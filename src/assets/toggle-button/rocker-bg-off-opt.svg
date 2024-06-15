@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60mm" height="40mm" version="1.1" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <defs>
+      <filter id="d" x="-.07110584" y="-.08101082" width="1.142212" height="1.162022" color-interpolation-filters="sRGB">
+         <feGaussianBlur result="blur" stdDeviation="1 1"/>
+      </filter>
+      <filter id="c" x="-.07110584" y="-.08101082" width="1.142212" height="1.162022" color-interpolation-filters="sRGB">
+         <feGaussianBlur result="blur" stdDeviation="1 1"/>
+      </filter>
+      <filter id="b" x="-.09015569" y="-.3900193" width="1.180311" height="1.780039" color-interpolation-filters="sRGB">
+         <feGaussianBlur result="blur" stdDeviation="1 1"/>
+      </filter>
+      <linearGradient id="a" x1="41.86924" x2="41.76045" y1="24.55162" y2="35.58229" gradientUnits="userSpaceOnUse">
+         <stop stop-color="#010101" stop-opacity=".8" offset="0"/>
+         <stop stop-color="#1a1a1a" stop-opacity=".7" offset="1"/>
+      </linearGradient>
+      <clipPath id="e">
+         <rect x="21.50238" y="27.48103" width="36.65289" height="8.442235" fill="#010101" fill-opacity=".804574" stop-color="#000000" stroke-width=".163736" style="-inkscape-stroke:none"/>
+      </clipPath>
+   </defs>
+   <g class="bg-shadow">
+      <rect transform="matrix(1.529978 0 0 .8542148 17.32542 -20.62564)" x="-9.026199" y="26.25636" width="33.7525" height="29.62567" rx="1.30721" ry="2.341333" fill="#020202" fill-opacity=".7" filter="url(#c)" stop-color="#000000" stroke-width=".218165" style="-inkscape-stroke:none"/>
+      <rect transform="matrix(1.481092 0 0 .8401016 19.9564 -18.45784)" x="-9.026199" y="26.25636" width="33.7525" height="29.62567" rx="1.350356" ry="2.380666" fill="#ffffff" fill-opacity=".202825" filter="url(#d)" stop-color="#000000" stroke-width=".218165" style="-inkscape-stroke:none"/>
+      <path transform="matrix(1.135679 0 0 1.927931 -5.576714 -26.92955)" d="m27.03366 26.86082h26.62062l-6.801149 6.153542z" clip-path="url(#e)" fill="url(#a)" filter="url(#b)" stop-color="#000000" stroke-width=".172032" style="-inkscape-stroke:none"/>
+      <rect x="4.838455" y="3.125846" width="50.34114" height="23.99679" rx="2.000001" ry="2.000001" fill="#1a1a1a" stop-color="#000000" stroke-width=".239793" style="-inkscape-stroke:none"/>
+   </g>
+</svg>
