@@ -17,12 +17,26 @@ export enum LfoShape
     Square = "Square"
 }
 
-/* Low frequency oscillator implementation, this LFO is always unipolar and positive (between 0 and 1) */
-export class Lfo extends BaseAudioNode
+/* Low frequency oscillator implementation, this LFO is always unipolar and positive (it oscillates between 0 and 1).
+** This class is basically an oscilator that goes on no matter if it is modulating one or more parameters.
+** The class that represent an LFO that is actually connected to a synth paramter and is modulating it is called
+** ShareableUnipolarOscillator, which can be turned on or off and will eventualy be connected to a sytnh paramter
+** through the LfoManager class, which manges multiple LFO that can modulate the same parameter (these LFOs can be
+** enabled or disabled/muted at any time). */
+export class UnipolarLfo extends BaseAudioNode
 {
+    // the LFO oscillator (oscillates between -1 and 1)
     private lfoOscillator: OscillatorNode;
+
+    /* A constant node of gain 1, which will turn the previous oscillator into a positive unipolar oscillator,
+    ** that will oscillate between 0 and 2. IMPORTANT: the value (offset) of this node should always be 1, so it always
+    ** send the value 1! */
     private constantOscillator: ConstantSourceNode;
-    private lfoGainNode: GainNode;
+
+    /* this node adds (merges) the 'lfoOscillator' and 'constantOscillator' togheter in order to obtain an oscillator
+    ** that will oscillate between 0 and 2. In order to obtain the expected oscillation between 0 and 1, the gain of this
+    ** oscillator SHOULD ALWAYS BE 0.5, so the end result oscillates between 0.5*0 and 0.5*2 (e.g. between 0 and 1). */
+    private mergerGainNode: GainNode;
 
     private frequencyType: FrequencyType = FrequencyType.AbsoluteFrequency;
 
@@ -36,9 +50,10 @@ export class Lfo extends BaseAudioNode
     ** the LFO will oscillate with exactly the frequency of the tempo */
     private noteDurationExponent = Settings.defaultLfoNoteDurationExponent;
 
-    public static readonly SAFETY_DURATION = 0.02; // 20 milisec
+    private static readonly CONSTANT_OSCILLATOR_OFFSET = 1;
+    private static readonly MERGER_GAIN_NODE_GAIN = 0.5;
 
-    private static readonly logger: Logger<ILogObj> = new Logger({name: "Lfo", minLevel: Settings.minLogLevel});
+    private static readonly logger: Logger<ILogObj> = new Logger({name: "UnipolarLfo", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext)
     {
@@ -49,14 +64,14 @@ export class Lfo extends BaseAudioNode
         this.lfoOscillator.frequency.setValueAtTime(this.absoluteFrequency, this.audioContext.currentTime);
 
         this.constantOscillator = this.audioContext.createConstantSource();
-        this.constantOscillator.offset.setValueAtTime(1.0, this.audioContext.currentTime);
+        this.constantOscillator.offset.setValueAtTime(UnipolarLfo.CONSTANT_OSCILLATOR_OFFSET, this.audioContext.currentTime);
 
-        this.lfoGainNode = this.audioContext.createGain();
-        this.lfoGainNode.gain.setValueAtTime(Settings.minLfoGain, this.audioContext.currentTime);
+        this.mergerGainNode = this.audioContext.createGain();
+        this.mergerGainNode.gain.setValueAtTime(UnipolarLfo.MERGER_GAIN_NODE_GAIN, this.audioContext.currentTime);
 
         // connect oscillator and constant source to the gain
-        this.lfoOscillator.connect(this.lfoGainNode);
-        this.constantOscillator.connect(this.lfoGainNode);
+        this.lfoOscillator.connect(this.mergerGainNode);
+        this.constantOscillator.connect(this.mergerGainNode);
 
         // start the nodes
         this.lfoOscillator.start();
@@ -65,11 +80,11 @@ export class Lfo extends BaseAudioNode
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.lfoGainNode; }
+    public override mainNode(): AudioNode { return this.mergerGainNode; }
 
     public setShape(shape: LfoShape): void
     {
-        Lfo.logger.debug(`setShape(${shape})`);
+        UnipolarLfo.logger.debug(`setShape(${shape})`);
 
         switch(shape)
         {
@@ -85,7 +100,7 @@ export class Lfo extends BaseAudioNode
 
     public setFrequencyType(freqType: FrequencyType): void
     {
-        Lfo.logger.debug(`setFrequencyType(${freqType})`);
+        UnipolarLfo.logger.debug(`setFrequencyType(${freqType})`);
 
         this.frequencyType = freqType;
     }
@@ -95,7 +110,7 @@ export class Lfo extends BaseAudioNode
     {
         if (Settings.minLfoAbsoluteFrequency <= freq && freq <= Settings.maxLfoAbsoluteFrequency)
         {
-            Lfo.logger.debug(`setFrequency(${freq})`);
+            UnipolarLfo.logger.debug(`setFrequency(${freq})`);
 
             this.absoluteFrequency = freq;  // set the new value
 
@@ -108,7 +123,7 @@ export class Lfo extends BaseAudioNode
         }
         else
         {
-            Lfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
+            UnipolarLfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
             return false; // change was not succesfull
         }
     }
@@ -118,7 +133,7 @@ export class Lfo extends BaseAudioNode
     {
         if (Settings.minLfoTempo <= tempo && tempo <= Settings.maxLfoTempo)
         {
-            Lfo.logger.debug(`setTempo(${tempo})`);
+            UnipolarLfo.logger.debug(`setTempo(${tempo})`);
 
             this.tempo = tempo; // set the new value
 
@@ -131,7 +146,7 @@ export class Lfo extends BaseAudioNode
         }
         else
         {
-            Lfo.logger.warn(`setTempo(${tempo}): value is outside bounds`);
+            UnipolarLfo.logger.warn(`setTempo(${tempo}): value is outside bounds`);
             return false;  // change was not succesfull
         }
     }
@@ -143,7 +158,7 @@ export class Lfo extends BaseAudioNode
         if (Settings.minLfoNoteDurationExponent <= noteDurationExponent
             && noteDurationExponent <= Settings.maxLfoNoteDurationExponent)
         {
-            Lfo.logger.debug(`setNoteDurationExponent(${noteDurationExponent})`);
+            UnipolarLfo.logger.debug(`setNoteDurationExponent(${noteDurationExponent})`);
 
             this.noteDurationExponent = noteDurationExponent;
 
@@ -157,7 +172,7 @@ export class Lfo extends BaseAudioNode
         }
         else
         {
-            Lfo.logger.warn(`setNoteDurationExponent(${noteDurationExponent}): value outside bounds"`);
+            UnipolarLfo.logger.warn(`setNoteDurationExponent(${noteDurationExponent}): value outside bounds"`);
             return false; // change was not succesful
         }
     }
@@ -170,14 +185,14 @@ export class Lfo extends BaseAudioNode
     ** frequency of the LFO. */
     private computeFrequency(): void
     {
-        Lfo.logger.debug(`computeFrequency()`);
+        UnipolarLfo.logger.debug(`computeFrequency()`);
 
         this.absoluteFrequency = this.tempo / (60.0 * 2**(this.noteDurationExponent + 2));
     }
 
     private computeTempo(): void
     {
-        Lfo.logger.debug(`computeFrequency()`);
+        UnipolarLfo.logger.debug(`computeFrequency()`);
 
         this.tempo = Math.round(this.absoluteFrequency * 60.0 * 2**(this.noteDurationExponent + 2));
     }

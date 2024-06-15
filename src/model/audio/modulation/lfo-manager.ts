@@ -1,7 +1,7 @@
 import { Settings } from "../../../constants/settings";
 import { BaseAudioNode } from "../base-audio-node";
-import { ShareableLfo } from "./shareable-lfo";
-import { Lfo } from "./lfo";
+import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
+import { UnipolarLfo } from "./unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -9,12 +9,17 @@ import type { ILogObj } from "tslog";
 
 export class LfoManager extends BaseAudioNode
 {
-    private lfoArray: Array<ShareableLfo>;
+    /* The array of managed shareable LFOs.
+    ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,
+    ** meaning that the shreable LFO is shared between modulation destinations. */
+    private lfoArray: Array<ShareableUnipolarLfo>;
+
+    // the gain node that merges (adds) all these LFO togheter
     private mergerGainNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Lfo", minLevel: Settings.minLogLevel});
 
-    constructor(audioContext: AudioContext, lfoArray: Array<Lfo>)
+    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>)
     {
         super(audioContext);
 
@@ -22,13 +27,13 @@ export class LfoManager extends BaseAudioNode
         this.mergerGainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
 
         // instantiate the array of LFOs
-        this.lfoArray = new Array<ShareableLfo>(lfoArray.length);
+        this.lfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
 
         // instantiate and connect each LFO to the final merger node and then mute each LFO
         for (let i = 0; i < this.lfoArray.length; i++)
         {
             // instantiate each ShareableLfo
-            this.lfoArray[i] = new ShareableLfo(this.audioContext, lfoArray[i]);
+            this.lfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
 
             // connect each LFO to the final merger node
             this.lfoArray[i].mainNode().connect(this.mergerGainNode);
@@ -42,7 +47,7 @@ export class LfoManager extends BaseAudioNode
     ** this method is supposed to return the main node of the class */
     public override mainNode(): AudioNode { return this.mergerGainNode; }
 
-    public getShareableLfos(): Array<ShareableLfo> { return this.lfoArray; }
+    public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.lfoArray; }
 
     public enableShareableLfo(lfoIndex: number): boolean
     {

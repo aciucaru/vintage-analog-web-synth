@@ -1,9 +1,11 @@
-/* Acknowledgement: the pulse oscillator is heavily inspired from the code of Andy Harman, from his GitHub page:
-** https://github.com/pendragon-andyh/WebAudio-PulseOscillator2
-**
-** This code is basically a TypeScript adaption of Andy's JavaScript code.
-**
-** This is the original license:
+/*
+
+Acknowledgement: the pulse oscillator is heavily inspired from the code of Andy Harman, from his GitHub page:
+https://github.com/pendragon-andyh/WebAudio-PulseOscillator
+
+This code is basically a TypeScript adaption of Andy's JavaScript code.
+
+This is the original license:
 
 Copyright (c) 2014 Andy Harman and Pendragon Software Limited.
 
@@ -16,6 +18,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import { Settings } from "../../../../constants/settings";
+import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
+import { LfoManager } from "../../modulation/lfo-manager";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 
 import { Logger } from "tslog";
@@ -33,11 +37,19 @@ export class PulseOscillator extends BasePulseOscillator
     private squareCurve: Float32Array = new Float32Array(256);
     private squareWaveShaper: WaveShaperNode;
 
+    // this gain node is what makes the pulse width adjustment possible;
+    // the pulse width is also modulatable, thank to this gain node
     private modulatableGainNode: GainNode;
+
+    // modulator nodes:
+    private freqLfoManager: LfoManager;
+    private unisonDetuneLfoManager: LfoManager;
+    private pulseWidthLfoManager: LfoManager;
+    private gainLfoManager: LfoManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "PulseOscillator", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, initialGain: number)
+    constructor(audioContext: AudioContext, initialGain: number, lfoArray: Array<UnipolarLfo>)
     {
         super(audioContext, initialGain);
 
@@ -77,6 +89,17 @@ export class PulseOscillator extends BasePulseOscillator
 
         // start the sound oscillator
         this.sawOscillatorNode.start();
+
+        // instantiate and connect the LFO managers for the modulatable parameters of this oscillator
+        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray);
+        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, lfoArray);
+        this.pulseWidthLfoManager = new LfoManager(this.audioContext, lfoArray);
+        this.gainLfoManager = new LfoManager(this.audioContext, lfoArray);
+
+        this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
+        this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
+        this.pulseWidthLfoManager.mainNode().connect(this.modulatableGainNode.gain);
+        this.gainLfoManager.mainNode().connect(this.outputGainNode.gain);
     }
 
     public override setNote(octaves: number, semitones: number): boolean
