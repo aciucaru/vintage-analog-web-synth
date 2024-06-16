@@ -14,8 +14,8 @@ This synthesizer has the folowing features:
 * 2 ADSR envelopes: one for the filter and one for the volume/amplitude
 
 ### License
-The source code is licensed under the MIT license
+The source code is licensed under the MIT license.
 
-The images that I made myself are licensed un Creative Commons CC0
+The images that I made myself are licensed under Creative Commons CC0.
 
 The rest of the images/fonts are free images from the internet and they have their own license. 
