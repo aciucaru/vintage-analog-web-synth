@@ -1,4 +1,4 @@
-1. This software (programming code) is licensed unde the below MIT license (images, artwork and fonts used in this software are not covered by the MIT license):
+1. 1. This software (programming code) is licensed unde the below MIT license (images, artwork and fonts used in this software are not covered by the MIT license):
 
 MIT License
 
@@ -10,16 +10,54 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-End of MIT license
+End of license.
+
+1. 1. This software (programming code) contains portions of code by Mathias Rasmussen, specifically the AudioOscillocope.svelte file uses animation code by Mathias Rasmussen, taken from https://github.com/mathiasvr/audio-oscilloscope. Below is the license of the code by Mathias Rasmussen:
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2018 Mathias Rasmussen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+End of license.
+
+1. 3. This software (programming code) contains portions of code by Andy Harman and Pendragon Software Limited and is taken from https://github.com/pendragon-andyh/WebAudio-PulseOscillator. The code was used in the pusle=oscillator.ts file, for implemnting a pulse wave. Below is the license of the code by Andy Harman and Pendragon Software Limited:
+
+Copyright (c) 2014 Andy Harman and Pendragon Software Limited.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+End of license.
 
 2. The images/artwork inside the src/assets directory by aciucaru are marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
 
 3. The images, artwork and fonts inside the src/assets-external directory are free images, artwork and/or fonts taken (with permission) from the internet and they belong to their copyright owners. More information about these files is in the README.md file. Below is the list of these images, artwork and or fonts:
 
-3.1. freepik - Dark brown wood texture background taken from www.freepik.com:
+3. 1. freepik - Dark brown wood texture background taken from www.freepik.com:
 https://www.freepik.com/free-photo/dark-brown-wood-texture-background-with-design-space_21631223.htm#fromView=search&page=1&position=7&uuid=a8791087-f9ec-484f-9f71-94d4edec9ed9
 
-3.2. LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license for this font is as below:
+3. 2. LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license for this font is as below:
 
 Copyright (c) 2015 Fredrick Brennan (http://8type.net)
 
