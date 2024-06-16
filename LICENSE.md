@@ -16,10 +16,10 @@ End of MIT license
 
 3. The images, artwork and fonts inside the src/assets-external directory are free images, artwork and/or fonts taken (with permission) from the internet and they belong to their copyright owners. More information about these files is in the README.md file. Below is the list of these images, artwork and or fonts:
 
-freepik - Dark brown wood texture background taken from www.freepik.com:
+3.1. freepik - Dark brown wood texture background taken from www.freepik.com:
 https://www.freepik.com/free-photo/dark-brown-wood-texture-background-with-design-space_21631223.htm#fromView=search&page=1&position=7&uuid=a8791087-f9ec-484f-9f71-94d4edec9ed9
 
-LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license for this font is as below:
+3.2. LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license for this font is as below:
 
 Copyright (c) 2015 Fredrick Brennan (http://8type.net)
 
