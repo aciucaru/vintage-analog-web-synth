@@ -1,5 +1,5 @@
 1. Software (programming code) licenses
-  1. This software (programming code) by aciucaru is licensed unde the below MIT license (images, artwork and fonts used in this software are not covered by the MIT license):
+  * This software (programming code) by aciucaru is licensed unde the below MIT license (images, artwork and fonts used in this software are not covered by the MIT license):
 
 MIT License
 
@@ -13,7 +13,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 End of license.
 
-  2. This software (programming code) contains portions of code by Mathias Rasmussen, specifically the AudioOscillocope.svelte file uses animation code by Mathias Rasmussen, taken from https://github.com/mathiasvr/audio-oscilloscope. Below is the license of the code by Mathias Rasmussen:
+  * This software (programming code) contains portions of code by Mathias Rasmussen, specifically the AudioOscillocope.svelte file uses animation code by Mathias Rasmussen, taken from https://github.com/mathiasvr/audio-oscilloscope. Below is the license of the code by Mathias Rasmussen:
 
 The MIT License (MIT)
 
@@ -39,7 +39,7 @@ SOFTWARE.
 
 End of license.
 
-  3. This software (programming code) contains portions of code by Andy Harman and Pendragon Software Limited and is taken from https://github.com/pendragon-andyh/WebAudio-PulseOscillator. The code was used in the pusle=oscillator.ts file, for implemnting a pulse wave. Below is the license of the code by Andy Harman and Pendragon Software Limited:
+  * This software (programming code) contains portions of code by Andy Harman and Pendragon Software Limited and is taken from https://github.com/pendragon-andyh/WebAudio-PulseOscillator. The code was used in the pusle=oscillator.ts file, for implemnting a pulse wave. Below is the license of the code by Andy Harman and Pendragon Software Limited:
 
 Copyright (c) 2014 Andy Harman and Pendragon Software Limited.
 
@@ -55,10 +55,10 @@ End of license.
 
 3. The images, artwork and fonts inside the src/assets-external directory are free images, artwork and/or fonts taken (with permission) from the internet and they belong to their copyright owners. More information about these files is in the README.md file. Below is the list of these images, artwork and or fonts:
 
-  1. freepik - Dark brown wood texture background taken from www.freepik.com:
+  * freepik - Dark brown wood texture background taken from www.freepik.com:
 https://www.freepik.com/free-photo/dark-brown-wood-texture-background-with-design-space_21631223.htm#fromView=search&page=1&position=7&uuid=a8791087-f9ec-484f-9f71-94d4edec9ed9
 
-  2. LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license for this font is as below:
+  * LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license for this font is as below:
 
 Copyright (c) 2015 Fredrick Brennan (http://8type.net)
 
