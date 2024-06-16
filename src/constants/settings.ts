@@ -139,6 +139,8 @@ export class Settings
     // settings for LFO: *******************************************************************************
     /* the LFO oscillator plus ConstantNode will give values in range (0, 2), so the min. gain is 0 and 
     ** the max gain is 0.5, in order to obtain values in the range (0, 1) */
+    public static readonly lfoGainChangeTimeOffset = 0.02; // 20 milisec
+
     public static readonly minLfoGain = 0.0;
     public static readonly maxLfoGain = 1; 
     public static readonly defaultLfoGain = 0.0;
@@ -160,6 +162,9 @@ export class Settings
     public static readonly maxLfoAbsoluteFrequency = Settings.maxLfoTempo / (60.0 * 2**(Settings.minLfoNoteDurationExponent + 2));
     public static readonly defaultLfoAbsoluteFrequency = Settings.defaultLfoTempo / (60.0 * 2**(Settings.defaultLfoNoteDurationExponent + 2));
 
+    // settings for shareable LFO
+    public static readonly shareableLfoDisabledGain = 0.0;
+    public static readonly shareableLfoEnabledGain = 1.0; 
 
     // settings for LFO Array: **************************************************************************
     // the total number of LFOs for one single layer (timbre) of the synth

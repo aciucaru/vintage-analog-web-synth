@@ -21,6 +21,7 @@ import { Settings } from "../../../../constants/settings";
 import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
 import { LfoManager } from "../../modulation/lfo-manager";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
+import { lfoArray } from "../../shareable-audio-nodes";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -49,7 +50,7 @@ export class PulseOscillator extends BasePulseOscillator
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "PulseOscillator", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, initialGain: number, lfoArray: Array<UnipolarLfo>)
+    constructor(audioContext: AudioContext, initialGain: number)
     {
         super(audioContext, initialGain);
 

@@ -30,6 +30,8 @@ export class ShareableUnipolarLfo extends BaseAudioNode
     // keeps track if the LFO is enabled or disabled
     private isLfoEnabled: boolean = false;
 
+    private static readonly OFFSET_DURATION = 0.02; // 20 miliseconds
+
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ShareableUnipolarLfo", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)
@@ -43,6 +45,9 @@ export class ShareableUnipolarLfo extends BaseAudioNode
 
         // connect oscillator and constant source to the gain
         this.lfo.mainNode().connect(this.toggleGainNode);
+
+        // disable the LFO
+        this.toggleGainNode.gain.setValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime);
     }
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
@@ -58,7 +63,7 @@ export class ShareableUnipolarLfo extends BaseAudioNode
         this.isLfoEnabled = true;
 
         // set the new value
-        this.toggleGainNode.gain.linearRampToValueAtTime(Settings.maxLfoGain, this.audioContext.currentTime);
+        this.toggleGainNode.gain.linearRampToValueAtTime(Settings.shareableLfoEnabledGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }
 
     public disable(): void
@@ -68,6 +73,6 @@ export class ShareableUnipolarLfo extends BaseAudioNode
         this.isLfoEnabled = false;
 
         // set the new value
-        this.toggleGainNode.gain.linearRampToValueAtTime(Settings.minLfoGain, this.audioContext.currentTime);
+        this.toggleGainNode.gain.linearRampToValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }
 }

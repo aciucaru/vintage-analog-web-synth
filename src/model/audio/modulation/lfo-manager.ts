@@ -14,20 +14,51 @@ export class LfoManager extends BaseAudioNode
     ** meaning that the shreable LFO is shared between modulation destinations. */
     private lfoArray: Array<ShareableUnipolarLfo>;
 
-    // the gain node that merges (adds) all these LFO togheter
+    /* The gain node that merges (adds) all above LFOs togheter.
+    ** This gain node serves both as a merger node (it merges all LFOs from the 'lfoArray' into a
+    ** single node/signal) and also as the modulation amount (it's gain is the modulation amount, 
+    ** basically a multiplier that multiplies the merged LFOs signal).
+    **
+    ** The gain of this node is computed as below:
+    ** mergerGainNode.gain = (1.0 / numberOfEnabledLfos) * modulationAmount */
     private mergerGainNode: GainNode;
+
+    // how many LFOs are enabled
+    private numberOfEnabledLfos = 0;
+
+    // the modulation amount
+    private modulationAmount = 0;
+
+    // the modulation amount limits
+    private minModulationAmount: number;
+    private maxModulationAmount: number;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Lfo", minLevel: Settings.minLogLevel});
 
-    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>)
+    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>, minModulationAmount: number, maxModulationAmount: number)
     {
         super(audioContext);
 
-        this.mergerGainNode = this.audioContext.createGain();
-        this.mergerGainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
-
         // instantiate the array of LFOs
         this.lfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
+
+        if (minModulationAmount < maxModulationAmount)
+        {
+            this.minModulationAmount = minModulationAmount;
+            this.maxModulationAmount = maxModulationAmount;
+        }
+        else
+        {
+            LfoManager.logger.warn(`constructor(): minModulationAmount is not smaller than maxModulationAmount, values have been switched`);
+
+            this.minModulationAmount = maxModulationAmount;
+            this.maxModulationAmount = minModulationAmount;
+        }
+
+        this.mergerGainNode = this.audioContext.createGain();
+
+        // the initial gain of the node that merges all LFOs is 0 (no moudulation amount)
+        this.mergerGainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
 
         // instantiate and connect each LFO to the final merger node and then mute each LFO
         for (let i = 0; i < this.lfoArray.length; i++)
@@ -58,6 +89,7 @@ export class LfoManager extends BaseAudioNode
             // first, disable the LFO
             this.lfoArray[lfoIndex].enable();
 
+            // then recompute and also set the gains for 
             this.setLfosGains();
 
             return true;
@@ -91,7 +123,7 @@ export class LfoManager extends BaseAudioNode
         }
     }
 
-    /* This method recomputes and sets the gains of each LFO from the LFO array.
+    /* This utility method recomputes and sets the gains of each LFO from the LFO array.
     ** This method is for internal use and should be called whenever an LFO is
     ** enabled or disabled. */
     private setLfosGains(): void
@@ -107,6 +139,15 @@ export class LfoManager extends BaseAudioNode
         /* then compute the corresponding gain in such a way that the sum of all
         ** enabled LFOs varies between 0 and 1 (e.g. the sum of all LFOs is maximum 1) */
         const newMergerGain = 1.0 / enabledLfosCount;
-        this.mergerGainNode.gain.linearRampToValueAtTime(newMergerGain, this.audioContext.currentTime);
+        this.mergerGainNode.gain.linearRampToValueAtTime(newMergerGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
+    }
+
+    /* Utility method that recomputes and also set the gain of this node.
+    ** Thsi method should be called anytime an LFO is turned on/off or when the modulation amount changes. */
+    private setFinalGain(): void
+    {
+        const finalGain = (1.0 / this.numberOfEnabledLfos) * this.modulationAmount;
+
+        this.mergerGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }
 }
