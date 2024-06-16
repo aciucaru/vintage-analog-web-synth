@@ -77,12 +77,12 @@
 
     .wood-side-left
     {
-        background-image: url("../assets/wood-sides/freepik-dark-brown-wood-texture-left-w100.jpg");
+        background-image: url("../assets-external/freepik-dark-brown-wood-texture-left-w100.jpg");
     }
 
     .wood-side-right
     {
-        background-image: url("../assets/wood-sides/freepik-dark-brown-wood-texture-right-w100.jpg");
+        background-image: url("../assets-external/freepik-dark-brown-wood-texture-right-w100.jpg");
     }
 
     .wood-shadows-center

@@ -195,7 +195,7 @@
     @font-face
     {
         font-family: LCD14;
-        src: url("../assets/fonts/LCD14.otf");
+        src: url("../assets-external/LCD14.otf");
         font-weight: normal;
         font-style: italic;
     }
