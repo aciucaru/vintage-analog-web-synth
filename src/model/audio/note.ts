@@ -4,6 +4,10 @@ import { Settings } from "../../constants/settings";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
+// Freq
+// 3.85846329106347
+// 33488.0723584766
+
 export class Note
 {
     // main parameters of a note: octaves and semitones
@@ -16,7 +20,7 @@ export class Note
     private centsOffset: number = 0;
 
     // the final frequency of the note
-    public freq: number = 440.0; // default value corresponds to 4 'octaves' and 0 'semitones'
+    private freq: number = 440.0; // default value corresponds to 4 'octaves' and 9 'semitones'
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Note", minLevel: Settings.minLogLevel});
 
@@ -245,4 +249,6 @@ export class Note
         Note.logger.debug(`recomputeFreq(): o: ${this.octaves} oo: ${this.octavesOffset} s: ${this.semitones} so: ${this.semitonesOffset}` +
                             ` new freq: ${this.freq}`);
     }
+
+    public getFreq(): number { return this.freq; }
 }

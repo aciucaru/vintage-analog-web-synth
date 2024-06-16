@@ -24,6 +24,7 @@ export class Settings
     // settings for oscillators: ********************************************************************
     public static readonly minOscGain = 0.0;
     public static readonly maxOscGain = 1.0;
+    public static readonly defaultOscGain = 1.0;
 
     public static readonly minOscOctavesOffset = -2;
     public static readonly maxOscOctavesOffset = 2;
@@ -75,7 +76,7 @@ export class Settings
     public static readonly maxFilterResonance = 50.0;
     public static readonly defaultFilterResonance = 1.0;
 
-    /* anvelope amount: the envelope amount is not a percentage, it's an absolute value of the same unit type
+    /* envelope amount: the envelope amount is not a percentage, it's an absolute value of the same unit type
     ** as the cuttof frequency (Hz);
     ** the envelope will get added to the cutoff frequency, but the envelope amount can also have negative values, in
     ** this case the envelope is upside down, and reduces the cutoff frequency while modulating; */

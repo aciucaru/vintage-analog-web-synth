@@ -26,33 +26,53 @@ export class LfoManager extends BaseAudioNode
     // how many LFOs are enabled
     private numberOfEnabledLfos = 0;
 
-    // the modulation amount
-    private modulationAmount = 0;
+    // the modulation amount, in normalized form (between -1.0 and 1.0, where 0.0 means no modulation)
+    private normalizedModulationAmount = 0.0; // 0% (no modulation)
 
-    // the modulation amount limits
-    private minModulationAmount: number;
-    private maxModulationAmount: number;
+    // the final (absolute) modulation amount
+    private absoluteModulationAmount = 0;
+
+    /* The limits of the modulated parameter, in absolute value (not in percentages).
+    ** These are the limits between which the modulated parameter varies, there are not the limits of the modulator */
+    private parameterLowerLimit: number;
+    private parameterUpperLimit: number;
+    // the current value of the modulated parameter
+    private parameterCurrentValue: number;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Lfo", minLevel: Settings.minLogLevel});
 
-    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>, minModulationAmount: number, maxModulationAmount: number)
+    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
+                parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number)
     {
         super(audioContext);
 
         // instantiate the array of LFOs
         this.lfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
 
-        if (minModulationAmount < maxModulationAmount)
+        // initialize limits of the modulated parameter
+        if (parameterLowerLimit < parameterUpperLimit)
         {
-            this.minModulationAmount = minModulationAmount;
-            this.maxModulationAmount = maxModulationAmount;
+            this.parameterLowerLimit = parameterLowerLimit;
+            this.parameterUpperLimit = parameterUpperLimit;
         }
         else
         {
-            LfoManager.logger.warn(`constructor(): minModulationAmount is not smaller than maxModulationAmount, values have been switched`);
+            LfoManager.logger.warn(`constructor(): lower limit of modulated parameter is not smaller than upper limit, values will be switched`);
 
-            this.minModulationAmount = maxModulationAmount;
-            this.maxModulationAmount = minModulationAmount;
+            this.parameterLowerLimit = parameterUpperLimit;
+            this.parameterUpperLimit = parameterLowerLimit;
+        }
+
+        // initialize the current value of the modulated parameter
+        // if the current value is inside limits
+        if (parameterLowerLimit <= parameterCurrentValue && parameterCurrentValue <= parameterUpperLimit)
+            this.parameterCurrentValue = parameterCurrentValue;
+        else // if current value is outside limits
+        {
+            LfoManager.logger.warn(`constructor(): current value of modulated parameter is not inside supplied limits, current value will be in the middle`);
+
+            // aproximate the current value as being in the middle of the lower and upper limit
+            this.parameterCurrentValue = (this.parameterUpperLimit - this.parameterLowerLimit) / 2.0;
         }
 
         this.mergerGainNode = this.audioContext.createGain();
@@ -69,7 +89,7 @@ export class LfoManager extends BaseAudioNode
             // connect each LFO to the final merger node
             this.lfoArray[i].mainNode().connect(this.mergerGainNode);
 
-            // set gain to minimum (doesn't actually stop the LFO, it just mutes it)
+            // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
             this.lfoArray[i].disable();
         }
     }
@@ -86,11 +106,14 @@ export class LfoManager extends BaseAudioNode
         {
             LfoManager.logger.debug(`enableLfo(${lfoIndex})`);
 
-            // first, disable the LFO
+            // first, enable the LFO
             this.lfoArray[lfoIndex].enable();
 
+            // then, increase the count of enabled LFOs
+            this.numberOfEnabledLfos += 1;
+
             // then recompute and also set the gains for 
-            this.setLfosGains();
+            this.computeFinalGain();
 
             return true;
         }
@@ -111,7 +134,10 @@ export class LfoManager extends BaseAudioNode
             // first, disable the LFO
             this.lfoArray[lfoIndex].disable();
 
-            this.setLfosGains();
+            // then, decrease the count of enabled LFOs
+            this.numberOfEnabledLfos -= 1;
+
+            this.computeFinalGain();
 
             return true;
         }
@@ -123,30 +149,75 @@ export class LfoManager extends BaseAudioNode
         }
     }
 
-    /* This utility method recomputes and sets the gains of each LFO from the LFO array.
-    ** This method is for internal use and should be called whenever an LFO is
-    ** enabled or disabled. */
-    private setLfosGains(): void
+    public setNormalizedModulationAmount(normalizedModulationAmount: number): boolean
     {
-        // count how many enabled LFOs are in the LFO array
-        let enabledLfosCount = 0;
-        for (let i = 0; i < this.lfoArray.length; i++)
+        if (0.0 <= normalizedModulationAmount && normalizedModulationAmount <= 1.0)
         {
-            if (this.lfoArray[i].isEnabled())
-                enabledLfosCount++;
-        }
+            LfoManager.logger.debug(`setNormalizedModulationAmount(${normalizedModulationAmount})`);
 
-        /* then compute the corresponding gain in such a way that the sum of all
-        ** enabled LFOs varies between 0 and 1 (e.g. the sum of all LFOs is maximum 1) */
-        const newMergerGain = 1.0 / enabledLfosCount;
-        this.mergerGainNode.gain.linearRampToValueAtTime(newMergerGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
+            this.normalizedModulationAmount = normalizedModulationAmount;
+
+            // recompute and set the absolute modulation
+            this.computeAbsoluteModulationAmount();
+
+            // recompute and set the final gain
+            this.computeFinalGain();
+
+            return true; // change was succesfull
+        }
+        else
+        {
+            LfoManager.logger.warn(`setNormalizedModulationAmount(${normalizedModulationAmount}): parameter is outside bounds`);
+
+            return false; // change was not succesfull
+        }
     }
 
-    /* Utility method that recomputes and also set the gain of this node.
-    ** Thsi method should be called anytime an LFO is turned on/off or when the modulation amount changes. */
-    private setFinalGain(): void
+    public setParameterCurrentValue(parameterCurrentValue: number): boolean
     {
-        const finalGain = (1.0 / this.numberOfEnabledLfos) * this.modulationAmount;
+        if (this.parameterLowerLimit <= parameterCurrentValue && parameterCurrentValue <= this.parameterUpperLimit)
+        {
+            LfoManager.logger.debug(`setParameterCurrentValue(${parameterCurrentValue})`);
+
+            this.parameterCurrentValue = parameterCurrentValue;
+
+            this.computeAbsoluteModulationAmount();
+            this.computeFinalGain();
+
+            return true; // change was succesfull
+        }
+        else
+        {
+            LfoManager.logger.warn(`setParameterCurrentValue(${parameterCurrentValue}): parameter is outside bounds`);
+
+            return true; // change was not succesfull
+        }
+    }
+
+    /* This method computes the absolute modulation amount, and does this by multiplying the 'normalizedModulationAmount', which is
+    ** a factor with the maximum possible modulation in the direction of the 'normalizedModulationAmount' (plus or minus).
+    **
+    ** If the 'normalizedModulationAmount' is positive, then the maximum modulation possible will be between the modulated parameter's
+    ** current value and the modulated parameter's upper limit.
+    **
+    ** If the 'normalizedModulationAmount' is negative, then the maximum modulation possible will be  between the modulated parameter's
+    ** current value and the modulated paramter's lower limit.
+    **
+    ** So the absolute modulation amount differs, depending if the normalized modulation amount is positive (0...1) or negative (-1...0) */
+    private computeAbsoluteModulationAmount(): void
+    {
+        // first, we check if the normalized modulation amount is positive or negative
+        if (this.normalizedModulationAmount >= 0)
+            this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterUpperLimit - this.parameterCurrentValue);
+        else
+            this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterCurrentValue - this.parameterLowerLimit);
+    }
+
+    /* Utility method that recomputes and also set the final gain of the LfoManager node.
+    ** This method should be called anytime an LFO is turned on/off or when the modulation amount changes. */
+    private computeFinalGain(): void
+    {
+        const finalGain = (1.0 / this.numberOfEnabledLfos) * this.absoluteModulationAmount;
 
         this.mergerGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }

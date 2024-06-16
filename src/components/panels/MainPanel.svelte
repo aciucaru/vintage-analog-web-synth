@@ -40,7 +40,6 @@
         width: 100%;
         /* height: min-content; */
         height: auto;
-        overflow: auto;
 
         display: grid;
         grid-template-columns: 30px

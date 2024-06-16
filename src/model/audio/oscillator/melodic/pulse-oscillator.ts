@@ -18,7 +18,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import { Settings } from "../../../../constants/settings";
-import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
+import { NoteSettings } from "../../../../constants/note-settings";
 import { LfoManager } from "../../modulation/lfo-manager";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 import { lfoArray } from "../../shareable-audio-nodes";
@@ -57,7 +57,7 @@ export class PulseOscillator extends BasePulseOscillator
         // instantiate the sawtooth oscillator and set parameters
         this.sawOscillatorNode = this.audioContext.createOscillator();
         this.sawOscillatorNode.type = "sawtooth";
-        this.sawOscillatorNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+        this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
 
         // define the curve for the constant wave shaper node
         this.constantCurve[0] = Settings.defaultOscPulseWidth;
@@ -92,10 +92,15 @@ export class PulseOscillator extends BasePulseOscillator
         this.sawOscillatorNode.start();
 
         // instantiate and connect the LFO managers for the modulatable parameters of this oscillator
-        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray);
-        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, lfoArray);
-        this.pulseWidthLfoManager = new LfoManager(this.audioContext, lfoArray);
-        this.gainLfoManager = new LfoManager(this.audioContext, lfoArray);
+        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                            NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                                    Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune,
+                                                    Settings.defaultOscUnisonCentsDetune);
+        this.pulseWidthLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                                    Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
+        this.gainLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                                Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
 
         this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
         this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
@@ -111,7 +116,7 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -128,7 +133,7 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -145,7 +150,7 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -162,7 +167,7 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);

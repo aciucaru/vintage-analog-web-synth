@@ -7,7 +7,7 @@
     // the audio context prop: is used to create an analyser node
     export let audioContext: AudioContext;
 
-    export let width: number = 160;
+    export let width: number = 130;
     export let height: number = 90;
 
     export let label: string = "";
