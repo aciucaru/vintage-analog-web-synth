@@ -137,7 +137,7 @@
         absoluteValueString = `${ (displayFactor * newAbsoluteValue).toFixed(decimals) }`;
 
         // // call the event handler (callback) and pass it the new value
-        // onValueChange(newAbsoluteValue);
+        onValueChange(newAbsoluteValue);
 
         // redraw the knob pointer
         drawCanvas();  
@@ -150,7 +150,7 @@
         absoluteValue = newAbsoluteValue;
 
         // call the event handler (callback) and pass it the new value
-        onValueChange(newAbsoluteValue);
+        // onValueChange(newAbsoluteValue);
 
         // reset the increment in steps
         currentIncrementedSteps = 0;
