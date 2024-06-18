@@ -120,9 +120,12 @@ export class Settings
     public static readonly maxAdsrSustainLevel = 1.0; // 100%, the full value of the modulated parameter
     public static readonly defaultAdsrSustainLevel = 0.8; // 80%
 
-    public static readonly minAdsrReleaseDuration = 0.0; // 0 seconds
+    public static readonly adsrSafetyDuration = 0.01; // 10 milisec
+
+    public static readonly minAdsrReleaseDuration = Settings.adsrSafetyDuration + 0.01; // 20 miliseconds
     public static readonly maxAdsrReleaseDuration = 8.0; // 8 seconds
     public static readonly defaultAdsrReleaseDuration = 1.0; // 1 second
+
 
     // ADSR defaults for cutoff filter:
     public static readonly defaultAdsrFilterAttackDuration = 0.0; // 0 seconds

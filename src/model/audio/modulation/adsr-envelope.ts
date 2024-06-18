@@ -33,10 +33,11 @@ export class AdsrEnvelope extends BaseAudioNode
     private releaseDuration: number = Settings.defaultAdsrReleaseDuration;
 
     // time parameters:
+    private attackStartTime = this.audioContext.currentTime;
     private attackEndTime = this.audioContext.currentTime + this.attackDuration; // the time the attack phase should end
     private decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
-    private releaseEndTime = this.audioContext.currentTime + this.releaseDuration; // the time the attack phase should end
-    public static readonly SAFETY_DURATION = 0.02; // 20 milisec
+    private releaseStartTime = this.decayEndTime + Settings.adsrSafetyDuration; // the time the release should start
+    private releaseEndTime = this.releaseStartTime + this.releaseDuration; // the time the release phase should end
     
     private static readonly logger: Logger<ILogObj> = new Logger({name: "AdsrEnvelope", minLevel: Settings.minLogLevel});
 
@@ -65,6 +66,7 @@ export class AdsrEnvelope extends BaseAudioNode
 
         // get relevant times
         const currentTime = this.audioContext.currentTime; // the time when note was triggered
+        this.attackStartTime = currentTime; // save the attack start time also
         this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
         this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
         const sustainEndTime = this.decayEndTime + duration;
@@ -102,11 +104,29 @@ export class AdsrEnvelope extends BaseAudioNode
 
         // get relevant times
         const currentTime = this.audioContext.currentTime; // the time when note was triggered
+        this.attackStartTime = currentTime; // save the attack start time also
         this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
         this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
 
+        /* It might be possible that the the 'noteOn' (atack-decay) phase has started before the 'release' phase of the
+        ** previous note, so we verify this first: */
+        if (this.releaseStartTime < currentTime && currentTime < this.releaseEndTime)
+        {
+            // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
+            const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
+            const currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+
+            // then we set the gain to the computed value, this is the gain that would appear on time 'currentTime'
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, currentTime);
+
+            // then we cancel all event that start AFTER the previous event
+            this.
+        }
+
         // first phase: cancel all remaining events
+        // first we add an event before the canceling occurs, the value will revert back to the last value of this event
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, currentTime);
+        // cancel all events after the previous event
         this.adsrGainNode.gain.cancelScheduledValues(currentTime + AdsrEnvelope.SAFETY_DURATION);
 
         /* Attack phase: raise gain to maximum in 'attackTime' seconds;
@@ -124,9 +144,9 @@ export class AdsrEnvelope extends BaseAudioNode
     {
         // get relevant times
         const currentTime = this.audioContext.currentTime; // the time when note was released
-        this.releaseEndTime = currentTime + this.releaseDuration; // the time the attack phase should end
 
-        /* Release phase, lower gain to minimum (zero cannot be used with exponential ramp):
+        /* Release phase, lower gain to minimum (zero is not used because it does not work with exponential ramp).
+        **
         ** It might be possible that the release phase has started before the attack-decay phase has finished,
         ** in this case the envelope will drop, but then, it will rise back again, because the attack ending time
         ** is after the release time(!), and so the value won't be at miminum, as expected, it will rise up again.
@@ -135,32 +155,47 @@ export class AdsrEnvelope extends BaseAudioNode
         // if the release happened before the attack has finished
         if (currentTime <= this.attackEndTime)
         {
-            this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, currentTime);
-            this.adsrGainNode.gain.cancelScheduledValues(this.attackEndTime - AdsrEnvelope.SAFETY_DURATION);
-            // unfortunately, the much more usefull 'cancelAndHoldAtTime(); does not work on Firefox
+            // first phase: cancel all remaining events
+            // this.adsrGainNode.gain.cancelScheduledValues(this.attackEndTime - AdsrEnvelope.SAFETY_DURATION);
+            this.adsrGainNode.gain.cancelScheduledValues(currentTime);
 
-            // first phase: set gain to 'sustainLevel', 'setValueAtTime()' acts like a checkpoint between ramps
-            this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, currentTime);
+            // then compute the value at the time of the 'stop' phase, this is done by linear interpolation
+            const slope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
+            const currentTimeGain = slope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
 
-            // for release phase we use linear ramp, not exponential, because exponential goes down to quick
+            // then set the gain to the previously computed value
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, currentTime + AdsrEnvelope.SAFETY_DURATION);
+
+            // compute the end of the 'release' phase
+            this.releaseEndTime = currentTime + AdsrEnvelope.SAFETY_DURATION + this.releaseDuration;
+
+            // then start the actual 'release' phase by ramping down to the minimum possible
+            // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
             this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
         }
         // if the release ha happened after the attack phase but before the decay phase
         else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
         {
-            this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, currentTime);
+            // first phase: cancel all remaining events
             this.adsrGainNode.gain.cancelScheduledValues(this.decayEndTime - AdsrEnvelope.SAFETY_DURATION);
             // unfortunately, the much more usefull 'cancelAndHoldAtTime(); does not work on Firefox
 
-            // first phase: set gain to 'sustainLevel', 'setValueAtTime()' acts like a checkpoint between ramps
-            this.adsrGainNode.gain.setValueAtTime(this.sustainLevel, currentTime);
+            // then compute the value at the time of the 'stop' phase, this is done by linear interpolation
+            const slope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
+            const currentTimeGain = slope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+
+            // then set the gain to the previously computed value
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, currentTime + AdsrEnvelope.SAFETY_DURATION);
+
+            // compute the end of the 'release' phase
+            this.releaseEndTime = currentTime + AdsrEnvelope.SAFETY_DURATION + this.releaseDuration;
 
             // for release phase we use linear ramp, not exponential, because exponential goes down to quick
             this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
         }
         else // if the release has happend normally, after the decay phase
         {
-            // first phase: set gain to 'sustainLevel', 'setValueAtTime()' acts like a checkpoint between ramps
+            // first phase: set gain to 'sustainLevel'
             this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, currentTime);
 
             // for release phase we use linear ramp, not exponential, because exponential goes down to quick
