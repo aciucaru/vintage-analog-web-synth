@@ -265,6 +265,9 @@ export class AdsrEnvelope extends BaseAudioNode
         this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.releaseStartTime);
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
 
+        // just to be safe, cancell all events after thE release has finished
+        // this.adsrGainNode.gain.cancelScheduledValues(this.releaseEndTime + Settings.adsrSafetyDuration);
+
         // AdsrEnvelope.logger.debug(`start(): ADSR stoped`);
     }
 

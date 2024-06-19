@@ -2,12 +2,19 @@
     import MainPanel from "./panels/MainPanel.svelte";
     import KeyboardPanel from "./panels/KeyboardPanel.svelte";
     import WoodSide from "./WoodSide.svelte";
+    import SidePanel from "./panels/SidePanel.svelte";
 </script>
 
 <div class="main-container">
     <WoodSide></WoodSide>
     <div class="center-container">
         <MainPanel></MainPanel>
+    </div>
+    <WoodSide otherside={true}></WoodSide>
+
+    <WoodSide></WoodSide>
+    <div class="center-container">
+        <SidePanel></SidePanel>
     </div>
     <WoodSide otherside={true}></WoodSide>
 </div>
@@ -36,7 +43,7 @@
     {
         box-sizing: border-box;
 
-        width: 100%;
+        /* width: 100%; */
 
         display: flex;
         flex-flow: column nowrap;
