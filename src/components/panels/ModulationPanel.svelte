@@ -22,9 +22,9 @@
     {
         box-sizing: border-box;
 
-        width: 100%;
+        /* width: 100%; */
         /* height: min-content; */
-        height: auto;
+        /* height: auto; */
 
         display: grid;
         grid-template-columns: 30px

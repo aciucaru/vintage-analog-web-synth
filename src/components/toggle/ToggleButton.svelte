@@ -76,8 +76,8 @@
     <!-- only draw the title or icon if the necessary prop was supplied -->
     {#if toggleData.label.length > 0}
         <div class="title" on:click={handleToogleClick}>{toggleData.label}</div>
-    {:else if toggleData.iconType !== null}
-        <div class={getIconClassName(toggleData.iconType)} on:click={handleToogleClick}></div>
+    <!-- {:else if toggleData.iconType !== null}
+        <div class={getIconClassName(toggleData.iconType)} on:click={handleToogleClick}></div> -->
     {/if}
 </div>
 

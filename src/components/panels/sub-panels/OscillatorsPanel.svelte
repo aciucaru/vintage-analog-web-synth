@@ -11,14 +11,14 @@
     import RadioGroup from "../../radio-button/RadioGroup.svelte";
 
     // oscillator 1 callbacks *********************************************************************
-    const osc1TriangleToggleData = new ToggleButtonData("", ButtonIcon.WAVE_TRIANGLE, oscCallbacks.onOsc1TriangleSelect, true);
-    const osc1SawToggleData = new ToggleButtonData("", ButtonIcon.WAVE_SAW, oscCallbacks.onOsc1SawSelect);
-    const osc1PulseToggleData = new ToggleButtonData("", ButtonIcon.WAVE_PULSE, oscCallbacks.onOsc1PulseSelect);
+    const osc1TriangleToggleData = new ToggleButtonData("TRI", oscCallbacks.onOsc1TriangleSelect, true);
+    const osc1SawToggleData = new ToggleButtonData("SAW", oscCallbacks.onOsc1SawSelect);
+    const osc1PulseToggleData = new ToggleButtonData("PULSE", oscCallbacks.onOsc1PulseSelect);
 
     // oscillator 2 callbacks **************************************************************************
-    const osc2TriangleToggleData = new ToggleButtonData("", ButtonIcon.WAVE_TRIANGLE, oscCallbacks.onOsc2TriangleSelect, true);
-    const osc2SawToggleData = new ToggleButtonData("", ButtonIcon.WAVE_SAW, oscCallbacks.onOsc2SawSelect);
-    const osc2PulseToggleData = new ToggleButtonData("", ButtonIcon.WAVE_PULSE, oscCallbacks.onOsc2PulseSelect);
+    const osc2TriangleToggleData = new ToggleButtonData("TRI", oscCallbacks.onOsc2TriangleSelect, true);
+    const osc2SawToggleData = new ToggleButtonData("SAW", oscCallbacks.onOsc2SawSelect);
+    const osc2PulseToggleData = new ToggleButtonData("PULSE", oscCallbacks.onOsc2PulseSelect);
 
     // noise oscillator callbacks and data ****************************************************************************************
     /* the radio group must receive an array of button data and will create as many radio

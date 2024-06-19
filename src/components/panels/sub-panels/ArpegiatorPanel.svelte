@@ -8,8 +8,8 @@
     import { ToggleButtonData, ButtonIcon } from "../../../model/gui/toggle-button-data";
     import ToggleButton from "../../toggle/ToggleButton.svelte";
 
-    const onToggleOnOff = new ToggleButtonData("On/Off", null, arpegiatorCallbacks.onToggleOnOff, false);
-    const onToggleRetrigger = new ToggleButtonData("Retrigger", null, arpegiatorCallbacks.onToggleRetrigger, false);
+    const onToggleOnOff = new ToggleButtonData("On/Off", arpegiatorCallbacks.onToggleOnOff, false);
+    const onToggleRetrigger = new ToggleButtonData("Retrigger", arpegiatorCallbacks.onToggleRetrigger, false);
     
     // noise oscillator callbacks and data ****************************************************************************************
     /* the radio group must receive an array of button data and will create as many radio

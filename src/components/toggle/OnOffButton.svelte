@@ -1,9 +1,12 @@
 <script lang="ts">
-    import { ButtonIcon } from "../../model/gui/toggle-button-data";
-    import { ToggleButtonData } from "../../model/gui/toggle-button-data";
-
     // props:
-    export let toggleData: ToggleButtonData
+    // callback prop, that is called when the button is toggled
+    export let onToggleChange: (isToggled: boolean) => void;
+
+    // an optional title prop wich represents the option to be toggled
+    export let label: string = "";
+
+    export let isToggled: boolean = false;
 
     // an optional title prop wich represents the option to be toggled
     // export let title: string = "";
@@ -20,49 +23,16 @@
     let buttonClass = "button-part button-part-off";
     let backgroundClass = "button-background button-background-off";
 
-    $: buttonClass = toggleData.isToggled ? "button-part button-part-on" : "button-part button-part-off";
-    $: backgroundClass = toggleData.isToggled ? "button-background button-background-on" : "button-background button-background-off";
+    $: buttonClass = isToggled ? "button-part button-part-on" : "button-part button-part-off";
+    $: backgroundClass = isToggled ? "button-background button-background-on" : "button-background button-background-off";
 
     function handleToogleClick(): void
     {
         // switch toggled state
-        toggleData.isToggled = !(toggleData.isToggled);
+        isToggled = !(isToggled);
 
-        // the call supplied callback
-        toggleData.onToggleChange(toggleData.isToggled);
-    }
-
-    function getIconClassName(iconType: ButtonIcon | null): string
-    {
-        let iconName: string = "icon";
-
-        if (iconType != null )
-        {
-            switch(iconType)
-            {
-                case ButtonIcon.WAVE_SINE:
-                    iconName = "icon icon-sine-wave-bg";
-                    break;
-
-                case ButtonIcon.WAVE_PULSE:
-                    iconName = "icon icon-pulse-wave-bg";
-                    break;
-
-                case ButtonIcon.WAVE_SAW:
-                    iconName = "icon icon-saw-wave-bg";
-                    break;
-
-                case ButtonIcon.WAVE_TRIANGLE:
-                    iconName = "icon icon-triangle-wave-bg";
-                    break;
-
-                default:
-                    iconName = "icon";
-                    break;
-            }
-        }
-
-        return iconName;
+        // call the supplied callback
+        onToggleChange(isToggled);
     }
 </script>
 
@@ -74,10 +44,8 @@
     </div>
 
     <!-- only draw the title or icon if the necessary prop was supplied -->
-    {#if toggleData.label.length > 0}
-        <div class="title" on:click={handleToogleClick}>{toggleData.label}</div>
-    {:else if toggleData.iconType !== null}
-        <div class={getIconClassName(toggleData.iconType)} on:click={handleToogleClick}></div>
+    {#if label.length > 0}
+        <div class="title" on:click={handleToogleClick}>{label}</div>
     {/if}
 </div>
 
@@ -102,8 +70,8 @@
     .button-container
     {
         /* width and height are necessary in order to display the background image */
-        width: 45px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
 
         width: auto;
         height: auto;
@@ -124,8 +92,8 @@
     .button-background
     {
         /* width and height are necessary in order to display the background image */
-        width: 45px;
-        height: 30px;
+        width: 34px;
+        height: 34px;
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -153,14 +121,15 @@
     .button-background-on
     {
         border: solid 1px hsl(0, 0%, 10%);
+        background-color: hsl(0, 0%, 10%);
         /* background-image: url("../../assets/toggle-button/rocker-bg-on-opt.svg"); */
     }
 
     .button-part
     {
         /* width and height are necessary in order to display the background image */
-        width: 45px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -168,12 +137,13 @@
         padding: 0px;
         margin: 0px;
 
-        border: none;
+        border-radius: 5px;
     }
 
     .button-part-off
     {
-        background-image: radial-gradient(ellipse at top, hsla(216, 20%, 30%, 0.7) 0%, hsla(207, 20%, 15%, 0.7) 50%);
+        border: solid 1px hsl(0, 0%, 20%);
+        background-image: radial-gradient(ellipse at center, hsl(0, 0%, 50%) 0%, hsl(0, 0%, 30%) 90%);
         
         /* background-image: url("../../assets/toggle-button/rocker-switch-off-opt.svg"); */
 
@@ -188,19 +158,25 @@
 
     .button-part-off:hover
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(120%);
+        background-image: radial-gradient(ellipse at center, hsl(0, 0%, 40%) 0%, hsl(0, 0%, 25%) 90%);
+
+        /* filter: saturate(400%) hue-rotate(-100deg) brightness(120%); */
     }
 
     .button-part-off:hover:active
     {
+        background-image: radial-gradient(ellipse at center, hsl(0, 0%, 40%) 0%, hsl(0, 0%, 25%) 90%);
         filter: saturate(400%) hue-rotate(-100deg) brightness(160%);
     }
 
     .button-part-on
     {
-        background-color: none;
+        border: solid 1px hsl(0, 0%, 20%);
+        background-image: radial-gradient(ellipse at center, hsl(210, 40%, 70%) 0%, hsl(210, 40%, 50%) 90%);
+
+        /* background-color: none; */
         /* "background: none" is bad, because it eliminates backgrounds, but here it seems necessary */
-        background: none;
+        /* background: none;
         background-size: 100% auto;
         background-size: contain;
         background-attachment: scroll;
@@ -208,16 +184,18 @@
         background-position: top left;
 
         background-image: url("../../assets/toggle-button/rocker-switch-on-opt.svg");
-        filter: saturate(400%) hue-rotate(-100deg);
+        filter: saturate(400%) hue-rotate(-100deg); */
     }
 
     .button-part-on:hover
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(80%);
+        background-image: radial-gradient(ellipse at center, hsl(210, 40%, 60%) 0%, hsl(210, 40%, 40%) 90%);
+        /* filter: saturate(400%) hue-rotate(-100deg) brightness(80%); */
     }
 
     .button-part-on:hover:active
     {
+        background-image: radial-gradient(ellipse at center, hsl(210, 40%, 60%) 0%, hsl(210, 40%, 40%) 90%);
         filter: saturate(400%) hue-rotate(-100deg) brightness(60%);
     }
 

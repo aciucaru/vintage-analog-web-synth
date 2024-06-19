@@ -18,12 +18,12 @@ export class ToggleButtonData
 
     /* the name of an optional image file that this component will use as icon;
     ** the component assumes that the file is found in a certain path (see below) and does not look elsewhere */
-    public iconType: ButtonIcon | null = null;
+    // public iconType: ButtonIcon | null = null;
 
-    constructor(label: string = "", iconType: ButtonIcon | null = null, onToggleChange: (isToggled: boolean) => void, isToggled: boolean = false)
+    constructor(label: string = "", onToggleChange: (isToggled: boolean) => void, isToggled: boolean = false)
     {
         this.label = label;
-        this.iconType = iconType;
+        // this.iconType = iconType;
         this.onToggleChange = onToggleChange;
         this.isToggled = isToggled;
     }
