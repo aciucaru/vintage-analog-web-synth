@@ -14,6 +14,16 @@
     <div class="title" style="grid-column: 2 / 7; grid-row: 2 / 3;">MODULATION MATRIX</div>
 
     <div class="horizontal-container">
+        <div class="mod-source-header">SRC</div>
+        <div class="mod-source-header">LFO1</div>
+        <div class="mod-source-header">LFO2</div>
+        <div class="mod-source-header">LFO3</div>
+        <div class="mod-source-header">LFO4</div>
+        <div class="mod-source-header">LFO5</div>
+        <div class="mod-source-header">Amount</div>
+    </div>
+
+    <div class="horizontal-container">
         <div class="mod-destination-title">OSC1 Freq</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
@@ -189,6 +199,26 @@
     }
 
     .mod-destination-title
+    {
+        pointer-events: none;
+
+        margin: 0px;
+        padding: 0px;
+
+        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 25%, 0.6), hsla(220, 20%, 20%, 0.6)); */
+        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 30%, 0.6), hsla(220, 20%, 25%, 0.6)); */
+        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(45, 25%, 25%), hsl(45, 25%, 20%)); ok for orange */
+        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+
+        color: hsl(0, 0%, 85%);
+        font-family: sans-serif;
+        font-size: 12px;
+        /* overflow: hidden; */
+        /* white-space: nowrap; */
+        /* text-overflow: clip; */
+    }
+
+    .mod-source-header
     {
         pointer-events: none;
 

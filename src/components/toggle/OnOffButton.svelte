@@ -6,19 +6,9 @@
     // an optional title prop wich represents the option to be toggled
     export let label: string = "";
 
+    // an optional prop wich represents the toggled state of the button
     export let isToggled: boolean = false;
 
-    // an optional title prop wich represents the option to be toggled
-    // export let title: string = "";
-
-    // export let isToggled: boolean = false;
-
-    /* the name of an optional image file that this component will use as icon;
-    ** the component assumes that the file is found in a certain path (see below) and does not look elsewhere */
-    // export let iconType: ButtonIcon | null = null;
-
-    // callback prop, that is called when the button is toggled
-    // export let onToggleChange: () => void;
 
     let buttonClass = "button-part button-part-off";
     let backgroundClass = "button-background button-background-off";
