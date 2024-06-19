@@ -113,14 +113,18 @@ export class AdsrEnvelope extends BaseAudioNode
         // if the current note has started during the previous note's 'attack' phase
         if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
         {
-            const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
-            currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+            // const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
+            // currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+
+            currentTimeGain = this.computeAttackCurrentGain(currentTime);
         }
         // if the current note has started during the previous note's 'decay' phase
         else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
         {
-            const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
-            currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+            // const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
+            // currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+            
+            currentTimeGain = this.computeDecayCurrentGain(currentTime);
         }
         /* if the current note has started after the previous note's 'decay' phase
         ** here we have only 2 possibilities:
@@ -137,8 +141,10 @@ export class AdsrEnvelope extends BaseAudioNode
             else // we are in the 'release' phase of the previous note
             {
                 // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
-                const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
-                currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+                // const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
+                // currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+
+                currentTimeGain = this.computeReleaseCurrentGain(currentTime);
             }
         }
         /* Ideal case: if the current note has started after the previous note's 'release' phase.
@@ -203,14 +209,18 @@ export class AdsrEnvelope extends BaseAudioNode
         if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
         {
             // compute the value at the time of the 'stop' phase, this is done by linear interpolation
-            const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
-            currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+            // const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
+            // currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+
+            currentTimeGain = this.computeAttackCurrentGain(currentTime);
         }
         // if the release happened during the 'decay phase' of the previous note
         else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
         {
-            const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
-            currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+            // const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
+            // currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+
+            currentTimeGain = this.computeDecayCurrentGain(currentTime);
         }
         /* Ideal case: if the current 'noteOff' event has started after the previous note's 'decay' phase.
         ** This means we are in the 'sustain' phase, which where norammly the 'release' phase should be triggered.*/
@@ -242,11 +252,13 @@ export class AdsrEnvelope extends BaseAudioNode
         // this.adsrGainNode.gain.cancelScheduledValues(this.attackEndTime - AdsrEnvelope.SAFETY_DURATION);
         this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
 
-        // compute the end of the 'release' phase
-        this.releaseEndTime = cancelationStartTime + this.releaseDuration;
+        // compute the start and end of the 'release' phase
+        this.releaseStartTime = cancelationStartTime;
+        this.releaseEndTime = this.releaseStartTime + this.releaseDuration;
 
         // then start the actual 'release' phase by ramping down to the minimum possible
         // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
+        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.releaseStartTime);
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
 
         // AdsrEnvelope.logger.debug(`start(): ADSR stoped`);
@@ -321,6 +333,64 @@ export class AdsrEnvelope extends BaseAudioNode
         {
             AdsrEnvelope.logger.warn(`setReleaseTime(${releaseTime}): argument is outside bounds`);
             return false; // value change was not succesfull
+        }
+    }
+
+    // utility method that computes the gain of the 'attack' phase corresponding to a given current time
+    private computeAttackCurrentGain(currentTime: number): number
+    {
+        // first, check if the 'currentTime' is really in the 'attack' phase
+        if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
+        {
+            AdsrEnvelope.logger.debug(`computeAttackCurrentGain(${currentTime})`);
+
+            const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
+            const currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+
+            return currentTimeGain;
+        }
+        else
+        {
+            AdsrEnvelope.logger.warn(`computeAttackCurrentGain(${currentTime}): currentTime is outside 'attack' phase`);
+            return -1; // computation was not succesfull
+        }
+    }
+
+    private computeDecayCurrentGain(currentTime: number): number
+    {
+        // first, check if the 'currentTime' is really in the 'attack' phase
+        if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
+        {
+            AdsrEnvelope.logger.debug(`computeDecayCurrentGain(${currentTime})`);
+
+            const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
+            const currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+
+            return currentTimeGain;
+        }
+        else
+        {
+            AdsrEnvelope.logger.warn(`computeDecayCurrentGain(${currentTime}): currentTime is outside 'decay' phase`);
+            return -1; // computation was not succesfull
+        }
+    }
+
+    private computeReleaseCurrentGain(currentTime: number): number
+    {
+        // first, check if the 'currentTime' is really in the 'attack' phase
+        if (currentTime > this.decayEndTime)
+        {
+            AdsrEnvelope.logger.debug(`computeReleaseCurrentGain(${currentTime})`);
+
+            const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
+            const currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+
+            return currentTimeGain;
+        }
+        else
+        {
+            AdsrEnvelope.logger.warn(`computeReleaseCurrentGain(${currentTime}): currentTime is outside 'release' phase`);
+            return -1; // computation was not succesfull
         }
     }
 }
