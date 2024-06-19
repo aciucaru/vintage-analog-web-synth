@@ -158,28 +158,31 @@ export class AdsrEnvelope extends BaseAudioNode
             currentTimeGain = Settings.minAdsrSustainLevel;
         }
 
-        /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
-        ** and the we cancell all remaining events.
-        ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
-        ** before the cancelation, which is the value of this next line: */
-        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.attackStartTime);
-
+        const rampEndTime = currentTime + Settings.adsrSafetyDuration;
         // compute the time AFTER which all the events of the gain paramter should be canceled
-        const cancelationStartTime = currentTime + Settings.adsrSafetyDuration;
-
-        // then we cancel all events that start AFTER the previous cancelation time, this is not really necessary
-        this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+        const cancelationStartTime = rampEndTime + Settings.adsrSafetyDuration;
 
         // compute and set relevant times
         this.attackStartTime = cancelationStartTime; // save the attack start time
         this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
         this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
 
+        /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
+        ** and the we cancell all remaining events.
+        ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
+        ** before the cancelation, which is the value of this next line: */
+        this.adsrGainNode.gain.setValueAtTime(currentTimeGain, currentTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+        // this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.attackStartTime);
+
+        // then we cancel all events that start AFTER the previous cancelation time, this is not really necessary
+        this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+
         /* Attack phase: raise gain to maximum in 'attackTime' seconds;
         ** we use linear ramp for this, because exponential ramp does not seem to work properly, it instead delays the value;
         ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
         // this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.attackStartTime);
-        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.attackStartTime);
+        // this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.attackStartTime); // works better without
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
 
         // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
@@ -233,32 +236,29 @@ export class AdsrEnvelope extends BaseAudioNode
             currentTimeGain = this.sustainLevel;
         }
 
-        /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
-        ** and the we cancell all remaining events.
-        ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
-        ** before the cancelation, which is the value of this next line: */
-        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, currentTime);
+        const rampEndTime = currentTime + Settings.adsrSafetyDuration;
 
         // now we compute the time AFTER all scheduled events should be canceled
-        const cancelationStartTime = currentTime + Settings.adsrSafetyDuration;
-        // let cancelationStartTime = 0.0;
-        // if (currentTime + Settings.adsrSafetyDuration < this.attackEndTime) // perfect situation case
-        //     cancelationStartTime = currentTime + Settings.adsrSafetyDuration;
-        // else // not so perfect case
-        //     // TO DO: this time might not be perfect, should find better values?
-        //     cancelationStartTime = currentTime;
-
-        // first phase: cancel all remaining events
-        // this.adsrGainNode.gain.cancelScheduledValues(this.attackEndTime - AdsrEnvelope.SAFETY_DURATION);
-        this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+        const cancelationStartTime = rampEndTime + Settings.adsrSafetyDuration;
 
         // compute the start and end of the 'release' phase
         this.releaseStartTime = cancelationStartTime;
         this.releaseEndTime = this.releaseStartTime + this.releaseDuration;
 
+        /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
+        ** and the we cancell all remaining events.
+        ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
+        ** before the cancelation, which is the value of this next line: */
+        this.adsrGainNode.gain.setValueAtTime(currentTimeGain, currentTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+
+        // cancel all remaining events
+        this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+
         // then start the actual 'release' phase by ramping down to the minimum possible
         // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
-        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.releaseStartTime);
+        // this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.releaseStartTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.releaseStartTime);
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
 
         // AdsrEnvelope.logger.debug(`start(): ADSR stoped`);
