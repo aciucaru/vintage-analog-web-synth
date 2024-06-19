@@ -5,7 +5,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 /* General-purpose ADSR envelope; this envelope does not have a predefined min and max value,
-** instead, it can vary between 0 and 'sustainLevel', where 'sustainLevel' can be maximum 1.0 (100%);
+** instead, it can vary between 0.0 , 1.0 and 'sustainLevel', where 'sustainLevel' can be maximum 1.0 (100%);
 **
 ** The ADSR enevelope is always between 0.0 and 1.0 and is first multiplied by the 'evelope amount',
 ** where the 'envelope amount' is no longer a relative value (between 0 and 1) but an absolute value,
@@ -104,7 +104,8 @@ export class AdsrEnvelope extends BaseAudioNode
     {
         // AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
 
-        const currentTime = this.audioContext.currentTime; // the time when note was triggered
+        // the time when the current note was triggered
+        const currentTime = this.audioContext.currentTime;
 
         let currentTimeGain = 0.0;
 
@@ -114,58 +115,57 @@ export class AdsrEnvelope extends BaseAudioNode
         else
             this.hasReleasePhaseStarted = true;
 
-        // if we are in the ADS phase
-        if (this.hasReleasePhaseStarted === false)
-        {
+
         // if the current note has started during the previous note's 'attack' phase
-            if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
-            {
-                const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
-                currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
-            }
-            // if the current note has started durin the previous note's 'decay' phase
-            else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
-            {
-                const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
-                currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
-            }
-            else if ()
-            else if (this.releaseStartTime <= currentTime && currentTime <= this.releaseEndTime)
-            {
-                // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
-                const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
-                const currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
-
-                // then we set the gain to the computed value, this is the gain that would appear on time 'currentTime'
-                this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, currentTime);
-
-                // now we compute the time AFTER all scheduled events should be canceled
-                let cancelationStartTime = 0.0;
-                if (currentTime + Settings.adsrSafetyDuration < this.releaseEndTime) // perfect situation case
-                    cancelationStartTime = currentTime + Settings.adsrSafetyDuration;
-                else // not so perfect case
-                    // TO DO: this time might not be perfect, should find better values?
-                    cancelationStartTime = currentTime;
-
-                // then we cancel all events that start AFTER the previous cancelation time
-                this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
-
-                // compute and set relevant times
-                this.attackStartTime = cancelationStartTime; // save the attack start time also
-                this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
-                this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
-
-                /* Attack phase: raise gain from minimum to maximum in 'attackTime' seconds;
-                ** we use linear ramp for this, because exponential ramp does not seem to work properly, it instead delays the value;
-                ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
-                this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.attackStartTime); // is it really needed? should use minGain?
-                this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
-
-                // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
-                // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
-                this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
-            }
+        if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
+        {
+            const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
+            currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
         }
+        // if the current note has started during the previous note's 'decay' phase
+        else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
+        {
+            const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
+            currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+        }
+        // if the current note has started after the previous note's 'decay' phase
+        
+        else if (currentTime > this.decayEndTime)
+        {
+            // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
+            const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
+            const currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+
+            // then we set the gain to the computed value, this is the gain that would appear on time 'currentTime'
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, currentTime);
+
+            // now we compute the time AFTER all scheduled events should be canceled
+            let cancelationStartTime = 0.0;
+            if (currentTime + Settings.adsrSafetyDuration < this.releaseEndTime) // perfect situation case
+                cancelationStartTime = currentTime + Settings.adsrSafetyDuration;
+            else // not so perfect case
+                // TO DO: this time might not be perfect, should find better values?
+                cancelationStartTime = currentTime;
+
+            // then we cancel all events that start AFTER the previous cancelation time
+            this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+
+            // compute and set relevant times
+            this.attackStartTime = cancelationStartTime; // save the attack start time also
+            this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
+            this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+
+            /* Attack phase: raise gain from minimum to maximum in 'attackTime' seconds;
+            ** we use linear ramp for this, because exponential ramp does not seem to work properly, it instead delays the value;
+            ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.attackStartTime); // is it really needed? should use minGain?
+            this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
+
+            // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
+            // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
+            this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
+        }
+
         // if we are in the R (release) phase
         else
         {
