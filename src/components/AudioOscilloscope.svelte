@@ -156,7 +156,7 @@
 
 <div class="main-container">
     {#if label.length > 0}
-        <div class="label">{label}</div>
+        <div class="label unselectable">{label}</div>
     {/if}
 
     <canvas class="analyser-canvas" bind:this={analyserCanvas} width="{width}" height="{height}"></canvas>
@@ -200,5 +200,11 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

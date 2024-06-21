@@ -232,6 +232,7 @@
     .main-container
     {
         --knob-width: 50px;
+        --knob-height: 50px;
         --text-height: 12px;
 
         box-sizing: border-box;
@@ -253,7 +254,6 @@
     .title
     {
         box-sizing: border-box;
-        /* pointer-events: none; */
 
         width: var(--knob-width);
         height: var(--text-height);
@@ -290,7 +290,6 @@
     .numeric-value
     {
         box-sizing: border-box;
-        /* pointer-events: none; */
 
         width: var(--knob-width);
         height:  var(--text-height);

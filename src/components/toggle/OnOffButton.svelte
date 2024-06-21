@@ -35,13 +35,17 @@
 
     <!-- only draw the title or icon if the necessary prop was supplied -->
     {#if label.length > 0}
-        <div class="title" on:click={handleToogleClick}>{label}</div>
+        <div class="title unselectable" on:click={handleToogleClick}>{label}</div>
     {/if}
 </div>
 
 <style>
     .main-container
     {
+        --button-width: 40px;
+        --button-height: 40px;
+        --text-height: 12px;
+
         box-sizing: border-box;
 
         width: auto;
@@ -60,8 +64,8 @@
     .button-container
     {
         /* width and height are necessary in order to display the background image */
-        width: 40px;
-        height: 40px;
+        width: var(--button-width);
+        height: var(--button-height);
 
         width: auto;
         height: auto;
@@ -82,8 +86,8 @@
     .button-background
     {
         /* width and height are necessary in order to display the background image */
-        width: 34px;
-        height: 34px;
+        width: calc( var(--button-width) - 6px);
+        height: calc( var(--button-height) - 6px);
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -118,8 +122,8 @@
     .button-part
     {
         /* width and height are necessary in order to display the background image */
-        width: 32px;
-        height: 32px;
+        width: calc( var(--button-width) - 8px);
+        height: calc( var(--button-height) - 8px);
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -191,12 +195,11 @@
 
     .title
     {
-        pointer-events: none;
         box-sizing: border-box;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
-        font-size: 12px;
+        font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
@@ -205,25 +208,9 @@
         margin-left: 10px;
     }
 
-    .icon
+    .unselectable
     {
-        /* width and height are necessary in order to display the background image */
-        width: 24px;
-        height: 12px;
-
-        background-size: 100% auto;
-        background-size: contain;
-        background-attachment: scroll;
-        background-repeat: no-repeat;
-        background-position: top left;
-        filter: brightness(1.5);
-
-        margin: 0px;
-        margin-left: 10px;
+        user-select: none;
+        -webkit-user-select: none;
     }
-
-    .icon-sine-wave-bg { background-image: url("../../assets/toggle-button/wave-sine-opt.svg"); }
-    .icon-pulse-wave-bg { background-image: url("../../assets/toggle-button/wave-pulse-opt.svg"); }
-    .icon-saw-wave-bg { background-image: url("../../assets/toggle-button/wave-saw-opt.svg"); }
-    .icon-triangle-wave-bg { background-image: url("../../assets/toggle-button/wave-triangle-opt.svg"); }
 </style>

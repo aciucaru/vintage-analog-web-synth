@@ -84,6 +84,10 @@
 <style>
     .main-container
     {
+        --button-width: 45px;
+        --button-height: 30px;
+        --text-height: 12px;
+
         box-sizing: border-box;
 
         width: auto;
@@ -102,8 +106,8 @@
     .button-container
     {
         /* width and height are necessary in order to display the background image */
-        width: 45px;
-        height: 30px;
+        width: var(--button-width);
+        height: var(--button-height);
 
         width: auto;
         height: auto;
@@ -124,8 +128,8 @@
     .button-background
     {
         /* width and height are necessary in order to display the background image */
-        width: 45px;
-        height: 30px;
+        width: var(--button-width);
+        height: var(--button-height);
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -155,8 +159,8 @@
     .button-part
     {
         /* width and height are necessary in order to display the background image */
-        width: 45px;
-        height: 30px;
+        width: var(--button-width);
+        height: var(--button-height);
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -191,9 +195,8 @@
 
     .button-part-on
     {
-        background-color: none;
-        /* "background: none" is bad, because it eliminates backgrounds, but here it seems necessary */
-        background: none;
+        /* background-color: none;
+        background: none; */
         background-size: 100% auto;
         background-size: contain;
         background-attachment: scroll;
@@ -216,12 +219,11 @@
 
     .title
     {
-        /* pointer-events: none; */
         box-sizing: border-box;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
-        font-size: 12px;
+        font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
@@ -252,9 +254,4 @@
         user-select: none;
         -webkit-user-select: none;
     }
-
-    .icon-sine-wave-bg { background-image: url("../../assets/toggle-button/wave-sine-opt.svg"); }
-    .icon-pulse-wave-bg { background-image: url("../../assets/toggle-button/wave-pulse-opt.svg"); }
-    .icon-saw-wave-bg { background-image: url("../../assets/toggle-button/wave-saw-opt.svg"); }
-    .icon-triangle-wave-bg { background-image: url("../../assets/toggle-button/wave-triangle-opt.svg"); }
 </style>

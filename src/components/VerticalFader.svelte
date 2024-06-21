@@ -264,7 +264,6 @@
         padding: 0px;
 
         color: hsl(0, 0%, 85%);
-        /* pointer-events: none; */
         box-sizing: border-box;
 
         font-family: sans-serif;
@@ -285,8 +284,6 @@
 
     .numeric-value
     {
-        /* pointer-events: none; */
-        
         box-sizing: border-box;
 
         width: var(--fader-width);
