@@ -12,7 +12,7 @@
     <div class="background" style="grid-column: 1 / 8; grid-row: 1 / 9;"></div>
 
     <!-- voice parameters ***************************************************************************************************************** -->
-    <div class="title" style="grid-column: 2 / 7; grid-row: 2 / 3;">VOICE</div>
+    <div class="title unselectable" style="grid-column: 2 / 7; grid-row: 2 / 3;">VOICE</div>
 
     <div style="grid-column: 2 / 3; grid-row: 4 / 6;">
         <Knob title={"Gain"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
@@ -144,17 +144,9 @@
         background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
     }
 
-    .cutoff-background
+    .unselectable
     {
-        /* box-sizing: border-box; */
-
-        padding: 0px;
-        padding-left: 40px;
-        padding-right: 40px;
-        margin: 0px;
-
-        border-radius: 4px;
-
-        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

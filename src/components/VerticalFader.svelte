@@ -219,7 +219,7 @@
         <div class={faderTrackClass}></div>
         <div class="thumb-container">
             <div bind:this={faderThumbPrefill} class="thumb-prefill"></div>
-            <div bind:this={faderThumb} on:mousedown={onMouseDown} class="thumb"></div>
+            <div bind:this={faderThumb} on:mousedown={onMouseDown} class="thumb unselectable"></div>
         </div>
     </div>
 

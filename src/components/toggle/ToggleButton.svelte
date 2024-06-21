@@ -1,35 +1,45 @@
 <script lang="ts">
     import { ButtonIcon } from "../../model/gui/toggle-button-data";
-    import { ToggleButtonData } from "../../model/gui/toggle-button-data";
 
     // props:
-    export let toggleData: ToggleButtonData
-
-    // an optional title prop wich represents the option to be toggled
-    // export let title: string = "";
-
-    // export let isToggled: boolean = false;
-
-    /* the name of an optional image file that this component will use as icon;
-    ** the component assumes that the file is found in a certain path (see below) and does not look elsewhere */
-    // export let iconType: ButtonIcon | null = null;
+    // export let toggleData: ToggleButtonData
 
     // callback prop, that is called when the button is toggled
-    // export let onToggleChange: () => void;
+    export let onToggleChange: (isToggled: boolean) => void;
+
+    // an optional label prop
+    export let label: string = "";
+
+    // prop that tells if the toggle button starts in On (true) or Off (false) mode
+    export let isToggled: boolean = false;
+
+    /* props that gives the images paths and dimensions for the background of the button;
+    ** the background description is made out of 2 images (for On and for Off) and the same dimensions; */
+    export let bgImageOnPath: string = "";
+    export let bgImageOffPath: string = "";
+    export let bgImageWidth: number = 0;
+    export let bgImageHeight: number = 0;
+
+    /* props that gives the images paths and dimensions for the foreground of the button (the actual button images);
+    ** the background description is made out of 2 images (for On and for Off) and the same dimensions; */
+    export let fgImageOnPath: string = "";
+    export let fgImageOffPath: string = "";
+    export let fgImageWidth: number = 0;
+    export let fgImageHeight: number = 0;
 
     let buttonClass = "button-part button-part-off";
     let backgroundClass = "button-background button-background-off";
 
-    $: buttonClass = toggleData.isToggled ? "button-part button-part-on" : "button-part button-part-off";
-    $: backgroundClass = toggleData.isToggled ? "button-background button-background-on" : "button-background button-background-off";
+    $: buttonClass = isToggled ? "button-part button-part-on" : "button-part button-part-off";
+    $: backgroundClass = isToggled ? "button-background button-background-on" : "button-background button-background-off";
 
-    function handleToogleClick(): void
+    function handleToggleClick(): void
     {
         // switch toggled state
-        toggleData.isToggled = !(toggleData.isToggled);
+        isToggled = !(isToggled);
 
-        // the call supplied callback
-        toggleData.onToggleChange(toggleData.isToggled);
+        // call the supplied callback
+        onToggleChange(isToggled);
     }
 
     function getIconClassName(iconType: ButtonIcon | null): string
@@ -70,14 +80,12 @@
     <!-- the toggle button -->
     <div class="button-container">
         <div class={backgroundClass}></div>
-        <div on:click={handleToogleClick} class={buttonClass}></div>
+        <div class={buttonClass} on:click={handleToggleClick} ></div>
     </div>
 
-    <!-- only draw the title or icon if the necessary prop was supplied -->
-    {#if toggleData.label.length > 0}
-        <div class="title unselectable" on:click={handleToogleClick}>{toggleData.label}</div>
-    <!-- {:else if toggleData.iconType !== null}
-        <div class={getIconClassName(toggleData.iconType)} on:click={handleToogleClick}></div> -->
+    <!-- only draw the title if the necessary prop was supplied -->
+    {#if label.length > 0}
+        <div class="title unselectable" on:click={handleToggleClick}>{label}</div>
     {/if}
 </div>
 

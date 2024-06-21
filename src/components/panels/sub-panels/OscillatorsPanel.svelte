@@ -70,9 +70,9 @@
 
     <!-- oscillator 1 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 12 / 14;">
-        <ToggleButton toggleData={osc1TriangleToggleData}></ToggleButton>
-        <ToggleButton toggleData={osc1SawToggleData}></ToggleButton>
-        <ToggleButton toggleData={osc1PulseToggleData}></ToggleButton>
+        <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
+        <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
+        <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 12 / 14;">
@@ -125,9 +125,9 @@
 
     <!-- oscillator 2 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 10 / 11; grid-row: 12 / 14;">
-        <ToggleButton toggleData={osc2TriangleToggleData}></ToggleButton>
-        <ToggleButton toggleData={osc2SawToggleData}></ToggleButton>
-        <ToggleButton toggleData={osc2PulseToggleData}></ToggleButton>
+        <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc2TriangleSelect} isToggled={true}></ToggleButton>
+        <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc2PulseSelect}></ToggleButton>
+        <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc2SawSelect}></ToggleButton>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 12 / 14;">
