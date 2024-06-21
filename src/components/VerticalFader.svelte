@@ -233,6 +233,10 @@
 <style>
     .main-container
     {
+        --fader-width: 40px;
+        --fader-height: 150px;
+        --text-height: 12px;
+
         box-sizing: border-box;
 
         display: flex;
@@ -253,8 +257,8 @@
     {
         box-sizing: border-box;
 
-        width: 40px;
-        height: 14px;
+        width: var(--fader-width);
+        height: var(--text-height);
 
         margin: 0px;
         padding: 0px;
@@ -264,7 +268,7 @@
         box-sizing: border-box;
 
         font-family: sans-serif;
-        font-size: 12px;
+        font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
@@ -285,15 +289,15 @@
         
         box-sizing: border-box;
 
-        width: 40px;
-        height: 14px;
+        width: var(--fader-width);
+        height: var(--text-height);
 
         margin: 0px;
         padding: 0px;
 
         color: hsl(210, 30%, 60%);
         font-family: LCD14, Tahoma, serif;
-        font-size: 12px;
+        font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
@@ -303,8 +307,8 @@
     {
         box-sizing: border-box;
 
-        width: 40px;
-        height: 150px;
+        width: var(--fader-width);
+        height: var(--fader-height);
 
         display: grid;
         grid-template-columns: auto;

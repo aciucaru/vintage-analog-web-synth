@@ -231,6 +231,9 @@
 <style>
     .main-container
     {
+        --knob-width: 50px;
+        --text-height: 12px;
+
         box-sizing: border-box;
 
         display: flex;
@@ -252,15 +255,15 @@
         box-sizing: border-box;
         pointer-events: none;
 
-        width: 50px;
-        height:  12px;
+        width: var(--knob-width);
+        height: var(--text-height);
 
         margin: 0px;
         padding: 0px;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
-        font-size: 12px;
+        font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
@@ -289,15 +292,15 @@
         box-sizing: border-box;
         pointer-events: none;
 
-        width: 50px;
-        height:  12px;
+        width: var(--knob-width);
+        height:  var(--text-height);
 
         margin: 0px;
         padding: 0px;
 
         color: hsl(210, 30%, 60%);
         font-family: LCD14, Tahoma, serif;
-        font-size: 14px;
+        font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
