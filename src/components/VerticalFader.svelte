@@ -25,16 +25,16 @@
     // how many decimals should the displayed value have
     export let decimals: number = 2;
 
-    // if the numeric value should be displayed or not; default is true
-    export let showValue: boolean = true;
-
     /* if the slider track is in one direction only (from min. to max.) or if it's
     ** bidirectional (symmetrical) */
-   export let bidirectionalTrack: boolean = false;
+    export let bidirectionalTrack: boolean = false;
 
     /* the event handler (callback) prop the knob will call when it's rotated
     ** this event receives the new value set by the knob */
     export let onValueChange: (newValue: number) => void;
+
+    // if the numeric value should be displayed or not; default is true
+    let showValue: boolean = false;
 
     const logger: Logger<ILogObj> = new Logger({name: "VerticalFader", minLevel: Settings.minLogLevel });
 
@@ -108,6 +108,8 @@
 
     function onMouseMove(event: Event): void
     {
+        showValue = true;
+
         // how many steps are between minValue and maxValue
         const STEP_COUNT = Math.floor((maxValue - minValue) / step) + 1;
 
@@ -189,6 +191,8 @@
     // this function should only remove event listeners 
     function onMouseUp(event: Event): void
     {
+        showValue = false;
+
         // assign new value
         absoluteValue = newAbsoluteValue;
 
@@ -211,10 +215,6 @@
 </script>
 
 <div class="main-container">
-    {#if label.length > 0}
-        <div class="label">{label}</div>
-    {/if}
-
     <div class="fader-container">
         <div class={faderTrackClass}></div>
         <div class="thumb-container">
@@ -225,6 +225,8 @@
 
     {#if showValue}
         <div class="numeric-value">{absoluteValueString}</div>
+    {:else if label.length > 0}
+        <div class="label">{label}</div>
     {/if}
 </div>
 
@@ -250,6 +252,9 @@
     .label
     {
         box-sizing: border-box;
+
+        width: 40px;
+        height: 14px;
 
         margin: 0px;
         padding: 0px;
@@ -280,9 +285,15 @@
         
         box-sizing: border-box;
 
+        width: 40px;
+        height: 14px;
+
+        margin: 0px;
+        padding: 0px;
+
         color: hsl(210, 30%, 60%);
         font-family: LCD14, Tahoma, serif;
-        font-size: 14px;
+        font-size: 12px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;

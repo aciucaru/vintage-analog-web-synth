@@ -25,14 +25,14 @@
     // how many decimals should the displayed value have
     export let decimals: number = 2;
 
-    // if the numeric value should be displayed or not; default is true
-    export let showValue: boolean = true;
-
     /* the event handler (callback) prop the knob will call when it's rotated
     ** this event receives the new value set by the knob */
     export let onValueChange: (newValue: number) => void;
 
     const logger: Logger<ILogObj> = new Logger({name: "Knob", minLevel: Settings.minLogLevel });
+
+    // if the numeric value should be displayed or not; default is true
+    let showValue: boolean = false;
 
     /* the number of steps that were set while turning the knob (can be positive or negative);
     ** it gets multiplied by the step value and added to the initial value after releasing
@@ -91,6 +91,8 @@
 
     function onMouseMove(event: Event): void
     {
+        showValue = true;
+        
         // how many steps are between minValue and maxValue
         const STEP_COUNT = Math.floor((maxValue - minValue) / step) + 1;
 
@@ -146,6 +148,8 @@
     // this function should only remove event listeners 
     function onMouseUp(event: Event): void
     {
+        showValue = false;
+
         // assign new value
         absoluteValue = newAbsoluteValue;
 
@@ -215,14 +219,12 @@
 </script>
 
 <div class="main-container">
-    {#if title.length > 0}
-        <div class="title">{title}</div>
-    {/if}
-
     <canvas bind:this={canvas} width="{WIDTH}" height="{HEIGHT}" on:mousedown={onMouseDown} class="knob-canvas"></canvas>
 
     {#if showValue}
         <div class="numeric-value">{absoluteValueString}</div>
+    {:else if title.length > 0}
+        <div class="title">{title}</div>
     {/if}
 </div>
 
@@ -250,8 +252,11 @@
         box-sizing: border-box;
         pointer-events: none;
 
+        width: 50px;
+        height:  12px;
+
         margin: 0px;
-        padding: 3px;
+        padding: 0px;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
@@ -284,8 +289,11 @@
         box-sizing: border-box;
         pointer-events: none;
 
+        width: 50px;
+        height:  12px;
+
         margin: 0px;
-        padding: 2px;
+        padding: 0px;
 
         color: hsl(210, 30%, 60%);
         font-family: LCD14, Tahoma, serif;
