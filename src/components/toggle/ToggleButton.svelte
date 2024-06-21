@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ButtonIcon } from "../../model/gui/toggle-button-data";
+    import { ToggleButtonData } from "../../model/gui/toggle-button-data";
 
     // props:
     // export let toggleData: ToggleButtonData
@@ -14,25 +14,16 @@
     export let isToggled: boolean = false;
 
     /* props that gives the images paths and dimensions for the background of the button;
-    ** the background description is made out of 2 images (for On and for Off) and the same dimensions; */
-    export let bgImageOnPath: string = "";
-    export let bgImageOffPath: string = "";
-    export let bgImageWidth: number = 0;
-    export let bgImageHeight: number = 0;
+    ** the background description is made out of 2 images (for On and for Off) and the dimensions; */
+    export let imageData: ToggleButtonData | null = null;
 
-    /* props that gives the images paths and dimensions for the foreground of the button (the actual button images);
-    ** the background description is made out of 2 images (for On and for Off) and the same dimensions; */
-    export let fgImageOnPath: string = "";
-    export let fgImageOffPath: string = "";
-    export let fgImageWidth: number = 0;
-    export let fgImageHeight: number = 0;
+    let backgroundClass = "background-main background-off-image";
+    let foregroundClass = "foreground-main foreground-off-image";
 
-    let buttonClass = "button-part button-part-off";
-    let backgroundClass = "button-background button-background-off";
+    // $: buttonClass = isToggled ? "foreground-main foreground-on-image" : "foreground-main foreground-off-image";
+    // $: backgroundClass = isToggled ? "background-main button-background-on-image" : "background-main background-off-image";
 
-    $: buttonClass = isToggled ? "button-part button-part-on" : "button-part button-part-off";
-    $: backgroundClass = isToggled ? "button-background button-background-on" : "button-background button-background-off";
-
+    // the event handler for the 'click' event, this methods gets called when the button is clicked
     function handleToggleClick(): void
     {
         // switch toggled state
@@ -42,45 +33,44 @@
         onToggleChange(isToggled);
     }
 
-    function getIconClassName(iconType: ButtonIcon | null): string
+    function computeDefaultBackgroundClass(): string
     {
-        let iconName: string = "icon";
+        let backgroundClass = isToggled ? "background-main button-background-on-image" : "background-main background-off-image";
 
-        if (iconType != null )
-        {
-            switch(iconType)
-            {
-                case ButtonIcon.WAVE_SINE:
-                    iconName = "icon icon-sine-wave-bg";
-                    break;
-
-                case ButtonIcon.WAVE_PULSE:
-                    iconName = "icon icon-pulse-wave-bg";
-                    break;
-
-                case ButtonIcon.WAVE_SAW:
-                    iconName = "icon icon-saw-wave-bg";
-                    break;
-
-                case ButtonIcon.WAVE_TRIANGLE:
-                    iconName = "icon icon-triangle-wave-bg";
-                    break;
-
-                default:
-                    iconName = "icon";
-                    break;
-            }
-        }
-
-        return iconName;
+        return backgroundClass;
     }
+
+    function computeDefaultForegroundClass(): string
+    {
+        let foregroundClass = isToggled ? "foreground-main foreground-on-image" : "foreground-main foreground-off-image";
+
+        return foregroundClass;
+    }
+
+    function computeCustomBackgroundClass(): string
+    {
+        let backgroundClass = isToggled ? "background-main button-background-on-image" : "background-main background-off-image";
+
+        return backgroundClass;
+    }
+
+    function computeCustomForegroundClass(): string
+    {
+        let foregroundClass = isToggled ? "foreground-main foreground-on-image" : "foreground-main foreground-off-image";
+
+        return foregroundClass;
+    }
+
+    $: backgroundClass = isToggled ?
+                            computeDefaultBackgroundClass() : computeCustomBackgroundClass();
+    $: foregroundClass = isToggled ? computeDefaultForegroundClass() : computeCustomForegroundClass();
 </script>
 
 <div class="main-container">
     <!-- the toggle button -->
     <div class="button-container">
         <div class={backgroundClass}></div>
-        <div class={buttonClass} on:click={handleToggleClick} ></div>
+        <div class={foregroundClass} on:click={handleToggleClick} ></div>
     </div>
 
     <!-- only draw the title if the necessary prop was supplied -->
@@ -133,7 +123,7 @@
         margin: 0px;
     }
 
-    .button-background
+    .background-main
     {
         /* width and height are necessary in order to display the background image */
         width: var(--button-width);
@@ -147,82 +137,80 @@
 
         border: none;
 
-        background-size: 100% auto;
-        background-size: contain;
-        background-attachment: scroll;
-        background-repeat: no-repeat;
-        background-position: top left;
-    }
-
-    .button-background-off
-    {
-        background-image: url("../../assets/toggle-button/rocker-bg-off-opt.svg");
-    }
-
-    .button-background-on
-    {
-        background-image: url("../../assets/toggle-button/rocker-bg-on-opt.svg");
-    }
-
-    .button-part
-    {
-        /* width and height are necessary in order to display the background image */
-        width: var(--button-width);
-        height: var(--button-height);
-
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-
-        padding: 0px;
-        margin: 0px;
-
-        border: none;
-    }
-
-    .button-part-off
-    {
-        background-image: url("../../assets/toggle-button/rocker-switch-off-opt.svg");
         /* necessary settings, otherwise the SVG background won't display properly: */
         background-size: 100% auto;
         background-size: contain;
         background-attachment: scroll;
         background-repeat: no-repeat;
         background-position: top left;
-        filter: saturate(400%) hue-rotate(-100deg);
     }
 
-    .button-part-off:hover
+    .background-on-default-image
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(120%);
+        background-image: url("../../assets/toggle-button/rocker-bg-on-opt.svg");
     }
 
-    .button-part-off:hover:active
+    .background-off-default-image
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(160%);
+        background-image: url("../../assets/toggle-button/rocker-bg-off-opt.svg");
     }
 
-    .button-part-on
+    .foreground-main
     {
-        /* background-color: none;
-        background: none; */
+        /* width and height are necessary in order to display the background image */
+        width: var(--button-width);
+        height: var(--button-height);
+
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: none;
+
+        /* necessary settings, otherwise the SVG background won't display properly: */
         background-size: 100% auto;
         background-size: contain;
         background-attachment: scroll;
         background-repeat: no-repeat;
         background-position: top left;
+    }
 
+    .foreground-on--default-image
+    {
         background-image: url("../../assets/toggle-button/rocker-switch-on-opt.svg");
+
+        /* aditional effect */
         filter: saturate(400%) hue-rotate(-100deg);
     }
 
-    .button-part-on:hover
+    .foreground-on-default-image:hover
     {
         filter: saturate(400%) hue-rotate(-100deg) brightness(80%);
     }
 
-    .button-part-on:hover:active
+    .foreground-on-default-image:hover:active
     {
         filter: saturate(400%) hue-rotate(-100deg) brightness(60%);
+    }
+
+    .foreground-off-default-image
+    {
+        background-image: url("../../assets/toggle-button/rocker-switch-off-opt.svg");
+        
+        /* aditional effect */
+        filter: saturate(400%) hue-rotate(-100deg);
+    }
+
+    .foreground-off-default-image:hover
+    {
+        filter: saturate(400%) hue-rotate(-100deg) brightness(120%);
+    }
+
+    .foreground-off-default-image:hover:active
+    {
+        filter: saturate(400%) hue-rotate(-100deg) brightness(160%);
     }
 
     .title

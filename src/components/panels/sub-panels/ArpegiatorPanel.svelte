@@ -5,11 +5,11 @@
 
     import NumericScreen from "../../NumericScreen.svelte";
     import RadioGroup from "../../radio-button/RadioGroup.svelte";
-    import { ToggleButtonData, ButtonIcon } from "../../../model/gui/toggle-button-data";
+    import { ToggleButtonData } from "../../../model/gui/toggle-button-data";
     import ToggleButton from "../../toggle/ToggleButton.svelte";
 
-    const onToggleOnOff = new ToggleButtonData("On/Off", arpegiatorCallbacks.onToggleOnOff, false);
-    const onToggleRetrigger = new ToggleButtonData("Retrigger", arpegiatorCallbacks.onToggleRetrigger, false);
+    // const onToggleOnOff = new ToggleButtonData("On/Off", arpegiatorCallbacks.onToggleOnOff, false);
+    // const onToggleRetrigger = new ToggleButtonData("Retrigger", arpegiatorCallbacks.onToggleRetrigger, false);
     
     // noise oscillator callbacks and data ****************************************************************************************
     /* the radio group must receive an array of button data and will create as many radio
@@ -27,11 +27,11 @@
 
     <!-- mixer knobs -->
     <div style="grid-column: 1 / 2; grid-row: 2 / 3;">
-        <ToggleButton toggleData={onToggleOnOff}></ToggleButton>
+        <!-- <ToggleButton toggleData={onToggleOnOff}></ToggleButton> -->
     </div>
 
     <div style="grid-column: 2 / 3; grid-row: 2 / 3;">
-        <ToggleButton toggleData={onToggleRetrigger}></ToggleButton>
+        <!-- <ToggleButton toggleData={onToggleRetrigger}></ToggleButton> -->
     </div>
 
     <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
