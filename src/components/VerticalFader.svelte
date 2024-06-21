@@ -224,9 +224,9 @@
     </div>
 
     {#if showValue}
-        <div class="numeric-value">{absoluteValueString}</div>
+        <div class="numeric-value unselectable">{absoluteValueString}</div>
     {:else if label.length > 0}
-        <div class="label">{label}</div>
+        <div class="label unselectable">{label}</div>
     {/if}
 </div>
 
@@ -264,7 +264,7 @@
         padding: 0px;
 
         color: hsl(0, 0%, 85%);
-        pointer-events: none;
+        /* pointer-events: none; */
         box-sizing: border-box;
 
         font-family: sans-serif;
@@ -285,7 +285,7 @@
 
     .numeric-value
     {
-        pointer-events: none;
+        /* pointer-events: none; */
         
         box-sizing: border-box;
 
@@ -412,5 +412,11 @@
         background-repeat: no-repeat;
         background-position: top left;
         background-attachment: scroll;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

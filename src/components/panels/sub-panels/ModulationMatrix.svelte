@@ -11,142 +11,142 @@
 </script>
 
 <div class="main-container">
-    <div class="title" style="grid-column: 2 / 7; grid-row: 2 / 3;">MODULATION MATRIX</div>
+    <div class="title unselectable" style="grid-column: 2 / 7; grid-row: 2 / 3;">MODULATION MATRIX</div>
 
     <div class="horizontal-container">
-        <div class="mod-source-header">SRC</div>
-        <div class="mod-source-header">LFO1</div>
-        <div class="mod-source-header">LFO2</div>
-        <div class="mod-source-header">LFO3</div>
-        <div class="mod-source-header">LFO4</div>
-        <div class="mod-source-header">LFO5</div>
-        <div class="mod-source-header">Amount</div>
+        <div class="mod-source-header unselectable">SRC</div>
+        <div class="mod-source-header unselectable">LFO1</div>
+        <div class="mod-source-header unselectable">LFO2</div>
+        <div class="mod-source-header unselectable">LFO3</div>
+        <div class="mod-source-header unselectable">LFO4</div>
+        <div class="mod-source-header unselectable">LFO5</div>
+        <div class="mod-source-header unselectable">Amount</div>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC1 Freq</div>
+        <div class="mod-destination-title unselectable">OSC1 Freq</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC1 Amp</div>
+        <div class="mod-destination-title unselectable">OSC1 Amp</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC1 PW</div>
+        <div class="mod-destination-title unselectable">OSC1 PW</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC1 Detune</div>
+        <div class="mod-destination-title unselectable">OSC1 Detune</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
 
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC2 Freq</div>
+        <div class="mod-destination-title unselectable">OSC2 Freq</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC2 Amp</div>
+        <div class="mod-destination-title unselectable">OSC2 Amp</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC2 PW</div>
+        <div class="mod-destination-title unselectable">OSC2 PW</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">OSC3 Detune</div>
+        <div class="mod-destination-title unselectable">OSC3 Detune</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
-    </div>
-
-
-
-    <div class="horizontal-container">
-        <div class="mod-destination-title">SUB Freq</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
-    </div>
-
-    <div class="horizontal-container">
-        <div class="mod-destination-title">SUB Amp</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
 
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">FILTER Cutoff</div>
+        <div class="mod-destination-title unselectable">SUB Freq</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
-        <div class="mod-destination-title">FILTER Res</div>
+        <div class="mod-destination-title unselectable">SUB Amp</div>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
         <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <Knob onValueChange={onModAmountChange} showValue={false}></Knob>
+        <Knob onValueChange={onModAmountChange}></Knob>
+    </div>
+
+
+
+    <div class="horizontal-container">
+        <div class="mod-destination-title unselectable">FILTER Cutoff</div>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <Knob onValueChange={onModAmountChange}></Knob>
+    </div>
+
+    <div class="horizontal-container">
+        <div class="mod-destination-title unselectable">FILTER Res</div>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+        <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 </div>
 
@@ -200,7 +200,7 @@
 
     .mod-destination-title
     {
-        pointer-events: none;
+        /* pointer-events: none; */
 
         margin: 0px;
         padding: 0px;
@@ -220,7 +220,7 @@
 
     .mod-source-header
     {
-        pointer-events: none;
+        /* pointer-events: none; */
 
         margin: 0px;
         padding: 0px;
@@ -236,5 +236,11 @@
         /* overflow: hidden; */
         /* white-space: nowrap; */
         /* text-overflow: clip; */
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

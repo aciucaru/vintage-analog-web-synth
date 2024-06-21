@@ -1,11 +1,9 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { voice } from "../../../model/audio/voice";
 
     import * as filterCallbacks from "../../../callbacks/filter-callbacks";
 
     import Knob from "../../Knob.svelte";
-    import AudioOscilloscope from "../../AudioOscilloscope.svelte";
     import VerticalFader from "../../VerticalFader.svelte";
 </script>
 
@@ -14,7 +12,7 @@
 
     <!-- filter main paramenters *********************************************************************************************** -->
     <!-- section title -->
-    <div class="title" style="grid-column: 2 / 7; grid-row: 2 / 3;">FILTER</div>
+    <div class="title unselectable" style="grid-column: 2 / 7; grid-row: 2 / 3;">FILTER</div>
 
     <!-- background for knobs: -->
     <!-- background for cutoff freq knob -->
@@ -123,7 +121,7 @@
 
     .title
     {
-        pointer-events: none;
+        /* pointer-events: none; */
 
         margin: 0px;
         padding: 0px;
@@ -167,5 +165,11 @@
         border-radius: 4px;
 
         background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

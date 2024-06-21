@@ -75,7 +75,7 @@
 
     <!-- only draw the title or icon if the necessary prop was supplied -->
     {#if toggleData.label.length > 0}
-        <div class="title" on:click={handleToogleClick}>{toggleData.label}</div>
+        <div class="title unselectable" on:click={handleToogleClick}>{toggleData.label}</div>
     <!-- {:else if toggleData.iconType !== null}
         <div class={getIconClassName(toggleData.iconType)} on:click={handleToogleClick}></div> -->
     {/if}
@@ -216,7 +216,7 @@
 
     .title
     {
-        pointer-events: none;
+        /* pointer-events: none; */
         box-sizing: border-box;
 
         color: hsl(0, 0%, 85%);
@@ -245,6 +245,12 @@
 
         margin: 0px;
         margin-left: 10px;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 
     .icon-sine-wave-bg { background-image: url("../../assets/toggle-button/wave-sine-opt.svg"); }

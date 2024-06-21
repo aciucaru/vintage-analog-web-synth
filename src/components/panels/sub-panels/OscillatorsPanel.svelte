@@ -3,7 +3,7 @@
     import * as oscCallbacks from "../../../callbacks/oscillators-callbacks";
     import * as mixerCallbacks from "../../../callbacks/mixer-callbacks";
 
-    import { ButtonIcon, ToggleButtonData } from "../../../model/gui/toggle-button-data";
+    import { ToggleButtonData } from "../../../model/gui/toggle-button-data";
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
 
     import Knob from "../../Knob.svelte";
@@ -35,11 +35,7 @@
     <div class="osc1-section-background" style="grid-column: 1 / 8; grid-row: 1 / 15;"></div>
 
     <!-- oscillator 1 section title -->
-    <div class="title" style="grid-column: 2 / 7; grid-row: 2 / 3;">OSC 1</div>
-
-    <!-- <div class="knob-group" style="grid-column: 3 / 6; grid-row: 2 / 3;"></div>
-    <div class="knob-group" style="grid-column: 2 / 3; grid-row: 3 / 4;"></div>
-    <div class="knob-group" style="grid-column: 3 / 6; grid-row: 3 / 4;"></div> -->
+    <div class="title unselectable" style="grid-column: 2 / 7; grid-row: 2 / 3;">OSC 1</div>
 
     <!-- oscillator 1 frequency controls -->
     <div style="grid-column: 2 / 3; grid-row: 4 / 6;">
@@ -94,7 +90,7 @@
     <div class="osc2-section-background" style="grid-column: 9 / 16; grid-row: 1 / 15;"></div>
 
     <!-- title -->
-    <div class="title" style="grid-column: 10 / 15; grid-row: 2 / 3;">OSC 2</div>
+    <div class="title unselectable" style="grid-column: 10 / 15; grid-row: 2 / 3;">OSC 2</div>
 
     <!-- oscillator 2 frequency controls -->
     <div style="grid-column: 10 / 11; grid-row: 4 / 6;">
@@ -149,7 +145,7 @@
     <div class="sub-osc-bottom-section-background" style="grid-column: 17 / 24; grid-row: 11 / 15;"></div>
 
     <!-- section title -->
-    <div class="title" style="grid-column: 18 / 19; grid-row: 2 / 3;">SUB OSC</div>
+    <div class="title unselectable" style="grid-column: 18 / 19; grid-row: 2 / 3;">SUB</div>
 
     <div style="grid-column: 18 / 19; grid-row: 4 / 6;">
         <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
@@ -176,7 +172,7 @@
     <div class="noise-osc-section-background" style="grid-column: 21 / 24; grid-row: 1 / 10;"></div>
 
     <!-- section title -->
-    <div class="title" style="grid-column: 22 / 23; grid-row: 2 / 3;">NOISE OSC</div>
+    <div class="title unselectable" style="grid-column: 22 / 23; grid-row: 2 / 3;">NOISE</div>
 
     <div class="toggle-buttons-group" style="grid-column: 22 / 23; grid-row: 4 / 7;">
         <RadioGroup label={"Type"} radioDataArray={radioDataArray}></RadioGroup>
@@ -192,8 +188,6 @@
     .main-container
     {
         box-sizing: border-box;
-
-        /* width: 100%; */
 
         display: grid;
         grid-template-columns: 5px auto 5px auto 15px auto 5px
@@ -337,5 +331,11 @@
         /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(217, 14%, 25%), hsl(217, 14%, 20%)); */
         /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(217, 14%, 22%), hsl(217, 14%, 17%)); */
         background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

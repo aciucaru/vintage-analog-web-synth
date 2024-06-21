@@ -222,9 +222,9 @@
     <canvas bind:this={canvas} width="{WIDTH}" height="{HEIGHT}" on:mousedown={onMouseDown} class="knob-canvas"></canvas>
 
     {#if showValue}
-        <div class="numeric-value">{absoluteValueString}</div>
+        <div class="numeric-value unselectable">{absoluteValueString}</div>
     {:else if title.length > 0}
-        <div class="title">{title}</div>
+        <div class="title unselectable">{title}</div>
     {/if}
 </div>
 
@@ -253,7 +253,7 @@
     .title
     {
         box-sizing: border-box;
-        pointer-events: none;
+        /* pointer-events: none; */
 
         width: var(--knob-width);
         height: var(--text-height);
@@ -290,7 +290,7 @@
     .numeric-value
     {
         box-sizing: border-box;
-        pointer-events: none;
+        /* pointer-events: none; */
 
         width: var(--knob-width);
         height:  var(--text-height);
@@ -304,5 +304,11 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>
