@@ -22,11 +22,67 @@
     let buttonBackground: HTMLDivElement;
     let buttonForeground: HTMLDivElement;
 
-    let backgroundClass = "background-main background-off-image";
-    let foregroundClass = "foreground-main foreground-off-image";
+    let backgroundClass = "button-main background-off-image";
+    let foregroundClass = "button-main foreground-off-image foreground-off-filter";
 
-    // $: buttonClass = isToggled ? "foreground-main foreground-on-image" : "foreground-main foreground-off-image";
-    // $: backgroundClass = isToggled ? "background-main button-background-on-image" : "background-main background-off-image";
+    let backgroundOnImageUrl = "";
+    let backgroundOffImageUrl = "";
+
+    let foregroundOnImageUrl = "";
+    let foregroundOffImageUrl = "";
+
+    let buttonWidth = 0;
+    let buttonHeight = 0;
+
+    // if the use has not supplied custom images (and their dimensions)
+    if (imageData == null) // the '==' operator will check for both 'null' and 'undefined'
+    {
+        buttonWidth = 45;
+        buttonHeight = 30;
+
+        backgroundOnImageUrl = "$lib/rocker-bg-on-opt.svg";
+        backgroundOffImageUrl = "$lib/rocker-bg-off-opt.svg";
+
+        foregroundOnImageUrl = "$lib/rocker-switch-on-opt.svg";
+        foregroundOffImageUrl = "$lib/rocker-switch-off-opt.svg";
+    }
+    // if the user has supplied custom images (and their dimensions)
+    else
+    {
+        buttonWidth = imageData.imageWidth;
+        buttonHeight = imageData.imageHeight;
+
+        backgroundOnImageUrl = imageData.bgImageOnPath;
+        backgroundOffImageUrl = imageData.bgImageOffPath;
+
+        foregroundOnImageUrl = imageData.fgImageOnPath;
+        foregroundOffImageUrl = imageData.fgImageOffPath;
+    }
+
+    function setButtonImages(): void
+    {
+
+        // if the user did not provide custom images
+        if (imageData == null) // '!==' check for both 'null' and 'undefined'
+        {
+            buttonBackground.style.backgroundImage = isToggled ?
+                                                        "url($lib/rocker-bg-on-opt.svg);" : "url($lib/rocker-bg-off-opt.svg);";
+
+            buttonForeground.style.backgroundImage = isToggled ?
+                                                        "url($lib/rocker-switch-on-opt.svg);" : "url($lib/rocker-switch-off-opt.svg);";
+        }
+        else // if the user has provided custom images
+        {
+            // then
+            buttonBackground.style.width = `${imageData.imageWidth}`;
+            buttonBackground.style.height = `${imageData.imageHeight}`;
+            buttonBackground.style.backgroundImage = isToggled ? `url(${imageData.bgImageOnPath});` : `url(${imageData.bgImageOffPath});`;
+
+            buttonForeground.style.width = `${imageData.imageWidth}`;
+            buttonForeground.style.height = `${imageData.imageHeight}`;
+            buttonForeground.style.backgroundImage = isToggled ? `url(${imageData.fgImageOnPath});` : `url(${imageData.fgImageOffPath});`;
+        }
+    }
 
     // the event handler for the 'click' event, this methods gets called when the button is clicked
     function handleToggleClick(): void
@@ -36,117 +92,53 @@
 
         // call the supplied callback
         onToggleChange(isToggled);
+
+        setButtonImages();
     }
 
-    function computeBackgroundClass(): string
-    {
-        let backgroundClass = "background-main background-off-default-image";
-        
-        // if no custom images have been provided
-        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+    onMount(() =>
         {
-            if (isToggled)
-                backgroundClass = "background-main background-on-default-image";
+            // if the use has not supplied custom images (and their dimensions)
+            if (imageData == null) // the '==' operator will check for both 'null' and 'undefined'
+            {
+                buttonWidth = 45;
+                buttonHeight = 30;
+
+                backgroundOnImageUrl = "$lib/rocker-bg-on-opt.svg";
+                backgroundOffImageUrl = "$lib/rocker-bg-off-opt.svg";
+
+                foregroundOnImageUrl = "$lib/rocker-switch-on-opt.svg";
+                foregroundOffImageUrl = "$lib/rocker-switch-off-opt.svg";
+            }
+            // if the user has supplied custom images (and their dimensions)
             else
-                backgroundClass = "background-main background-off-default-image";
+            {
+                buttonWidth = imageData.imageWidth;
+                buttonHeight = imageData.imageHeight;
+
+                backgroundOnImageUrl = imageData.bgImageOnPath;
+                backgroundOffImageUrl = imageData.bgImageOffPath;
+
+                foregroundOnImageUrl = imageData.fgImageOnPath;
+                foregroundOffImageUrl = imageData.fgImageOffPath;
+            }
+
+            setButtonImages();
         }
-        else // if custom images paths have been provided
-        {
-            const customBackgroundClass = document.createElement("style");
+    );
 
-            if (isToggled)
-                backgroundClass = "background-main background-on-custom-image";
-            else
-                backgroundClass = "background-main background-off-custom-image";
-        }
-        
-        return backgroundClass;
-    }
-
-    function computeForegroundClass(): string
-    {
-        let foregroundClass = "foreground-main foreground-off-default-image";
-        
-        // if no custom images have been provided
-        if (imageData == null) // '==' checks for both 'null' and 'undefined'
-        {
-            if (isToggled)
-                foregroundClass = "foreground-main foreground-on-default-image";
-            else
-                foregroundClass = "foreground-main foreground-off-default-image";
-        }
-        else // if custom images paths have been provided
-        {
-            if (isToggled)
-                foregroundClass = "foreground-main foreground-on-custom-image";
-            else
-                foregroundClass = "foreground-main foreground-off-custom-image";
-        }
-        
-        return foregroundClass;
-    }
-
-    function computeBackgroundOnClass(): string
-    {
-        let backgroundClass = "background-main background-on-default-image";
-        
-        // if no custom images have been provided
-        if (imageData == null) // '==' checks for both 'null' and 'undefined'
-            backgroundClass = "background-main background-on-default-image";
-        else // if custom images paths have been provided
-            backgroundClass = "background-main background-on-custom-image";
-        
-        return backgroundClass;
-    }
-
-    function computeBackgroundOffClass(): string
-    {
-        let backgroundClass = "background-main background-off-default-image";
-        
-        // if no custom images have been provided
-        if (imageData == null) // '==' checks for both 'null' and 'undefined'
-            backgroundClass = "background-main background-off-default-image";
-        else // if custom images paths have been provided
-            backgroundClass = "background-main background-off-custom-image";
-        
-        return backgroundClass;
-    }
-
-    function computeForegroundOnClass(): string
-    {
-        let foregroundClass = "foreground-main foreground-on-default-image";
-        
-        // if no custom images have been provided
-        if (imageData == null) // '==' checks for both 'null' and 'undefined'
-            foregroundClass = "foreground-main foreground-on-default-image";
-        else // if custom images paths have been provided
-            foregroundClass = "foreground-main foreground-on-custom-image";
-        
-        return foregroundClass;
-    }
-
-    function computeForegroundOffClass(): string
-    {
-        let foregroundClass = "foreground-main foreground-off-default-image";
-        
-        // if no custom images have been provided
-        if (imageData == null) // '==' checks for both 'null' and 'undefined'
-            foregroundClass = "foreground-main foreground-off-default-image";
-        else // if custom images paths have been provided
-            foregroundClass = "foreground-main foreground-off-custom-image";
-        
-        return foregroundClass;
-    }
-
-    $: backgroundClass = isToggled ? computeBackgroundOnClass() : computeBackgroundOffClass();
-    $: foregroundClass = isToggled ? computeForegroundOnClass() : computeForegroundOffClass();
+    $: backgroundClass = isToggled ? "button-main background-on-image" : "button-main background-off-image";
+    $: foregroundClass = isToggled ? "button-main foreground-on-image foreground-on-filter" : "button-main foreground-off-image foreground-off-filter";
 </script>
 
-<div class="main-container">
+<div style={`--button-width: ${buttonWidth}px; button-height: ${buttonHeight}px;`} class="main-container">
     <!-- the toggle button -->
     <div class="button-container">
-        <div bind:this={buttonBackground} class={backgroundClass}></div>
-        <div bind:this={buttonForeground} class={foregroundClass} on:click={handleToggleClick}></div>
+        <div bind:this={buttonBackground}
+            style={`--bg-on-image: url(${backgroundOnImageUrl}); --bg-off-image: url(${backgroundOffImageUrl});`} class={backgroundClass}></div>
+
+        <div bind:this={buttonForeground} on:click={handleToggleClick}
+            style={`--fg-on-image: url(${foregroundOnImageUrl}); --fg-off-image: url(${foregroundOffImageUrl});`} class={foregroundClass}></div>
     </div>
 
     <!-- only draw the label if the necessary prop was supplied -->
@@ -158,8 +150,8 @@
 <style>
     .main-container
     {
-        --button-width: 45px;
-        --button-height: 30px;
+        /* --button-width: 45px;
+        --button-height: 30px; */
         --text-height: 12px;
 
         box-sizing: border-box;
@@ -199,7 +191,7 @@
         margin: 0px;
     }
 
-    .background-main
+    .button-main
     {
         /* width and height are necessary in order to display the background image */
         width: var(--button-width);
@@ -221,72 +213,56 @@
         background-position: top left;
     }
 
-    .background-on-default-image
+    /* classes for default button images */
+    .background-on-image
     {
-        background-image: url("../../assets/toggle-button/rocker-bg-on-opt.svg");
+        background-image: url(--bg-on-image);
     }
 
-    .background-off-default-image
+    .background-off-image
     {
-        background-image: url("../../assets/toggle-button/rocker-bg-off-opt.svg");
+        background-image: url(--bg-off-image);
     }
 
-    .foreground-main
+    .foreground-on-image
     {
-        /* width and height are necessary in order to display the background image */
-        width: var(--button-width);
-        height: var(--button-height);
-
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-
-        padding: 0px;
-        margin: 0px;
-
-        border: none;
-
-        /* necessary settings, otherwise the SVG background won't display properly: */
-        background-size: 100% auto;
-        background-size: contain;
-        background-attachment: scroll;
-        background-repeat: no-repeat;
-        background-position: top left;
+        background-image: url(--fg-on-image);
     }
 
-    .foreground-main:hover
+    .foreground-off-image
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(80%);
+        background-image: url(--fg-off-image);
     }
 
-    .foreground-on-default-image:hover:active
+    /* classes for filters */
+    .foreground-on-filter
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(60%);
+        filter: brightness(100%);
     }
 
-    .foreground-off-default-image
+    .foreground-on-filter:hover
     {
-        background-image: url("../../assets/toggle-button/rocker-switch-off-opt.svg");
-        
-        /* aditional effect */
-        filter: saturate(400%) hue-rotate(-100deg);
+        filter: brightness(80%);
     }
 
-    .foreground-off-default-image:hover
+    .foreground-on-filter:hover:active
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(120%);
+        filter: brightness(60%);
     }
 
-    .foreground-off-default-image:hover:active
+    .foreground-off-filter
     {
-        filter: saturate(400%) hue-rotate(-100deg) brightness(160%);
+        filter: brightness(100%);
     }
 
-    .foreground-on-default-image
+    .foreground-off-filter:hover
     {
-        background-image: url("../../assets/toggle-button/rocker-switch-on-opt.svg");
+        filter: brightness(120%);
+    }
 
-        /* aditional effect */
-        filter: saturate(400%) hue-rotate(-100deg);
+    .foreground-off-filter:hover:active
+    {
+        filter: brightness(160%);
     }
 
     .label
