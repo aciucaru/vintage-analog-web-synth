@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { ToggleButtonData } from "../../model/gui/toggle-button-data";
 
     // props:
@@ -17,6 +18,10 @@
     ** the background description is made out of 2 images (for On and for Off) and the dimensions; */
     export let imageData: ToggleButtonData | null = null;
 
+    // the two div elements of the button, as objects
+    let buttonBackground: HTMLDivElement;
+    let buttonForeground: HTMLDivElement;
+
     let backgroundClass = "background-main background-off-image";
     let foregroundClass = "foreground-main foreground-off-image";
 
@@ -33,49 +38,120 @@
         onToggleChange(isToggled);
     }
 
-    function computeDefaultBackgroundClass(): string
+    function computeBackgroundClass(): string
     {
-        let backgroundClass = isToggled ? "background-main button-background-on-image" : "background-main background-off-image";
+        let backgroundClass = "background-main background-off-default-image";
+        
+        // if no custom images have been provided
+        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+        {
+            if (isToggled)
+                backgroundClass = "background-main background-on-default-image";
+            else
+                backgroundClass = "background-main background-off-default-image";
+        }
+        else // if custom images paths have been provided
+        {
+            const customBackgroundClass = document.createElement("style");
 
+            if (isToggled)
+                backgroundClass = "background-main background-on-custom-image";
+            else
+                backgroundClass = "background-main background-off-custom-image";
+        }
+        
         return backgroundClass;
     }
 
-    function computeDefaultForegroundClass(): string
+    function computeForegroundClass(): string
     {
-        let foregroundClass = isToggled ? "foreground-main foreground-on-image" : "foreground-main foreground-off-image";
-
+        let foregroundClass = "foreground-main foreground-off-default-image";
+        
+        // if no custom images have been provided
+        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+        {
+            if (isToggled)
+                foregroundClass = "foreground-main foreground-on-default-image";
+            else
+                foregroundClass = "foreground-main foreground-off-default-image";
+        }
+        else // if custom images paths have been provided
+        {
+            if (isToggled)
+                foregroundClass = "foreground-main foreground-on-custom-image";
+            else
+                foregroundClass = "foreground-main foreground-off-custom-image";
+        }
+        
         return foregroundClass;
     }
 
-    function computeCustomBackgroundClass(): string
+    function computeBackgroundOnClass(): string
     {
-        let backgroundClass = isToggled ? "background-main button-background-on-image" : "background-main background-off-image";
-
+        let backgroundClass = "background-main background-on-default-image";
+        
+        // if no custom images have been provided
+        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+            backgroundClass = "background-main background-on-default-image";
+        else // if custom images paths have been provided
+            backgroundClass = "background-main background-on-custom-image";
+        
         return backgroundClass;
     }
 
-    function computeCustomForegroundClass(): string
+    function computeBackgroundOffClass(): string
     {
-        let foregroundClass = isToggled ? "foreground-main foreground-on-image" : "foreground-main foreground-off-image";
+        let backgroundClass = "background-main background-off-default-image";
+        
+        // if no custom images have been provided
+        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+            backgroundClass = "background-main background-off-default-image";
+        else // if custom images paths have been provided
+            backgroundClass = "background-main background-off-custom-image";
+        
+        return backgroundClass;
+    }
 
+    function computeForegroundOnClass(): string
+    {
+        let foregroundClass = "foreground-main foreground-on-default-image";
+        
+        // if no custom images have been provided
+        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+            foregroundClass = "foreground-main foreground-on-default-image";
+        else // if custom images paths have been provided
+            foregroundClass = "foreground-main foreground-on-custom-image";
+        
         return foregroundClass;
     }
 
-    $: backgroundClass = isToggled ?
-                            computeDefaultBackgroundClass() : computeCustomBackgroundClass();
-    $: foregroundClass = isToggled ? computeDefaultForegroundClass() : computeCustomForegroundClass();
+    function computeForegroundOffClass(): string
+    {
+        let foregroundClass = "foreground-main foreground-off-default-image";
+        
+        // if no custom images have been provided
+        if (imageData == null) // '==' checks for both 'null' and 'undefined'
+            foregroundClass = "foreground-main foreground-off-default-image";
+        else // if custom images paths have been provided
+            foregroundClass = "foreground-main foreground-off-custom-image";
+        
+        return foregroundClass;
+    }
+
+    $: backgroundClass = isToggled ? computeBackgroundOnClass() : computeBackgroundOffClass();
+    $: foregroundClass = isToggled ? computeForegroundOnClass() : computeForegroundOffClass();
 </script>
 
 <div class="main-container">
     <!-- the toggle button -->
     <div class="button-container">
-        <div class={backgroundClass}></div>
-        <div class={foregroundClass} on:click={handleToggleClick} ></div>
+        <div bind:this={buttonBackground} class={backgroundClass}></div>
+        <div bind:this={buttonForeground} class={foregroundClass} on:click={handleToggleClick}></div>
     </div>
 
-    <!-- only draw the title if the necessary prop was supplied -->
+    <!-- only draw the label if the necessary prop was supplied -->
     {#if label.length > 0}
-        <div class="title unselectable" on:click={handleToggleClick}>{label}</div>
+        <div class="label unselectable" on:click={handleToggleClick}>{label}</div>
     {/if}
 </div>
 
@@ -177,15 +253,7 @@
         background-position: top left;
     }
 
-    .foreground-on--default-image
-    {
-        background-image: url("../../assets/toggle-button/rocker-switch-on-opt.svg");
-
-        /* aditional effect */
-        filter: saturate(400%) hue-rotate(-100deg);
-    }
-
-    .foreground-on-default-image:hover
+    .foreground-main:hover
     {
         filter: saturate(400%) hue-rotate(-100deg) brightness(80%);
     }
@@ -213,7 +281,15 @@
         filter: saturate(400%) hue-rotate(-100deg) brightness(160%);
     }
 
-    .title
+    .foreground-on-default-image
+    {
+        background-image: url("../../assets/toggle-button/rocker-switch-on-opt.svg");
+
+        /* aditional effect */
+        filter: saturate(400%) hue-rotate(-100deg);
+    }
+
+    .label
     {
         box-sizing: border-box;
 
