@@ -45,6 +45,12 @@
 
         foregroundOnImageUrl = "$lib/rocker-switch-on-opt.svg";
         foregroundOffImageUrl = "$lib/rocker-switch-off-opt.svg";
+
+        // backgroundOnImageUrl = "../../assets/toggle-button/rocker-bg-on-opt.svg";
+        // backgroundOffImageUrl = "../../assets/toggle-button/rocker-bg-off-opt.svg";
+
+        // foregroundOnImageUrl = "../../assets/toggle-button/rocker-fg-on-opt.svg";
+        // foregroundOffImageUrl = "../../assets/toggle-button/rocker-fg-on-opt.svg";
     }
     // if the user has supplied custom images (and their dimensions)
     else
@@ -134,11 +140,23 @@
 <div style={`--button-width: ${buttonWidth}px; button-height: ${buttonHeight}px;`} class="main-container">
     <!-- the toggle button -->
     <div class="button-container">
-        <div bind:this={buttonBackground}
-            style={`--bg-on-image: url(${backgroundOnImageUrl}); --bg-off-image: url(${backgroundOffImageUrl});`} class={backgroundClass}></div>
-
-        <div bind:this={buttonForeground} on:click={handleToggleClick}
-            style={`--fg-on-image: url(${foregroundOnImageUrl}); --fg-off-image: url(${foregroundOffImageUrl});`} class={foregroundClass}></div>
+        {#if imageData == null}
+            {#if isToggled}
+                <div bind:this={buttonBackground} style={`background-image: url("$lib/rocker-bg-on-opt.svg")`} class={backgroundClass}></div>
+                <div bind:this={buttonForeground} style={`background-image: url("$lib/rocker-fg-on-opt.svg")`} class={foregroundClass} on:click={handleToggleClick}></div>
+            {:else}
+                <div bind:this={buttonBackground} style={`background-image: url("$lib/rocker-bg-off-opt.svg")`} class={backgroundClass}></div>
+                <div bind:this={buttonForeground} style={`background-image: url("$lib/rocker-fg-off-opt.svg")`} class={foregroundClass} on:click={handleToggleClick}></div>
+            {/if}
+        {:else}
+            {#if isToggled}
+                <div bind:this={buttonBackground} style={`background-image: url("${imageData.bgImageOnPath}")`} class={backgroundClass}></div>
+                <div bind:this={buttonForeground} style={`background-image: url("${imageData.fgImageOnPath}")`} class={foregroundClass} on:click={handleToggleClick}></div>
+            {:else}
+                <div bind:this={buttonBackground} style={`background-image: url("${imageData.bgImageOffPath}")`} class={backgroundClass}></div>
+                <div bind:this={buttonForeground} style={`background-image: url("${imageData.fgImageOffPath}")`} class={foregroundClass} on:click={handleToggleClick}></div>
+            {/if}
+        {/if}
     </div>
 
     <!-- only draw the label if the necessary prop was supplied -->
@@ -147,6 +165,8 @@
     {/if}
 </div>
 
+<!-- Remember: Svelte styles are per component definition, not per each component instance!
+    If we need custom images/styles per instance, we should use inline styles (directly in the HTML) instead. -->
 <style>
     .main-container
     {
@@ -214,25 +234,26 @@
     }
 
     /* classes for default button images */
-    .background-on-image
+    /* .background-on-image
     {
-        background-image: url(--bg-on-image);
+        background-image: url("$lib/rocker-bg-on-opt.svg");
+        background-image: url("../../assets/toggle-button/rocker-bg-off-opt.svg");
     }
 
     .background-off-image
     {
-        background-image: url(--bg-off-image);
+        background-image: url("$lib/rocker-bg-off-opt.svg");
     }
 
     .foreground-on-image
     {
-        background-image: url(--fg-on-image);
+        background-image: url("$lib/rocker-fg-on-opt.svg");
     }
 
     .foreground-off-image
     {
-        background-image: url(--fg-off-image);
-    }
+        background-image: url("$lib/rocker-fg-off-opt.svg");
+    } */
 
     /* classes for filters */
     .foreground-on-filter
