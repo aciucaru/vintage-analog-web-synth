@@ -3,22 +3,11 @@
     import * as oscCallbacks from "../../../callbacks/oscillators-callbacks";
     import * as mixerCallbacks from "../../../callbacks/mixer-callbacks";
 
-    import { ToggleButtonData } from "../../../model/gui/toggle-button-data";
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
 
     import Knob from "../../Knob.svelte";
     import ToggleButton from "../../toggle/ToggleButton.svelte";
     import RadioGroup from "../../radio-button/RadioGroup.svelte";
-
-    // oscillator 1 callbacks *********************************************************************
-    const osc1TriangleToggleData = new ToggleButtonData("TRI", oscCallbacks.onOsc1TriangleSelect, true);
-    const osc1SawToggleData = new ToggleButtonData("SAW", oscCallbacks.onOsc1SawSelect);
-    const osc1PulseToggleData = new ToggleButtonData("PULSE", oscCallbacks.onOsc1PulseSelect);
-
-    // oscillator 2 callbacks **************************************************************************
-    const osc2TriangleToggleData = new ToggleButtonData("TRI", oscCallbacks.onOsc2TriangleSelect, true);
-    const osc2SawToggleData = new ToggleButtonData("SAW", oscCallbacks.onOsc2SawSelect);
-    const osc2PulseToggleData = new ToggleButtonData("PULSE", oscCallbacks.onOsc2PulseSelect);
 
     // noise oscillator callbacks and data ****************************************************************************************
     /* the radio group must receive an array of button data and will create as many radio
