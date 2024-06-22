@@ -59,7 +59,12 @@
 
     <!-- oscillator 1 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 12 / 14;">
-        <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
+        <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}>
+            <div slot="bgOnImage" class="buttonBgOnImage"></div>
+            <div slot="bgOffImage" class="buttonBgOffImage"></div>
+            <div slot="fgOnImage" class="buttonFgOnImage"></div>
+            <div slot="fgOffImage" class="buttonFgOffImage"></div>
+        </ToggleButton>
         <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
         <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
     </div>
@@ -326,5 +331,62 @@
     {
         user-select: none;
         -webkit-user-select: none;
+    }
+
+
+    .buttonBgOnImage
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 10%);
+        background-color: hsl(0, 0%, 30%);
+    }
+
+    .buttonBgOffImage
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 10%);
+        background-color: hsl(0, 0%, 10%);
+    }
+
+    .buttonFgOnImage
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 20%);
+        background-image: radial-gradient(ellipse at center, hsl(210, 40%, 70%) 0%, hsl(210, 40%, 50%) 90%);
+    }
+
+    .buttonFgOffImage
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 20%);
+        background-image: radial-gradient(ellipse at center, hsl(0, 0%, 50%) 0%, hsl(0, 0%, 30%) 90%);
     }
 </style>

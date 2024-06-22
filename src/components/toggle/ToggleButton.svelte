@@ -34,7 +34,7 @@
 <!-- <div style={`--button-width: ${buttonWidth}px; button-height: ${buttonHeight}px;`} class="main-container"> -->
 <div class="main-container">
     <!-- the toggle button -->
-    <div class="button-container">
+    <!-- <div class="button-container">
         <div class="button-main">
             <slot name="bgOnImage">
                 <div class={backgroundClass}></div>
@@ -45,6 +45,32 @@
             <slot name="fgOnImage">
                 <div class={foregroundClass}></div>
             </slot>
+        </div>
+    </div> -->
+
+    <div class="button-container">
+        <div class="button-main">
+            {#if isToggled}
+                <slot name="bgOnImage">
+                    <div class="button-image background-on-default-image"></div>
+                </slot>
+            {:else}
+                <slot name="bgOffImage">
+                    <div class="button-image background-off-default-image"></div>
+                </slot>
+            {/if}
+        </div>
+    
+        <div class="button-main" on:click={handleToggleClick}>
+            {#if isToggled}
+                <slot name="fgOnImage">
+                    <div class="button-image foreground-on-default-image foreground-on-filter"></div>
+                </slot>
+            {:else}
+                <slot name="fgOffImage">
+                    <div class="button-image foreground-off-default-image foreground-off-filter"></div>
+                </slot>
+            {/if}
         </div>
     </div>
 
