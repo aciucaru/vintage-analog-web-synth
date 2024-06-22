@@ -1,9 +1,7 @@
 <script lang="ts">
-    import { Settings } from "../../../constants/settings";
-    import { ToggleButtonData } from "../../../model/gui/toggle-button-data";
 
     import Knob from "../../Knob.svelte";
-    import OnOffButton from "../../toggle/OnOffButton.svelte";
+    import ToggleButton from "../../toggle/ToggleButton.svelte";
 
     function onLfoToggle(isToggled: boolean): void { }
 
@@ -25,41 +23,165 @@
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 Freq</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 Amp</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 PW</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 Detune</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
@@ -67,41 +189,165 @@
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC2 Freq</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC2 Amp</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC2 PW</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC3 Detune</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
@@ -109,21 +355,83 @@
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">SUB Freq</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">SUB Amp</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
@@ -131,21 +439,83 @@
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">FILTER Cutoff</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">FILTER Res</div>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={true}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
-        <OnOffButton onToggleChange={onLfoToggle} isToggled={false}></OnOffButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 </div>
@@ -236,6 +606,62 @@
         /* overflow: hidden; */
         /* white-space: nowrap; */
         /* text-overflow: clip; */
+    }
+
+    .lfo-button-bg-on
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 10%);
+        background-color: hsl(0, 0%, 30%);
+    }
+
+    .lfo-button-bg-off
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 10%);
+        background-color: hsl(0, 0%, 10%);
+    }
+
+    .lfo-button-fg-on
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 20%);
+        background-image: radial-gradient(ellipse at center, hsl(210, 40%, 70%) 0%, hsl(210, 40%, 50%) 90%);
+    }
+
+    .lfo-button-fg-off
+    {
+        box-sizing: border-box;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0px;
+        margin: 0px;
+
+        border: solid 1px hsl(0, 0%, 20%);
+        background-image: radial-gradient(ellipse at center, hsl(0, 0%, 50%) 0%, hsl(0, 0%, 30%) 90%);
     }
 
     .unselectable
