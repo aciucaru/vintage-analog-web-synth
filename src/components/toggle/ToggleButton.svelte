@@ -199,7 +199,7 @@
         text-overflow: clip;
 
         margin: 0px;
-        margin-left: 10px;
+        padding: 0px;
     }
 
     .unselectable

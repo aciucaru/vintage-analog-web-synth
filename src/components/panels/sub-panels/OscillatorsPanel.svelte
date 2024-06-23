@@ -44,9 +44,20 @@
 
     <!-- oscillator 1 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 6 / 7;">
-        <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
-        <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
-        <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
+        <div class="waveform-button-icon-group">
+            <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
+            <div class="waveform-icon"></div>
+        </div>
+
+        <div class="waveform-button-icon-group">
+            <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
+            <div class="waveform-icon"></div>
+        </div>
+
+        <div class="waveform-button-icon-group">
+            <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
+            <div class="waveform-icon"></div>
+        </div>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 6 / 7;">
@@ -84,9 +95,20 @@
 
     <!-- oscillator 2 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 10 / 11; grid-row: 6 / 7;">
-        <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc2TriangleSelect} isToggled={true}></ToggleButton>
-        <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc2PulseSelect}></ToggleButton>
-        <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc2SawSelect}></ToggleButton>
+        <div class="waveform-button-icon-group">
+            <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc2TriangleSelect} isToggled={true}></ToggleButton>
+            <div class="waveform-icon"></div>
+        </div>
+
+        <div class="waveform-button-icon-group">
+            <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc2PulseSelect}></ToggleButton>
+            <div class="waveform-icon"></div>
+        </div>
+
+        <div class="waveform-button-icon-group">
+            <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc2SawSelect}></ToggleButton>
+            <div class="waveform-icon"></div>
+        </div>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 6 / 7;">
