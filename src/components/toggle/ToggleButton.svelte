@@ -79,7 +79,7 @@
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         align-content: center;
 
         padding: 0px;
@@ -194,7 +194,7 @@
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
         font-size: var(--text-height);
-        overflow: hidden;
+        /* overflow: hidden; */
         white-space: nowrap;
         text-overflow: clip;
 

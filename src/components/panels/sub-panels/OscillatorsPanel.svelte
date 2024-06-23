@@ -45,18 +45,18 @@
     <!-- oscillator 1 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 6 / 7;">
         <div class="waveform-button-icon-group">
-            <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
-            <div class="waveform-icon"></div>
+            <ToggleButton onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
+            <div class="waveform-icon triangle-icon"></div>
         </div>
 
         <div class="waveform-button-icon-group">
-            <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
-            <div class="waveform-icon"></div>
+            <ToggleButton onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
+            <div class="waveform-icon saw-icon"></div>
         </div>
 
         <div class="waveform-button-icon-group">
-            <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
-            <div class="waveform-icon"></div>
+            <ToggleButton onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
+            <div class="waveform-icon pulse-icon"></div>
         </div>
     </div>
 
@@ -96,23 +96,23 @@
     <!-- oscillator 2 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 10 / 11; grid-row: 6 / 7;">
         <div class="waveform-button-icon-group">
-            <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc2TriangleSelect} isToggled={true}></ToggleButton>
-            <div class="waveform-icon"></div>
+            <ToggleButton onToggleChange={oscCallbacks.onOsc2TriangleSelect} isToggled={true}></ToggleButton>
+            <div class="waveform-icon triangle-icon"></div>
         </div>
 
         <div class="waveform-button-icon-group">
-            <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc2PulseSelect}></ToggleButton>
-            <div class="waveform-icon"></div>
+            <ToggleButton onToggleChange={oscCallbacks.onOsc2SawSelect}></ToggleButton>
+            <div class="waveform-icon saw-icon"></div>
         </div>
 
         <div class="waveform-button-icon-group">
-            <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc2SawSelect}></ToggleButton>
-            <div class="waveform-icon"></div>
+            <ToggleButton onToggleChange={oscCallbacks.onOsc2PulseSelect}></ToggleButton>
+            <div class="waveform-icon pulse-icon"></div>
         </div>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 6 / 7;">
-        <Knob title={"Pulse width"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
+        <Knob title={"PW"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
             displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc2PulseWidthChange}></Knob>
     </div>
 
@@ -190,14 +190,7 @@
         margin: 0px;
         padding: 0px;
 
-        /* border: solid 1px hsla(0, 0%, 100%, 0.25); */
         border-radius: 5px;
-
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(230, 20%, 20%), hsl(230, 20%, 10%)); also ok */
-        /* background: hsla(230, 10%, 15%, 0.5) linear-gradient(160deg, hsl(230, 10%, 15%), hsl(230, 10%, 10%)); */
-        /* background: url("../../assets/texture-01.png"), linear-gradient(160deg, hsla(230, 10%, 15%, 0.8), hsla(230, 10%, 10%, 0.8)); */
-
-        /* background: url("../../../assets/texture/texture-01-dark-blue-filt-seamless.jpg") repeat top left; */
     }
 
     .osc1-section-background
@@ -310,6 +303,63 @@
         /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(217, 14%, 25%), hsl(217, 14%, 20%)); */
         /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(217, 14%, 22%), hsl(217, 14%, 17%)); */
         background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
+    }
+
+    .waveform-button-icon-group
+    {
+        box-sizing: border-box;
+
+        width: auto;
+        height: auto;
+
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        align-content: center;
+
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .waveform-icon
+    {
+        padding: 0px;
+        margin: 0px;
+        margin-left: 2px;
+
+        border: none;
+
+        /* necessary settings, otherwise the SVG background won't display properly: */
+        background-size: 100% auto;
+        background-size: contain;
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+        background-position: top left;
+    }
+
+    .triangle-icon
+    {
+        width: 16px;
+        height: 16px;
+
+        background-image: url("../../../assets/icons/wave-triangle-single-opt.svg");
+    }
+
+    .saw-icon
+    {
+        width: 16px;
+        height: 16px;
+
+        background-image: url("../../../assets/icons/wave-saw-single-opt.svg");
+    }
+
+    .pulse-icon
+    {
+        width: 16px;
+        height: 16px;
+
+        background-image: url("../../../assets/icons/wave-pulse-single-opt.svg");
     }
 
     .unselectable
