@@ -42,21 +42,6 @@
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1CentsOffsetChange}></Knob>
     </div>
 
-    <!-- oscillator 1 unison controls -->
-    <div style="grid-column: 2 / 3; grid-row: 7 / 9;">
-        <Knob title={"Detune"} minValue={Settings.minOscUnisonCentsDetune} maxValue={Settings.maxOscUnisonCentsDetune} initialValue={Settings.defaultOscUnisonCentsDetune}
-            step={1} decimals={0} onValueChange={oscCallbacks.onOsc1DetuneChange}></Knob>
-    </div>
-
-    <div style="grid-column: 4 / 5; grid-row: 7 / 9;">
-        <Knob title={"Blend"} minValue={Settings.minOscUnisonBlend} maxValue={Settings.maxOscUnisonBlend} initialValue={Settings.defaultOscUnisonBlend}
-            displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc1BlendChange}></Knob>
-    </div>
-
-    <div style="grid-column: 6 / 7; grid-row: 7 / 9;">
-        free
-    </div>
-
     <!-- oscillator 1 shape, pulse width and volume controls -->
     <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 12 / 14;">
         <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
@@ -95,21 +80,6 @@
     <div style="grid-column: 14 / 15; grid-row: 4 / 6;">
         <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2CentsOffsetChange}></Knob>
-    </div>
-
-    <!-- oscillator 2 unison controls -->
-    <div style="grid-column: 10 / 11; grid-row: 7 / 9;">
-        <Knob title={"Detune"} minValue={Settings.minOscUnisonCentsDetune} maxValue={Settings.maxOscUnisonCentsDetune} initialValue={Settings.defaultOscUnisonCentsDetune}
-            step={1} decimals={0} onValueChange={oscCallbacks.onOsc2DetuneChange}></Knob>
-    </div>
-
-    <div style="grid-column: 12 / 13; grid-row: 7 / 9;">
-        <Knob title={"Blend"} minValue={Settings.minOscUnisonBlend} maxValue={Settings.maxOscUnisonBlend} initialValue={Settings.defaultOscUnisonBlend}
-            displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc2BlendChange}></Knob>
-    </div>
-
-    <div style="grid-column: 14 / 15; grid-row: 7 / 9;">
-        free
     </div>
 
     <!-- oscillator 2 shape, pulse width and volume controls -->
