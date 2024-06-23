@@ -138,12 +138,12 @@
     /* classes for default button images */
     .background-on-default-image
     {
-        background-image: url("../../assets/toggle-button/rocker-bg-on-opt.svg");
+        background-image: url("../../assets/toggle-button/toggle-button-on-opt.svg");
     }
 
     .background-off-default-image
     {
-        background-image: url("../../assets/toggle-button/rocker-bg-off-opt.svg");
+        background-image: url("../../assets/toggle-button/toggle-button-off-opt.svg");
     }
 
     .foreground-on-default-image

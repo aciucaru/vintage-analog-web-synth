@@ -21,123 +21,122 @@
 
 <div class="main-container">
     <!-- oscillator 1 *********************************************************************************************** -->
-    <div class="osc1-section-background" style="grid-column: 1 / 8; grid-row: 1 / 15;"></div>
+    <div class="osc1-section-background" style="grid-column: 1 / 8; grid-row: 1 / 8;"></div>
 
     <!-- oscillator 1 section title -->
     <div class="title unselectable" style="grid-column: 2 / 7; grid-row: 2 / 3;">OSC 1</div>
 
     <!-- oscillator 1 frequency controls -->
-    <div style="grid-column: 2 / 3; grid-row: 4 / 6;">
+    <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
         <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 4 / 5; grid-row: 4 / 6;">
+    <div style="grid-column: 4 / 5; grid-row: 4 / 5;">
         <Knob title={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1SemitonesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 6 / 7; grid-row: 4 / 6;">
+    <div style="grid-column: 6 / 7; grid-row: 4 / 5;">
         <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1CentsOffsetChange}></Knob>
     </div>
 
     <!-- oscillator 1 shape, pulse width and volume controls -->
-    <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 12 / 14;">
+    <div class="toggle-buttons-group" style="grid-column: 2 / 3; grid-row: 6 / 7;">
         <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc1TriangleSelect} isToggled={true}></ToggleButton>
         <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc1PulseSelect}></ToggleButton>
         <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc1SawSelect}></ToggleButton>
     </div>
 
-    <div style="grid-column: 4 / 5; grid-row: 12 / 14;">
-        <Knob title={"Pulse width"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
+    <div style="grid-column: 4 / 5; grid-row: 6 / 7;">
+        <Knob title={"PW"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
             displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc1PulseWidthChange}></Knob>
     </div>
 
-    <div style="grid-column: 6 / 7; grid-row: 12 / 14;">
+    <div style="grid-column: 6 / 7; grid-row: 6 / 7;">
         <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onOsc1LevelChange}></Knob>
     </div>
 
 
     <!-- oscillator 2 ******************************************************************************** -->
-    <div class="osc2-section-background" style="grid-column: 9 / 16; grid-row: 1 / 15;"></div>
+    <div class="osc2-section-background" style="grid-column: 9 / 16; grid-row: 1 / 8;"></div>
 
     <!-- title -->
     <div class="title unselectable" style="grid-column: 10 / 15; grid-row: 2 / 3;">OSC 2</div>
 
     <!-- oscillator 2 frequency controls -->
-    <div style="grid-column: 10 / 11; grid-row: 4 / 6;">
+    <div style="grid-column: 10 / 11; grid-row: 4 / 5;">
         <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2OctavesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 12 / 13; grid-row: 4 / 6;">
+    <div style="grid-column: 12 / 13; grid-row: 4 / 5;">
         <Knob title={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2SemitonesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 14 / 15; grid-row: 4 / 6;">
+    <div style="grid-column: 14 / 15; grid-row: 4 / 5;">
         <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2CentsOffsetChange}></Knob>
     </div>
 
     <!-- oscillator 2 shape, pulse width and volume controls -->
-    <div class="toggle-buttons-group" style="grid-column: 10 / 11; grid-row: 12 / 14;">
+    <div class="toggle-buttons-group" style="grid-column: 10 / 11; grid-row: 6 / 7;">
         <ToggleButton label={"TRI"} onToggleChange={oscCallbacks.onOsc2TriangleSelect} isToggled={true}></ToggleButton>
         <ToggleButton label={"PULSE"} onToggleChange={oscCallbacks.onOsc2PulseSelect}></ToggleButton>
         <ToggleButton label={"SAW"} onToggleChange={oscCallbacks.onOsc2SawSelect}></ToggleButton>
     </div>
 
-    <div style="grid-column: 12 / 13; grid-row: 12 / 14;">
+    <div style="grid-column: 12 / 13; grid-row: 6 / 7;">
         <Knob title={"Pulse width"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
             displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc2PulseWidthChange}></Knob>
     </div>
 
-    <div style="grid-column: 14 / 15; grid-row: 12 / 14;">
+    <div style="grid-column: 14 / 15; grid-row: 6 / 7;">
         <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onOsc2LevelChange}></Knob>
     </div>
 
     <!-- sub oscillator ******************************************************************************************************* -->
-    <div class="sub-osc-top-section-background" style="grid-column: 17 / 20; grid-row: 1 / 11;"></div>
-    <div class="sub-osc-bottom-section-background" style="grid-column: 17 / 24; grid-row: 11 / 15;"></div>
+    <div class="sub-osc-top-section-background" style="grid-column: 17 / 22; grid-row: 1 / 8;"></div>
 
     <!-- section title -->
-    <div class="title unselectable" style="grid-column: 18 / 19; grid-row: 2 / 3;">SUB</div>
+    <div class="title unselectable" style="grid-column: 18 / 21; grid-row: 2 / 3;">SUB</div>
 
-    <div style="grid-column: 18 / 19; grid-row: 4 / 6;">
+    <div style="grid-column: 18 / 19; grid-row: 4 / 5;">
         <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscOctavesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 7 / 9;">
+    <div style="grid-column: 20 / 21; grid-row: 4 / 5;">
         <Knob title={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscSemitonesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 12 / 14;">
+    <div style="grid-column: 18 / 19; grid-row: 6 / 7;">
         <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscCentsOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 12 / 14;">
+    <div style="grid-column: 20 / 21; grid-row: 6 / 7;">
         <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onSubOscLevelChange}></Knob>
     </div>
 
 
     <!-- noise oscillator ******************************************************************************************* -->
-    <div class="noise-osc-section-background" style="grid-column: 21 / 24; grid-row: 1 / 10;"></div>
+    <div class="noise-osc-section-background" style="grid-column: 23 / 26; grid-row: 1 / 8;"></div>
 
     <!-- section title -->
-    <div class="title unselectable" style="grid-column: 22 / 23; grid-row: 2 / 3;">NOISE</div>
+    <div class="title unselectable" style="grid-column: 24 / 25; grid-row: 2 / 3;">NOISE</div>
 
-    <div class="toggle-buttons-group" style="grid-column: 22 / 23; grid-row: 4 / 7;">
-        <RadioGroup label={"Type"} radioDataArray={radioDataArray}></RadioGroup>
+    <div class="toggle-buttons-group" style="grid-column: 24 / 25; grid-row: 4 / 5;">
+        <RadioGroup radioDataArray={radioDataArray}></RadioGroup>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 7 / 9;">
+    <div style="grid-column: 24 / 25; grid-row: 6 / 7;">
         <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onNoiseOscLevelChange}></Knob>
     </div>
@@ -153,14 +152,13 @@
                                 5px
                                 5px auto 5px auto 15px auto 5px
                                 5px
-                                5px auto 5px
+                                5px auto 5px auto 5px
                                 5px
                                 5px auto 5px;
 
         grid-template-rows: 5px
-                            auto 5px auto auto 5px
-                            auto auto 5px 10px
-                            5px auto auto 5px;
+                            auto
+                            5px auto 5px auto 5px;
 
         justify-items: stretch;
         align-items: stretch;

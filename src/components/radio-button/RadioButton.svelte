@@ -15,9 +15,9 @@
 
     const logger: Logger<ILogObj> = new Logger({name: "RadioGroup", minLevel: Settings.minLogLevel });
 
-    let ligthPartClass = "button-part button-part-off";
+    let ligthPartClass = "button-part button-part-off unselectable";
 
-    $: ligthPartClass = radioData.isToggled ? "button-part button-part-on" : "button-part button-part-off";
+    $: ligthPartClass = radioData.isToggled ? "button-part button-part-on unselectable" : "button-part button-part-off unselectable";
 
     function handleToogleClick(): void
     {
@@ -47,7 +47,7 @@
 
     <!-- the label is optional; the label is drawn only if the necessary prop was supplied -->
     {#if radioData.label.length > 0}
-        <div class="title" on:click={handleToogleClick}>{radioData.label}</div>
+        <div class="label unselectable" on:click={handleToogleClick}>{radioData.label}</div>
     {/if}
 </div>
 
@@ -115,7 +115,7 @@
         filter: saturate(400%) hue-rotate(-100deg) brightness(80%);
     }
 
-    .title
+    .label
     {
         pointer-events: none;
         box-sizing: border-box;
@@ -130,5 +130,11 @@
         margin: 3px;
         margin-left: 10px;
         padding: 0px;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>
