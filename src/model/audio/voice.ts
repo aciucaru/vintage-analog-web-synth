@@ -1,14 +1,19 @@
 import { Settings } from "../../constants/settings";
 import { audioContext, lfoArray } from "./shareable-audio-nodes";
-import { UnisonOscillator } from "./oscillator/melodic/unison-oscillator";
+
 import { SubOscillator } from "./oscillator/melodic/sub-oscillator";
+import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
 import { MultiNoiseOscillator } from "./oscillator/noise/multi-noise-oscillator";
+
+
 import { OscMixer } from "./mixer";
 import { OscFilter } from "./lowpass-filter";
+
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+
 
 
 export class Voice
@@ -16,8 +21,8 @@ export class Voice
     private audioContext: AudioContext;
 
     // the oscillators:
-    private unisonOscillator1: UnisonOscillator;
-    private unisonOscillator2: UnisonOscillator;
+    private unisonOscillator1: MultiShapeOscillator;
+    private unisonOscillator2: MultiShapeOscillator;
     private subOscillator: SubOscillator;
     private noiseOscillator: MultiNoiseOscillator;
 
@@ -49,8 +54,8 @@ export class Voice
             Voice.logger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         // instantiate the nodes:
-        this.unisonOscillator1 = new UnisonOscillator(this.audioContext, Settings.maxOscGain);
-        this.unisonOscillator2 = new UnisonOscillator(this.audioContext, Settings.minOscGain);
+        this.unisonOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain);
+        this.unisonOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain);
         this.subOscillator = new SubOscillator(this.audioContext, Settings.minOscGain, lfoArray);
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
@@ -142,9 +147,9 @@ export class Voice
 
     public outputNode(): GainNode { return this.outputGainNode; }
 
-    public getUnisonOscillator1(): UnisonOscillator { return this.unisonOscillator1; }
+    public getMultiShapeOscillator1(): MultiShapeOscillator { return this.unisonOscillator1; }
 
-    public getUnisonOscillator2(): UnisonOscillator { return this.unisonOscillator2; }
+    public getMultiShapeOscillator2(): MultiShapeOscillator { return this.unisonOscillator2; }
 
     public getSubOscillator(): SubOscillator { return this.subOscillator; }
 

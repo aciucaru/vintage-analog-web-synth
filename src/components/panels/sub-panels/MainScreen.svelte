@@ -13,12 +13,12 @@
 
     <div style="grid-column: 3 / 4; grid-row: 3 / 4;">
         <AudioOscilloscope label={"OSC 1"}
-            audioNode={voice.getUnisonOscillator1().getAnalyserGainNode()} audioContext={voice.getAudioContext()}></AudioOscilloscope>
+            audioNode={voice.getMultiShapeOscillator1().getAnalyserGainNode()} audioContext={voice.getAudioContext()}></AudioOscilloscope>
     </div>
 
     <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
         <AudioOscilloscope label={"OSC 2"}
-        audioNode={voice.getUnisonOscillator2().getAnalyserGainNode()} audioContext={voice.getAudioContext()}></AudioOscilloscope>
+        audioNode={voice.getMultiShapeOscillator2().getAnalyserGainNode()} audioContext={voice.getAudioContext()}></AudioOscilloscope>
     </div>
 
     <div style="grid-column: 7 / 8; grid-row: 3 / 4;">

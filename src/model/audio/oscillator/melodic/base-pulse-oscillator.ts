@@ -6,9 +6,6 @@ import type { ILogObj } from "tslog";
 
 export abstract class BasePulseOscillator extends BaseJoinableOscillator
 {
-    // currently not used
-    // private static readonly basePulseOscLogger: Logger<ILogObj> = new Logger({name: "BasePulseOscillator", minLevel: Settings.minLogLevel });
-
     constructor(audioContext: AudioContext, initialGain: number)
     {
         super(audioContext, initialGain);

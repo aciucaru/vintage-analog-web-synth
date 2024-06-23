@@ -15,8 +15,6 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
     // the note that the oscillator is supposed to produce
     protected note: Note;
 
-    // private static readonly baseMelodicOscLogger: Logger<ILogObj> = new Logger({name: "BaseMelodicOscillator", minLevel: Settings.minLogLevel });
-
     constructor(audioContext: AudioContext, initialGain: number)
     {
         super(audioContext, initialGain);

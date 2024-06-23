@@ -1,6 +1,6 @@
 import { Settings } from "../../constants/settings";
-import type { UnisonOscillator } from "./oscillator/melodic/unison-oscillator";
 import type { SubOscillator } from "./oscillator/melodic/sub-oscillator";
+import type { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
 import type { MultiNoiseOscillator } from "./oscillator/noise/multi-noise-oscillator";
 
 import { Logger } from "tslog";
@@ -15,8 +15,8 @@ export class OscMixer
 
     /* references to the oscillators the mixer will mix togheter
     ** these oscillators do not need separate gain nodes for mixing, because they already contain a gain node each*/
-    private oscillator1: UnisonOscillator;
-    private oscillator2: UnisonOscillator;
+    private oscillator1: MultiShapeOscillator;
+    private oscillator2: MultiShapeOscillator;
     private subOscillator: SubOscillator;
     private noiseOscillator: MultiNoiseOscillator;
 
@@ -31,7 +31,7 @@ export class OscMixer
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "OscMixer", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, osc1: UnisonOscillator, osc2: UnisonOscillator, subOsc: SubOscillator, noiseOsc: MultiNoiseOscillator)
+    constructor(audioContext: AudioContext, osc1: MultiShapeOscillator, osc2: MultiShapeOscillator, subOsc: SubOscillator, noiseOsc: MultiNoiseOscillator)
     {
         if (audioContext !== undefined)
             this.audioContext = audioContext;

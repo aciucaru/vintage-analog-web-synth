@@ -40,9 +40,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.sawOscNode.type = "sawtooth";
 
         // set the initial frequency of the sound oscillators
-        this.triangleOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-        this.sawOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-        this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+        this.triangleOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+        this.sawOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+        this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
 
         // instatiate the gain nodes of the sound oscillators
         this.triangleOscGainNode = this.audioContext.createGain();
@@ -84,9 +84,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.triangleOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.sawOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.triangleOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             MultiShapeOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -103,9 +103,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.triangleOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.sawOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.triangleOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             MultiShapeOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -123,9 +123,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
             MultiShapeOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
             // this.mainOsc.frequency.value = this.note.freq;
-            this.triangleOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.sawOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.triangleOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             MultiShapeOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -143,9 +143,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
             MultiShapeOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
             // this.mainOsc.frequency.value = this.note.freq;
-            this.triangleOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.sawOscNode.frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
-            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.freq, this.audioContext.currentTime);
+            this.triangleOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             MultiShapeOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);

@@ -12,63 +12,56 @@ export function onOsc1TriangleSelect(isToggled: boolean): void
 {
     logger.debug("onTriangleSelect(): triangle shape selected");
 
-    voice.getUnisonOscillator1().toggleGlobalTriangleShape();
+    voice.getMultiShapeOscillator1().toggleTriangleShape();
 }
 
 export function onOsc1SawSelect(isToggled: boolean): void
 {
     logger.debug("onSawSelect(): saw shape selected");
 
-    voice.getUnisonOscillator1().toggleGlobalSawShape();
+    voice.getMultiShapeOscillator1().toggleSawShape();
 }
 
 export function onOsc1PulseSelect(isToggled: boolean): void
 {
     logger.debug("onPulseSelect(): square shape selected");
 
-    voice.getUnisonOscillator1().toggleGlobalSquareShape();
+    voice.getMultiShapeOscillator1().togglePulseShape();
 }
 
 export function onOsc1OctavesOffsetChange(octavesOffset: number): void
 {
     logger.debug(`onOctavesOffsetChange(): new value: ${octavesOffset}`);
 
-    voice.getUnisonOscillator1().setOctavesOffset(octavesOffset);
+    voice.getMultiShapeOscillator1().setOctavesOffset(octavesOffset);
 }
 
 export function onOsc1SemitonesOffsetChange(semitonesOffset: number): void
 {
     logger.debug(`onSemitonesOffsetChange(): new value: ${semitonesOffset}`);
 
-    voice.getUnisonOscillator1().setSemitonesOffset(semitonesOffset);
+    voice.getMultiShapeOscillator1().setSemitonesOffset(semitonesOffset);
 }
 
 export function onOsc1CentsOffsetChange(centsOffset: number): void
 {
     logger.debug(`onCentsOffsetChange(): new value: ${centsOffset}`);
 
-    voice.getUnisonOscillator1().setCentsOffset(centsOffset);
+    voice.getMultiShapeOscillator1().setCentsOffset(centsOffset);
 }
 
 export function onOsc1DetuneChange(unisonCentsDetune: number): void
 {
     logger.debug(`onDetuneChange(): new value: ${unisonCentsDetune}`);
 
-    voice.getUnisonOscillator1().setUnisonDetune(unisonCentsDetune);
-}
-
-export function onOsc1BlendChange(unisonBlend: number): void
-{
-    logger.debug(`onBlendChange(): new value: ${unisonBlend}`);
-
-    voice.getUnisonOscillator1().setUnisonBlend(unisonBlend);
+    voice.getMultiShapeOscillator1().setUnisonDetune(unisonCentsDetune);
 }
 
 export function onOsc1PulseWidthChange(pulseWidth: number): void
 {
     logger.debug(`onPulseWidthChange(): new value: ${pulseWidth}`);
 
-    voice.getUnisonOscillator1().setPulseWidth(pulseWidth);
+    voice.getMultiShapeOscillator1().setPulseWidth(pulseWidth);
 }
 
 
@@ -77,21 +70,21 @@ export function onOsc2TriangleSelect(isToggled: boolean): void
 {
     logger.debug("onTriangleSelect(): triangle shape selected");
 
-    voice.getUnisonOscillator2().toggleGlobalTriangleShape();
+    voice.getMultiShapeOscillator2().toggleTriangleShape();
 }
 
 export function onOsc2SawSelect(isToggled: boolean): void
 {
     logger.debug("onSawSelect(): saw shape selected");
 
-    voice.getUnisonOscillator2().toggleGlobalSawShape();
+    voice.getMultiShapeOscillator2().toggleSawShape();
 }
 
 export function onOsc2PulseSelect(isToggled: boolean): void
 {
     logger.debug("onPulseSelect(): square shape selected");
 
-    voice.getUnisonOscillator2().toggleGlobalSquareShape();
+    voice.getMultiShapeOscillator2().togglePulseShape();
 }
 
 
@@ -99,42 +92,35 @@ export function onOsc2OctavesOffsetChange(octavesOffset: number): void
 {
     logger.debug(`onOctavesOffsetChange(): new value: ${octavesOffset}`);
 
-    voice.getUnisonOscillator2().setOctavesOffset(octavesOffset);
+    voice.getMultiShapeOscillator2().setOctavesOffset(octavesOffset);
 }
 
 export function onOsc2SemitonesOffsetChange(semitonesOffset: number): void
 {
     logger.debug(`onSemitonesOffsetChange(): new value: ${semitonesOffset}`);
 
-    voice.getUnisonOscillator2().setSemitonesOffset(semitonesOffset);
+    voice.getMultiShapeOscillator2().setSemitonesOffset(semitonesOffset);
 }
 
 export function onOsc2CentsOffsetChange(centsOffset: number): void
 {
     logger.debug(`onCentsOffsetChange(): new value: ${centsOffset}`);
 
-    voice.getUnisonOscillator2().setCentsOffset(centsOffset);
+    voice.getMultiShapeOscillator2().setCentsOffset(centsOffset);
 }
 
 export function onOsc2DetuneChange(unisonCentsDetune: number): void
 {
     logger.debug(`onDetuneChange(): new value: ${unisonCentsDetune}`);
 
-    voice.getUnisonOscillator2().setUnisonDetune(unisonCentsDetune);
-}
-
-export function onOsc2BlendChange(unisonBlend: number): void
-{
-    logger.debug(`onBlendChange(): new value: ${unisonBlend}`);
-
-    voice.getUnisonOscillator2().setUnisonBlend(unisonBlend);
+    voice.getMultiShapeOscillator2().setUnisonDetune(unisonCentsDetune);
 }
 
 export function onOsc2PulseWidthChange(pulseWidth: number): void
 {
     logger.debug(`onPulseWidthChange(): new value: ${pulseWidth}`);
 
-    voice.getUnisonOscillator2().setPulseWidth(pulseWidth);
+    voice.getMultiShapeOscillator2().setPulseWidth(pulseWidth);
 }
 
 
@@ -181,11 +167,4 @@ export function onBrownNoiseSelect(): void
     logger.debug("onBrownNoiseSelect(): brown noise selected");
 
     voice.getNoiseOscillator().setNoiseType(NoiseType.Brown);
-}
-
-export function onNoiseKeyTrack(keyTrackingLevel: number): void
-{
-    logger.debug(`onNoiseKeyTrack(): new value: ${keyTrackingLevel}`);
-
-    voice.getNoiseOscillator().setKeyTrackingLevel(keyTrackingLevel);
 }

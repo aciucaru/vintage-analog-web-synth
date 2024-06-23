@@ -9,10 +9,6 @@ import type { LfoManager } from "../../modulation/lfo-manager";
 ** unison oscillator (e.g. can be 'joined' in unison with multiple other oscillators of the same type);  */
 export abstract class BaseJoinableOscillator extends BaseMelodicOscillator
 {
-    // protected unisonDetuneLfoManager: LfoManager;
-    // curently not used
-    // private static readonly joinableOscLogger: Logger<ILogObj> = new Logger({name: "BaseJoinableOscillator", minLevel: Settings.minLogLevel });
-
     constructor(audioContext: AudioContext, initialGain: number)
     {
         super(audioContext, initialGain);
