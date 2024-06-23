@@ -10,8 +10,8 @@
     export let isToggled: boolean = false;
 
     // props for width and heigth of button
-    export let buttonWidth = 45;
-    export let buttonHeight = 30;
+    export let buttonWidth = 24;
+    export let buttonHeight = 20;
 
     // the classes for the background and foreground of the button
     let backgroundClass = "button-image background-off-default-image";
@@ -138,22 +138,22 @@
     /* classes for default button images */
     .background-on-default-image
     {
-        background-image: url("../../assets/toggle-button/toggle-button-on-opt.svg");
+        background-image: url("../../assets/toggle-button/toggle-button-bg-opt.svg");
     }
 
     .background-off-default-image
     {
-        background-image: url("../../assets/toggle-button/toggle-button-off-opt.svg");
+        background-image: url("../../assets/toggle-button/toggle-button-bg-opt.svg");
     }
 
     .foreground-on-default-image
     {
-        background-image: url("../../assets/toggle-button/rocker-switch-on-opt.svg");
+        background-image: url("../../assets/toggle-button/toggle-button-fg-on-opt.svg");
     }
 
     .foreground-off-default-image
     {
-        background-image: url("../../assets/toggle-button/rocker-switch-off-opt.svg");
+        background-image: url("../../assets/toggle-button/toggle-button-fg-off-opt.svg");
     }
 
     /* classes for filters */
