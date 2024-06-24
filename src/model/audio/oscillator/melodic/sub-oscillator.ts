@@ -15,7 +15,7 @@ export class SubOscillator extends BaseMelodicOscillator
 
     // modulator nodes:
     private freqLfoManager: LfoManager;
-    private gainLfoManager: LfoManager;
+    private ampLfoManager: LfoManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "SubOscillator", minLevel: Settings.minLogLevel });
 
@@ -36,14 +36,20 @@ export class SubOscillator extends BaseMelodicOscillator
         // start the sound oscillator
         this.subOsc.start();
 
-        // instantiate and connect the LFO managers for the modulatable parameters of this oscillator
+        // instantiate the LFO managers for the modulatable parameters of this oscillator
         this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                            NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
-        this.gainLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                            Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
+                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+        this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                                Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
+
+        // connect the LFO managers for the modulatable parameters of this oscillator
+        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+        this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
+                                                Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
 
         this.freqLfoManager.mainNode().connect(this.subOsc.frequency);
-        this.gainLfoManager.mainNode().connect(this.outputGainNode.gain);
+        this.ampLfoManager.mainNode().connect(this.outputGainNode.gain);
     }
 
     public setNote(octaves: number, semitones: number): boolean
@@ -113,7 +119,7 @@ export class SubOscillator extends BaseMelodicOscillator
         return isChangeSuccessfull;
     }
     
+    // getters for the LFO managers of this oscillator
     public getFreqLfoManager(): LfoManager { return this.freqLfoManager; }
-
-    public getGainLfoManager(): LfoManager { return this.gainLfoManager; } 
+    public getAmpLfoManager(): LfoManager { return this.ampLfoManager; }
 }

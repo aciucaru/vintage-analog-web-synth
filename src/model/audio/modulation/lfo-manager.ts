@@ -12,7 +12,7 @@ export class LfoManager extends BaseAudioNode
     /* The array of managed shareable LFOs.
     ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,
     ** meaning that the shreable LFO is shared between modulation destinations. */
-    private lfoArray: Array<ShareableUnipolarLfo>;
+    private shareableLfoArray: Array<ShareableUnipolarLfo>;
 
     /* The gain node that merges (adds) all above LFOs togheter.
     ** This gain node serves both as a merger node (it merges all LFOs from the 'lfoArray' into a
@@ -47,9 +47,6 @@ export class LfoManager extends BaseAudioNode
     {
         super(audioContext);
 
-        // instantiate the array of LFOs
-        this.lfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
-
         // initialize limits of the modulated parameter
         if (parameterLowerLimit < parameterUpperLimit)
         {
@@ -81,17 +78,20 @@ export class LfoManager extends BaseAudioNode
         // the initial gain of the node that merges all LFOs is 0 (no moudulation amount)
         this.mergerGainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
 
-        // instantiate and connect each LFO to the final merger node and then mute each LFO
-        for (let i = 0; i < this.lfoArray.length; i++)
+        // instantiate the array of shareable LFOs, for this we use the length of the 'lfoArray' constructor argument
+        this.shareableLfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
+
+        // instantiate and connect each shareable LFO to the final merger node and then mute each LFO
+        for (let i = 0; i < this.shareableLfoArray.length; i++)
         {
             // instantiate each ShareableLfo
-            this.lfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
+            this.shareableLfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
 
             // connect each LFO to the final merger node
-            this.lfoArray[i].mainNode().connect(this.mergerGainNode);
+            this.shareableLfoArray[i].mainNode().connect(this.mergerGainNode);
 
             // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
-            this.lfoArray[i].disable();
+            this.shareableLfoArray[i].disable();
         }
     }
 
@@ -99,16 +99,16 @@ export class LfoManager extends BaseAudioNode
     ** this method is supposed to return the main node of the class */
     public override mainNode(): AudioNode { return this.mergerGainNode; }
 
-    public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.lfoArray; }
+    public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
 
     public enableShareableLfo(lfoIndex: number): boolean
     {
-        if (0 <= lfoIndex && lfoIndex <= this.lfoArray.length)
+        if (0 <= lfoIndex && lfoIndex <= this.shareableLfoArray.length)
         {
             LfoManager.logger.debug(`enableLfo(${lfoIndex})`);
 
             // first, enable the LFO
-            this.lfoArray[lfoIndex].enable();
+            this.shareableLfoArray[lfoIndex].enable();
 
             // then, increase the count of enabled LFOs
             this.numberOfEnabledLfos += 1;
@@ -128,12 +128,12 @@ export class LfoManager extends BaseAudioNode
 
     public disableLfo(lfoIndex: number): boolean
     {
-        if (0 <= lfoIndex && lfoIndex <= this.lfoArray.length)
+        if (0 <= lfoIndex && lfoIndex <= this.shareableLfoArray.length)
         {
             LfoManager.logger.debug(`disableLfo(${lfoIndex})`);
 
             // first, disable the LFO
-            this.lfoArray[lfoIndex].disable();
+            this.shareableLfoArray[lfoIndex].disable();
 
             // then, decrease the count of enabled LFOs
             this.numberOfEnabledLfos -= 1;

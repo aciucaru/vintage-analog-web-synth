@@ -8,20 +8,19 @@ import type { ILogObj } from "tslog";
 /* This class is similar to the UnipolarLfo class and it contains an UnipolarLfo instance, but there is a difference between
 ** them: the UnipolarLfo just oscillates continously and cannot be disabled or re-enabled at will.
 ** This class passes the UnipolarLfo through an aditional GainNode, who's 'gain' parameter can be set to 0 to give the illusion
-** that the UnipolrLfo has been disable, or who's 'gain' parameter can be set to a positive value to give the illusion that the
+** that the UnipolarLfo has been disabled, or who's 'gain' parameter can be set to a positive value to give the illusion that the
 ** LFO has been re-enabled.
 **
 ** The internal UnipolarLfo already oscillates in unipolar mode, between 0 and 1.
 **
 ** The ShareableUnipolarLfo oscillates between 0 and 1 (when enabled) and between 0 and 0 (no perceivable effect, when disabled).
 **
-** This class is called 'shareable' because, by being able to turn an LFO on/off, we choose if the LFO modulates one synth parameter
-** (the 'on' state) but does not modulate another synth parameter (the 'off' state). In this way, we can reuse the same LFO for
-** multiple synth paramters, if we want to, but we are not obligated to use that LFO for all synth parameters because the 'shareable'
-** LFO cand be enabled/disabled for each synth paramter separately. */
+** This class is called 'shareable' because, by being able to turn an LFO on/off, we can modulate multiple parameters with the same LFO
+** In this way, we can reuse the same LFO for multiple synth parameters, if we want to, but we are not obligated to use that LFO for all
+** synth parameters because the 'shareable' LFO cand be enabled/disabled for each synth paramter separately. */
 export class ShareableUnipolarLfo extends BaseAudioNode
 {
-    // the unipolar LFO tha talways oscillates
+    // the unipolar LFO that oscillates continously once started, it never stops
     private lfo: UnipolarLfo;
 
     // the on/off GainNode, which gives the illusion that the LFO is being disabled or enabled (muted or unmuted)

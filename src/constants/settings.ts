@@ -126,7 +126,6 @@ export class Settings
     public static readonly maxAdsrReleaseDuration = 8.0; // 8 seconds
     public static readonly defaultAdsrReleaseDuration = 1.0; // 1 second
 
-
     // ADSR defaults for cutoff filter:
     public static readonly defaultAdsrFilterAttackDuration = 0.0; // 0 seconds
     public static readonly defaultAdsrFilterDecayDuration = 0.0; // 0 seconds
@@ -177,7 +176,7 @@ export class Settings
     // the total number of LFOs for one single layer (timbre) of the synth
     public static readonly lfoCount = 5;
     // the maximum number of simultaneos LFOs that can modulate a parameter
-    public static readonly lfoArrayModulatorsCount = 5;
+    // public static readonly lfoArrayModulatorsCount = 5;
 
 
     // settings for voice *******************************************************************************

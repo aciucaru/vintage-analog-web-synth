@@ -1,19 +1,21 @@
 import { Settings } from "../../constants/settings";
-import { audioContext, lfoArray } from "./shareable-audio-nodes";
+import { NoteSettings } from "../../constants/note-settings";
+import { audioContext } from "./shareable-audio-nodes";
 
 import { SubOscillator } from "./oscillator/melodic/sub-oscillator";
 import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
 import { MultiNoiseOscillator } from "./oscillator/noise/multi-noise-oscillator";
 
-
 import { OscMixer } from "./mixer";
 import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
+import { UnipolarLfo } from "./modulation/unipolar-lfo";
+import { lfoArray } from "./shareable-audio-nodes";
+import { LfoManager } from "./modulation/lfo-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-
 
 
 export class Voice
@@ -38,6 +40,14 @@ export class Voice
 
     private outputGainNode: GainNode;
 
+
+    private sharedLfoArray: Array<UnipolarLfo>;
+    // modulator nodes:
+    private freqLfoManager: LfoManager;
+    private ampLfoManager: LfoManager;
+    private pulseWidthLfoManager: LfoManager;
+    private unisonDetuneLfoManager: LfoManager;
+
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Voice", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext)
@@ -53,9 +63,26 @@ export class Voice
         if (audioContext === null)
             Voice.logger.warn("constructor(): audioContext is null, separate audioContext was created");
 
+        // instantiate and fill the array of shared LFOs
+        this.sharedLfoArray = new Array<UnipolarLfo>(Settings.lfoCount);
+        for (let i = 0; i < this.sharedLfoArray.length; i++)
+        {
+            this.sharedLfoArray[i] = new UnipolarLfo(this.audioContext);
+        }
+        
+        // instantiate the LFO managers
+        this.freqLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+        this.ampLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+                                                Settings.minVoiceGain, Settings.maxVoiceGain, Settings.defaultVoiceGain);
+        this.pulseWidthLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+                                                    Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
+        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+                                                    Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune, Settings.defaultOscUnisonCentsDetune);
+
         // instantiate the nodes:
-        this.unisonOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain);
-        this.unisonOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain);
+        this.unisonOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
+        this.unisonOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain, lfoArray);
         this.subOscillator = new SubOscillator(this.audioContext, Settings.minOscGain, lfoArray);
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
