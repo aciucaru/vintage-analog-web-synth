@@ -24,6 +24,7 @@ import { LfoManager } from "../../modulation/lfo-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+import { NoteSettings } from "../../../../constants/note-settings";
 
 
 export class PulseOscillator extends BasePulseOscillator
@@ -39,7 +40,22 @@ export class PulseOscillator extends BasePulseOscillator
 
     // this gain node is what makes the 'pulse width' adjustment possible;
     // the pulse width is also modulatable, thanks to this gain node;
-    private modulatableGainNode: GainNode;
+    private pulseWidthGainNode: GainNode;
+
+    /* parameter value nodes (constant nodes):
+    ** These are 'constant oscillators' that always emit the same value, and here they are used as the value of
+    ** some parameters of this oscillator (frequency, pulse width, unison detune).
+    **
+    ** The purpose of these constant nodes is to be able to add the current value of the parameter with the value
+    ** of an LFO and/or an ADSR envelope. They bassicaly allow modulation.
+    **
+    ** The constant node is basically the value of the modulatable parameter (regardless if the parameter is being modulated or not).
+    **
+    ** The final value of the oscillator's parameter is the sum of the ConstantSourceNode, the LfoManager and the ADSR envelope.
+    ** The sum is made by connecting al previous 3 nodes to the same parameter. */
+    private freqValueNode: ConstantSourceNode;
+    private pulseWidthValueNode: ConstantSourceNode;
+    private unisonDetuneValueNode: ConstantSourceNode;
 
     // modulator nodes:
     private freqLfoManager: LfoManager;
@@ -73,15 +89,15 @@ export class PulseOscillator extends BasePulseOscillator
         this.squareWaveShaper = new WaveShaperNode(this.audioContext, { curve: this.squareCurve });
 
         // instatiate the gain node
-        this.modulatableGainNode = this.audioContext.createGain();
+        this.pulseWidthGainNode = this.audioContext.createGain();
         // set the initial gain of the gain nodes
-        this.modulatableGainNode.gain.setValueAtTime(Settings.defaultOscPulseWidth, this.audioContext.currentTime);
+        this.pulseWidthGainNode.gain.setValueAtTime(Settings.defaultOscPulseWidth, this.audioContext.currentTime);
 
         // connect wave shapers (v1):
         this.sawOscillatorNode.connect(this.constantWaveShaper);
-        this.constantWaveShaper.connect(this.modulatableGainNode);
-        this.sawOscillatorNode.connect(this.modulatableGainNode); // extra, but necessary
-        this.modulatableGainNode.connect(this.squareWaveShaper);
+        this.constantWaveShaper.connect(this.pulseWidthGainNode);
+        this.sawOscillatorNode.connect(this.pulseWidthGainNode); // extra, but necessary
+        this.pulseWidthGainNode.connect(this.squareWaveShaper);
 
         // connect the gain nodes for the 3 oscillators to the same intermediate gain node, to combine them
         this.squareWaveShaper.connect(this.outputGainNode);
@@ -97,8 +113,24 @@ export class PulseOscillator extends BasePulseOscillator
         this.pulseWidthLfoManager = pulseWidthLfoManager;
         this.unisonDetuneLfoManager = unisonDetuneLfoManager;
 
+        // instantiate and set the constant nodes that will represent the current value of a parameter of this osc
+        this.freqValueNode = this.audioContext.createConstantSource();
+        this.freqValueNode.offset.setValueAtTime(NoteSettings.defaultFrequency, this.audioContext.currentTime);
+
+        this.pulseWidthValueNode = this.audioContext.createConstantSource();
+        this.pulseWidthValueNode.offset.setValueAtTime(Settings.defaultOscPulseWidth, this.audioContext.currentTime);
+
+        this.unisonDetuneValueNode = this.audioContext.createConstantSource();
+        this.unisonDetuneValueNode.offset.setValueAtTime(Settings.defaultOscUnisonCentsDetune, this.audioContext.currentTime);
+
+        // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
+        this.freqValueNode.connect(this.sawOscillatorNode.frequency)
         this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
-        this.pulseWidthLfoManager.mainNode().connect(this.modulatableGainNode.gain);
+
+        this.pulseWidthValueNode.connect(this.pulseWidthGainNode.gain);
+        this.pulseWidthLfoManager.mainNode().connect(this.pulseWidthGainNode.gain);
+
+        this.unisonDetuneValueNode.connect(this.sawOscillatorNode.detune);
         this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
     }
 
@@ -110,7 +142,8 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -127,7 +160,8 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -144,7 +178,8 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -161,7 +196,8 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         }
         else
             PulseOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
@@ -175,7 +211,8 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setDetune(${centsDetune})`);
 
-            this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.unisonDetuneValueNode.offset.setValueAtTime(centsDetune, this.audioContext.currentTime);
 
             return true;
         }
@@ -196,7 +233,8 @@ export class PulseOscillator extends BasePulseOscillator
             this.constantCurve[0] = pulseWidth;
             this.constantCurve[1] = pulseWidth;
 
-            this.modulatableGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
+            // this.modulatableGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
+            this.pulseWidthValueNode.offset.setValueAtTime(pulseWidth, this.audioContext.currentTime);
 
             return true; // change was succesfull
         }

@@ -224,7 +224,7 @@
     {#if showValue}
         <div class="numeric-value unselectable">{absoluteValueString}</div>
     {:else if title.length > 0}
-        <div class="title unselectable">{title}</div>
+        <div class="label unselectable">{title}</div>
     {/if}
 </div>
 
@@ -251,12 +251,12 @@
         padding: 0px;
     }
 
-    .title
+    .label
     {
         box-sizing: border-box;
 
         width: var(--knob-width);
-        height: var(--text-height);
+        height: calc(var(--text-height) + 4px);
 
         margin: 0px;
         padding: 0px;
@@ -292,13 +292,13 @@
         box-sizing: border-box;
 
         width: var(--knob-width);
-        height:  var(--text-height);
+        height: calc(var(--text-height) + 4px);
 
         margin: 0px;
         padding: 0px;
 
         color: hsl(210, 30%, 60%);
-        font-family: LCD14, Tahoma, serif;
+        font-family: monospace, monospace; /* we use 'monospace' twice for browser compatibility */
         font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;

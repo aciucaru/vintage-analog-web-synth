@@ -1,6 +1,6 @@
 import { Settings } from "../../constants/settings";
 import { NoteSettings } from "../../constants/note-settings";
-import { audioContext } from "./shareable-audio-nodes";
+import { audioContext } from "../../constants/shareable-audio-nodes";
 
 import { SubOscillator } from "./oscillator/melodic/sub-oscillator";
 import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
@@ -11,7 +11,7 @@ import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
 import { UnipolarLfo } from "./modulation/unipolar-lfo";
-import { lfoArray } from "./shareable-audio-nodes";
+import { lfoArray } from "../../constants/shareable-audio-nodes";
 import { LfoManager } from "./modulation/lfo-manager";
 
 import { Logger } from "tslog";

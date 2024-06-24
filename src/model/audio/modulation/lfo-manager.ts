@@ -101,7 +101,7 @@ export class LfoManager extends BaseAudioNode
 
     public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
 
-    public enableShareableLfo(lfoIndex: number): boolean
+    public enableLfo(lfoIndex: number): boolean
     {
         if (0 <= lfoIndex && lfoIndex <= this.shareableLfoArray.length)
         {
@@ -152,7 +152,7 @@ export class LfoManager extends BaseAudioNode
 
     public setNormalizedModulationAmount(normalizedModulationAmount: number): boolean
     {
-        if (0.0 <= normalizedModulationAmount && normalizedModulationAmount <= 1.0)
+        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount && normalizedModulationAmount <= Settings.minLfoNormalizedModulationAmount)
         {
             LfoManager.logger.debug(`setNormalizedModulationAmount(${normalizedModulationAmount})`);
 
