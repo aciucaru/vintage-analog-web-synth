@@ -1,9 +1,9 @@
 /*
 
-Acknowledgement: the pulse oscillator is heavily inspired from the code of Andy Harman, from his GitHub page:
+Acknowledgement: this pulse oscillator is heavily inspired from the code of Andy Harman, from his GitHub page:
 https://github.com/pendragon-andyh/WebAudio-PulseOscillator
 
-This code is basically a TypeScript adaption of Andy's JavaScript code.
+This code is basically a TypeScript adaptation of Andy Harman's JavaScript code.
 
 This is the original license:
 
@@ -18,10 +18,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import { Settings } from "../../../../constants/settings";
-import { NoteSettings } from "../../../../constants/note-settings";
-import { LfoManager } from "../../modulation/lfo-manager";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
-import { lfoArray } from "../../shareable-audio-nodes";
+
+import { LfoManager } from "../../modulation/lfo-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -38,19 +37,21 @@ export class PulseOscillator extends BasePulseOscillator
     private squareCurve: Float32Array = new Float32Array(256);
     private squareWaveShaper: WaveShaperNode;
 
-    // this gain node is what makes the pulse width adjustment possible;
-    // the pulse width is also modulatable, thank to this gain node
+    // this gain node is what makes the 'pulse width' adjustment possible;
+    // the pulse width is also modulatable, thanks to this gain node;
     private modulatableGainNode: GainNode;
 
     // modulator nodes:
     private freqLfoManager: LfoManager;
-    private unisonDetuneLfoManager: LfoManager;
     private pulseWidthLfoManager: LfoManager;
-    private gainLfoManager: LfoManager;
+    private unisonDetuneLfoManager: LfoManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "PulseOscillator", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, initialGain: number)
+    constructor(audioContext: AudioContext, initialGain: number,
+                freqLfoManager: LfoManager,
+                pulseWidthLfoManager: LfoManager,
+                unisonDetuneLfoManager: LfoManager)
     {
         super(audioContext, initialGain);
 
@@ -91,21 +92,14 @@ export class PulseOscillator extends BasePulseOscillator
         // start the sound oscillator
         this.sawOscillatorNode.start();
 
-        // instantiate and connect the LFO managers for the modulatable parameters of this oscillator
-        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                            NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
-        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                    Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune,
-                                                    Settings.defaultOscUnisonCentsDetune);
-        this.pulseWidthLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                    Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
-        this.gainLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
+        // set and connect the LFO managers for the modulatable parameters of this oscillator
+        this.freqLfoManager = freqLfoManager;
+        this.pulseWidthLfoManager = pulseWidthLfoManager;
+        this.unisonDetuneLfoManager = unisonDetuneLfoManager;
 
         this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
-        this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
         this.pulseWidthLfoManager.mainNode().connect(this.modulatableGainNode.gain);
-        this.gainLfoManager.mainNode().connect(this.outputGainNode.gain);
+        this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
     }
 
     public override setNote(octaves: number, semitones: number): boolean
@@ -204,13 +198,77 @@ export class PulseOscillator extends BasePulseOscillator
 
             this.modulatableGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
 
-            return true;
+            return true; // change was succesfull
         }
         else
         {
-            PulseOscillator.logger.warn(`setPulseWidth(${pulseWidth}): value is outside bounds`);
+            PulseOscillator.logger.warn(`setPulseWidth(${pulseWidth}): parmeter is outside bounds`);
 
-            return false;
+            return false; // change was not succesfull
+        }
+    }
+
+    /* LFO related methods.
+    ** The modulation amount is always in normalized form (values between -1.0 and 1.0). The normalized values
+    ** are basically like percentages between -100% and 100%. */
+
+    // Sets the modulation amount for the frequency of this oscillator
+    public setFreqLfoModAmount(normalizedModulationAmount: number): boolean
+    {
+        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
+            && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
+        {
+            PulseOscillator.logger.debug(`setFreqLfoModAmount(${normalizedModulationAmount})`);
+
+            this.freqLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
+
+            return true; // change was succesfull
+        }
+        else
+        {
+            PulseOscillator.logger.warn(`setFreqLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
+
+            return false; // change was not succesfull
+        }
+    }
+
+    // Sets the modulation amount for the pulse width of this oscillator
+    public setPulseWidthLfoModAmount(normalizedModulationAmount: number): boolean
+    {
+        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
+            && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
+        {
+            PulseOscillator.logger.debug(`setPulseWidthLfoModAmount(${normalizedModulationAmount})`);
+
+            this.pulseWidthLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
+
+            return true; // change was succesfull
+        }
+        else
+        {
+            PulseOscillator.logger.warn(`setPulseWidthLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
+
+            return false; // change was not succesfull
+        }
+    }
+
+    // Sets the modulation amount for the pulse width of this oscillator
+    public setUnisonDetuneLfoModAmount(normalizedModulationAmount: number): boolean
+    {
+        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
+            && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
+        {
+            PulseOscillator.logger.debug(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount})`);
+
+            this.unisonDetuneLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
+
+            return true; // change was succesfull
+        }
+        else
+        {
+            PulseOscillator.logger.warn(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
+
+            return false; // change was not succesfull
         }
     }
 

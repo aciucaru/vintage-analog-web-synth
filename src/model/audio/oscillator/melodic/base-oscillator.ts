@@ -1,6 +1,4 @@
 import { Settings } from "../../../../constants/settings";
-import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
-import { LfoManager } from "../../modulation/lfo-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

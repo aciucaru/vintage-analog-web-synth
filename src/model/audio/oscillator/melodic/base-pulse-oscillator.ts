@@ -1,10 +1,6 @@
-import { BaseJoinableOscillator } from "./base-joinable-oscillator";
+import { BaseUnisonOscillator } from "./base-unison-oscillator";
 
-import { Logger } from "tslog";
-import type { ILogObj } from "tslog";
-
-
-export abstract class BasePulseOscillator extends BaseJoinableOscillator
+export abstract class BasePulseOscillator extends BaseUnisonOscillator
 {
     constructor(audioContext: AudioContext, initialGain: number)
     {

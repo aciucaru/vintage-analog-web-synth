@@ -149,6 +149,9 @@ export class Settings
     public static readonly maxLfoGain = 1; 
     public static readonly defaultLfoGain = 0.0;
 
+    public static readonly minLfoNormalizedModulationAmount = -1.0; // -100%
+    public static readonly maxLfoNormalizedModulationAmount = 1.0; // 100%
+
     // tempo, in BPM (beats per minute)
     public static readonly minLfoTempo = 20;
     public static readonly maxLfoTempo = 500;
@@ -176,10 +179,12 @@ export class Settings
     // the maximum number of simultaneos LFOs that can modulate a parameter
     public static readonly lfoArrayModulatorsCount = 5;
 
+
     // settings for voice *******************************************************************************
     public static readonly minVoiceGain = 0.0;
     public static readonly maxVoiceGain = 1.0;
     public static readonly defaultVoiceGain = 0.5;
+
 
     // settings for arpegiator **************************************************************************
     public static readonly minArpegiatorKeys = 1;

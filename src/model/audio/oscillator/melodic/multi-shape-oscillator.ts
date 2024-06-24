@@ -2,6 +2,8 @@ import { Settings } from "../../../../constants/settings";
 import { PulseOscillator } from "./pulse-oscillator";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 
+import { LfoManager } from "../../modulation/lfo-manager";
+
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
@@ -24,16 +26,29 @@ export class MultiShapeOscillator extends BasePulseOscillator
     private sawOscGainNode: GainNode;
     private pulseOscGainNode: GainNode;
 
+    // modulator nodes:
+    private freqLfoManager: LfoManager;
+    private ampLfoManager: LfoManager;
+    private pulseWidthLfoManager: LfoManager;
+    private unisonDetuneLfoManager: LfoManager;
+
     private static readonly logger: Logger<ILogObj> = new Logger({name: "MultiShapeOscillator", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, initialGain: number)
+    constructor(audioContext: AudioContext, initialGain: number,
+                freqLfoManager: LfoManager,
+                ampLfoManager: LfoManager,
+                pulseWidthLfoManager: LfoManager,
+                unisonDetuneLfoManager: LfoManager)
     {
         super(audioContext, initialGain);
 
         // instantiate all sound oscillators
         this.triangleOscNode = this.audioContext.createOscillator();
         this.sawOscNode = this.audioContext.createOscillator();
-        this.pulseOscNode = new PulseOscillator(this.audioContext, Settings.maxOscGain);
+        this.pulseOscNode = new PulseOscillator(this.audioContext, Settings.maxOscGain,
+                                                freqLfoManager,
+                                                pulseWidthLfoManager,
+                                                unisonDetuneLfoManager);
         
         // set the shape of the sound oscillators (never changes)
         this.triangleOscNode.type = "triangle";
@@ -74,6 +89,28 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.triangleOscNode.start();
         this.sawOscNode.start();
         // this.pulseOscNode was already started in it's constructor, no need to start it manually
+
+        // instantiate and connect the LFO managers for the modulatable parameters of this oscillator
+        this.freqLfoManager = freqLfoManager;
+        this.ampLfoManager = ampLfoManager;
+        this.pulseWidthLfoManager = pulseWidthLfoManager;
+        this.unisonDetuneLfoManager = pulseWidthLfoManager;
+
+        // connect the frequency LFO manager to the oscillators
+        this.freqLfoManager.mainNode().connect(this.triangleOscNode.frequency);
+        this.freqLfoManager.mainNode().connect(this.sawOscNode.frequency);
+        // the 'freqLfoManager' was already connected to 'pulseOscNode' in the constructor of 'pulseOscNode'
+
+        // for the amplitude LFO manager, we only connect to one node, the output gain node
+        this.ampLfoManager.mainNode().connect(this.outputGainNode.gain);
+
+        /* for the pulse width modulation, there is no need to connect anything, the pulseWidthLfoManager
+        ** was already connected in the constructor of 'pulseOscNode' */
+
+        // connect the unison detune LFO manager to the oscillators
+        this.unisonDetuneLfoManager.mainNode().connect(this.sawOscNode.detune);
+        this.unisonDetuneLfoManager.mainNode().connect(this.triangleOscNode.detune);
+        // the 'unisonDetuneLfoManager' was already connected to 'pulseOscNode' in the constructor of 'pulseOscNode'
     }
 
     public override setNote(octaves: number, semitones: number): boolean

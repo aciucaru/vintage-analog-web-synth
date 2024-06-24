@@ -33,7 +33,8 @@ export class LfoManager extends BaseAudioNode
     private absoluteModulationAmount = 0;
 
     /* The limits of the modulated parameter, in absolute value (not in percentages).
-    ** These are the limits between which the modulated parameter varies, there are not the limits of the modulator */
+    ** These are the limits between which the modulated parameter varies, there are not the limits of the modulator.
+    ** The modulator (LfoManager) needs to know these limits, in order to not exceed the limits of the modulated parameter. */
     private parameterLowerLimit: number;
     private parameterUpperLimit: number;
     // the current value of the modulated parameter
@@ -173,6 +174,9 @@ export class LfoManager extends BaseAudioNode
         }
     }
 
+    /* This method sets the current absolute value of the modulated parameter.
+    ** This method should be called when the absolute value of the modulated parmaters changes, this
+    ** should happen inside the class that contains the modulated parameter. */
     public setParameterCurrentValue(parameterCurrentValue: number): boolean
     {
         if (this.parameterLowerLimit <= parameterCurrentValue && parameterCurrentValue <= this.parameterUpperLimit)
@@ -213,7 +217,7 @@ export class LfoManager extends BaseAudioNode
             this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterCurrentValue - this.parameterLowerLimit);
     }
 
-    /* Utility method that recomputes and also set the final gain of the LfoManager node.
+    /* Utility method that recomputes and also sets the final gain of the LfoManager node.
     ** This method should be called anytime an LFO is turned on/off or when the modulation amount changes. */
     private computeFinalGain(): void
     {
