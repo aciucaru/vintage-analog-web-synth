@@ -16,14 +16,12 @@ export class NoteSettings
         minNote.setOctavesOffset(Settings.minOscOctavesOffset);
         minNote.setSemitonesOffset(Settings.minOscSemitonesOffset);
         minNote.setCentsOffset(Settings.minOscCentsOffset);
-
         NoteSettings.minFrequency = minNote.getFreq();
 
         const maxNote = new Note(6, 11);
         maxNote.setOctavesOffset(Settings.maxOscOctavesOffset);
         maxNote.setSemitonesOffset(Settings.maxOscSemitonesOffset);
         maxNote.setCentsOffset(Settings.maxOscCentsOffset);
-
         NoteSettings.maxFrequency = maxNote.getFreq();
     }
 }

@@ -154,7 +154,7 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
             step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1FreqLfoModAmountChange}></Knob>
     </div>
 

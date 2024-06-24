@@ -40,7 +40,7 @@ export class LfoManager extends BaseAudioNode
     // the current value of the modulated parameter
     private parameterCurrentValue: number;
 
-    private static readonly logger: Logger<ILogObj> = new Logger({name: "Lfo", minLevel: Settings.minLogLevel});
+    private static readonly logger: Logger<ILogObj> = new Logger({name: "LfoManager", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
                 parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number)
@@ -99,7 +99,7 @@ export class LfoManager extends BaseAudioNode
     ** this method is supposed to return the main node of the class */
     public override mainNode(): AudioNode { return this.mergerGainNode; }
 
-    public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
+    // public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
 
     public enableLfo(lfoIndex: number): boolean
     {
@@ -152,7 +152,7 @@ export class LfoManager extends BaseAudioNode
 
     public setNormalizedModulationAmount(normalizedModulationAmount: number): boolean
     {
-        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount && normalizedModulationAmount <= Settings.minLfoNormalizedModulationAmount)
+        if (Settings.minLfoManagerModulationAmount <= normalizedModulationAmount && normalizedModulationAmount <= Settings.maxLfoManagerModulationAmount)
         {
             LfoManager.logger.debug(`setNormalizedModulationAmount(${normalizedModulationAmount})`);
 
@@ -221,7 +221,14 @@ export class LfoManager extends BaseAudioNode
     ** This method should be called anytime an LFO is turned on/off or when the modulation amount changes. */
     private computeFinalGain(): void
     {
-        const finalGain = (1.0 / this.numberOfEnabledLfos) * this.absoluteModulationAmount;
+        let finalGain = 0.0;
+
+        // if all LFOs are disabled
+        if (this.numberOfEnabledLfos == 0)
+            finalGain = 0.0; // if no LFOs are enabled, then te modulation is zero
+        // if there is at least one enabled LFO
+        else if (this.numberOfEnabledLfos > 0)
+            finalGain = (1.0 / this.numberOfEnabledLfos) * this.absoluteModulationAmount;
 
         this.mergerGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }

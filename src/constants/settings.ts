@@ -148,13 +148,10 @@ export class Settings
     public static readonly maxLfoGain = 1; 
     public static readonly defaultLfoGain = 0.0;
 
-    public static readonly minLfoNormalizedModulationAmount = -1.0; // -100%
-    public static readonly maxLfoNormalizedModulationAmount = 1.0; // 100%
-
     // tempo, in BPM (beats per minute)
     public static readonly minLfoTempo = 20;
     public static readonly maxLfoTempo = 500;
-    public static readonly defaultLfoTempo = 120;
+    public static readonly defaultLfoTempo = 100;
 
     /* The duration of a note, represented trough exponents of 2.
     ** The shorter the duration, the more notes fit into a bar.
@@ -177,6 +174,12 @@ export class Settings
     public static readonly lfoCount = 5;
     // the maximum number of simultaneos LFOs that can modulate a parameter
     // public static readonly lfoArrayModulatorsCount = 5;
+
+
+    // settings for LFO manager: **************************************************************************
+    public static readonly minLfoManagerModulationAmount = -1.0; // -100%
+    public static readonly maxLfoManagerModulationAmount = 1.0; // 100%
+    public static readonly defaultLfoManagerModulationAmount = 0.0; // 0%
 
 
     // settings for voice *******************************************************************************
