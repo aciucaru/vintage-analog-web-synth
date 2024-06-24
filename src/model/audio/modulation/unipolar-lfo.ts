@@ -4,11 +4,11 @@ import { BaseAudioNode } from "../base-audio-node";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-export enum FrequencyType
-{
-    AbsoluteFrequency = "AbsoluteFrequency",
-    BarDivisions4by4 = "BarDivisions4by4"
-}
+// export enum FrequencyType
+// {
+//     AbsoluteFrequency = "AbsoluteFrequency",
+//     BarDivisions4by4 = "BarDivisions4by4"
+// }
 
 export enum LfoShape
 {
@@ -19,10 +19,9 @@ export enum LfoShape
 
 /* Low frequency oscillator implementation, this LFO is always unipolar and positive (it oscillates between 0 and 1).
 ** This class is basically an oscilator that goes on no matter if it is modulating one or more parameters.
-** The class that represent an LFO that is actually connected to a synth paramter and is modulating it is called
-** ShareableUnipolarOscillator, which can be turned on or off and will eventualy be connected to a sytnh paramter
-** through the LfoManager class, which manges multiple LFO that can modulate the same parameter (these LFOs can be
-** enabled or disabled/muted at any time). */
+** The class that represents an LFO that is actually connected to a synth parameter is called ShareableUnipolarOscillator,
+** which can be turned on or off through the LfoManager class, which manages multiple LFOs that can modulate the same
+** parameter (these LFOs can be enabled or disabled/muted at any time). */
 export class UnipolarLfo extends BaseAudioNode
 {
     // the LFO oscillator (oscillates between -1 and 1)
@@ -38,17 +37,8 @@ export class UnipolarLfo extends BaseAudioNode
     ** oscillator SHOULD ALWAYS BE 0.5, so the end result oscillates between 0.5*0 and 0.5*2 (e.g. between 0 and 1). */
     private mergerGainNode: GainNode;
 
-    private frequencyType: FrequencyType = FrequencyType.AbsoluteFrequency;
-
     // the absolute frequency of the LFO, in Hz
     private absoluteFrequency: number = Settings.defaultLfoAbsoluteFrequency;
-
-    private tempo: number = Settings.defaultLfoTempo; // in BPM
-
-    /* the relative frequency of the LFO, as a note duration, where a bar has 4 notes (and lasts 4 beats).
-    ** For example a note duration of 2^(-2) = 1/4 bar, means that there are 4 notes in a bar, so
-    ** the LFO will oscillate with exactly the frequency of the tempo */
-    private noteDurationExponent = Settings.defaultLfoNoteDurationExponent;
 
     private static readonly CONSTANT_OSCILLATOR_OFFSET = 1;
     private static readonly MERGER_GAIN_NODE_GAIN = 0.5;
@@ -98,13 +88,6 @@ export class UnipolarLfo extends BaseAudioNode
         }
     }
 
-    public setFrequencyType(freqType: FrequencyType): void
-    {
-        UnipolarLfo.logger.debug(`setFrequencyType(${freqType})`);
-
-        this.frequencyType = freqType;
-    }
-
     // sets the absolute frequency of the LFO, in Hz
     public setFrequency(freq: number): boolean
     {
@@ -117,8 +100,6 @@ export class UnipolarLfo extends BaseAudioNode
             // assign the newly recomputed frequency to the LFO oscillator
             this.lfoOscillator.frequency.linearRampToValueAtTime(freq, this.audioContext.currentTime);
 
-            this.computeTempo(); // recompute tempo, so it matches the new frequency
-
             return true; // change was succesfull
         }
         else
@@ -126,74 +107,5 @@ export class UnipolarLfo extends BaseAudioNode
             UnipolarLfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
             return false; // change was not succesfull
         }
-    }
-
-    // sets the tempo of the LFO, in BPM
-    public setTempo(tempo: number): boolean
-    {
-        if (Settings.minLfoTempo <= tempo && tempo <= Settings.maxLfoTempo)
-        {
-            UnipolarLfo.logger.debug(`setTempo(${tempo})`);
-
-            this.tempo = tempo; // set the new value
-
-            this.computeFrequency(); // recompute frequency
-
-            // assign the newly recomputed frequency to the LFO oscillator
-            this.lfoOscillator.frequency.linearRampToValueAtTime(this.absoluteFrequency, this.audioContext.currentTime);
-
-            return true; // change was succesfull
-        }
-        else
-        {
-            UnipolarLfo.logger.warn(`setTempo(${tempo}): value is outside bounds`);
-            return false;  // change was not succesfull
-        }
-    }
-
-    /* sets the duration of a note, for the case where the LFO frequency
-    ** is specified in terms of tempo and note duration */
-    public setNoteDurationExponent(noteDurationExponent: number): boolean
-    {
-        if (Settings.minLfoNoteDurationExponent <= noteDurationExponent
-            && noteDurationExponent <= Settings.maxLfoNoteDurationExponent)
-        {
-            UnipolarLfo.logger.debug(`setNoteDurationExponent(${noteDurationExponent})`);
-
-            this.noteDurationExponent = noteDurationExponent;
-
-            this.computeFrequency(); // recompute LFO frequency
-            this.computeTempo(); // recompute LFO tempo, so it matches the frequency
-
-            // assign the newly recomputed frequency to the LFO oscillator
-            this.lfoOscillator.frequency.linearRampToValueAtTime(this.absoluteFrequency, this.audioContext.currentTime);
-
-            return true; // change was succesful
-        }
-        else
-        {
-            UnipolarLfo.logger.warn(`setNoteDurationExponent(${noteDurationExponent}): value outside bounds"`);
-            return false; // change was not succesful
-        }
-    }
-
-    /* This is a utilitary method that (re)computes the frequency of the LFO, on demand.
-    ** The method uses the tempo and note duration in order to compute the corresponding frequency.
-    ** The tempo is in BPM (beats pe minute) and the note duration is in fractions of a bar, where a
-    ** bar has 4 beats.
-    ** In this way we can determine how many notes there are in a beat, which eventually gives the
-    ** frequency of the LFO. */
-    private computeFrequency(): void
-    {
-        UnipolarLfo.logger.debug(`computeFrequency()`);
-
-        this.absoluteFrequency = this.tempo / (60.0 * 2**(this.noteDurationExponent + 2));
-    }
-
-    private computeTempo(): void
-    {
-        UnipolarLfo.logger.debug(`computeFrequency()`);
-
-        this.tempo = Math.round(this.absoluteFrequency * 60.0 * 2**(this.noteDurationExponent + 2));
     }
 }

@@ -148,22 +148,9 @@ export class Settings
     public static readonly maxLfoGain = 1; 
     public static readonly defaultLfoGain = 0.0;
 
-    // tempo, in BPM (beats per minute)
-    public static readonly minLfoTempo = 20;
-    public static readonly maxLfoTempo = 500;
-    public static readonly defaultLfoTempo = 100;
-
-    /* The duration of a note, represented trough exponents of 2.
-    ** The shorter the duration, the more notes fit into a bar.
-    ** A bar (a measure) has 4 beats. When the note duration is 1/4 of a bar it means
-    ** that the note lasts exactly 1 beat, and there will be 4 notes in a bar. */
-    public static readonly minLfoNoteDurationExponent = -6; // -6 means 2^(-6) = 1/64
-    public static readonly maxLfoNoteDurationExponent = 2; // 2 means 2^2 = 4
-    public static readonly defaultLfoNoteDurationExponent = -2; // -2 means 2^(-2) = 1/4
-
-    public static readonly minLfoAbsoluteFrequency = Settings.minLfoTempo / (60.0 * 2**(Settings.maxLfoNoteDurationExponent + 2));
-    public static readonly maxLfoAbsoluteFrequency = Settings.maxLfoTempo / (60.0 * 2**(Settings.minLfoNoteDurationExponent + 2));
-    public static readonly defaultLfoAbsoluteFrequency = Settings.defaultLfoTempo / (60.0 * 2**(Settings.defaultLfoNoteDurationExponent + 2));
+    public static readonly minLfoAbsoluteFrequency = 10; // 10 Hz
+    public static readonly maxLfoAbsoluteFrequency = 1000; // 1000 Hz
+    public static readonly defaultLfoAbsoluteFrequency = 10; // 10 Hz
 
     // settings for shareable LFO
     public static readonly shareableLfoDisabledGain = 0.0;
