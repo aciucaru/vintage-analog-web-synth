@@ -79,7 +79,9 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -96,7 +98,9 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -113,7 +117,9 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -130,7 +136,9 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
@@ -146,7 +154,8 @@ export class TriangleOscillator extends BaseUnisonOscillator
 
             // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
             this.unisonDetuneValueNode.offset.setValueAtTime(centsDetune, this.audioContext.currentTime);
-
+            this.unisonDetuneLfoManager.setParameterCurrentValue(centsDetune);
+            
             return true;
         }
         else

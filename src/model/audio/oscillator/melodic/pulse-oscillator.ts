@@ -144,6 +144,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -162,6 +163,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -180,6 +182,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -198,6 +201,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
@@ -213,6 +217,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
             this.unisonDetuneValueNode.offset.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.unisonDetuneLfoManager.setParameterCurrentValue(centsDetune);
 
             return true;
         }
@@ -235,6 +240,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.modulatableGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
             this.pulseWidthValueNode.offset.setValueAtTime(pulseWidth, this.audioContext.currentTime);
+            this.pulseWidthLfoManager.setParameterCurrentValue(pulseWidth);
 
             return true; // change was succesfull
         }
@@ -251,64 +257,64 @@ export class PulseOscillator extends BasePulseOscillator
     ** are basically like percentages between -100% and 100%. */
 
     // Sets the modulation amount for the frequency of this oscillator
-    public setFreqLfoModAmount(normalizedModulationAmount: number): boolean
-    {
-        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
-            && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
-        {
-            PulseOscillator.logger.debug(`setFreqLfoModAmount(${normalizedModulationAmount})`);
+    // public setFreqLfoModAmount(normalizedModulationAmount: number): boolean
+    // {
+    //     if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
+    //         && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
+    //     {
+    //         PulseOscillator.logger.debug(`setFreqLfoModAmount(${normalizedModulationAmount})`);
 
-            this.freqLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
+    //         this.freqLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
 
-            return true; // change was succesfull
-        }
-        else
-        {
-            PulseOscillator.logger.warn(`setFreqLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
+    //         return true; // change was succesfull
+    //     }
+    //     else
+    //     {
+    //         PulseOscillator.logger.warn(`setFreqLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
 
-            return false; // change was not succesfull
-        }
-    }
-
-    // Sets the modulation amount for the pulse width of this oscillator
-    public setPulseWidthLfoModAmount(normalizedModulationAmount: number): boolean
-    {
-        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
-            && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
-        {
-            PulseOscillator.logger.debug(`setPulseWidthLfoModAmount(${normalizedModulationAmount})`);
-
-            this.pulseWidthLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
-
-            return true; // change was succesfull
-        }
-        else
-        {
-            PulseOscillator.logger.warn(`setPulseWidthLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
-
-            return false; // change was not succesfull
-        }
-    }
+    //         return false; // change was not succesfull
+    //     }
+    // }
 
     // Sets the modulation amount for the pulse width of this oscillator
-    public setUnisonDetuneLfoModAmount(normalizedModulationAmount: number): boolean
-    {
-        if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
-            && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
-        {
-            PulseOscillator.logger.debug(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount})`);
+    // public setPulseWidthLfoModAmount(normalizedModulationAmount: number): boolean
+    // {
+    //     if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
+    //         && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
+    //     {
+    //         PulseOscillator.logger.debug(`setPulseWidthLfoModAmount(${normalizedModulationAmount})`);
 
-            this.unisonDetuneLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
+    //         this.pulseWidthLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
 
-            return true; // change was succesfull
-        }
-        else
-        {
-            PulseOscillator.logger.warn(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
+    //         return true; // change was succesfull
+    //     }
+    //     else
+    //     {
+    //         PulseOscillator.logger.warn(`setPulseWidthLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
 
-            return false; // change was not succesfull
-        }
-    }
+    //         return false; // change was not succesfull
+    //     }
+    // }
+
+    // Sets the modulation amount for the pulse width of this oscillator
+    // public setUnisonDetuneLfoModAmount(normalizedModulationAmount: number): boolean
+    // {
+    //     if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
+    //         && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
+    //     {
+    //         PulseOscillator.logger.debug(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount})`);
+
+    //         this.unisonDetuneLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
+
+    //         return true; // change was succesfull
+    //     }
+    //     else
+    //     {
+    //         PulseOscillator.logger.warn(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
+
+    //         return false; // change was not succesfull
+    //     }
+    // }
 
     public getOscillatorNode(): OscillatorNode { return this.sawOscillatorNode; }
 

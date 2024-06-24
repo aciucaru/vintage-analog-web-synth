@@ -79,7 +79,9 @@ export class SawOscillator extends BaseUnisonOscillator
         {
             SawOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -96,7 +98,9 @@ export class SawOscillator extends BaseUnisonOscillator
         {
             SawOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -113,7 +117,9 @@ export class SawOscillator extends BaseUnisonOscillator
         {
             SawOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -130,7 +136,9 @@ export class SawOscillator extends BaseUnisonOscillator
         {
             SawOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
@@ -146,6 +154,7 @@ export class SawOscillator extends BaseUnisonOscillator
 
             // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
             this.unisonDetuneValueNode.offset.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.unisonDetuneLfoManager.setParameterCurrentValue(centsDetune);
 
             return true;
         }

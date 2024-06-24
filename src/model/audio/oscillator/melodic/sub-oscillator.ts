@@ -81,7 +81,9 @@ export class SubOscillator extends BaseMelodicOscillator
         {
             SubOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -98,7 +100,9 @@ export class SubOscillator extends BaseMelodicOscillator
         {
             SubOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -115,7 +119,9 @@ export class SubOscillator extends BaseMelodicOscillator
         {
             SubOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -132,7 +138,9 @@ export class SubOscillator extends BaseMelodicOscillator
         {
             SubOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
