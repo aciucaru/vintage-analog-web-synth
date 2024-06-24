@@ -13,6 +13,20 @@ export class SubOscillator extends BaseMelodicOscillator
     // main node
     private subOsc: OscillatorNode;
 
+    /* parameter value nodes (constant nodes):
+    ** These are 'constant oscillators' that always emit the same value, and here they are used as the value of
+    ** some parameters of this oscillator (frequency, pulse width, unison detune).
+    **
+    ** The purpose of these constant nodes is to be able to add the current value of the parameter with the value
+    ** of an LFO and/or an ADSR envelope. They bassicaly allow modulation.
+    **
+    ** The constant node is basically the value of the modulatable parameter (regardless if the parameter is being modulated or not).
+    **
+    ** The final value of the oscillator's parameter is the sum of the ConstantSourceNode, the LfoManager and the ADSR envelope.
+    ** The sum is made by connecting al previous 3 nodes (constant, LFO and ADSR) to the same parameter. */
+    private freqValueNode: ConstantSourceNode;
+    private ampValueNode: ConstantSourceNode;
+
     // modulator nodes:
     private freqLfoManager: LfoManager;
     private ampLfoManager: LfoManager;
@@ -25,7 +39,7 @@ export class SubOscillator extends BaseMelodicOscillator
 
         // instantiate the sub oscillator and set settings
         this.subOsc = this.audioContext.createOscillator();
-        this.subOsc.type = "sine"; // the suboscillator is always a sine
+        this.subOsc.type = "sine"; // the sub oscillator is always a sine
 
         // connect the sub oscillator to the main output node
         this.subOsc.connect(this.outputGainNode);
@@ -33,8 +47,12 @@ export class SubOscillator extends BaseMelodicOscillator
         // also connect the sub oscillator to the analyser gain node, that is already connected to the analyser
         this.subOsc.connect(this.analyserGainNode);
 
-        // start the sound oscillator
-        this.subOsc.start();
+        // instantiate and set the constant nodes that will represent the current value of a parameter of this osc
+        this.freqValueNode = this.audioContext.createConstantSource();
+        this.freqValueNode.offset.setValueAtTime(NoteSettings.defaultFrequency, this.audioContext.currentTime);
+
+        this.ampValueNode = this.audioContext.createConstantSource();
+        this.ampValueNode.offset.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
 
         // instantiate the LFO managers for the modulatable parameters of this oscillator
         this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
@@ -42,17 +60,20 @@ export class SubOscillator extends BaseMelodicOscillator
         this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
                                                 Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
 
-        // connect the LFO managers for the modulatable parameters of this oscillator
-        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
-        this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
 
+        // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
+        this.freqValueNode.connect(this.subOsc.frequency);
         this.freqLfoManager.mainNode().connect(this.subOsc.frequency);
+
+        // for the amplitude LFO manager, we only connect to one node, the output gain node
+        this.ampValueNode.connect(this.outputGainNode.gain);
         this.ampLfoManager.mainNode().connect(this.outputGainNode.gain);
+
+        // start the sound oscillator
+        this.subOsc.start();
     }
 
-    public setNote(octaves: number, semitones: number): boolean
+    public override setNote(octaves: number, semitones: number): boolean
     {
         const isChangeSuccessfull = this.note.setOctavesAndSemitones(octaves, semitones);
 
@@ -68,7 +89,7 @@ export class SubOscillator extends BaseMelodicOscillator
         return isChangeSuccessfull;
     }
 
-    public setOctavesOffset(octavesOffset: number): boolean
+    public override setOctavesOffset(octavesOffset: number): boolean
     {
         // try to set the new value
         const isChangeSuccessfull = this.note.setOctavesOffset(octavesOffset);
@@ -85,7 +106,7 @@ export class SubOscillator extends BaseMelodicOscillator
         return isChangeSuccessfull;
     }
 
-    public setSemitonesOffset(semitonesOffset: number): boolean
+    public override setSemitonesOffset(semitonesOffset: number): boolean
     {
         // try to set the new value
         const isChangeSuccessfull = this.note.setSemitonesOffset(semitonesOffset);
@@ -102,7 +123,7 @@ export class SubOscillator extends BaseMelodicOscillator
         return isChangeSuccessfull;
     }
 
-    public setCentsOffset(centsOffset: number): boolean
+    public override setCentsOffset(centsOffset: number): boolean
     {
         // try to set the new value
         const isChangeSuccessfull = this.note.setCentsOffset(centsOffset);

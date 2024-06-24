@@ -18,13 +18,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import { Settings } from "../../../../constants/settings";
+import { NoteSettings } from "../../../../constants/note-settings";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 
 import { LfoManager } from "../../modulation/lfo-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-import { NoteSettings } from "../../../../constants/note-settings";
 
 
 export class PulseOscillator extends BasePulseOscillator
@@ -52,7 +52,7 @@ export class PulseOscillator extends BasePulseOscillator
     ** The constant node is basically the value of the modulatable parameter (regardless if the parameter is being modulated or not).
     **
     ** The final value of the oscillator's parameter is the sum of the ConstantSourceNode, the LfoManager and the ADSR envelope.
-    ** The sum is made by connecting al previous 3 nodes to the same parameter. */
+    ** The sum is made by connecting al previous 3 nodes (constant, LFO and ADSR) to the same parameter. */
     private freqValueNode: ConstantSourceNode;
     private pulseWidthValueNode: ConstantSourceNode;
     private unisonDetuneValueNode: ConstantSourceNode;
@@ -105,14 +105,6 @@ export class PulseOscillator extends BasePulseOscillator
         // connect the output gain to the analyser node
         this.squareWaveShaper.connect(this.analyserGainNode);
 
-        // start the sound oscillator
-        this.sawOscillatorNode.start();
-
-        // set and connect the LFO managers for the modulatable parameters of this oscillator
-        this.freqLfoManager = freqLfoManager;
-        this.pulseWidthLfoManager = pulseWidthLfoManager;
-        this.unisonDetuneLfoManager = unisonDetuneLfoManager;
-
         // instantiate and set the constant nodes that will represent the current value of a parameter of this osc
         this.freqValueNode = this.audioContext.createConstantSource();
         this.freqValueNode.offset.setValueAtTime(NoteSettings.defaultFrequency, this.audioContext.currentTime);
@@ -123,8 +115,13 @@ export class PulseOscillator extends BasePulseOscillator
         this.unisonDetuneValueNode = this.audioContext.createConstantSource();
         this.unisonDetuneValueNode.offset.setValueAtTime(Settings.defaultOscUnisonCentsDetune, this.audioContext.currentTime);
 
+        // set the LFO managers for the modulatable parameters of this oscillator
+        this.freqLfoManager = freqLfoManager;
+        this.pulseWidthLfoManager = pulseWidthLfoManager;
+        this.unisonDetuneLfoManager = unisonDetuneLfoManager;
+
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
-        this.freqValueNode.connect(this.sawOscillatorNode.frequency)
+        this.freqValueNode.connect(this.sawOscillatorNode.frequency);
         this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
 
         this.pulseWidthValueNode.connect(this.pulseWidthGainNode.gain);
@@ -132,6 +129,9 @@ export class PulseOscillator extends BasePulseOscillator
 
         this.unisonDetuneValueNode.connect(this.sawOscillatorNode.detune);
         this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
+
+        // start the main sound oscillator
+        this.sawOscillatorNode.start();
     }
 
     public override setNote(octaves: number, semitones: number): boolean
@@ -311,4 +311,9 @@ export class PulseOscillator extends BasePulseOscillator
     }
 
     public getOscillatorNode(): OscillatorNode { return this.sawOscillatorNode; }
+
+    // getters for the LFO managers of this oscillator
+    public getFreqLfoManager(): LfoManager { return this.freqLfoManager; }
+    public getPulseWidthLfoManager(): LfoManager { return this.pulseWidthLfoManager; }
+    public getUnisonDetuneLfoManager(): LfoManager { return this.unisonDetuneLfoManager; }
 }
