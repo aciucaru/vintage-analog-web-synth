@@ -361,6 +361,6 @@ export class MultiShapeOscillator extends BasePulseOscillator
     // getters for the LFO managers of this oscillator
     public getFreqLfoManager(): LfoManager { return this.freqLfoManager; }
     public getAmpLfoManager(): LfoManager { return this.ampLfoManager; }
-    public getPulseLfoManager(): LfoManager { return this.pulseWidthLfoManager; }
+    public getPulseWidthLfoManager(): LfoManager { return this.pulseWidthLfoManager; }
     public getUnisonDetuneLfoManager(): LfoManager { return this.unisonDetuneLfoManager; }
 }

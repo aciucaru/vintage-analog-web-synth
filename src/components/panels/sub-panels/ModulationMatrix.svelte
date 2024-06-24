@@ -9,6 +9,7 @@
 
     function onModAmountChange(octavesOffset: number): void { }
 
+    // Oscillator 1 callbacks ****************************************************************************
     // callbacks for Oscillator 1 frequency **************************************************************
     function onOscillator1FreqLfo1Toggle(isToggled: boolean): void
     {
@@ -101,6 +102,289 @@
     {
         voice.getMultiShapeOscillator1().getAmpLfoManager().setNormalizedModulationAmount(normalizedAmount);
     }
+
+
+    // callbacks for Oscillator 1 pulse width **************************************************************
+    function onOscillator1PulseWidthLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().enableLfo(0);
+        else
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().disableLfo(0);
+    }
+
+    function onOscillator1PulseWidthLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().enableLfo(1);
+        else
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().disableLfo(1);
+    }
+
+    function onOscillator1PulseWidthLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().enableLfo(2);
+        else
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().disableLfo(2);
+    }
+
+    function onOscillator1PulseWidthLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().enableLfo(3);
+        else
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().disableLfo(3);
+    }
+
+    function onOscillator1PulseWidthLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().enableLfo(4);
+        else
+            voice.getMultiShapeOscillator1().getPulseWidthLfoManager().disableLfo(4);
+    }
+
+    function onOscillator1PulseWidthLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getMultiShapeOscillator1().getPulseWidthLfoManager().setNormalizedModulationAmount(normalizedAmount);
+    }
+
+
+    // callbacks for Oscillator 1 unison **************************************************************
+    function onOscillator1UnisonDetuneLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().enableLfo(0);
+        else
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().disableLfo(0);
+    }
+
+    function onOscillator1UnisonDetuneLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().enableLfo(1);
+        else
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().disableLfo(1);
+    }
+
+    function onOscillator1UnisonDetuneLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().enableLfo(2);
+        else
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().disableLfo(2);
+    }
+
+    function onOscillator1UnisonDetuneLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().enableLfo(3);
+        else
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().disableLfo(3);
+    }
+
+    function onOscillator1UnisonDetuneLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().enableLfo(4);
+        else
+            voice.getMultiShapeOscillator1().getUnisonDetuneLfoManager().disableLfo(4);
+    }
+
+    function onOscillator1UnisonDetuneLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getMultiShapeOscillator1().getPulseWidthLfoManager().setNormalizedModulationAmount(normalizedAmount);
+    }
+
+
+    // Oscillator 2 callbacks ****************************************************************************
+    // callbacks for Oscillator 2 frequency **************************************************************
+    function onOscillator2FreqLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getFreqLfoManager().enableLfo(0);
+        else
+            voice.getMultiShapeOscillator2().getFreqLfoManager().disableLfo(0);
+    }
+
+    function onOscillator2FreqLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getFreqLfoManager().enableLfo(1);
+        else
+            voice.getMultiShapeOscillator2().getFreqLfoManager().disableLfo(1);
+    }
+
+    function onOscillator2FreqLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getFreqLfoManager().enableLfo(2);
+        else
+            voice.getMultiShapeOscillator2().getFreqLfoManager().disableLfo(2);
+    }
+
+    function onOscillator2FreqLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getFreqLfoManager().enableLfo(3);
+        else
+            voice.getMultiShapeOscillator2().getFreqLfoManager().disableLfo(3);
+    }
+
+    function onOscillator2FreqLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getFreqLfoManager().enableLfo(4);
+        else
+            voice.getMultiShapeOscillator2().getFreqLfoManager().disableLfo(4);
+    }
+
+    function onOscillator2FreqLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getMultiShapeOscillator2().getFreqLfoManager().setNormalizedModulationAmount(normalizedAmount);
+    }
+
+
+    // callbacks for Oscillator 2 amplitude **************************************************************
+    function onOscillator2AmpLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getAmpLfoManager().enableLfo(0);
+        else
+            voice.getMultiShapeOscillator2().getAmpLfoManager().disableLfo(0);
+    }
+
+    function onOscillator2AmpLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getAmpLfoManager().enableLfo(1);
+        else
+            voice.getMultiShapeOscillator2().getAmpLfoManager().disableLfo(1);
+    }
+
+    function onOscillator2AmpLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getAmpLfoManager().enableLfo(2);
+        else
+            voice.getMultiShapeOscillator2().getAmpLfoManager().disableLfo(2);
+    }
+
+    function onOscillator2AmpLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getAmpLfoManager().enableLfo(3);
+        else
+            voice.getMultiShapeOscillator2().getAmpLfoManager().disableLfo(3);
+    }
+
+    function onOscillator2AmpLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getAmpLfoManager().enableLfo(4);
+        else
+            voice.getMultiShapeOscillator2().getAmpLfoManager().disableLfo(4);
+    }
+
+    function onOscillator2AmpLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getMultiShapeOscillator2().getAmpLfoManager().setNormalizedModulationAmount(normalizedAmount);
+    }
+
+
+    // callbacks for Oscillator 2 pulse width **************************************************************
+    function onOscillator2PulseWidthLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().enableLfo(0);
+        else
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().disableLfo(0);
+    }
+
+    function onOscillator2PulseWidthLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().enableLfo(1);
+        else
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().disableLfo(1);
+    }
+
+    function onOscillator2PulseWidthLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().enableLfo(2);
+        else
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().disableLfo(2);
+    }
+
+    function onOscillator2PulseWidthLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().enableLfo(3);
+        else
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().disableLfo(3);
+    }
+
+    function onOscillator2PulseWidthLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().enableLfo(4);
+        else
+            voice.getMultiShapeOscillator2().getPulseWidthLfoManager().disableLfo(4);
+    }
+
+    function onOscillator2PulseWidthLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getMultiShapeOscillator2().getPulseWidthLfoManager().setNormalizedModulationAmount(normalizedAmount);
+    }
+
+
+    // callbacks for Oscillator 2 unison **************************************************************
+    function onOscillator2UnisonDetuneLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().enableLfo(0);
+        else
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().disableLfo(0);
+    }
+
+    function onOscillator2UnisonDetuneLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().enableLfo(1);
+        else
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().disableLfo(1);
+    }
+
+    function onOscillator2UnisonDetuneLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().enableLfo(2);
+        else
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().disableLfo(2);
+    }
+
+    function onOscillator2UnisonDetuneLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().enableLfo(3);
+        else
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().disableLfo(3);
+    }
+
+    function onOscillator2UnisonDetuneLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().enableLfo(4);
+        else
+            voice.getMultiShapeOscillator2().getUnisonDetuneLfoManager().disableLfo(4);
+    }
+
+    function onOscillator2UnisonDetuneLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getMultiShapeOscillator2().getPulseWidthLfoManager().setNormalizedModulationAmount(normalizedAmount);
+    }
 </script>
 
 <div class="main-container">
@@ -116,6 +400,8 @@
         <div class="mod-source-header unselectable">Amount</div>
     </div>
 
+    <!-- Oscillator 1 modulators *********************************************************************************************************************** -->
+    <!-- Oscillator 1 frequency modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 Freq</div>
 
@@ -158,6 +444,7 @@
             step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1FreqLfoModAmountChange}></Knob>
     </div>
 
+    <!-- Oscillator 1 amplitude modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 Amp</div>
 
@@ -199,256 +486,263 @@
         <Knob onValueChange={onOscillator1AmpLfoModAmountChange}></Knob>
     </div>
 
+    <!-- Oscillator 1 pulse width modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 PW</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob onValueChange={onOscillator1PulseWidthLfoModAmountChange}></Knob>
     </div>
 
+    <!-- Oscillator 1 unison detune modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC1 Detune</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob onValueChange={onOscillator1UnisonDetuneLfoModAmountChange}></Knob>
     </div>
 
 
-
+    <!-- Oscillator 2 modulators *********************************************************************************************************************** -->
+    <!-- Oscillator 2 frequency modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC2 Freq</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob onValueChange={onOscillator2FreqLfoModAmountChange}></Knob>
     </div>
 
+    <!-- Oscillator 2 amplitude modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC2 Amp</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob onValueChange={onOscillator2AmpLfoModAmountChange}></Knob>
     </div>
 
+    <!-- Oscillator 2 pulse width modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">OSC2 PW</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob onValueChange={onOscillator2PulseWidthLfoModAmountChange}></Knob>
     </div>
 
+    <!-- Oscillator 2 unison detune modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
-        <div class="mod-destination-title unselectable">OSC3 Detune</div>
+        <div class="mod-destination-title unselectable">OSC2 Detune</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob onValueChange={onOscillator2UnisonDetuneLfoModAmountChange}></Knob>
     </div>
 
 
-
+    <!-- Sub Oscillator modulators *********************************************************************************************************************** -->
+    <!-- Sub Oscillator frequency modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">SUB Freq</div>
 
@@ -490,6 +784,7 @@
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
+    <!-- Sub Oscillator amplitude modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">SUB Amp</div>
 
@@ -532,7 +827,8 @@
     </div>
 
 
-
+    <!-- Filter modulators *********************************************************************************************************************** -->
+    <!-- Filter cutoff frequency modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">FILTER Cutoff</div>
 
@@ -574,8 +870,51 @@
         <Knob onValueChange={onModAmountChange}></Knob>
     </div>
 
+    <!-- Filter resonance modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">FILTER Res</div>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
+            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
+            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
+            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
+        </ToggleButton>
+
+        <Knob onValueChange={onModAmountChange}></Knob>
+    </div>
+
+    <!-- Filter drive modulators ************************************************************************************************************* -->
+    <div class="horizontal-container">
+        <div class="mod-destination-title unselectable">FILTER Drive</div>
 
         <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
