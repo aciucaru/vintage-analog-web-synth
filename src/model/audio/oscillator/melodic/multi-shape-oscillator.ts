@@ -28,6 +28,14 @@ export class MultiShapeOscillator extends BasePulseOscillator
     private sawOscillatorGainNode: GainNode;
     private pulseOscillatorGainNode: GainNode;
 
+    /* parameter value node (constant node):
+    ** This is like a 'constant oscillators' that always emits the same value, and here it is used as the value of
+    ** the amplitude (gain) parameter.
+    **
+    ** The purpose of this constant nodes is to be able to add the current value of the parameter with the value
+    ** of an LFO and/or an ADSR envelope. It bassicaly allows modulation. */
+    private ampValueNode: ConstantSourceNode;
+
     // modulator nodes:
     private freqLfoManager: LfoManager;
     private ampLfoManager: LfoManager;
@@ -41,8 +49,10 @@ export class MultiShapeOscillator extends BasePulseOscillator
         super(audioContext, initialGain);
 
         // instantiate the LFO managers for the modulatable parameters of this oscillator
+        // this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
+        //                                         NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
         this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+                                                -400, 400, 0);
         this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
                                                 Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
         this.pulseWidthLfoManager = new LfoManager(this.audioContext, lfoArray,
@@ -98,12 +108,20 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.sawOscillatorNode.start();
         // this.pulseOscNode was already started in it's constructor, no need to start it manually
 
+        // instantiate and set the constant nodes that will represent the current value of a parameter of this osc
+        this.ampValueNode = this.audioContext.createConstantSource();
+        this.ampValueNode.offset.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
+
         // connect the frequency LFO manager to the oscillators
         this.freqLfoManager.mainNode().connect(this.triangleOscillatorNode.frequency);
         this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
         // the 'freqLfoManager' was already connected to 'pulseOscNode' in the constructor of 'pulseOscNode'
 
         // for the amplitude LFO manager, we only connect to one node, the output gain node
+        this.ampValueNode.connect(this.analyserGainNode.gain);
+        this.ampLfoManager.mainNode().connect(this.analyserGainNode.gain);
+
+        this.ampValueNode.connect(this.outputGainNode.gain);
         this.ampLfoManager.mainNode().connect(this.outputGainNode.gain);
 
         /* for the pulse width modulation, there is no need to connect anything, the pulse width LfoManager
@@ -268,6 +286,33 @@ export class MultiShapeOscillator extends BasePulseOscillator
             this.sawOscillatorGainValue = 0;
             this.pulseOscillatorGainValue = 0;
         }
+
+        const currentTime = this.audioContext.currentTime;
+
+        // set the gain values for all oscillators (using their associated gain values)
+        this.triangleOscillatorGainNode.gain.setValueAtTime(this.triangleOscillatorGainValue, currentTime);
+        this.sawOscillatorGainNode.gain.setValueAtTime(this.sawOscillatorGainValue, currentTime);
+        this.pulseOscillatorGainNode.gain.setValueAtTime(this.pulseOscillatorGainValue, currentTime);
+    }
+
+    public setOutputGain(gain: number): boolean
+    {
+        if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
+        {
+            MultiShapeOscillator.logger.debug(`setOutputGain(${gain})`);
+
+            // set the new value
+            this.ampValueNode.offset.linearRampToValueAtTime(gain, this.audioContext.currentTime);
+            this.ampLfoManager.setParameterCurrentValue(gain);
+
+            return true; // change was successfull
+        }
+        else
+        {
+            MultiShapeOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
+
+            return false; // change was not successfull
+        }
     }
 
     private setGainValues(): void
@@ -303,7 +348,7 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.computeGainValues();
 
         // reset the gain values for all oscillators (based on computed values from 'computeGainValues()')
-        this.setGainValues();
+        // this.setGainValues();
     }
 
     public toggleSawShape(): void
@@ -329,7 +374,7 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.computeGainValues();
 
         // reset the gain values for all oscillators (based on computed values from 'computeGainValues()')
-        this.setGainValues();
+        // this.setGainValues();
     }
 
     public togglePulseShape(): void
@@ -355,7 +400,7 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.computeGainValues();
 
         // reset the gain values for all oscillators (based on computed values from 'computeGainValues()')
-        this.setGainValues();
+        // this.setGainValues();
     }
 
     // getters for the LFO managers of this oscillator

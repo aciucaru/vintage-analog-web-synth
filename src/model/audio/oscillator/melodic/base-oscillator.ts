@@ -51,24 +51,24 @@ export abstract class BaseOscillator
     }
 
     // sets the value of the main gain node
-    public setOutputGain(gain: number): boolean
-    {
-        if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
-        {
-            BaseOscillator.baseOscLogger.debug(`setOutputGain(${gain})`);
+    // public setOutputGain(gain: number): boolean
+    // {
+    //     if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
+    //     {
+    //         BaseOscillator.baseOscLogger.debug(`setOutputGain(${gain})`);
 
-            // set the new value
-            this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
+    //         // set the new value
+    //         this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
 
-            return true; // change was successfull
-        }
-        else
-        {
-            BaseOscillator.baseOscLogger.warn(`setOutputGain(${gain}): value outside bounds`);
+    //         return true; // change was successfull
+    //     }
+    //     else
+    //     {
+    //         BaseOscillator.baseOscLogger.warn(`setOutputGain(${gain}): value outside bounds`);
 
-            return false; // change was not successfull
-        }
-    }
+    //         return false; // change was not successfull
+    //     }
+    // }
 
     // returns the main gain node
     public outputNode(): GainNode { return this.outputGainNode; }

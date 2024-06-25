@@ -40,7 +40,6 @@ export class Voice
 
     private outputGainNode: GainNode;
 
-
     private sharedLfoArray: Array<UnipolarLfo>;
     // modulator nodes:
     private freqLfoManager: LfoManager;

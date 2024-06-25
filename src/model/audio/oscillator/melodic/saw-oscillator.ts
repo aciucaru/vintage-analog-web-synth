@@ -81,7 +81,7 @@ export class SawOscillator extends BaseUnisonOscillator
 
             // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -100,7 +100,7 @@ export class SawOscillator extends BaseUnisonOscillator
 
             // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -119,7 +119,7 @@ export class SawOscillator extends BaseUnisonOscillator
 
             // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -138,7 +138,7 @@ export class SawOscillator extends BaseUnisonOscillator
 
             // this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SawOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);

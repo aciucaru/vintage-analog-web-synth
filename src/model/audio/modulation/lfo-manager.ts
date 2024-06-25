@@ -225,7 +225,7 @@ export class LfoManager extends BaseAudioNode
 
         // if all LFOs are disabled
         if (this.numberOfEnabledLfos == 0)
-            finalGain = 0.0; // if no LFOs are enabled, then te modulation is zero
+            finalGain = 0.0; // if no LFOs are enabled, then the modulation is zero
         // if there is at least one enabled LFO
         else if (this.numberOfEnabledLfos > 0)
             finalGain = (1.0 / this.numberOfEnabledLfos) * this.absoluteModulationAmount;

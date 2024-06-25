@@ -55,8 +55,10 @@ export class SubOscillator extends BaseMelodicOscillator
         this.ampValueNode.offset.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
 
         // instantiate the LFO managers for the modulatable parameters of this oscillator
+        // this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
+        //                                         NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
         this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+                                                -1000, 1000, 0);
         this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
                                                 Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
 
@@ -83,7 +85,7 @@ export class SubOscillator extends BaseMelodicOscillator
 
             // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -102,7 +104,7 @@ export class SubOscillator extends BaseMelodicOscillator
 
             // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -121,7 +123,7 @@ export class SubOscillator extends BaseMelodicOscillator
 
             // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -140,12 +142,32 @@ export class SubOscillator extends BaseMelodicOscillator
 
             // this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             SubOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
 
         return isChangeSuccessfull;
+    }
+
+    public setOutputGain(gain: number): boolean
+    {
+        if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
+        {
+            SubOscillator.logger.debug(`setOutputGain(${gain})`);
+
+            // set the new value
+            this.ampValueNode.offset.linearRampToValueAtTime(gain, this.audioContext.currentTime);
+            this.ampLfoManager.setParameterCurrentValue(gain);
+
+            return true; // change was successfull
+        }
+        else
+        {
+            SubOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
+
+            return false; // change was not successfull
+        }
     }
     
     // getters for the LFO managers of this oscillator

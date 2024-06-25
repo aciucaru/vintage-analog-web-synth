@@ -81,7 +81,7 @@ export class TriangleOscillator extends BaseUnisonOscillator
 
             // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -100,7 +100,7 @@ export class TriangleOscillator extends BaseUnisonOscillator
 
             // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -119,7 +119,7 @@ export class TriangleOscillator extends BaseUnisonOscillator
 
             // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -138,7 +138,7 @@ export class TriangleOscillator extends BaseUnisonOscillator
 
             // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             TriangleOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);

@@ -8,5 +8,5 @@ export const lfoArray: Array<UnipolarLfo> = new Array<UnipolarLfo>(Settings.lfoC
 for (let i = 0; i < lfoArray.length; i++)
 {
     lfoArray[i] = new UnipolarLfo(audioContext);
-    lfoArray[i].setFrequency(20);
+    lfoArray[i].setFrequency(Settings.defaultLfoAbsoluteFrequency);
 }

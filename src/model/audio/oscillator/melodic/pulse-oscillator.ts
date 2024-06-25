@@ -144,7 +144,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -163,7 +163,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -182,7 +182,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -201,7 +201,7 @@ export class PulseOscillator extends BasePulseOscillator
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
             this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);

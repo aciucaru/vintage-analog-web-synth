@@ -148,9 +148,9 @@ export class Settings
     public static readonly maxLfoGain = 1; 
     public static readonly defaultLfoGain = 0.0;
 
-    public static readonly minLfoAbsoluteFrequency = 10; // 10 Hz
-    public static readonly maxLfoAbsoluteFrequency = 1000; // 1000 Hz
-    public static readonly defaultLfoAbsoluteFrequency = 10; // 10 Hz
+    public static readonly minLfoAbsoluteFrequency = 0.1;
+    public static readonly maxLfoAbsoluteFrequency = 50;
+    public static readonly defaultLfoAbsoluteFrequency = 5;
 
     // settings for shareable LFO
     public static readonly shareableLfoDisabledGain = 0.0;
