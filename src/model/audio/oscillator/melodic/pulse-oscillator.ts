@@ -18,10 +18,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import { Settings } from "../../../../constants/settings";
-import { NoteSettings } from "../../../../constants/note-settings";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 
-import { LfoManager } from "../../modulation/lfo-manager";
+import type { ParameterManager } from "../../modulation/parameter-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -42,32 +41,17 @@ export class PulseOscillator extends BasePulseOscillator
     // the pulse width is also modulatable, thanks to this gain node;
     private pulseWidthGainNode: GainNode;
 
-    /* parameter value nodes (constant nodes):
-    ** These are 'constant oscillators' that always emit the same value, and here they are used as the value of
-    ** some parameters of this oscillator (frequency, pulse width, unison detune).
-    **
-    ** The purpose of these constant nodes is to be able to add the current value of the parameter with the value
-    ** of an LFO and/or an ADSR envelope. They bassicaly allow modulation.
-    **
-    ** The constant node is basically the value of the modulatable parameter (regardless if the parameter is being modulated or not).
-    **
-    ** The final value of the oscillator's parameter is the sum of the ConstantSourceNode, the LfoManager and the ADSR envelope.
-    ** The sum is made by connecting al previous 3 nodes (constant, LFO and ADSR) to the same parameter. */
-    private freqValueNode: ConstantSourceNode;
-    private pulseWidthValueNode: ConstantSourceNode;
-    private unisonDetuneValueNode: ConstantSourceNode;
-
-    // modulator nodes:
-    private freqLfoManager: LfoManager;
-    private pulseWidthLfoManager: LfoManager;
-    private unisonDetuneLfoManager: LfoManager;
+    // parameter manager nodes
+    private freqParamManager: ParameterManager;
+    private pulseWidthParamManager: ParameterManager;
+    private unisonDetuneParamManager: ParameterManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "PulseOscillator", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext, initialGain: number,
-                freqLfoManager: LfoManager,
-                pulseWidthLfoManager: LfoManager,
-                unisonDetuneLfoManager: LfoManager)
+                freqParamManager: ParameterManager,
+                pulseWidthParamManager: ParameterManager,
+                unisonDetuneParamManager: ParameterManager)
     {
         super(audioContext, initialGain);
 
@@ -105,30 +89,14 @@ export class PulseOscillator extends BasePulseOscillator
         // connect the output gain to the analyser node
         this.squareWaveShaper.connect(this.analyserGainNode);
 
-        // instantiate and set the constant nodes that will represent the current value of a parameter of this osc
-        this.freqValueNode = this.audioContext.createConstantSource();
-        this.freqValueNode.offset.setValueAtTime(NoteSettings.defaultFrequency, this.audioContext.currentTime);
-
-        this.pulseWidthValueNode = this.audioContext.createConstantSource();
-        this.pulseWidthValueNode.offset.setValueAtTime(Settings.defaultOscPulseWidth, this.audioContext.currentTime);
-
-        this.unisonDetuneValueNode = this.audioContext.createConstantSource();
-        this.unisonDetuneValueNode.offset.setValueAtTime(Settings.defaultOscUnisonCentsDetune, this.audioContext.currentTime);
-
-        // set the LFO managers for the modulatable parameters of this oscillator
-        this.freqLfoManager = freqLfoManager;
-        this.pulseWidthLfoManager = pulseWidthLfoManager;
-        this.unisonDetuneLfoManager = unisonDetuneLfoManager;
+        this.freqParamManager = freqParamManager;
+        this.pulseWidthParamManager = pulseWidthParamManager;
+        this.unisonDetuneParamManager = unisonDetuneParamManager;
 
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
-        this.freqValueNode.connect(this.sawOscillatorNode.frequency);
-        this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
-
-        this.pulseWidthValueNode.connect(this.pulseWidthGainNode.gain);
-        this.pulseWidthLfoManager.mainNode().connect(this.pulseWidthGainNode.gain);
-
-        this.unisonDetuneValueNode.connect(this.sawOscillatorNode.detune);
-        this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
+        this.freqParamManager.mainNode().connect(this.sawOscillatorNode.frequency);
+        this.pulseWidthParamManager.mainNode().connect(this.pulseWidthGainNode.gain);
+        this.unisonDetuneParamManager.mainNode().connect(this.sawOscillatorNode.detune);
 
         // start the main sound oscillator
         this.sawOscillatorNode.start();
@@ -143,8 +111,7 @@ export class PulseOscillator extends BasePulseOscillator
             PulseOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -162,8 +129,7 @@ export class PulseOscillator extends BasePulseOscillator
             PulseOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -181,8 +147,7 @@ export class PulseOscillator extends BasePulseOscillator
             PulseOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -200,8 +165,7 @@ export class PulseOscillator extends BasePulseOscillator
             PulseOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
             // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.freqValueNode.offset.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            // this.freqLfoManager.setParameterCurrentValue(this.note.getFreq());
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
             PulseOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
@@ -216,8 +180,7 @@ export class PulseOscillator extends BasePulseOscillator
             PulseOscillator.logger.debug(`setDetune(${centsDetune})`);
 
             // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
-            this.unisonDetuneValueNode.offset.setValueAtTime(centsDetune, this.audioContext.currentTime);
-            this.unisonDetuneLfoManager.setParameterCurrentValue(centsDetune);
+            this.unisonDetuneParamManager.setParameterCurrentValue(centsDetune);
 
             return true;
         }
@@ -239,8 +202,7 @@ export class PulseOscillator extends BasePulseOscillator
             this.constantCurve[1] = pulseWidth;
 
             // this.modulatableGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
-            this.pulseWidthValueNode.offset.setValueAtTime(pulseWidth, this.audioContext.currentTime);
-            this.pulseWidthLfoManager.setParameterCurrentValue(pulseWidth);
+            this.pulseWidthParamManager.setParameterCurrentValue(pulseWidth);
 
             return true; // change was succesfull
         }
@@ -252,74 +214,10 @@ export class PulseOscillator extends BasePulseOscillator
         }
     }
 
-    /* LFO related methods.
-    ** The modulation amount is always in normalized form (values between -1.0 and 1.0). The normalized values
-    ** are basically like percentages between -100% and 100%. */
-
-    // Sets the modulation amount for the frequency of this oscillator
-    // public setFreqLfoModAmount(normalizedModulationAmount: number): boolean
-    // {
-    //     if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
-    //         && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
-    //     {
-    //         PulseOscillator.logger.debug(`setFreqLfoModAmount(${normalizedModulationAmount})`);
-
-    //         this.freqLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
-
-    //         return true; // change was succesfull
-    //     }
-    //     else
-    //     {
-    //         PulseOscillator.logger.warn(`setFreqLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
-
-    //         return false; // change was not succesfull
-    //     }
-    // }
-
-    // Sets the modulation amount for the pulse width of this oscillator
-    // public setPulseWidthLfoModAmount(normalizedModulationAmount: number): boolean
-    // {
-    //     if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
-    //         && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
-    //     {
-    //         PulseOscillator.logger.debug(`setPulseWidthLfoModAmount(${normalizedModulationAmount})`);
-
-    //         this.pulseWidthLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
-
-    //         return true; // change was succesfull
-    //     }
-    //     else
-    //     {
-    //         PulseOscillator.logger.warn(`setPulseWidthLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
-
-    //         return false; // change was not succesfull
-    //     }
-    // }
-
-    // Sets the modulation amount for the pulse width of this oscillator
-    // public setUnisonDetuneLfoModAmount(normalizedModulationAmount: number): boolean
-    // {
-    //     if (Settings.minLfoNormalizedModulationAmount <= normalizedModulationAmount
-    //         && normalizedModulationAmount <= Settings.maxLfoNormalizedModulationAmount)
-    //     {
-    //         PulseOscillator.logger.debug(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount})`);
-
-    //         this.unisonDetuneLfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
-
-    //         return true; // change was succesfull
-    //     }
-    //     else
-    //     {
-    //         PulseOscillator.logger.warn(`setUnisonDetuneLfoModAmount(${normalizedModulationAmount}): paramater is outside bounds`);
-
-    //         return false; // change was not succesfull
-    //     }
-    // }
-
     public getOscillatorNode(): OscillatorNode { return this.sawOscillatorNode; }
 
     // getters for the LFO managers of this oscillator
-    public getFreqLfoManager(): LfoManager { return this.freqLfoManager; }
-    public getPulseWidthLfoManager(): LfoManager { return this.pulseWidthLfoManager; }
-    public getUnisonDetuneLfoManager(): LfoManager { return this.unisonDetuneLfoManager; }
+    public getFreqLfoManager(): ParameterManager { return this.freqParamManager; }
+    public getPulseWidthLfoManager(): ParameterManager { return this.pulseWidthParamManager; }
+    public getUnisonDetuneLfoManager(): ParameterManager { return this.unisonDetuneParamManager; }
 }

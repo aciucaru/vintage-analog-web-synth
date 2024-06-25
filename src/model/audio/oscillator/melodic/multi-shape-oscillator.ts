@@ -1,5 +1,4 @@
 import { Settings } from "../../../../constants/settings";
-import { NoteSettings } from "../../../../constants/note-settings";
 import { PulseOscillator } from "./pulse-oscillator";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 
@@ -64,9 +63,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.triangleOscillatorNode = this.audioContext.createOscillator();
         this.sawOscillatorNode = this.audioContext.createOscillator();
         this.pulseOscillatorNode = new PulseOscillator(this.audioContext, Settings.maxOscGain,
-                                                this.freqLfoManager,
-                                                this.pulseWidthLfoManager,
-                                                this.unisonDetuneLfoManager);
+                                                        this.freqLfoManager,
+                                                        this.pulseWidthLfoManager,
+                                                        this.unisonDetuneLfoManager);
         
         // set the shape of the sound oscillators (never changes)
         this.triangleOscillatorNode.type = "triangle";
