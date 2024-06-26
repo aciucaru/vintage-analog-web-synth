@@ -1,9 +1,12 @@
 import { Settings } from "../../../../constants/settings";
-import { PulseOscillator } from "./pulse-oscillator";
+import { NoteSettings } from "../../../../constants/note-settings";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
+import { PulseOscillator } from "./pulse-oscillator";
+import { TriangleOscillator } from "./triangle-oscillator";
+import { SawOscillator } from "./saw-oscillator";
 
-import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
-import { LfoManager } from "../../modulation/lfo-manager";
+import { UnipolarLfo } from "../../modulation/unipolar-lfo";
+import { ParameterManager } from "../../modulation/parameter-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -11,8 +14,8 @@ import type { ILogObj } from "tslog";
 
 export class MultiShapeOscillator extends BasePulseOscillator
 {
-    private triangleOscillatorNode: OscillatorNode;
-    private sawOscillatorNode: OscillatorNode;
+    private triangleOscillatorNode: TriangleOscillator;
+    private sawOscillatorNode: SawOscillator;
     private pulseOscillatorNode: PulseOscillator;
 
     private triangleOscillatorEnabled: boolean = true;
@@ -27,19 +30,11 @@ export class MultiShapeOscillator extends BasePulseOscillator
     private sawOscillatorGainNode: GainNode;
     private pulseOscillatorGainNode: GainNode;
 
-    /* parameter value node (constant node):
-    ** This is like a 'constant oscillators' that always emits the same value, and here it is used as the value of
-    ** the amplitude (gain) parameter.
-    **
-    ** The purpose of this constant nodes is to be able to add the current value of the parameter with the value
-    ** of an LFO and/or an ADSR envelope. It bassicaly allows modulation. */
-    private ampValueNode: ConstantSourceNode;
-
-    // modulator nodes:
-    private freqLfoManager: LfoManager;
-    private ampLfoManager: LfoManager;
-    private pulseWidthLfoManager: LfoManager;
-    private unisonDetuneLfoManager: LfoManager;
+    // parameter manager nodes:
+    private freqParamManager: ParameterManager;
+    private ampParamManager: ParameterManager;
+    private pulseWidthParamManager: ParameterManager;
+    private unisonDetuneParamManager: ParameterManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "MultiShapeOscillator", minLevel: Settings.minLogLevel });
 
@@ -47,34 +42,26 @@ export class MultiShapeOscillator extends BasePulseOscillator
     {
         super(audioContext, initialGain);
 
-        // instantiate the LFO managers for the modulatable parameters of this oscillator
-        // this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-        //                                         NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
-        this.freqLfoManager = new LfoManager(this.audioContext, lfoArray,
-                                                -400, 400, 0);
-        this.ampLfoManager = new LfoManager(this.audioContext, lfoArray,
+        this.freqParamManager = new ParameterManager(this.audioContext, lfoArray,
+                                                22.5, 7040, NoteSettings.defaultFrequency);
+        this.ampParamManager = new ParameterManager(this.audioContext, lfoArray,
                                                 Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
-        this.pulseWidthLfoManager = new LfoManager(this.audioContext, lfoArray,
+        this.pulseWidthParamManager = new ParameterManager(this.audioContext, lfoArray,
                                                     Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
-        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, lfoArray,
+        this.unisonDetuneParamManager = new ParameterManager(this.audioContext, lfoArray,
                                                         Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune, Settings.defaultOscUnisonCentsDetune);
 
         // instantiate all sound oscillators
-        this.triangleOscillatorNode = this.audioContext.createOscillator();
-        this.sawOscillatorNode = this.audioContext.createOscillator();
+        this.triangleOscillatorNode = new TriangleOscillator(this.audioContext, Settings.maxOscGain,
+                                                                this.freqParamManager,
+                                                                this.unisonDetuneParamManager);
+        this.sawOscillatorNode = new SawOscillator(this.audioContext, Settings.maxOscGain,
+                                                    this.freqParamManager,
+                                                    this.unisonDetuneParamManager);
         this.pulseOscillatorNode = new PulseOscillator(this.audioContext, Settings.maxOscGain,
-                                                        this.freqLfoManager,
-                                                        this.pulseWidthLfoManager,
-                                                        this.unisonDetuneLfoManager);
-        
-        // set the shape of the sound oscillators (never changes)
-        this.triangleOscillatorNode.type = "triangle";
-        this.sawOscillatorNode.type = "sawtooth";
-
-        // set the initial frequency of the sound oscillators
-        this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-        this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-        this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+                                                        this.freqParamManager,
+                                                        this.pulseWidthParamManager,
+                                                        this.unisonDetuneParamManager);
 
         // instatiate the gain nodes of the sound oscillators
         this.triangleOscillatorGainNode = this.audioContext.createGain();
@@ -88,8 +75,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
 
         // connect the nodes betwen them:
         // connect the 3 oscillators to their coresponding gain node
-        this.triangleOscillatorNode.connect(this.triangleOscillatorGainNode);
-        this.sawOscillatorNode.connect(this.sawOscillatorGainNode);
+        this.triangleOscillatorNode.outputNode().connect(this.triangleOscillatorGainNode);
+        this.sawOscillatorNode.outputNode().connect(this.sawOscillatorGainNode);
         this.pulseOscillatorNode.outputNode().connect(this.pulseOscillatorGainNode);
 
         // connect the gain nodes for the 3 oscillators to the same intermediate gain node, to combine them
@@ -102,34 +89,9 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.sawOscillatorGainNode.connect(this.analyserGainNode);
         this.pulseOscillatorGainNode.connect(this.analyserGainNode);
 
-        // start the sound oscillators
-        this.triangleOscillatorNode.start();
-        this.sawOscillatorNode.start();
-        // this.pulseOscNode was already started in it's constructor, no need to start it manually
-
-        // instantiate and set the constant nodes that will represent the current value of a parameter of this osc
-        this.ampValueNode = this.audioContext.createConstantSource();
-        this.ampValueNode.offset.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
-
-        // connect the frequency LFO manager to the oscillators
-        this.freqLfoManager.mainNode().connect(this.triangleOscillatorNode.frequency);
-        this.freqLfoManager.mainNode().connect(this.sawOscillatorNode.frequency);
-        // the 'freqLfoManager' was already connected to 'pulseOscNode' in the constructor of 'pulseOscNode'
-
-        // for the amplitude LFO manager, we only connect to one node, the output gain node
-        this.ampValueNode.connect(this.analyserGainNode.gain);
-        this.ampLfoManager.mainNode().connect(this.analyserGainNode.gain);
-
-        this.ampValueNode.connect(this.outputGainNode.gain);
-        this.ampLfoManager.mainNode().connect(this.outputGainNode.gain);
-
-        /* for the pulse width modulation, there is no need to connect anything, the pulse width LfoManager
-        ** was already connected in the constructor of 'pulseOscNode' */
-
-        // connect the unison detune LFO manager to the oscillators
-        this.unisonDetuneLfoManager.mainNode().connect(this.sawOscillatorNode.detune);
-        this.unisonDetuneLfoManager.mainNode().connect(this.triangleOscillatorNode.detune);
-        // the 'unisonDetuneLfoManager' was already connected to 'pulseOscNode' in the constructor of 'pulseOscNode'
+        // for the amplitude LFO manager, we do not connect to each oscillator, we connect it directly to the output gain node
+        this.ampParamManager.mainNode().connect(this.analyserGainNode.gain);
+        this.ampParamManager.mainNode().connect(this.outputGainNode.gain);
     }
 
     public override setNote(octaves: number, semitones: number): boolean
@@ -140,9 +102,14 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.triangleOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
         }
         else
             MultiShapeOscillator.logger.warn(`setOctavesAndSemitones(${octaves}, ${semitones}): value/values outside bounds`);
@@ -159,9 +126,14 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.triangleOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
         }
         else
             MultiShapeOscillator.logger.warn(`setOctavesOffset(${octavesOffset}): value outside bounds`);
@@ -178,10 +150,14 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            // this.mainOsc.frequency.value = this.note.freq;
-            this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.triangleOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
         }
         else
             MultiShapeOscillator.logger.warn(`setSemitonesOffset(${semitonesOffset}): value outside bounds`);
@@ -198,10 +174,14 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            // this.mainOsc.frequency.value = this.note.freq;
-            this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-            this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // this.triangleOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.triangleOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.sawOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
+
+            // this.pulseOscillatorNode.getOscillatorNode().frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            this.pulseOscillatorNode.getFreqParamManager().setParameterCurrentValue(this.note.getFreq());
         }
         else
             MultiShapeOscillator.logger.warn(`setCentsOffset(${centsOffset}): value outside bounds`);
@@ -215,9 +195,14 @@ export class MultiShapeOscillator extends BasePulseOscillator
         {
             MultiShapeOscillator.logger.debug(`setDetune(${centsDetune})`);
 
-            this.triangleOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
-            this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
-            this.pulseOscillatorNode.getOscillatorNode().detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            // this.triangleOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.triangleOscillatorNode.getUnisonDetuneParamManager().setParameterCurrentValue(centsDetune);
+
+            // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.sawOscillatorNode.getUnisonDetuneParamManager().setParameterCurrentValue(centsDetune);
+
+            // this.pulseOscillatorNode.getOscillatorNode().detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.pulseOscillatorNode.getUnisonDetuneParamManager().setParameterCurrentValue(centsDetune);
 
             return true;
         }
@@ -235,6 +220,10 @@ export class MultiShapeOscillator extends BasePulseOscillator
         if (isChangeSuccsefull)
         {
             MultiShapeOscillator.logger.debug(`setPulseWidth(${pulseWidth})`);
+
+            // this.pulseOscillatorNode.getOscillatorNode().detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            this.pulseOscillatorNode.getPulseWidthParamManager().setParameterCurrentValue(pulseWidth);
+
             return true; // change was successfull
         }
         else
@@ -301,8 +290,7 @@ export class MultiShapeOscillator extends BasePulseOscillator
             MultiShapeOscillator.logger.debug(`setOutputGain(${gain})`);
 
             // set the new value
-            this.ampValueNode.offset.linearRampToValueAtTime(gain, this.audioContext.currentTime);
-            this.ampLfoManager.setParameterCurrentValue(gain);
+            this.ampParamManager.setParameterCurrentValue(gain);
 
             return true; // change was successfull
         }
@@ -403,8 +391,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
     }
 
     // getters for the LFO managers of this oscillator
-    public getFreqLfoManager(): LfoManager { return this.freqLfoManager; }
-    public getAmpLfoManager(): LfoManager { return this.ampLfoManager; }
-    public getPulseWidthLfoManager(): LfoManager { return this.pulseWidthLfoManager; }
-    public getUnisonDetuneLfoManager(): LfoManager { return this.unisonDetuneLfoManager; }
+    public getFreqLfoManager(): ParameterManager { return this.freqParamManager; }
+    public getAmpLfoManager(): ParameterManager { return this.ampParamManager; }
+    public getPulseWidthLfoManager(): ParameterManager { return this.pulseWidthParamManager; }
+    public getUnisonDetuneLfoManager(): ParameterManager { return this.unisonDetuneParamManager; }
 }

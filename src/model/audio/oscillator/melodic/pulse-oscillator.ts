@@ -217,7 +217,7 @@ export class PulseOscillator extends BasePulseOscillator
     public getOscillatorNode(): OscillatorNode { return this.sawOscillatorNode; }
 
     // getters for the LFO managers of this oscillator
-    public getFreqLfoManager(): ParameterManager { return this.freqParamManager; }
-    public getPulseWidthLfoManager(): ParameterManager { return this.pulseWidthParamManager; }
-    public getUnisonDetuneLfoManager(): ParameterManager { return this.unisonDetuneParamManager; }
+    public getFreqParamManager(): ParameterManager { return this.freqParamManager; }
+    public getPulseWidthParamManager(): ParameterManager { return this.pulseWidthParamManager; }
+    public getUnisonDetuneParamManager(): ParameterManager { return this.unisonDetuneParamManager; }
 }

@@ -136,6 +136,6 @@ export class SawOscillator extends BaseUnisonOscillator
     }
     
     // getters for the LFO managers of this oscillator
-    public getFreqLfoManager(): ParameterManager { return this.freqParamManager; }
-    public getUnisonDetuneLfoManager(): ParameterManager { return this.unisonDetuneParamManager; }
+    public getFreqParamManager(): ParameterManager { return this.freqParamManager; }
+    public getUnisonDetuneParamManager(): ParameterManager { return this.unisonDetuneParamManager; }
 }
