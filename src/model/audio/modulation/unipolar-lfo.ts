@@ -40,6 +40,7 @@ export class UnipolarLfo extends BaseAudioNode
     // the absolute frequency of the LFO, in Hz
     private absoluteFrequency: number = Settings.defaultLfoAbsoluteFrequency;
 
+    // these values are for the 'constant' oscillator and for the merger gain node, they are fixed and should never change
     private static readonly CONSTANT_OSCILLATOR_OFFSET = 1;
     private static readonly MERGER_GAIN_NODE_GAIN = 0.5;
 

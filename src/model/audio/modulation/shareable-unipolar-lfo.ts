@@ -29,8 +29,6 @@ export class ShareableUnipolarLfo extends BaseAudioNode
     // keeps track if the LFO is enabled or disabled
     private isLfoEnabled: boolean = false;
 
-    private static readonly OFFSET_DURATION = 0.02; // 20 miliseconds
-
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ShareableUnipolarLfo", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)

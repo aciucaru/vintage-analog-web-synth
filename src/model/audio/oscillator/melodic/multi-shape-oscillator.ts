@@ -30,6 +30,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
     private sawOscillatorGainNode: GainNode;
     private pulseOscillatorGainNode: GainNode;
 
+    private ampGainNode: GainNode;
+
     // parameter manager nodes:
     private freqParamManager: ParameterManager;
     private ampParamManager: ParameterManager;
@@ -43,7 +45,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
         super(audioContext, initialGain);
 
         this.freqParamManager = new ParameterManager(this.audioContext, lfoArray,
-                                                22.5, 7040, NoteSettings.defaultFrequency);
+                                                    NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency,
+                                                    true, Settings.lfoManagerFreqLowerFixedRange, Settings.lfoManagerFreqLowerFixedRange);
         this.ampParamManager = new ParameterManager(this.audioContext, lfoArray,
                                                 Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
         this.pulseWidthParamManager = new ParameterManager(this.audioContext, lfoArray,
@@ -79,10 +82,13 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.sawOscillatorNode.outputNode().connect(this.sawOscillatorGainNode);
         this.pulseOscillatorNode.outputNode().connect(this.pulseOscillatorGainNode);
 
+        this.ampGainNode = this.audioContext.createGain();
+        this.ampGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
+
         // connect the gain nodes for the 3 oscillators to the same intermediate gain node, to combine them
-        this.triangleOscillatorGainNode.connect(this.outputGainNode);
-        this.sawOscillatorGainNode.connect(this.outputGainNode);
-        this.pulseOscillatorGainNode.connect(this.outputGainNode);
+        this.triangleOscillatorGainNode.connect(this.ampGainNode);
+        this.sawOscillatorGainNode.connect(this.ampGainNode);
+        this.pulseOscillatorGainNode.connect(this.ampGainNode);
 
         // connect the output gain to the gain node for the analyser
         this.triangleOscillatorGainNode.connect(this.analyserGainNode);
@@ -90,8 +96,11 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.pulseOscillatorGainNode.connect(this.analyserGainNode);
 
         // for the amplitude LFO manager, we do not connect to each oscillator, we connect it directly to the output gain node
-        this.ampParamManager.mainNode().connect(this.analyserGainNode.gain);
-        this.ampParamManager.mainNode().connect(this.outputGainNode.gain);
+        // this.ampParamManager.mainNode().connect(this.analyserGainNode.gain); // optional, but not necessary
+        this.ampParamManager.mainNode().connect(this.ampGainNode.gain);
+
+        // for the amplitude LFO manager, we do not connect to each oscillator, we connect it directly to the output gain node
+        this.ampGainNode.connect(this.outputGainNode);
     }
 
     public override setNote(octaves: number, semitones: number): boolean
@@ -391,8 +400,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
     }
 
     // getters for the LFO managers of this oscillator
-    public getFreqLfoManager(): ParameterManager { return this.freqParamManager; }
-    public getAmpLfoManager(): ParameterManager { return this.ampParamManager; }
-    public getPulseWidthLfoManager(): ParameterManager { return this.pulseWidthParamManager; }
-    public getUnisonDetuneLfoManager(): ParameterManager { return this.unisonDetuneParamManager; }
+    public getFreqParamManager(): ParameterManager { return this.freqParamManager; }
+    public getAmpParamManager(): ParameterManager { return this.ampParamManager; }
+    public getPulseWidthParamManager(): ParameterManager { return this.pulseWidthParamManager; }
+    public getUnisonDetuneParamManager(): ParameterManager { return this.unisonDetuneParamManager; }
 }

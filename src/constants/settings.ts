@@ -166,8 +166,10 @@ export class Settings
     // settings for LFO manager: **************************************************************************
     public static readonly minLfoManagerModulationAmount = -1.0; // -100%
     public static readonly maxLfoManagerModulationAmount = 1.0; // 100%
-    public static readonly defaultLfoManagerModulationAmount = 0.0; // 0%
+    public static readonly defaultLfoManagerModulationAmount = 0.0; // 0%, no modulation
 
+    public static readonly lfoManagerFreqLowerFixedRange = 400; // 400 Hz
+    public static readonly lfoManagerFreqUpperFixedRange = 400; // 400 Hz
 
     // settings for voice *******************************************************************************
     public static readonly minVoiceGain = 0.0;

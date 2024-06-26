@@ -28,6 +28,7 @@ export class TriangleOscillator extends BaseUnisonOscillator
         // instantiate the sub oscillator and set settings
         this.triangleOscillator = this.audioContext.createOscillator();
         this.triangleOscillator.type = "triangle";
+        this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
 
         // connect the sub oscillator to the main output node
         this.triangleOscillator.connect(this.outputGainNode);

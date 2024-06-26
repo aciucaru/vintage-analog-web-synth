@@ -27,7 +27,7 @@ export class LfoManager extends BaseAudioNode
     private numberOfEnabledLfos = 0;
 
     // the modulation amount, in normalized form (between -1.0 and 1.0, where 0.0 means no modulation)
-    private normalizedModulationAmount = 0.0; // 0% (no modulation)
+    private normalizedModulationAmount = 0; // 0% (no modulation)
 
     // the final (absolute) modulation amount
     private absoluteModulationAmount = 0;
@@ -40,10 +40,23 @@ export class LfoManager extends BaseAudioNode
     // the current value of the modulated parameter
     private parameterCurrentValue: number;
 
+    /* Fixed modulation ranges (amounts), these are both positive.
+    ** The 'upperModulationFixedRange' is always positive and refers to the maximum absolute (not in percentages) modulation amount
+    ** that can be set when the normalized modulation amount is positive (e.g. the modulation takes place ABOVE the current value of
+    ** the modulated parameter, meaning that the modulation is positive and ADDED to the current value of the parameter).
+    **
+    ** The 'lowerModulationFixedRange' is always positive and refers to the maximum absolute (not in percentages) modulation amount
+    ** that can be set when the normalized modulation amount is negative (e.g. the modulation takes place BELOW the current value of
+    ** the modulated parameter, meaning that the modulation is positive but SUBTRACTED from the current value of the parameter). */
+    private useFixedModulationRanges: boolean = false;
+    private lowerModulationFixedRange: number;
+    private upperModulationFixedRange: number;
+
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LfoManager", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
-                parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number)
+                parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
+                useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
         super(audioContext);
 
@@ -72,6 +85,10 @@ export class LfoManager extends BaseAudioNode
             // aproximate the current value as being in the middle of the lower and upper limit
             this.parameterCurrentValue = (this.parameterUpperLimit - this.parameterLowerLimit) / 2.0;
         }
+
+        this.useFixedModulationRanges = useFixedModulationRanges;
+        this.lowerModulationFixedRange = lowerModulationFixedRange;
+        this.upperModulationFixedRange = upperModulationFixedRange;
 
         this.mergerGainNode = this.audioContext.createGain();
 
@@ -158,8 +175,11 @@ export class LfoManager extends BaseAudioNode
 
             this.normalizedModulationAmount = normalizedModulationAmount;
 
-            // recompute and set the absolute modulation
-            this.computeAbsoluteModulationAmount();
+            // recompute the modulation absolute amount
+            if (this.useFixedModulationRanges)
+                this.computeAbsoluteModulationWithFixedRanges();
+            else
+                this.computeAbsoluteModulationWithVariableRanges();
 
             // recompute and set the final gain
             this.computeFinalGain();
@@ -185,7 +205,13 @@ export class LfoManager extends BaseAudioNode
 
             this.parameterCurrentValue = parameterCurrentValue;
 
-            this.computeAbsoluteModulationAmount();
+            // recompute the modulation absolute amount
+            if (this.useFixedModulationRanges)
+                this.computeAbsoluteModulationWithFixedRanges();
+            else
+                this.computeAbsoluteModulationWithVariableRanges();
+
+            // recompute and set the final gain
             this.computeFinalGain();
 
             return true; // change was succesfull
@@ -198,6 +224,8 @@ export class LfoManager extends BaseAudioNode
         }
     }
 
+    public getParameterCurrentValue(): number { return this.mergerGainNode.gain.value; }
+
     /* This method computes the absolute modulation amount, and does this by multiplying the 'normalizedModulationAmount', which is
     ** a factor with the maximum possible modulation in the direction of the 'normalizedModulationAmount' (plus or minus).
     **
@@ -208,8 +236,10 @@ export class LfoManager extends BaseAudioNode
     ** current value and the modulated paramter's lower limit.
     **
     ** So the absolute modulation amount differs, depending if the normalized modulation amount is positive (0...1) or negative (-1...0) */
-    private computeAbsoluteModulationAmount(): void
+    private computeAbsoluteModulationWithVariableRanges(): void
     {
+        LfoManager.logger.debug(`computeAbsoluteModulationWithVariableRanges()`);
+
         // first, we check if the normalized modulation amount is positive or negative
         if (this.normalizedModulationAmount >= 0)
             this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterUpperLimit - this.parameterCurrentValue);
@@ -217,19 +247,51 @@ export class LfoManager extends BaseAudioNode
             this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterCurrentValue - this.parameterLowerLimit);
     }
 
+    /* This method is imilar to the previous method and computes the absolute modulation amount.
+    **
+    ** So the absolute modulation amount differs, depending if the normalized modulation amount is positive (0...1) or negative (-1...0) */
+    private computeAbsoluteModulationWithFixedRanges(): void
+    {
+        LfoManager.logger.debug(`computeAbsoluteModulationWithFixedRanges()`);
+
+        // if the normalized modulation amount is positive
+        if (this.normalizedModulationAmount >= 0)
+        {
+            // this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterUpperLimit - this.parameterCurrentValue);
+            const modulationAmount = this.normalizedModulationAmount * this.upperModulationFixedRange;
+
+            if (this.parameterCurrentValue + modulationAmount <= this.parameterUpperLimit)
+                this.absoluteModulationAmount = modulationAmount;
+            else
+                this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterUpperLimit - this.parameterCurrentValue);
+        }
+        // if the normalized modulation amount is negative
+        else
+        {
+            // this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterCurrentValue - this.parameterLowerLimit);
+            const modulationAmount = this.normalizedModulationAmount * this.lowerModulationFixedRange;
+
+            // remember, here modulationAmount is negative
+            if (this.parameterCurrentValue + modulationAmount >= this.parameterLowerLimit)
+                this.absoluteModulationAmount = modulationAmount;
+            else
+                this.absoluteModulationAmount = this.normalizedModulationAmount * (this.parameterCurrentValue - this.parameterLowerLimit);
+        }
+    }
+
     /* Utility method that recomputes and also sets the final gain of the LfoManager node.
     ** This method should be called anytime an LFO is turned on/off or when the modulation amount changes. */
     private computeFinalGain(): void
     {
-        let finalGain = 0.0;
+        let finalGain = 0;
 
         // if all LFOs are disabled
         if (this.numberOfEnabledLfos == 0)
-            finalGain = 0.0; // if no LFOs are enabled, then the modulation is zero
+            finalGain = 0; // if no LFOs are enabled, then the modulation is zero
         // if there is at least one enabled LFO
         else if (this.numberOfEnabledLfos > 0)
             finalGain = (1.0 / this.numberOfEnabledLfos) * this.absoluteModulationAmount;
 
-        this.mergerGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
+        this.mergerGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime);
     }
 }

@@ -29,7 +29,7 @@ export class ParameterManager extends BaseAudioNode
     private mergerGainNode: GainNode;
 
     // the LFO modulation amount, in normalized form (between -1.0 and 1.0, where 0.0 means no modulation)
-    private lfoModulationAmount = 0.0; // 0% (no modulation)
+    private lfoModulationAmount = 0; // 0% (no modulation)
 
     /* The limits of the modulated parameter, in absolute value (not in percentages).
     ** These are the limits between which the modulated parameter varies, there are not the limits of the modulator.
@@ -42,7 +42,8 @@ export class ParameterManager extends BaseAudioNode
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ParameterManager", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
-                parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number)
+                parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
+                useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
         super(audioContext);
 
@@ -75,12 +76,17 @@ export class ParameterManager extends BaseAudioNode
         this.parameterValueNode = this.audioContext.createConstantSource();
         this.parameterValueNode.offset.setValueAtTime(this.parameterCurrentValue, this.audioContext.currentTime);
 
-        this.lfoManager = new LfoManager(this.audioContext, lfoArray, parameterLowerLimit, parameterUpperLimit, parameterCurrentValue);
+        this.lfoManager = new LfoManager(this.audioContext, lfoArray, parameterLowerLimit, parameterUpperLimit, parameterCurrentValue,
+                                            useFixedModulationRanges, lowerModulationFixedRange, upperModulationFixedRange);
 
         this.mergerGainNode = this.audioContext.createGain();
+        this.mergerGainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
 
         this.parameterValueNode.connect(this.mergerGainNode);
         this.lfoManager.mainNode().connect(this.mergerGainNode);
+
+        // start necessary nodes
+        this.parameterValueNode.start();
     }
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
@@ -114,13 +120,13 @@ export class ParameterManager extends BaseAudioNode
     {
         if (this.parameterLowerLimit <= parameterCurrentValue && parameterCurrentValue <= this.parameterUpperLimit)
         {
-            ParameterManager.logger.debug(`setParameterCurrentValue(${parameterCurrentValue})`);
-
             this.parameterCurrentValue = parameterCurrentValue;
 
             this.parameterValueNode.offset.linearRampToValueAtTime(parameterCurrentValue, this.audioContext.currentTime);
 
             this.lfoManager.setParameterCurrentValue(parameterCurrentValue);
+
+            ParameterManager.logger.debug(`setParameterCurrentValue(${parameterCurrentValue}): value=${this.parameterCurrentValue} lfo=${this.lfoManager.getParameterCurrentValue()}`);
 
             return true; // change was succesfull
         }
@@ -131,4 +137,6 @@ export class ParameterManager extends BaseAudioNode
             return true; // change was not succesfull
         }
     }
+
+    public getLfoManager(): LfoManager { return this.lfoManager; }
 }
