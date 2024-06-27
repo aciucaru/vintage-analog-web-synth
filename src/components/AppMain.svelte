@@ -12,11 +12,9 @@
     </div>
     <WoodSide otherside={true}></WoodSide>
 
-    <WoodSide></WoodSide>
     <div class="center-container">
         <SidePanel></SidePanel>
     </div>
-    <WoodSide otherside={true}></WoodSide>
 </div>
 
 

@@ -1,9 +1,4 @@
 <script lang="ts">
-    import OscillatorsPanel from "./sub-panels/OscillatorsPanel.svelte";
-    import MainScreen from "./sub-panels/MainScreen.svelte";
-    import FilterPanel from "./sub-panels/FilterPanel.svelte";
-    import VoicePanel from "./sub-panels/VoicePanel.svelte";
-    import InvisibleKeyboard from "../InvisibleKeyboard.svelte";
     import ModulationMatrix from "./sub-panels/ModulationMatrix.svelte";
 </script>
 
