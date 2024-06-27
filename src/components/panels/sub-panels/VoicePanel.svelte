@@ -15,17 +15,17 @@
     <div class="title unselectable" style="grid-column: 2 / 7; grid-row: 2 / 3;">VOICE</div>
 
     <div style="grid-column: 2 / 3; grid-row: 4 / 6;">
-        <Knob title={"Gain"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
+        <Knob label={"Gain"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onVolumeChange}></Knob>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 4 / 6;">
-        <Knob title={"Tremolo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <Knob label={"Tremolo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onTremoloChange}></Knob>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 4 / 6;">
-        <Knob title={"Vibrato"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <Knob label={"Vibrato"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onVibratoChange}></Knob>
     </div>
     

@@ -28,17 +28,17 @@
 
     <!-- oscillator 1 frequency controls -->
     <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
-        <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
+        <Knob label={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 4 / 5;">
-        <Knob title={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
+        <Knob label={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1SemitonesOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 4 / 5;">
-        <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
+        <Knob label={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc1CentsOffsetChange}></Knob>
     </div>
 
@@ -61,12 +61,12 @@
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 6 / 7;">
-        <Knob title={"PW"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
+        <Knob label={"PW"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
             displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc1PulseWidthChange}></Knob>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 6 / 7;">
-        <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
+        <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onOsc1LevelChange}></Knob>
     </div>
 
@@ -79,17 +79,17 @@
 
     <!-- oscillator 2 frequency controls -->
     <div style="grid-column: 10 / 11; grid-row: 4 / 5;">
-        <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
+        <Knob label={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2OctavesOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 4 / 5;">
-        <Knob title={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
+        <Knob label={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2SemitonesOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 4 / 5;">
-        <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
+        <Knob label={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onOsc2CentsOffsetChange}></Knob>
     </div>
 
@@ -112,12 +112,12 @@
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 6 / 7;">
-        <Knob title={"PW"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
+        <Knob label={"PW"} minValue={Settings.minOscPulseWidth} maxValue={Settings.maxOscPulseWidth} initialValue={Settings.defaultOscPulseWidth}
             displayFactor={100} step={0.01} decimals={0} onValueChange={oscCallbacks.onOsc2PulseWidthChange}></Knob>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 6 / 7;">
-        <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onOsc2LevelChange}></Knob>
     </div>
 
@@ -128,22 +128,22 @@
     <div class="title unselectable" style="grid-column: 18 / 21; grid-row: 2 / 3;">SUB</div>
 
     <div style="grid-column: 18 / 19; grid-row: 4 / 5;">
-        <Knob title={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
+        <Knob label={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscOctavesOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 4 / 5;">
-        <Knob title={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
+        <Knob label={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscSemitonesOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 18 / 19; grid-row: 6 / 7;">
-        <Knob title={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
+        <Knob label={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscCentsOffsetChange}></Knob>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 6 / 7;">
-        <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onSubOscLevelChange}></Knob>
     </div>
 
@@ -159,7 +159,7 @@
     </div>
 
     <div style="grid-column: 24 / 25; grid-row: 6 / 7;">
-        <Knob title={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onNoiseOscLevelChange}></Knob>
     </div>
 </div>

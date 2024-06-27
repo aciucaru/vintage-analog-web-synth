@@ -7,7 +7,7 @@
 
     // props:
     // the title above the knob
-    export let title: string = "";
+    export let label: string = "";
 
     // the min. and max. absolute values the knob is supossed to set
     export let minValue: number = 0.0;
@@ -24,6 +24,9 @@
 
     // how many decimals should the displayed value have
     export let decimals: number = 2;
+
+    // the width and height of the knob (and the canvas)
+    export let knobWidth: number = 50;
 
     /* the event handler (callback) prop the knob will call when it's rotated
     ** this event receives the new value set by the knob */
@@ -64,8 +67,8 @@
     newAbsoluteValue = initialValue;
 
     // the width and height of the canvas
-    const WIDTH = 50;
-    const HEIGHT = 50;
+    const WIDTH = knobWidth;
+    const HEIGHT = knobWidth;
 
     // the canvas and related graphic context
     let canvas: HTMLCanvasElement;
@@ -221,11 +224,14 @@
 <div class="main-container">
     <canvas bind:this={canvas} width="{WIDTH}" height="{HEIGHT}" on:mousedown={onMouseDown} class="knob-canvas unselectable"></canvas>
 
-    {#if title.length > 0}
+    <!-- if the user has supplied a label -->
+    {#if label.length > 0}
+        <!-- if the numeric value should be displayed -->
         {#if showValue}
             <div class="numeric-value unselectable">{absoluteValueString}</div>
+        <!-- if the label should be displayed -->
         {:else}
-            <div class="label unselectable">{title}</div>
+            <div class="label unselectable">{label}</div>
         {/if}
     {/if}
 </div>

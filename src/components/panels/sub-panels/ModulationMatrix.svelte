@@ -485,13 +485,13 @@
 <div class="main-container">
     <div class="title unselectable" style="grid-column: 2 / 15; grid-row: 2 / 3;">MODULATION MATRIX</div>
 
-    <div class="mod-source-header unselectable" style="grid-column: 2 / 3; grid-row: 4 / 5;">DESTINATION</div>
+    <div class="mod-source-header unselectable" style="grid-column: 2 / 3; grid-row: 4 / 5;">DEST</div>
     <div class="mod-source-header unselectable" style="grid-column: 4 / 5; grid-row: 4 / 5;">LFO1</div>
     <div class="mod-source-header unselectable" style="grid-column: 6 / 7; grid-row: 4 / 5;">LFO2</div>
     <div class="mod-source-header unselectable" style="grid-column: 8 / 9; grid-row: 4 / 5;">LFO3</div>
     <div class="mod-source-header unselectable" style="grid-column: 10 / 11; grid-row: 4 / 5;">LFO4</div>
     <div class="mod-source-header unselectable" style="grid-column: 12 / 13; grid-row: 4 / 5;">LFO5</div>
-    <div class="mod-source-header unselectable" style="grid-column: 14 / 15; grid-row: 4 / 5;">Amount</div>
+    <div class="mod-source-header unselectable" style="grid-column: 14 / 15; grid-row: 4 / 5;">Amnt</div>
 
     <!-- Oscillator 1 modulators *********************************************************************************************************************** -->
     <!-- Oscillator 1 frequency modulators ************************************************************************************************************* -->
@@ -544,7 +544,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 6 / 7;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1FreqLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator1FreqLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 1 amplitude modulators ************************************************************************************************************* -->
@@ -597,7 +597,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 8 / 9;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1AmpLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator1AmpLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 1 pulse width modulators ************************************************************************************************************* -->
@@ -650,7 +650,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 10 / 11;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1PulseWidthLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator1PulseWidthLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 1 unison detune modulators ************************************************************************************************************* -->
@@ -703,7 +703,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 12 / 13;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1UnisonDetuneLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator1UnisonDetuneLfoModAmountChange}></Knob>
     </div>
 
 
@@ -758,7 +758,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 14 / 15;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2FreqLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator2FreqLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 amplitude modulators ************************************************************************************************************* -->
@@ -811,7 +811,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 16 / 17;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2AmpLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator2AmpLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 pulse width modulators ************************************************************************************************************* -->
@@ -864,7 +864,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 18 / 19;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2PulseWidthLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator2PulseWidthLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 unison detune modulators ************************************************************************************************************* -->
@@ -917,7 +917,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 20 / 21;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2UnisonDetuneLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator2UnisonDetuneLfoModAmountChange}></Knob>
     </div>
 
 
@@ -972,7 +972,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 22 / 23;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onModAmountChange}></Knob>
     </div>
 
 
@@ -1026,7 +1026,7 @@
 
     <div style="grid-column: 14 / 15; grid-row: 24 / 25;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onModAmountChange}></Knob>
     </div>
 
 
@@ -1081,90 +1081,114 @@
 
     <div style="grid-column: 14 / 15; grid-row: 26 / 27;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onFilterCutoffFreqLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onFilterCutoffFreqLfoModAmountChange}></Knob>
     </div>
 
     <!-- Filter resonance modulators ************************************************************************************************************* -->
-        <div class="mod-destination-title unselectable">FILTER Res</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 2 / 3; grid-row: 28 / 29;">FILTER Res</div>
 
+    <div style="grid-column: 4 / 5; grid-row: 28 / 29;">
         <ToggleButton onToggleChange={onLowPassFilterResonanceLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 6 / 7; grid-row: 28 / 29;">
         <ToggleButton onToggleChange={onLowPassFilterResonanceLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 8 / 9; grid-row: 28 / 29;">
         <ToggleButton onToggleChange={onLowPassFilterResonanceLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 10 / 11; grid-row: 28 / 29;">
         <ToggleButton onToggleChange={onLowPassFilterResonanceLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 12 / 13; grid-row: 28 / 29;">
         <ToggleButton onToggleChange={onLowPassFilterResonanceLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 14 / 15; grid-row: 28 / 29;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onFilterResonanceLfoModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onFilterResonanceLfoModAmountChange}></Knob>
+    </div>
 
     <!-- Filter drive modulators ************************************************************************************************************* -->
-        <div class="mod-destination-title unselectable">FILTER Drive</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 2 / 3; grid-row: 30 / 31;">FILTER Drive</div>
 
+    <div style="grid-column: 4 / 5; grid-row: 30 / 31;">
         <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 6 / 7; grid-row: 30 / 31;">
         <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 8 / 9; grid-row: 30 / 31;">
         <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 10 / 11; grid-row: 30 / 31;">
         <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 12 / 13; grid-row: 30 / 31;">
         <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
+    </div>
 
+    <div style="grid-column: 14 / 15; grid-row: 30 / 31;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onModAmountChange}></Knob>
+    </div>
 </div>
 
 <style>
@@ -1174,11 +1198,12 @@
 
         display: grid;
         grid-template-columns: 5px repeat(7, auto 5px);
-        grid-template-rows: 5px repeat(14, auto 5px);
+        grid-template-rows: 5px repeat(15, auto 5px);
 
         justify-items: stretch;
         align-items: stretch;
-        justify-content: center;
+        justify-content: start;
+        align-content: start;
         gap: 0px;
 
         margin: 0px;
@@ -1256,8 +1281,8 @@
     {
         box-sizing: border-box;
 
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
 
         padding: 0px;
         margin: 0px;
@@ -1270,8 +1295,8 @@
     {
         box-sizing: border-box;
 
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
 
         padding: 0px;
         margin: 0px;
@@ -1284,8 +1309,8 @@
     {
         box-sizing: border-box;
 
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
 
         padding: 0px;
         margin: 0px;
@@ -1298,8 +1323,8 @@
     {
         box-sizing: border-box;
 
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
 
         padding: 0px;
         margin: 0px;

@@ -19,17 +19,17 @@
     <div class="cutoff-background" style="grid-column: 2 / 3; grid-row: 4 / 8;"></div>
 
     <div style="grid-column: 2 / 3; grid-row: 4 / 8;">
-        <Knob title={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
+        <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
         step={1} decimals={0} onValueChange={filterCallbacks.onCutoffFreqChange}></Knob>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 4 / 6;">
-        <Knob title={"Reso"} minValue={Settings.minFilterResonance} maxValue={Settings.maxFilterResonance} initialValue={Settings.defaultFilterResonance}
+        <Knob label={"Reso"} minValue={Settings.minFilterResonance} maxValue={Settings.maxFilterResonance} initialValue={Settings.defaultFilterResonance}
             step={0.01} decimals={0} onValueChange={filterCallbacks.onResonanceChange}></Knob>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 4 / 6;">
-        <Knob title={"Key trck"} minValue={Settings.minFilterKeyTrackingAmount} maxValue={Settings.maxFilterKeyTrackingAmount} initialValue={Settings.defaultFilterKeyTrackingAmount}
+        <Knob label={"Key trck"} minValue={Settings.minFilterKeyTrackingAmount} maxValue={Settings.maxFilterKeyTrackingAmount} initialValue={Settings.defaultFilterKeyTrackingAmount}
             step={1} decimals={0} onValueChange={filterCallbacks.onKeyTrackingChange}></Knob>
     </div>
 
