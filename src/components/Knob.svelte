@@ -219,12 +219,14 @@
 </script>
 
 <div class="main-container">
-    <canvas bind:this={canvas} width="{WIDTH}" height="{HEIGHT}" on:mousedown={onMouseDown} class="knob-canvas"></canvas>
+    <canvas bind:this={canvas} width="{WIDTH}" height="{HEIGHT}" on:mousedown={onMouseDown} class="knob-canvas unselectable"></canvas>
 
-    {#if showValue}
-        <div class="numeric-value unselectable">{absoluteValueString}</div>
-    {:else if title.length > 0}
-        <div class="label unselectable">{title}</div>
+    {#if title.length > 0}
+        {#if showValue}
+            <div class="numeric-value unselectable">{absoluteValueString}</div>
+        {:else}
+            <div class="label unselectable">{title}</div>
+        {/if}
     {/if}
 </div>
 
