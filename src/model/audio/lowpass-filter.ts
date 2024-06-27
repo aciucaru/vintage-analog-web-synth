@@ -1,9 +1,11 @@
 import { Settings } from "../../constants/settings";
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
 import { BaseAudioNode } from "./base-audio-node";
+import { ModulationManager } from "./modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+
 
 export class OscFilter extends BaseAudioNode
 {
@@ -15,12 +17,16 @@ export class OscFilter extends BaseAudioNode
     protected keyTrackingAmount: number;
     protected envelopeAmount: number;
 
+    // parameter manager nodes
+    private cutoffFreqModulationManager: ModulationManager;
+    private resonanceModulationManager: ModulationManager;
+
     // the ADSR envelope for the cutoff frequency
     private cutoffAdsrEnvelope: AdsrEnvelope;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LowpassFilter", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext)
+    constructor(audioContext: AudioContext, freqCutoffModulationManager: ModulationManager, resonanceModulationManager: ModulationManager)
     {
         super(audioContext);
 
@@ -32,13 +38,20 @@ export class OscFilter extends BaseAudioNode
         this.envelopeAmount = Settings.defaultFilterEnvelopeAmount;
         this.keyTrackingAmount = Settings.defaultFilterKeyTrackingAmount;
 
+        this.cutoffFreqModulationManager = freqCutoffModulationManager;
+        this.resonanceModulationManager = resonanceModulationManager;
+
         this.cutoffAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
         // set the cuttof frequency to a default
         this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
 
-        // connect ADSR envelope with filter frequency cutoff
+        // connect modulators with filter frequency cutoff
         this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
+        this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.frequency);
+
+        // connect modulators with resonance (Q factor)
+        this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
     }
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
@@ -52,7 +65,11 @@ export class OscFilter extends BaseAudioNode
         {
             OscFilter.logger.debug(`setCutoffFrequency(${freq})`);
 
+            // set the cutoff frequency
             this.filterNode.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
+            this.cutoffFreqModulationManager.setParameterCurrentValue(freq);
 
             return true; // change was succesfull
         }
@@ -69,7 +86,11 @@ export class OscFilter extends BaseAudioNode
         {
             OscFilter.logger.debug(`setResonance(${resonance})`);
 
+            // set the resonance
             this.setQFactor(resonance);
+
+            // notify the modulation manager that the main value has changed
+            this.resonanceModulationManager.setParameterCurrentValue(resonance);
 
             return true; // change was succesfull
         }
@@ -139,5 +160,8 @@ export class OscFilter extends BaseAudioNode
         }
     }
 
+    // modulators getters
     public getAdsrEnvelope(): AdsrEnvelope { return this.cutoffAdsrEnvelope; }
+    public getCutoffFreqModulationManager(): ModulationManager { return this.cutoffFreqModulationManager; }
+    public getResonanceModulationManager(): ModulationManager { return this.resonanceModulationManager; }
 }

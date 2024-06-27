@@ -385,6 +385,101 @@
     {
         voice.getMultiShapeOscillator2().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
     }
+
+
+    // Filter callbacks ****************************************************************************
+    // *********************************************************************************************
+    // callbacks for Filter cutoff frequency **************************************************************
+    function onLowPassFilterCutoffFreqLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(0);
+        else
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(0);
+    }
+
+    function onLowPassFilterCutoffFreqLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(1);
+        else
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(1);
+    }
+
+    function onLowPassFilterCutoffFreqLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(2);
+        else
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(2);
+    }
+
+    function onLowPassFilterCutoffFreqLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(3);
+        else
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(3);
+    }
+
+    function onLowPassFilterCutoffFreqLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(4);
+        else
+            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(4);
+    }
+
+    function onFilterCutoffFreqLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getFilter().getCutoffFreqModulationManager().setLfosModulationAmount(normalizedAmount);
+    }
+
+    // callbacks for Filter resonance **************************************************************
+    function onLowPassFilterResonanceLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(0);
+        else
+            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(0);
+    }
+
+    function onLowPassFilterResonanceLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(1);
+        else
+            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(1);
+    }
+
+    function onLowPassFilterResonanceLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(2);
+        else
+            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(2);
+    }
+
+    function onLowPassFilterResonanceLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(3);
+        else
+            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(3);
+    }
+
+    function onLowPassFilterResonanceLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(4);
+        else
+            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(4);
+    }
+
+    function onFilterResonanceLfoModAmountChange(normalizedAmount: number): void
+    {
+        voice.getFilter().getResonanceModulationManager().setLfosModulationAmount(normalizedAmount);
+    }
 </script>
 
 <div class="main-container">
@@ -753,35 +848,35 @@
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">SUB Freq</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -796,35 +891,35 @@
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">SUB Amp</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -841,35 +936,35 @@
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">FILTER Cutoff</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -877,42 +972,42 @@
         </ToggleButton>
 
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onFilterCutoffFreqLfoModAmountChange}></Knob>
     </div>
 
     <!-- Filter resonance modulators ************************************************************************************************************* -->
     <div class="horizontal-container">
         <div class="mod-destination-title unselectable">FILTER Res</div>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo1Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo2Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo3Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo4Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo5Toggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -920,7 +1015,7 @@
         </ToggleButton>
 
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onFilterResonanceLfoModAmountChange}></Knob>
     </div>
 
     <!-- Filter drive modulators ************************************************************************************************************* -->

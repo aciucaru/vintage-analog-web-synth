@@ -16,6 +16,7 @@ import { LfoManager } from "./modulation/lfo-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+import { ModulationManager } from "./modulation/modulation-manager";
 
 
 export class Voice
@@ -40,12 +41,15 @@ export class Voice
 
     private outputGainNode: GainNode;
 
+    // LFO modulators
     private sharedLfoArray: Array<UnipolarLfo>;
     // modulator nodes:
-    private freqLfoManager: LfoManager;
-    private ampLfoManager: LfoManager;
-    private pulseWidthLfoManager: LfoManager;
-    private unisonDetuneLfoManager: LfoManager;
+    // private freqLfoManager: LfoManager;
+    // private ampLfoManager: LfoManager;
+    // private pulseWidthLfoManager: LfoManager;
+    // private unisonDetuneLfoManager: LfoManager;
+    private filterCutoffFreqModulationManager: ModulationManager;
+    private filterResonanceModulationManager: ModulationManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Voice", minLevel: Settings.minLogLevel});
 
@@ -69,15 +73,20 @@ export class Voice
             this.sharedLfoArray[i] = new UnipolarLfo(this.audioContext);
         }
         
-        // instantiate the LFO managers
-        this.freqLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-                                                NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
-        this.ampLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-                                                Settings.minVoiceGain, Settings.maxVoiceGain, Settings.defaultVoiceGain);
-        this.pulseWidthLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-                                                    Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
-        this.unisonDetuneLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-                                                    Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune, Settings.defaultOscUnisonCentsDetune);
+        // instantiate the modulation  managers
+        // this.freqLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+        //                                         NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
+        // this.ampLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+        //                                         Settings.minVoiceGain, Settings.maxVoiceGain, Settings.defaultVoiceGain);
+        // this.pulseWidthLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+        //                                             Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
+        // this.unisonDetuneLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
+        //                                             Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune, Settings.defaultOscUnisonCentsDetune);
+
+        this.filterCutoffFreqModulationManager = new ModulationManager(this.audioContext, lfoArray,
+                                                                        Settings.minFilterCutoffFreq, Settings.maxFilterCutoffFreq, Settings.defaultFilterCutoffFreq);
+        this.filterResonanceModulationManager = new ModulationManager(this.audioContext, lfoArray,
+                                                                        Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
 
         // instantiate the nodes:
         this.unisonOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
@@ -87,7 +96,7 @@ export class Voice
 
         // instantiate the mixer, filter and ADSR envelope
         this.oscillatorMixer = new OscMixer(this.audioContext, this.unisonOscillator1, this.unisonOscillator2, this.subOscillator, this.noiseOscillator);
-        this.filterNode = new OscFilter(this.audioContext);
+        this.filterNode = new OscFilter(this.audioContext,  this.filterCutoffFreqModulationManager, this.filterResonanceModulationManager);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
         // instantiate and connect the gain node that combines all oscillators that should pass through the cutoff filter
