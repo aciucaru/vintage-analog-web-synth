@@ -135,6 +135,8 @@ export class TriangleOscillator extends BaseUnisonOscillator
         }
     }
     
+    public getOscillatorNode(): OscillatorNode { return this.triangleOscillator; }
+
     // getters for the LFO managers of this oscillator
     public getFreqParamManager(): ParameterManager { return this.freqParamManager; }
     public getUnisonDetuneParamManager(): ParameterManager { return this.unisonDetuneParamManager; }
