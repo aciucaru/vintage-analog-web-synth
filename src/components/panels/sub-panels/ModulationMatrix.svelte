@@ -483,7 +483,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator1AmpLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1AmpLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 1 pulse width modulators ************************************************************************************************************* -->
@@ -525,7 +526,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator1PulseWidthLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1PulseWidthLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 1 unison detune modulators ************************************************************************************************************* -->
@@ -567,7 +569,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator1UnisonDetuneLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator1UnisonDetuneLfoModAmountChange}></Knob>
     </div>
 
 
@@ -611,7 +614,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator2FreqLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2FreqLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 amplitude modulators ************************************************************************************************************* -->
@@ -653,7 +657,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator2AmpLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2AmpLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 pulse width modulators ************************************************************************************************************* -->
@@ -695,7 +700,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator2PulseWidthLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2PulseWidthLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 unison detune modulators ************************************************************************************************************* -->
@@ -737,7 +743,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onOscillator2UnisonDetuneLfoModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onOscillator2UnisonDetuneLfoModAmountChange}></Knob>
     </div>
 
 
@@ -781,7 +788,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
     </div>
 
     <!-- Sub Oscillator amplitude modulators ************************************************************************************************************* -->
@@ -823,7 +831,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
     </div>
 
 
@@ -867,7 +876,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
     </div>
 
     <!-- Filter resonance modulators ************************************************************************************************************* -->
@@ -909,7 +919,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
     </div>
 
     <!-- Filter drive modulators ************************************************************************************************************* -->
@@ -951,7 +962,8 @@
             <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
         </ToggleButton>
 
-        <Knob onValueChange={onModAmountChange}></Knob>
+        <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={onModAmountChange}></Knob>
     </div>
 </div>
 
