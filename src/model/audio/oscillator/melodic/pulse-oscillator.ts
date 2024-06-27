@@ -20,7 +20,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import { Settings } from "../../../../constants/settings";
 import { BasePulseOscillator } from "./base-pulse-oscillator";
 
-import type { ParameterManager } from "../../modulation/parameter-manager";
+import type { ModulationManager } from "../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -42,16 +42,16 @@ export class PulseOscillator extends BasePulseOscillator
     private pulseWidthGainNode: GainNode;
 
     // parameter manager nodes
-    private freqParamManager: ParameterManager;
-    private pulseWidthParamManager: ParameterManager;
-    private unisonDetuneParamManager: ParameterManager;
+    private freqParamManager: ModulationManager;
+    private pulseWidthParamManager: ModulationManager;
+    private unisonDetuneParamManager: ModulationManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "PulseOscillator", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext, initialGain: number,
-                freqParamManager: ParameterManager,
-                pulseWidthParamManager: ParameterManager,
-                unisonDetuneParamManager: ParameterManager)
+                freqParamManager: ModulationManager,
+                pulseWidthParamManager: ModulationManager,
+                unisonDetuneParamManager: ModulationManager)
     {
         super(audioContext, initialGain);
 
@@ -59,6 +59,7 @@ export class PulseOscillator extends BasePulseOscillator
         this.sawOscillatorNode = this.audioContext.createOscillator();
         this.sawOscillatorNode.type = "sawtooth";
         this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+        // this.sawOscillatorNode.frequency.setValueAtTime(0, this.audioContext.currentTime);
 
         // define the curve for the constant wave shaper node
         this.constantCurve[0] = Settings.defaultOscPulseWidth;
@@ -110,7 +111,10 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -128,7 +132,10 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -146,7 +153,10 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -164,7 +174,10 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            // this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -179,7 +192,10 @@ export class PulseOscillator extends BasePulseOscillator
         {
             PulseOscillator.logger.debug(`setDetune(${centsDetune})`);
 
-            // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+            // set the detune
+            this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed 
             this.unisonDetuneParamManager.setParameterCurrentValue(centsDetune);
 
             return true;
@@ -201,7 +217,10 @@ export class PulseOscillator extends BasePulseOscillator
             this.constantCurve[0] = pulseWidth;
             this.constantCurve[1] = pulseWidth;
 
-            // this.modulatableGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
+            // set the pulse width
+            this.pulseWidthGainNode.gain.setValueAtTime(pulseWidth, this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.pulseWidthParamManager.setParameterCurrentValue(pulseWidth);
 
             return true; // change was succesfull
@@ -217,7 +236,7 @@ export class PulseOscillator extends BasePulseOscillator
     public getOscillatorNode(): OscillatorNode { return this.sawOscillatorNode; }
 
     // getters for the LFO managers of this oscillator
-    public getFreqParamManager(): ParameterManager { return this.freqParamManager; }
-    public getPulseWidthParamManager(): ParameterManager { return this.pulseWidthParamManager; }
-    public getUnisonDetuneParamManager(): ParameterManager { return this.unisonDetuneParamManager; }
+    public getFreqParamManager(): ModulationManager { return this.freqParamManager; }
+    public getPulseWidthParamManager(): ModulationManager { return this.pulseWidthParamManager; }
+    public getUnisonDetuneParamManager(): ModulationManager { return this.unisonDetuneParamManager; }
 }

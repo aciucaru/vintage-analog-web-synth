@@ -19,7 +19,7 @@ export abstract class BaseOscillator
 
     private static readonly baseOscLogger: Logger<ILogObj> = new Logger({name: "BaseOscillator", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, initialGain: number)
+    constructor(audioContext: AudioContext)
     {
         if (audioContext !== undefined)
             this.audioContext = audioContext;
@@ -36,18 +36,7 @@ export abstract class BaseOscillator
         this.analyserGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
         this.outputGainNode = this.audioContext.createGain();
-        if (Settings.minOscGain <= initialGain && initialGain <= Settings.maxOscGain)
-            this.outputGainNode.gain.setValueAtTime(initialGain, this.audioContext.currentTime);
-        else
-        {
-            BaseOscillator.baseOscLogger.warn(`constructor(): 'initialGain' of value ${initialGain} is outside bounds and will be ignored`);
-
-            if (initialGain < Settings.minOscGain)
-                this.outputGainNode.gain.setValueAtTime(Settings.minOscGain, this.audioContext.currentTime);
-            
-            if (initialGain > Settings.maxOscGain)
-                this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
-        }
+        this.outputGainNode.gain.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
     }
 
     // sets the value of the main gain node

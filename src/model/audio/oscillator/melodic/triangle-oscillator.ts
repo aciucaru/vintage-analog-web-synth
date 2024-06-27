@@ -1,7 +1,7 @@
 import { Settings } from "../../../../constants/settings";
 import { BaseUnisonOscillator } from "./base-unison-oscillator";
 import { LfoManager } from "../../modulation/lfo-manager";
-import type { ParameterManager } from "../../modulation/parameter-manager";
+import type { ModulationManager } from "../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -14,14 +14,14 @@ export class TriangleOscillator extends BaseUnisonOscillator
     private triangleOscillator: OscillatorNode;
 
     // parameter manager nodes
-    private freqParamManager: ParameterManager;
-    private unisonDetuneParamManager: ParameterManager;
+    private freqParamManager: ModulationManager;
+    private unisonDetuneParamManager: ModulationManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "TriangleOscillator", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext, initialGain: number,
-        freqParamManager: ParameterManager,
-        unisonDetuneParamManager: ParameterManager)
+        freqParamManager: ModulationManager,
+        unisonDetuneParamManager: ModulationManager)
     {
         super(audioContext, initialGain);
 
@@ -39,6 +39,8 @@ export class TriangleOscillator extends BaseUnisonOscillator
         this.unisonDetuneParamManager = unisonDetuneParamManager;
 
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
+        this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+        // this.triangleOscillator.frequency.setValueAtTime(0, this.audioContext.currentTime);
         this.freqParamManager.mainNode().connect(this.triangleOscillator.frequency);
         this.unisonDetuneParamManager.mainNode().connect(this.triangleOscillator.detune);
 
@@ -54,7 +56,10 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setOctavesAndSemitones(${octaves}, ${semitones})`);
 
-            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -72,7 +77,10 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setOctavesOffset(${octavesOffset})`);
 
-            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -90,7 +98,10 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setSemitonesOffset(${semitonesOffset})`);
 
-            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -108,7 +119,10 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setCentsOffset(${centsOffset})`);
 
-            // this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+            // set the frequency
+            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
             this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
         }
         else
@@ -123,8 +137,11 @@ export class TriangleOscillator extends BaseUnisonOscillator
         {
             TriangleOscillator.logger.debug(`setDetune(${centsDetune})`);
 
-            // this.sawOscillatorNode.detune.setValueAtTime(centsDetune, this.audioContext.currentTime);
-            this.unisonDetuneParamManager.setParameterCurrentValue(centsDetune);
+            // set the frequency
+            this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
             
             return true;
         }
@@ -138,6 +155,6 @@ export class TriangleOscillator extends BaseUnisonOscillator
     public getOscillatorNode(): OscillatorNode { return this.triangleOscillator; }
 
     // getters for the LFO managers of this oscillator
-    public getFreqParamManager(): ParameterManager { return this.freqParamManager; }
-    public getUnisonDetuneParamManager(): ParameterManager { return this.unisonDetuneParamManager; }
+    public getFreqParamManager(): ModulationManager { return this.freqParamManager; }
+    public getUnisonDetuneParamManager(): ModulationManager { return this.unisonDetuneParamManager; }
 }
