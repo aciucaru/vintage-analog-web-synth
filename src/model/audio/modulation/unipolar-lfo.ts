@@ -14,7 +14,8 @@ export enum LfoShape
 {
     Triangle = "Triangle",
     Sawtooth = "Sawtooth",
-    Square = "Square"
+    Square = "Square",
+    Sine = "Sine"
 }
 
 /* Low frequency oscillator implementation, this LFO is always unipolar and positive (it oscillates between 0 and 1).
@@ -51,7 +52,7 @@ export class UnipolarLfo extends BaseAudioNode
         super(audioContext);
 
         this.lfoOscillator = this.audioContext.createOscillator();
-        this.lfoOscillator.type = "triangle"; // acceptable values are: triangle, saw, square (no sine)
+        this.lfoOscillator.type = "triangle";
         this.lfoOscillator.frequency.setValueAtTime(this.absoluteFrequency, this.audioContext.currentTime);
 
         this.constantOscillator = this.audioContext.createConstantSource();
@@ -84,6 +85,8 @@ export class UnipolarLfo extends BaseAudioNode
             case LfoShape.Sawtooth: this.lfoOscillator.type = "sawtooth"; break;
 
             case LfoShape.Square: this.lfoOscillator.type = "square"; break;
+
+            case LfoShape.Sine: this.lfoOscillator.type = "sine"; break;
 
             default: break;
         }
