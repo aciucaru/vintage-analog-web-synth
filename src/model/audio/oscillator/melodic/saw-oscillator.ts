@@ -28,7 +28,6 @@ export class SawOscillator extends BaseUnisonOscillator
         // instantiate the sub oscillator and set settings
         this.sawOscillator = this.audioContext.createOscillator();
         this.sawOscillator.type = "sawtooth";
-        this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
 
         // connect the sub oscillator to the main output node
         this.sawOscillator.connect(this.outputGainNode);
