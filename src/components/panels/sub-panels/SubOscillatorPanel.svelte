@@ -12,7 +12,7 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 3 / 4;">SUB</div>
+    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 3 / 4;">SINE OSC</div>
 
     <div style="grid-column: 1 / 3; grid-row: 5 / 6;">
         <Knob label={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}

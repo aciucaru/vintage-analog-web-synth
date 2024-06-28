@@ -1,11 +1,13 @@
 <script lang="ts">
+    import MainScreen from "./sub-panels/MainScreen.svelte";
     import FilterSettingsPanel from "./sub-panels/FilterSettingsPanel.svelte";
-import MainScreen from "./sub-panels/MainScreen.svelte";
+    import FilterEnvelopePanel from "./sub-panels/FilterEnvelopePanel.svelte";
 </script>
 
 <div class="main-container">
     <MainScreen></MainScreen>
     <FilterSettingsPanel></FilterSettingsPanel>
+    <FilterEnvelopePanel></FilterEnvelopePanel>
 </div>
 
 

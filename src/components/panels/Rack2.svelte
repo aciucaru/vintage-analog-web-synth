@@ -4,6 +4,8 @@
     import NoiseOscillatorPanel from "./sub-panels/NoiseOscillatorPanel.svelte";
     import InvisibleKeyboard from "../InvisibleKeyboard.svelte";
     import SubOscillatorPanel from "./sub-panels/SubOscillatorPanel.svelte";
+    import VoiceSettingsPanel from "./sub-panels/VoiceSettingsPanel.svelte";
+    import VoiceEnvelopePanel from "./sub-panels/VoiceEnvelopePanel.svelte";
 </script>
 
 <div class="main-container">
@@ -11,6 +13,8 @@
     <Oscillator2Panel></Oscillator2Panel>
     <SubOscillatorPanel></SubOscillatorPanel>
     <NoiseOscillatorPanel></NoiseOscillatorPanel>
+    <VoiceSettingsPanel></VoiceSettingsPanel>
+    <VoiceEnvelopePanel></VoiceEnvelopePanel>
     <InvisibleKeyboard></InvisibleKeyboard>
 </div>
 

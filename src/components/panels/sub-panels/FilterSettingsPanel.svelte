@@ -11,7 +11,7 @@
     <!-- title -->
     <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 3 / 4;">FILTER</div>
 
-    <!-- background for cutoff freq knob -->
+    <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
     <div class="cutoff-background unselectable" style="grid-column: 1 / 3; grid-row: 3 / 4;"></div>
 
     <div style="grid-column: 1 / 3; grid-row: 5 / 6;">
@@ -25,8 +25,8 @@
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 5 / 6;">
-        <Knob label={"Env amnt"} minValue={Settings.minFilterKeyTrackingAmount} maxValue={Settings.maxFilterKeyTrackingAmount} initialValue={Settings.defaultFilterKeyTrackingAmount}
-            step={1} decimals={0} onValueChange={filterCallbacks.onEnvelopeAmountChange}></Knob>
+        <Knob label={"Env amnt"} minValue={Settings.minFilterEnvelopeAmount} maxValue={Settings.maxFilterEnvelopeAmount}
+        initialValue={Settings.defaultFilterEnvelopeAmount} step={10} decimals={0} onValueChange={filterCallbacks.onEnvelopeAmountChange}></Knob>
     </div>
 </div>
 

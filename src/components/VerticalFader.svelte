@@ -25,8 +25,9 @@
     // how many decimals should the displayed value have
     export let decimals: number = 2;
 
-    /* if the slider track is in one direction only (from min. to max.) or if it's
-    ** bidirectional (symmetrical) */
+    /* for GUI purposes only: if the slider track is in one direction only (from min. to max.) or if is
+    ** bidirectional (symmetrical), this setting does not change functionality, but only the track
+    ** CSS background image */
     export let bidirectionalTrack: boolean = false;
 
     /* the event handler (callback) prop the knob will call when it's rotated
@@ -258,7 +259,7 @@
         box-sizing: border-box;
 
         width: var(--fader-width);
-        height: var(--text-height);
+        height: calc(var(--text-height) + 4px);
 
         margin: 0px;
         padding: 0px;
@@ -287,13 +288,13 @@
         box-sizing: border-box;
 
         width: var(--fader-width);
-        height: var(--text-height);
+        height: calc(var(--text-height) + 4px);
 
         margin: 0px;
         padding: 0px;
 
         color: hsl(210, 30%, 60%);
-        font-family: LCD14, Tahoma, serif;
+        font-family: monospace, monospace; /* we use 'monospace' twice for browser compatibility */
         font-size: var(--text-height);
         overflow: hidden;
         white-space: nowrap;
