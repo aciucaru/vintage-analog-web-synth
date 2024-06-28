@@ -58,20 +58,8 @@
         padding-right: 10px;
 
         border-radius: 2px;
-        background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
-    }
-
-    .background
-    {
-        box-sizing: border-box;
-
-        margin: 0px;
-        padding: 0px;
-        border-radius: 5px;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-
-        background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
+        background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),
+                    url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
     }
 
     .title

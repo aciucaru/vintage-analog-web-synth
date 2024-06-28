@@ -2,12 +2,18 @@
     import MainScreen from "./sub-panels/MainScreen.svelte";
     import FilterSettingsPanel from "./sub-panels/FilterSettingsPanel.svelte";
     import FilterEnvelopePanel from "./sub-panels/FilterEnvelopePanel.svelte";
+    import SingleLfoPanel from "./sub-panels/SingleLfoPanel.svelte";
 </script>
 
 <div class="main-container">
     <MainScreen></MainScreen>
     <FilterSettingsPanel></FilterSettingsPanel>
     <FilterEnvelopePanel></FilterEnvelopePanel>
+    <SingleLfoPanel lfoIndex={0}></SingleLfoPanel>
+    <SingleLfoPanel lfoIndex={1}></SingleLfoPanel>
+    <SingleLfoPanel lfoIndex={2}></SingleLfoPanel>
+    <SingleLfoPanel lfoIndex={3}></SingleLfoPanel>
+    <SingleLfoPanel lfoIndex={4}></SingleLfoPanel>
 </div>
 
 
