@@ -1,10 +1,12 @@
 <script lang="ts">
     import SidePanel from "./panels/SidePanel.svelte";
+    import Rack1 from "./panels/Rack1.svelte";
     import Rack2 from "./panels/Rack2.svelte";
 </script>
 
 <div class="main-container">
     <div class="center-container">
+        <Rack1></Rack1>
         <Rack2></Rack2>
     </div>
 
@@ -22,8 +24,8 @@
         width: min-content;
 
         display: flex;
-        flex-flow: row nowrap;
-        align-items: stretch;
+        flex-flow: column nowrap;
+        align-items: flex-start;
         justify-content: center;
         align-content: flex-start;
 

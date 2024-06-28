@@ -42,37 +42,24 @@
     {
         box-sizing: border-box;
 
-        /* height: min-content; */
-        /* width: max-content; */
         width: auto;
-        height: auto;
+        height: 250px;
 
         display: grid;
-        /* grid-template-columns: 10px auto 10px auto 10px auto 10px auto 10px;
-        grid-template-rows: 10px auto 10px auto 10px; */
 
         grid-template-columns: 10px 10px
                                 auto 10px auto 10px auto 10px auto
                                 10px 10px;
-
-        /* grid-template-columns: 10px 10px
-                                min-content 10px min-content 10px min-content
-                                10px 10px; */
         grid-template-rows: 10px 10px
                             auto 10px auto
                             10px 10px;
 
-        /* justify-items: start;
-        align-items: start;
-        justify-content: center; */
         justify-items: stretch;
         align-items: stretch;
         justify-content: stretch;
         gap: 0px;
 
-        margin: 0px;
-        /* margin-left: 20px;
-        margin-right: 20px; */
+        margin: 1px;
         padding: 0px;
 
         text-align: center;
@@ -93,7 +80,7 @@
         margin: 0px;
         padding: 0px;
 
-        border-radius: 4px;
+        border-radius: 2px;
 
         /* border: solid 1px yellow; */
         background: url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat left top;
@@ -110,7 +97,7 @@
         justify-self: stretch;
         align-self: stretch;
 
-        border-radius: 4px;
+        border-radius: 2px;
 
         /* border: solid 1px yellow; */
         background-image: linear-gradient(160deg, hsla(216, 10%, 10%, 0.8) 0%, hsla(207, 10%, 0%, 0.8) 50%);

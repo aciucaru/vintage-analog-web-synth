@@ -65,20 +65,18 @@
 
         display: grid;
         grid-template-columns: 16px auto 5px auto 5px auto 16px;
-
         grid-template-rows: 16px
-                            5px
-                            auto 5px
-                            auto 5px auto 5px
+                            5px auto
+                            5px auto 5px auto 5px
                             16px;
 
         justify-items: stretch;
-        align-items: stretch;
-        justify-content: start;
+        align-items: start;
+        justify-content: space-between;
         align-content: space-between;
         gap: 0px;
 
-        margin: 0px;
+        margin: 1px;
         padding: 0px;
         padding-left: 10px;
         padding-right: 10px;

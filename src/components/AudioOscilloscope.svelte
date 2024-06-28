@@ -7,8 +7,8 @@
     // the audio context prop: is used to create an analyser node
     export let audioContext: AudioContext;
 
-    export let width: number = 130;
-    export let height: number = 90;
+    export let width: number = 100;
+    export let height: number = 75;
 
     export let label: string = "";
 
@@ -53,18 +53,6 @@
         private timeDomain: Uint8Array;
         private drawRequest: number;
         private ctx: CanvasRenderingContext2D;
-
-        // constructor(analyserNode: AnalyserNode, ctx: CanvasRenderingContext2D, options: any = {})
-        // {
-        //     this.analyser = analyserNode;
-        //     this.ctx = ctx;
-
-        //     if (options.fftSize)
-        //         this.analyser.fftSize = options.fftSize;
-
-        //     this.timeDomain = new Uint8Array(this.analyser.fftSize);
-        //     this.drawRequest = 0;
-        // }
 
         constructor(audioNode: AudioNode, audioContext: AudioContext, ctx: CanvasRenderingContext2D, options: any = {})
         {

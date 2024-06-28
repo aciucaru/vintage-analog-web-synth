@@ -42,25 +42,23 @@
 
         display: grid;
         grid-template-columns: 16px auto;
-
         grid-template-rows: 16px
-                            5px
-                            auto 5px
-                            auto 5px auto 5px
+                            5px auto
+                            5px auto 5px auto 5px
                             16px;
 
         justify-items: stretch;
-        align-items: stretch;
-        justify-content: start;
+        align-items: start;
+        justify-content: space-between;
         align-content: space-between;
         gap: 0px;
 
-        margin: 0px;
+        margin: 1px;
         padding: 0px;
         padding-left: 10px;
         padding-right: 10px;
 
-        border-radius: 5px;
+        border-radius: 2px;
         background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
     }
 
