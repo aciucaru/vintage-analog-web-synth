@@ -1,16 +1,12 @@
 <script lang="ts">
-    import MainPanel from "./panels/MainPanel.svelte";
-    import KeyboardPanel from "./panels/KeyboardPanel.svelte";
-    import WoodSide from "./WoodSide.svelte";
     import SidePanel from "./panels/SidePanel.svelte";
+    import Rack2 from "./panels/Rack2.svelte";
 </script>
 
 <div class="main-container">
-    <WoodSide></WoodSide>
     <div class="center-container">
-        <MainPanel></MainPanel>
+        <Rack2></Rack2>
     </div>
-    <WoodSide otherside={true}></WoodSide>
 
     <div class="center-container">
         <SidePanel></SidePanel>

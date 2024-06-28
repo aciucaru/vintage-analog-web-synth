@@ -245,6 +245,8 @@
 
         box-sizing: border-box;
 
+        width: var(--knob-width);
+
         display: flex;
         flex-flow: column nowrap;
         /* set alignment on main axis */
@@ -253,7 +255,6 @@
         align-items: center;
         /* set space between flex lines */
         align-content: center;
-        gap: 5px;
 
         margin: 0px;
         padding: 0px;

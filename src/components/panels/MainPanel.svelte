@@ -1,5 +1,7 @@
 <script lang="ts">
     import OscillatorsPanel from "./sub-panels/OscillatorsPanel.svelte";
+    import Oscillator1Panel from "./sub-panels/Oscillator1Panel.svelte";
+    import Oscillator2Panel from "./sub-panels/Oscillator2Panel.svelte";
     import MainScreen from "./sub-panels/MainScreen.svelte";
     import FilterPanel from "./sub-panels/FilterPanel.svelte";
     import VoicePanel from "./sub-panels/VoicePanel.svelte";
@@ -15,8 +17,12 @@
     </div>
 
     <div style="grid-column: 2 / 3; grid-row: 4 / 7;">
-        <OscillatorsPanel></OscillatorsPanel>
+        <Oscillator1Panel></Oscillator1Panel>
     </div>
+
+    <!-- <div style="grid-column: 2 / 3; grid-row: 4 / 7;">
+        <OscillatorsPanel></OscillatorsPanel>
+    </div> -->
 
     <div style="grid-column: 4 / 6; grid-row: 2 / 5;">
         <FilterPanel></FilterPanel>
