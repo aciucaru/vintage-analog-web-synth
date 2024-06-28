@@ -12,12 +12,51 @@
 
     const logger: Logger<ILogObj> = new Logger({name: "RadioGroup", minLevel: Settings.minLogLevel });
 
+    // tab selection index
     let selectedLfoIndex = 0;
+
+    // tab styles
+    let tab1ButtonStyle = "tab-button tab-button-selected unselectable";
+    let tab2ButtonStyle = "tab-button tab-button-unselected unselectable";
+    let tab3ButtonStyle = "tab-button tab-button-unselected unselectable";
+    let tab4ButtonStyle = "tab-button tab-button-unselected unselectable";
+    let tab5ButtonStyle = "tab-button tab-button-unselected unselectable";
+
+    // tab selection callbacks:
+    function onTab1Select(): void
+    {
+        logger.debug("onTab1Select(): tab index 0");
+        selectedLfoIndex = 0;
+    }
+
+    function onTab2Select(event: Event): void
+    {
+        logger.debug("onTab2Select(): tab index 1");
+        selectedLfoIndex = 1;
+    }
+
+    function onTab3Select(event: Event): void
+    {
+        logger.debug("onTab3Select(): tab index 2");
+        selectedLfoIndex = 2;
+    }
+
+    function onTab4Select(event: Event): void
+    {
+        logger.debug("onTab4Select(): tab index 3");
+        selectedLfoIndex = 3;
+    }
+
+    function onTab5Select(event: Event): void
+    {
+        logger.debug("onTab5Select(): tab index 4");
+        selectedLfoIndex = 4;
+    }
 
     // LFO 1 callbacks and data ****************************************************************************************
     function onLfo1TriangleShapeSelect(): void
     {
-        logger.debug("onLfo1TriangleShapeSelect(): triangle shape selected");
+        logger.debug("onLfo1TriangleShapeSelect()");
 
         if (lfoArray.length > 0)
             lfoArray[0].setShape(LfoShape.Triangle);
@@ -25,7 +64,7 @@
 
     function onLfo1SawtoothShapeSelect(): void
     {
-        logger.debug("onLfo1TriangleShapeSelect(): triangle shape selected");
+        logger.debug("onLfo1SawtoothShapeSelect()");
 
         if (lfoArray.length > 0)
             lfoArray[0].setShape(LfoShape.Sawtooth);
@@ -33,7 +72,7 @@
 
     function onLfo1SquareShapeSelect(): void
     {
-        logger.debug("onLfo1TriangleShapeSelect(): triangle shape selected");
+        logger.debug("onLfo1SquareShapeSelect()");
 
         if (lfoArray.length > 0)
             lfoArray[0].setShape(LfoShape.Square);
@@ -41,7 +80,7 @@
 
     function onLfo1SineShapeSelect(): void
     {
-        logger.debug("onLfo1TriangleShapeSelect(): triangle shape selected");
+        logger.debug("onLfo1SineShapeSelect()");
 
         if (lfoArray.length > 0)
             lfoArray[0].setShape(LfoShape.Sine);
@@ -57,10 +96,10 @@
 
     // the data for a single radio button consists of an index, a label and the callback
     const lfo1RadioDataArray: Array<RadioButtonData> = new Array<RadioButtonData>(4);
-    lfo1RadioDataArray[0] = new RadioButtonData(0, "Tri", onLfo1TriangleShapeSelect, true);
-    lfo1RadioDataArray[1] = new RadioButtonData(1, "Saw", onLfo1SawtoothShapeSelect);
-    lfo1RadioDataArray[2] = new RadioButtonData(2, "Square", onLfo1SquareShapeSelect);
-    lfo1RadioDataArray[3] = new RadioButtonData(3, "Sine", onLfo1SineShapeSelect);
+    lfo1RadioDataArray[0] = new RadioButtonData(0, "", onLfo1TriangleShapeSelect, true);
+    lfo1RadioDataArray[1] = new RadioButtonData(1, "", onLfo1SawtoothShapeSelect);
+    lfo1RadioDataArray[2] = new RadioButtonData(2, "", onLfo1SquareShapeSelect);
+    lfo1RadioDataArray[3] = new RadioButtonData(3, "", onLfo1SineShapeSelect);
 
     function lfo1RadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
     {
@@ -126,10 +165,10 @@
 
     // the data for a single radio button consists of an index, a label and the callback
     const lfo2RadioDataArray: Array<RadioButtonData> = new Array<RadioButtonData>(4);
-    lfo2RadioDataArray[0] = new RadioButtonData(0, "Tri", onLfo2TriangleShapeSelect, true);
-    lfo2RadioDataArray[1] = new RadioButtonData(1, "Saw", onLfo2SawtoothShapeSelect);
-    lfo2RadioDataArray[2] = new RadioButtonData(2, "Square", onLfo2SquareShapeSelect);
-    lfo2RadioDataArray[3] = new RadioButtonData(3, "Sine", onLfo2SineShapeSelect);
+    lfo2RadioDataArray[0] = new RadioButtonData(0, "", onLfo2TriangleShapeSelect, true);
+    lfo2RadioDataArray[1] = new RadioButtonData(1, "", onLfo2SawtoothShapeSelect);
+    lfo2RadioDataArray[2] = new RadioButtonData(2, "", onLfo2SquareShapeSelect);
+    lfo2RadioDataArray[3] = new RadioButtonData(3, "", onLfo2SineShapeSelect);
 
     function lfo2RadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
     {
@@ -193,10 +232,10 @@
 
     // the data for a single radio button consists of an index, a label and the callback
     const lfo3RadioDataArray: Array<RadioButtonData> = new Array<RadioButtonData>(4);
-    lfo3RadioDataArray[0] = new RadioButtonData(0, "Tri", onLfo3TriangleShapeSelect, true);
-    lfo3RadioDataArray[1] = new RadioButtonData(1, "Saw", onLfo3SawtoothShapeSelect);
-    lfo3RadioDataArray[2] = new RadioButtonData(2, "Square", onLfo3SquareShapeSelect);
-    lfo3RadioDataArray[3] = new RadioButtonData(3, "Sine", onLfo3SineShapeSelect);
+    lfo3RadioDataArray[0] = new RadioButtonData(0, "", onLfo3TriangleShapeSelect, true);
+    lfo3RadioDataArray[1] = new RadioButtonData(1, "", onLfo3SawtoothShapeSelect);
+    lfo3RadioDataArray[2] = new RadioButtonData(2, "", onLfo3SquareShapeSelect);
+    lfo3RadioDataArray[3] = new RadioButtonData(3, "", onLfo3SineShapeSelect);
 
     function lfo3RadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
     {
@@ -261,10 +300,10 @@
 
     // the data for a single radio button consists of an index, a label and the callback
     const lfo4RadioDataArray: Array<RadioButtonData> = new Array<RadioButtonData>(4);
-    lfo4RadioDataArray[0] = new RadioButtonData(0, "Tri", onLfo4TriangleShapeSelect, true);
-    lfo4RadioDataArray[1] = new RadioButtonData(1, "Saw", onLfo4SawtoothShapeSelect);
-    lfo4RadioDataArray[2] = new RadioButtonData(2, "Square", onLfo4SquareShapeSelect);
-    lfo4RadioDataArray[3] = new RadioButtonData(3, "Sine", onLfo4SineShapeSelect);
+    lfo4RadioDataArray[0] = new RadioButtonData(0, "", onLfo4TriangleShapeSelect, true);
+    lfo4RadioDataArray[1] = new RadioButtonData(1, "", onLfo4SawtoothShapeSelect);
+    lfo4RadioDataArray[2] = new RadioButtonData(2, "", onLfo4SquareShapeSelect);
+    lfo4RadioDataArray[3] = new RadioButtonData(3, "", onLfo4SineShapeSelect);
 
     function lfo4RadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
     {
@@ -329,10 +368,10 @@
 
     // the data for a single radio button consists of an index, a label and the callback
     const lfo5RadioDataArray: Array<RadioButtonData> = new Array<RadioButtonData>(4);
-    lfo5RadioDataArray[0] = new RadioButtonData(0, "Tri", onLfo5TriangleShapeSelect, true);
-    lfo5RadioDataArray[1] = new RadioButtonData(1, "Saw", onLfo5SawtoothShapeSelect);
-    lfo5RadioDataArray[2] = new RadioButtonData(2, "Square", onLfo5SquareShapeSelect);
-    lfo5RadioDataArray[3] = new RadioButtonData(3, "Sine", onLfo5SineShapeSelect);
+    lfo5RadioDataArray[0] = new RadioButtonData(0, "", onLfo5TriangleShapeSelect, true);
+    lfo5RadioDataArray[1] = new RadioButtonData(1, "", onLfo5SawtoothShapeSelect);
+    lfo5RadioDataArray[2] = new RadioButtonData(2, "", onLfo5SquareShapeSelect);
+    lfo5RadioDataArray[3] = new RadioButtonData(3, "", onLfo5SineShapeSelect);
 
     function lfo5RadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
     {
@@ -352,99 +391,166 @@
         }
         // else, do nothing
     }
+
+    // recompute the tab button styles for each button, using Svelte reactive statement ($:)
+    $: tab1ButtonStyle = selectedLfoIndex === 0 ? "tab-button tab-button-selected unselectable" : "tab-button tab-button-unselected unselectable";
+    $: tab2ButtonStyle = selectedLfoIndex === 1 ? "tab-button tab-button-selected unselectable" : "tab-button tab-button-unselected unselectable";
+    $: tab3ButtonStyle = selectedLfoIndex === 2 ? "tab-button tab-button-selected unselectable" : "tab-button tab-button-unselected unselectable";
+    $: tab4ButtonStyle = selectedLfoIndex === 3 ? "tab-button tab-button-selected unselectable" : "tab-button tab-button-unselected unselectable";
+    $: tab5ButtonStyle = selectedLfoIndex === 4 ? "tab-button tab-button-selected unselectable" : "tab-button tab-button-unselected unselectable";
 </script>
 
 <div class="main-container">
     <!-- oscillator 1 *********************************************************************************************** -->
     <div class="tab-buttons-container">
-        <div class="tab-button">LFO 1</div>
-        <div class="tab-button">LFO 2</div>
-        <div class="tab-button">LFO 3</div>
-        <div class="tab-button">LFO 4</div>
-        <div class="tab-button">LFO 5</div>
+        <div class={tab1ButtonStyle} on:click={onTab1Select}>LFO 1</div>
+        <div class={tab2ButtonStyle} on:click={onTab2Select}>LFO 2</div>
+        <div class={tab3ButtonStyle} on:click={onTab3Select}>LFO 3</div>
+        <div class={tab4ButtonStyle} on:click={onTab4Select}>LFO 4</div>
+        <div class={tab5ButtonStyle} on:click={onTab5Select}>LFO 5</div>
     </div>
 
     {#if selectedLfoIndex === 0}
-        <div class="tab-content">
-            <div class="waveshape-buttons-container">
-                <RadioButton radioData={lfo1RadioDataArray[0]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo1RadioDataArray[1]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo1RadioDataArray[2]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo1RadioDataArray[3]} containerCallback={containerCallback}></RadioButton>
+        <div class="lfo-editor">
+            <div style="grid-column: 1 / 2; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo1RadioDataArray[0]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
             </div>
+            <div class="waveform-icon triangle-icon" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
 
-            <!-- oscillator 1 frequency controls -->
-            <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
+            <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo1RadioDataArray[1]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon saw-icon" style="grid-column: 4 / 5; grid-row: 1 / 2;"></div>
+
+            <div style="grid-column: 1 / 2; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo1RadioDataArray[2]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon square-icon" style="grid-column: 2 / 3; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo1RadioDataArray[3]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon sine-icon" style="grid-column: 4 / 5; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 5 / 6; grid-row: 1 / 3;">
                 <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
-                    step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
+                    step={1} decimals={0} onValueChange={onLfo1FreqChange}></Knob>
             </div>
         </div>
     {/if}
 
     {#if selectedLfoIndex === 1}
-        <div class="tab-content">
-            <div class="waveshape-buttons-container">
-                <RadioButton radioData={lfo2RadioDataArray[0]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo2RadioDataArray[1]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo2RadioDataArray[2]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo2RadioDataArray[3]} containerCallback={containerCallback}></RadioButton>
+        <div class="lfo-editor">
+            <div style="grid-column: 1 / 2; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo2RadioDataArray[0]} containerCallback={lfo2RadioContainerCallback}></RadioButton>
             </div>
+            <div class="waveform-icon triangle-icon" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
 
-            <!-- oscillator 1 frequency controls -->
-            <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
+            <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo2RadioDataArray[1]} containerCallback={lfo2RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon saw-icon" style="grid-column: 4 / 5; grid-row: 1 / 2;"></div>
+
+            <div style="grid-column: 1 / 2; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo2RadioDataArray[2]} containerCallback={lfo2RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon square-icon" style="grid-column: 2 / 3; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo2RadioDataArray[3]} containerCallback={lfo2RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon sine-icon" style="grid-column: 4 / 5; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 5 / 6; grid-row: 1 / 3;">
                 <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
-                    step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
+                    step={1} decimals={0} onValueChange={onLfo2FreqChange}></Knob>
             </div>
         </div>
     {/if}
 
     {#if selectedLfoIndex === 2}
-        <div class="tab-content">
-            <div class="waveshape-buttons-container">
-                <RadioButton radioData={lfo3RadioDataArray[0]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo3RadioDataArray[1]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo3RadioDataArray[2]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo3RadioDataArray[3]} containerCallback={containerCallback}></RadioButton>
+        <div class="lfo-editor">
+            <div style="grid-column: 1 / 2; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo3RadioDataArray[0]} containerCallback={lfo3RadioContainerCallback}></RadioButton>
             </div>
+            <div class="waveform-icon triangle-icon" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
 
-            <!-- oscillator 1 frequency controls -->
-            <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
+            <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo3RadioDataArray[1]} containerCallback={lfo3RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon saw-icon" style="grid-column: 4 / 5; grid-row: 1 / 2;"></div>
+
+            <div style="grid-column: 1 / 2; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo3RadioDataArray[2]} containerCallback={lfo3RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon square-icon" style="grid-column: 2 / 3; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo3RadioDataArray[3]} containerCallback={lfo3RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon sine-icon" style="grid-column: 4 / 5; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 5 / 6; grid-row: 1 / 3;">
                 <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
-                    step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
+                    step={1} decimals={0} onValueChange={onLfo3FreqChange}></Knob>
             </div>
         </div>
     {/if}
 
     {#if selectedLfoIndex === 3}
-        <div class="tab-content">
-            <div class="waveshape-buttons-container">
-                <RadioButton radioData={lfo4RadioDataArray[0]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo4RadioDataArray[1]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo4RadioDataArray[2]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo4RadioDataArray[3]} containerCallback={containerCallback}></RadioButton>
+        <div class="lfo-editor">
+            <div style="grid-column: 1 / 2; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo4RadioDataArray[0]} containerCallback={lfo4RadioContainerCallback}></RadioButton>
             </div>
+            <div class="waveform-icon triangle-icon" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
 
-            <!-- oscillator 1 frequency controls -->
-            <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
+            <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo4RadioDataArray[1]} containerCallback={lfo4RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon saw-icon" style="grid-column: 4 / 5; grid-row: 1 / 2;"></div>
+
+            <div style="grid-column: 1 / 2; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo4RadioDataArray[2]} containerCallback={lfo4RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon square-icon" style="grid-column: 2 / 3; grid-row: 2 / 3;"></div>
+            
+            <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo4RadioDataArray[3]} containerCallback={lfo4RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon sine-icon" style="grid-column: 4 / 5; grid-row: 2 / 3;"></div>
+            
+            <div style="grid-column: 5 / 6; grid-row: 1 / 3;">
                 <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
-                    step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
+                    step={1} decimals={0} onValueChange={onLfo4FreqChange}></Knob>
             </div>
         </div>
     {/if}
 
     {#if selectedLfoIndex === 4}
-        <div class="tab-content">
-            <div class="waveshape-buttons-container">
-                <RadioButton radioData={lfo5RadioDataArray[0]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo5RadioDataArray[1]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo5RadioDataArray[2]} containerCallback={containerCallback}></RadioButton>
-                <RadioButton radioData={lfo5RadioDataArray[3]} containerCallback={containerCallback}></RadioButton>
+        <div class="lfo-editor">
+            <div style="grid-column: 1 / 2; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo5RadioDataArray[0]} containerCallback={lfo5RadioContainerCallback}></RadioButton>
             </div>
+            <div class="waveform-icon triangle-icon" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
 
-            <!-- oscillator 1 frequency controls -->
-            <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
+            <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
+                <RadioButton radioData={lfo5RadioDataArray[1]} containerCallback={lfo5RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon saw-icon" style="grid-column: 4 / 5; grid-row: 1 / 2;"></div>
+
+            <div style="grid-column: 1 / 2; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo5RadioDataArray[2]} containerCallback={lfo5RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon square-icon" style="grid-column: 2 / 3; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
+                <RadioButton radioData={lfo5RadioDataArray[3]} containerCallback={lfo5RadioContainerCallback}></RadioButton>
+            </div>
+            <div class="waveform-icon sine-icon" style="grid-column: 4 / 5; grid-row: 2 / 3;"></div>
+
+            <div style="grid-column: 5 / 6; grid-row: 1 / 3;">
                 <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
-                    step={1} decimals={0} onValueChange={oscCallbacks.onOsc1OctavesOffsetChange}></Knob>
+                    step={1} decimals={0} onValueChange={onLfo5FreqChange}></Knob>
             </div>
         </div>
     {/if}
@@ -455,99 +561,42 @@
     {
         box-sizing: border-box;
 
-        display: grid;
-        grid-template-columns: 5px auto 5px auto 15px auto 5px
-                                5px
-                                5px auto 5px auto 15px auto 5px
-                                5px
-                                5px auto 5px auto 5px
-                                5px
-                                5px auto 5px;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        align-content: center;
 
-        grid-template-rows: 5px
-                            auto
-                            5px auto 5px auto 5px;
-
-        justify-items: stretch;
-        align-items: stretch;
-        justify-content: center;
-        gap: 0px;
+        padding: 5px;
+        margin: 0px;
 
         margin: 0px;
         padding: 0px;
 
-        border-radius: 5px;
-    }
-
-    .osc1-section-background
-    {
-        box-sizing: border-box;
-
-        margin: 0px;
-        padding: 0px;
         border-radius: 5px;
 
         background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
     }
 
-    .osc2-section-background
+    .tab-buttons-container
     {
         box-sizing: border-box;
 
-        margin: 0px;
-        padding: 0px;
-        border-radius: 5px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        align-content: center;
 
-        background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
+        margin: 5px;
+        padding: 0px;
     }
 
-    .sub-osc-top-section-background
+    .tab-button
     {
-        box-sizing: border-box;
-
         margin: 0px;
-        padding: 0px;
-        border-radius: 5px;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-
-        background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat bottom left;
-    }
-
-    .sub-osc-bottom-section-background
-    {
-        box-sizing: border-box;
-
-        margin: 0px;
-        padding: 0px;
-        border-radius: 5px;
-        border-top-left-radius: 0px;
-
-        background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
-    }
-
-    .noise-osc-section-background
-    {
-        box-sizing: border-box;
-
-        margin: 0px;
-        padding: 0px;
-        border-radius: 5px;
-
-        background: url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
-    }
-
-    .title
-    {
-        pointer-events: none;
-
-        margin: 0px;
-        padding: 0px;
-
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 25%, 0.6), hsla(220, 20%, 20%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 30%, 0.6), hsla(220, 20%, 25%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(45, 25%, 25%), hsl(45, 25%, 20%)); ok for orange */
-        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        margin-left: 2px;
+        padding: 5px;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
@@ -557,55 +606,48 @@
         text-overflow: clip;
     }
 
-    .toggle-buttons-group
+    .tab-button-selected
     {
-        box-sizing: border-box;
-
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        flex-flow: column nowrap;
-        /* set alignment on main axis */
-        justify-content: space-between;
-        /* set alingment on cross-axis */
-        align-items: flex-start;
-        /* set space between flex lines */
-        align-content: center;
-
-        padding: 0px;
-        margin: 0px;
+        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
     }
 
-    .knob-group
+    .tab-button-unselected
     {
-        /* box-sizing: border-box; */
-
-        padding: 0px;
-        margin: 0px;
-
-        border-radius: 4px;
-
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(217, 14%, 25%), hsl(217, 14%, 20%)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(217, 14%, 22%), hsl(217, 14%, 17%)); */
         background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
     }
 
-    .waveform-button-icon-group
+
+    .lfo-editor
     {
         box-sizing: border-box;
 
-        width: auto;
-        height: auto;
+        display: grid;
+        grid-template-columns: repeat(5, auto);
 
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        justify-content: flex-start;
-        align-content: center;
+        grid-template-rows: auto auto;
 
+        justify-items: stretch;
+        align-items: stretch;
+        justify-content: center;
+        gap: 5px;
+
+        margin: 5px;
         padding: 0px;
+    }
+
+    .label
+    {
         margin: 0px;
+        padding: 0px;
+
+        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+
+        color: hsl(0, 0%, 85%);
+        font-family: sans-serif;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: clip;
     }
 
     .waveform-icon
@@ -640,12 +682,20 @@
         background-image: url("../../../assets/icons/wave-saw-single-opt.svg");
     }
 
-    .pulse-icon
+    .square-icon
     {
         width: 16px;
         height: 16px;
 
         background-image: url("../../../assets/icons/wave-pulse-single-opt.svg");
+    }
+
+    .sine-icon
+    {
+        width: 16px;
+        height: 16px;
+
+        background-image: url("../../../assets/icons/wave-sine-single-opt.svg");
     }
 
     .unselectable

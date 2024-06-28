@@ -47,8 +47,8 @@ export class Settings
 
     // these values should never be 0 (0% width) or 1 (100% width), because the oscillation would
     // be a straight line, not a square (pulse) wave
-    public static readonly minOscPulseWidth = 0.1; // 10%
-    public static readonly maxOscPulseWidth = 0.9; // 90%
+    public static readonly minOscPulseWidth = 0.0; // 10%
+    public static readonly maxOscPulseWidth = 1.0; // 90%
     public static readonly defaultOscPulseWidth = 0.5; // 50% - square
 
     // noise oscillator settings

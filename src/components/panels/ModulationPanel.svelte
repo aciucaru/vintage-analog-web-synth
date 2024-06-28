@@ -1,5 +1,6 @@
 <script lang="ts">
     import ModulationMatrix from "./sub-panels/ModulationMatrix.svelte";
+    import LfoPanel from "./sub-panels/LfoPanel.svelte";
 </script>
 
 <div class="main-container">
@@ -8,6 +9,10 @@
 
     <div style="grid-column: 2 / 3; grid-row: 2 / 3;">
         <ModulationMatrix></ModulationMatrix>
+    </div>
+
+    <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
+        <LfoPanel></LfoPanel>
     </div>
 </div>
 
@@ -29,8 +34,7 @@
                                 30px;
 
         grid-template-rows: 30px
-                            auto
-                            20px
+                            auto 20px
                             auto 20px
                             auto
                             30px;
