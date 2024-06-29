@@ -1,24 +1,13 @@
 <script lang="ts">
-    import Oscillator1Panel from "./sub-panels/Oscillator1Panel.svelte";
-    import Oscillator2Panel from "./sub-panels/Oscillator2Panel.svelte";
-    import NoiseOscillatorPanel from "./sub-panels/NoiseOscillatorPanel.svelte";
-    import InvisibleKeyboard from "../InvisibleKeyboard.svelte";
-    import SubOscillatorPanel from "./sub-panels/SubOscillatorPanel.svelte";
-    import VoiceSettingsPanel from "./sub-panels/VoiceSettingsPanel.svelte";
-    import VoiceEnvelopePanel from "./sub-panels/VoiceEnvelopePanel.svelte";
     import MainScreen from "./sub-panels/MainScreen.svelte";
-    import FilterSettingsPanel from "./sub-panels/FilterSettingsPanel.svelte";
-    import FilterEnvelopePanel from "./sub-panels/FilterEnvelopePanel.svelte";
-    import SingleLfoPanel from "./sub-panels/SingleLfoPanel.svelte";
     import MultipleLfoPanel from "./sub-panels/MultipleLfoPanel.svelte";
+    import LfoMatrix from "./sub-panels/LfoMatrix.svelte";
 </script>
 
 <div class="main-container">
-    <Oscillator1Panel></Oscillator1Panel>
-    <Oscillator2Panel></Oscillator2Panel>
-    <SubOscillatorPanel></SubOscillatorPanel>
-    <NoiseOscillatorPanel></NoiseOscillatorPanel>
+    <MainScreen></MainScreen>
     <MultipleLfoPanel></MultipleLfoPanel>
+    <LfoMatrix></LfoMatrix>
 </div>
 
 
