@@ -1139,7 +1139,7 @@
     <div class="mod-destination-title unselectable" style="grid-column: 28 / 29; grid-row: 13 / 15;">FILT<br>Drive</div>
 
     <div style="grid-column: 28 / 29; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -1148,7 +1148,7 @@
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -1157,7 +1157,7 @@
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -1166,7 +1166,7 @@
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -1175,7 +1175,7 @@
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onLfoToggle} isToggled={true}>
+        <ToggleButton onToggleChange={onLfoToggle}>
             <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
             <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
             <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
@@ -1258,12 +1258,9 @@
     .mod-source-header
     {
         margin: 0px;
-        padding: 0px;
+        padding: 2px;
 
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 25%, 0.6), hsla(220, 20%, 20%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 30%, 0.6), hsla(220, 20%, 25%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(45, 25%, 25%), hsl(45, 25%, 20%)); ok for orange */
-        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;

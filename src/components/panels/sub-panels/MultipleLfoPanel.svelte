@@ -27,7 +27,7 @@
     /* set space between flex lines */
     align-content: flex-start;
 
-    margin: 0px;
+    margin: 1px;
     padding: 0px;
 
     text-align: center;

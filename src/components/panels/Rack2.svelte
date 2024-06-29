@@ -49,33 +49,7 @@
         padding: 0px;
 
         text-align: center;
-    }
 
-    .textured-background
-    {
-        grid-column: 1 / 9;
-        grid-row: 1 / 8;
-
-        justify-self: stretch;
-        align-self: stretch;
-
-        margin: 0px;
-        padding: 0px;
-
-        background: url("../../assets/texture/texture-large-filt-seamless.jpg") repeat left top;
-    }
-
-    .gradient-background
-    {
-        grid-column: 1 / 9;
-        grid-row: 1 / 8;
-
-        justify-self: stretch;
-        align-self: stretch;
-
-        margin: 0px;
-        padding: 0px;
-
-        background-image: radial-gradient(ellipse at top, hsla(216, 20%, 30%, 0.7) 0%, hsla(207, 20%, 15%, 0.7) 50%);
+        background: linear-gradient(hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 50%);
     }
 </style>
