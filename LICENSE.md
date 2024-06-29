@@ -1,4 +1,4 @@
-1. Software (programming code) licenses
+1. Software (programming code) licenses.
     This software (programming code) by aciucaru is licensed unde the below MIT license (images, artwork and fonts used in this software are not covered by the MIT license):
 
         MIT License
