@@ -18,4 +18,4 @@
 4. The images/artwork inside the src/assets directory are made by aciucaru and are marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
 
 5. The images, artwork and fonts inside the src/assets-external directory are free images, artwork and/or fonts taken (with permission) from the internet and they belong to their copyright owners. You can find their license in hte LICENSE directory. Below is the list of these images, artwork and or fonts used in this project:
-    * LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license can be foundin the LICENSE directory.
+    * LCD14.otf, an open source font made to mimic LCD screens, Copyright (c) 2015 Fredrick Brennan (http://8type.net). The license of this font can be found in the LICENSE directory.
