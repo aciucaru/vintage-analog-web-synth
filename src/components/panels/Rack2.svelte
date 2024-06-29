@@ -34,7 +34,8 @@
     {
         box-sizing: border-box;
 
-        width: min-content;
+        /* width: min-content; */
+        width: 100%;
 
         display: flex;
         flex-flow: row nowrap;

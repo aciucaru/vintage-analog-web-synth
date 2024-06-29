@@ -16,7 +16,8 @@
     {
         box-sizing: border-box;
 
-        width: min-content;
+        /* width: min-content; */
+        width: 100%;
 
         display: flex;
         flex-flow: row nowrap;
@@ -31,7 +32,7 @@
         padding: 0px;
 
         text-align: center;
-        
+
         background: linear-gradient(hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 50%);
     }
 </style>

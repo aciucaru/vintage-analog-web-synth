@@ -16,7 +16,8 @@
     {
         box-sizing: border-box;
 
-        width: min-content;
+        /* width: min-content; */
+        width: 100%;
 
         display: flex;
         flex-flow: column nowrap;
@@ -28,6 +29,8 @@
         padding: 0px;
 
         text-align: center;
+
+        background-color: hsl(0, 0%, 0%);
     }
 
     .center-container
