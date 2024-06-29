@@ -1,19 +1,24 @@
 <script lang="ts">
+    import Oscillator1Panel from "./sub-panels/Oscillator1Panel.svelte";
+    import Oscillator2Panel from "./sub-panels/Oscillator2Panel.svelte";
+    import NoiseOscillatorPanel from "./sub-panels/NoiseOscillatorPanel.svelte";
+    import InvisibleKeyboard from "../InvisibleKeyboard.svelte";
+    import SubOscillatorPanel from "./sub-panels/SubOscillatorPanel.svelte";
+    import VoiceSettingsPanel from "./sub-panels/VoiceSettingsPanel.svelte";
+    import VoiceEnvelopePanel from "./sub-panels/VoiceEnvelopePanel.svelte";
     import MainScreen from "./sub-panels/MainScreen.svelte";
     import FilterSettingsPanel from "./sub-panels/FilterSettingsPanel.svelte";
     import FilterEnvelopePanel from "./sub-panels/FilterEnvelopePanel.svelte";
     import SingleLfoPanel from "./sub-panels/SingleLfoPanel.svelte";
+    import MultipleLfoPanel from "./sub-panels/MultipleLfoPanel.svelte";
 </script>
 
 <div class="main-container">
-    <MainScreen></MainScreen>
-    <FilterSettingsPanel></FilterSettingsPanel>
-    <FilterEnvelopePanel></FilterEnvelopePanel>
-    <SingleLfoPanel lfoIndex={0}></SingleLfoPanel>
-    <SingleLfoPanel lfoIndex={1}></SingleLfoPanel>
-    <SingleLfoPanel lfoIndex={2}></SingleLfoPanel>
-    <SingleLfoPanel lfoIndex={3}></SingleLfoPanel>
-    <SingleLfoPanel lfoIndex={4}></SingleLfoPanel>
+    <Oscillator1Panel></Oscillator1Panel>
+    <Oscillator2Panel></Oscillator2Panel>
+    <SubOscillatorPanel></SubOscillatorPanel>
+    <NoiseOscillatorPanel></NoiseOscillatorPanel>
+    <MultipleLfoPanel></MultipleLfoPanel>
 </div>
 
 
@@ -32,9 +37,6 @@
         align-items: center;
         /* set space between flex lines */
         align-content: flex-start;
-
-        margin: 0px;
-        padding: 0px;
 
         margin: 0px;
         padding: 0px;

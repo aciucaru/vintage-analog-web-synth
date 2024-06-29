@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ModulationMatrix from "./sub-panels/ModulationMatrix.svelte";
+    import LfoMatrix from "./sub-panels/LfoMatrix.svelte";
     import LfoPanel from "./sub-panels/LfoPanel.svelte";
 </script>
 
@@ -8,7 +8,7 @@
     <div class="gradient-background"></div>
 
     <div style="grid-column: 2 / 3; grid-row: 2 / 3;">
-        <ModulationMatrix></ModulationMatrix>
+        <LfoMatrix></LfoMatrix>
     </div>
 
     <div style="grid-column: 2 / 3; grid-row: 4 / 5;">

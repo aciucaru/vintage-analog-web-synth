@@ -86,7 +86,7 @@
 
 <div class="main-container">
         <!-- title -->
-        <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 3 / 4;">LFO</div>
+        <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 3 / 4;">LFO {lfoIndex + 1}</div>
 
         <div style="grid-column: 1 / 3; grid-row: 5 / 6;">
             <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
@@ -135,14 +135,12 @@
         align-content: space-between;
         gap: 0px;
 
-        margin: 1px;
+        margin: 0px;
         padding: 0px;
         padding-left: 10px;
         padding-right: 10px;
 
-        border-radius: 2px;
-        background: linear-gradient(hsla(216, 20%, 30%, 0.7) 0%, hsla(207, 20%, 15%, 0.7) 50%),
-                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
+        border-radius: 0px;
     }
 
     .title
