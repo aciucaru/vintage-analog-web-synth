@@ -204,6 +204,19 @@ export class Settings
     public static readonly maxArpegiatorOctaves = 4;
     public static readonly defaultArpegiatorOctaves = 1;
 
+
+    // settings for sequencer ****************************************************************************
+    public static readonly sequencerSteps = 16;
+
+    public static readonly minSequencerTempo = 20;
+    public static readonly maxSequencerTempo = 300;
+    public static readonly defaultSequencerTempo = 120;
+
+    public static readonly minSequencerOctaves = 0;
+    public static readonly maxSequencerOctaves = 2;
+    public static readonly defaultSequencerOctaves = 0;
+
+
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
 }

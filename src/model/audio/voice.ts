@@ -73,16 +73,6 @@ export class Voice
             this.sharedLfoArray[i] = new UnipolarLfo(this.audioContext);
         }
         
-        // instantiate the modulation  managers
-        // this.freqLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-        //                                         NoteSettings.minFrequency, NoteSettings.maxFrequency, NoteSettings.defaultFrequency);
-        // this.ampLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-        //                                         Settings.minVoiceGain, Settings.maxVoiceGain, Settings.defaultVoiceGain);
-        // this.pulseWidthLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-        //                                             Settings.minOscPulseWidth, Settings.maxOscPulseWidth, Settings.defaultOscPulseWidth);
-        // this.unisonDetuneLfoManager = new LfoManager(this.audioContext, this.sharedLfoArray,
-        //                                             Settings.minOscUnisonCentsDetune, Settings.maxOscUnisonCentsDetune, Settings.defaultOscUnisonCentsDetune);
-
         this.filterCutoffFreqModulationManager = new ModulationManager(this.audioContext, lfoArray,
                                                                         Settings.minFilterCutoffFreq, Settings.maxFilterCutoffFreq, Settings.defaultFilterCutoffFreq);
         this.filterResonanceModulationManager = new ModulationManager(this.audioContext, lfoArray,
@@ -144,7 +134,7 @@ export class Voice
     {
         Voice.logger.debug(`noteOn(octaves = ${octaves}, semitones = ${semitones})`);
 
-        // first, set the internal note (as octaves and semitones) for all oscillators
+        // first, set the internal note (as octaves and semitones) for all melodic oscillators
         this.unisonOscillator1.setNote(octaves, semitones);
         this.unisonOscillator2.setNote(octaves, semitones);
         this.subOscillator.setNote(octaves, semitones);
