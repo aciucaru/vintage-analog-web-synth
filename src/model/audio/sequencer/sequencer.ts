@@ -37,7 +37,7 @@ export class Sequencer
 
         this.notesInQueue = new Array<{noteIndex: number, time: number}>(Settings.sequencerSteps);
 
-        this.timingWorker = new Worker("");
+        this.timingWorker = new Worker("./worker.js");
 
         /* Assign 'this' to a variable of a different name, because inside Web Worker 'onmessage'
         ** 'this' will refer to the Web Worker, not the class instance. Storing 'this' in a

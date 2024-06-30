@@ -1,12 +1,14 @@
 <script lang="ts">
     import Rack1 from "./panels/Rack1.svelte";
     import Rack2 from "./panels/Rack2.svelte";
+    import Rack3 from "./panels/Rack3.svelte";
 </script>
 
 <div class="main-container">
     <div class="center-container">
         <Rack1></Rack1>
         <Rack2></Rack2>
+        <Rack3></Rack3>
     </div>
 </div>
 

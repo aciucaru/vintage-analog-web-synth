@@ -280,8 +280,8 @@
     .main-container
     {
         box-sizing: border-box;
-        height: 160px;
-        width: auto;
+        height: 0px;
+        width: 0px;
 
         display: flex;
         flex-flow: column nowrap;
@@ -294,5 +294,6 @@
 
         margin: 0px;
         padding: 0px;
+        background-color: blue;
     }
 </style>
