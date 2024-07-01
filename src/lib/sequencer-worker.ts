@@ -1,5 +1,5 @@
-let timerId = null;
-let interval = 100;
+let timerId: number | undefined = undefined;
+let interval: number | undefined = 100;
 
 self.onmessage = function(evt)
 {
@@ -26,7 +26,7 @@ self.onmessage = function(evt)
         console.log("stopping");
 
         clearInterval(timerId);
-        timerId = null;
+        timerId = undefined;
     }
 }
 
