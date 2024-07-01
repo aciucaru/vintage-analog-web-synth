@@ -182,102 +182,102 @@
 
 <div class="main-container">
     <div bind:this={step0}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[0]}
     class:stepOff={!enabledItems[0]}
-    style="grid-column: 1 / 2; grid-row: 1 / 2;">1</div>
+    style="grid-column: 2 / 3; grid-row: 2 / 3;">1</div>
 
     <div bind:this={step1}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[1]}
     class:stepOff={!enabledItems[1]}
-    style="grid-column: 2 / 3; grid-row: 1 / 2;">2</div>
+    style="grid-column: 3 / 4; grid-row: 2 / 3;">2</div>
 
     <div bind:this={step2}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[2]}
     class:stepOff={!enabledItems[2]}
-    style="grid-column: 3 / 4; grid-row: 1 / 2;">3</div>
+    style="grid-column: 4 / 5; grid-row: 2 / 3;">3</div>
 
     <div bind:this={step3}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[3]}
     class:stepOff={!enabledItems[3]}
-    style="grid-column: 4 / 5; grid-row: 1 / 2;">4</div>
+    style="grid-column: 5 / 6; grid-row: 2 / 3;">4</div>
 
     <div bind:this={step4}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[4]}
     class:stepOff={!enabledItems[4]}
-    style="grid-column: 5 / 6; grid-row: 1 / 2;">5</div>
+    style="grid-column: 6 / 7; grid-row: 2 / 3;">5</div>
 
     <div bind:this={step5}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[5]}
     class:stepOff={!enabledItems[5]}
-    style="grid-column: 6 / 7; grid-row: 1 / 2;">6</div>
+    style="grid-column: 7 / 8; grid-row: 2 / 3;">6</div>
 
     <div bind:this={step6}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[6]}
     class:stepOff={!enabledItems[6]}
-    style="grid-column: 7 / 8; grid-row: 1 / 2;">7</div>
+    style="grid-column: 8 / 9; grid-row: 2 / 3;">7</div>
 
     <div bind:this={step7}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[7]}
     class:stepOff={!enabledItems[7]}
-    style="grid-column: 8 / 9; grid-row: 1 / 2;">8</div>
+    style="grid-column: 9 / 10; grid-row: 2 / 3;">8</div>
 
     <div bind:this={step8}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[8]}
     class:stepOff={!enabledItems[8]}
-    style="grid-column: 9 / 10; grid-row: 1 / 2;">9</div>
+    style="grid-column: 10 / 11; grid-row: 2 / 3;">9</div>
 
     <div bind:this={step9}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[9]}
     class:stepOff={!enabledItems[9]}
-    style="grid-column: 10 / 11; grid-row: 1 / 2;">10</div>
+    style="grid-column: 11 / 12; grid-row: 2 / 3;">10</div>
 
     <div bind:this={step10}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[10]}
     class:stepOff={!enabledItems[10]}
-    style="grid-column: 11 / 12; grid-row: 1 / 2;">11</div>
+    style="grid-column: 12 / 13; grid-row: 2 / 3;">11</div>
 
     <div bind:this={step11}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[11]}
     class:stepOff={!enabledItems[11]}
-    style="grid-column: 12 / 13; grid-row: 1 / 2;">12</div>
+    style="grid-column: 13 / 14; grid-row: 2 / 3;">12</div>
 
     <div bind:this={step12}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[12]}
     class:stepOff={!enabledItems[12]}
-    style="grid-column: 13 / 14; grid-row: 1 / 2;">13</div>
+    style="grid-column: 14 / 15; grid-row: 2 / 3;">13</div>
 
     <div bind:this={step13}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[13]}
     class:stepOff={!enabledItems[13]}
-    style="grid-column: 14 / 15; grid-row: 1 / 2;">14</div>
+    style="grid-column: 15 / 16; grid-row: 2 / 3;">14</div>
 
     <div bind:this={step14}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[14]}
     class:stepOff={!enabledItems[14]}
-    style="grid-column: 15 / 16; grid-row: 1 / 2;">15</div>
+    style="grid-column: 16 / 17; grid-row: 2 / 3;">15</div>
 
     <div bind:this={step15}
-    class="step"
+    class="step unselectable"
     class:stepOn={enabledItems[15]}
     class:stepOff={!enabledItems[15]}
-    style="grid-column: 16 / 17; grid-row: 1 / 2;">16</div>
+    style="grid-column: 17 / 18; grid-row: 2 / 3;">16</div>
 
-    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 1 / 2; grid-row: 2 / 3;">Play/stop</div>
+    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 2 / 5; grid-row: 3 / 4;">Play/stop</div>
 </div>
 
 <style>
@@ -289,7 +289,7 @@
 
         display: grid;
         grid-template-columns: 16px
-                                auto repeat(16, 30px)
+                                repeat(16, 30px)
                                 16px;
 
         grid-template-rows: 16px 30px auto 16px;
@@ -298,13 +298,15 @@
         align-items: center;
         justify-content: space-between;
         align-content: space-between;
-        gap: 0px;
+        gap: 5px;
 
         margin: 1px;
         padding: 0px;
 
         border-radius: 2px;
-        background: linear-gradient(hsla(216, 20%, 30%, 0.7) 0%, hsla(207, 20%, 15%, 0.7) 50%);
+        background: linear-gradient(hsla(216, 20%, 15%, 0.8) 0%, hsla(207, 20%, 5%, 0.8) 50%),
+                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
+
     }
 
     .step
@@ -344,7 +346,6 @@
         border-radius: 4px;
         border: solid 1px hsl(0, 0%, 50%);
 
-        /* background-color: gray; */
         background: linear-gradient(hsl(230, 20%, 47%) 0%, hsl(228, 23%, 35%) 50%);
     }
 
