@@ -36,6 +36,7 @@ export class AdsrEnvelope extends BaseAudioNode
     private attackStartTime = this.audioContext.currentTime;
     private attackEndTime = this.audioContext.currentTime + this.attackDuration; // the time the attack phase should end
     private decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+    private sustainEndTime = this.decayEndTime + Settings.adsrSafetyDuration;
     private releaseStartTime = this.decayEndTime + Settings.adsrSafetyDuration; // the time the release should start
     private releaseEndTime = this.releaseStartTime + this.releaseDuration; // the time the release phase should end
 
@@ -57,46 +58,97 @@ export class AdsrEnvelope extends BaseAudioNode
 
     public startAndStop(duration: number): void
     {
+        let timeDuration = 0;
+
         if (duration > 0)
-            AdsrEnvelope.logger.debug(`startAndStop(${duration}): ADSR triggered for ${duration} seconds`);
+            timeDuration = duration;
+            // AdsrEnvelope.logger.debug(`startAndStop(${duration}): ADSR triggered for ${duration} seconds`);
         else
         {
-            const clippedDuration = 0.1; // clip to 100 milisec
+            timeDuration = (60.0 / 120.0) / 4.0; // clip to 120 BPM 4/4
 
-            AdsrEnvelope.logger.warn(`startAndStop(${duration}): ADSR triggerd, duration is negative, value clipped to ${clippedDuration}`);
+            // AdsrEnvelope.logger.warn(`startAndStop(${duration}): ADSR triggerd, duration is negative, value clipped to ${timeDuration}`);
         }
 
-        // get relevant times
         const currentTime = this.audioContext.currentTime; // the time when note was triggered
-        this.attackStartTime = currentTime; // save the attack start time also
-        this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
-        this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
-        const sustainEndTime = this.decayEndTime + duration;
-        this.releaseEndTime = sustainEndTime + this.releaseDuration; // the time the attack phase should end
+
+        // if the duration of the note contains all 4 phases (ADSR)
+        if (timeDuration > this.attackDuration + this.decayDuration + this.releaseDuration)
+        {
+            /* First compute the duration of the sustain phase, where the sustain duration is the time remaining after
+            ** subtracting the ADR duration from the note full duration. */
+            const sustainDuration = timeDuration - (this.attackDuration + this.decayDuration + this.releaseDuration);
+
+            // then compute all phases times:
+            // const currentTime = this.audioContext.currentTime; // the time when note was triggered
+            this.attackStartTime = currentTime; // save the attack start time also
+            this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
+            this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+            this.releaseStartTime = this.decayEndTime + sustainDuration; // the time the release phase should start
+            this.releaseEndTime = this.releaseStartTime + this.releaseDuration; // the time the release phase should end
+        }
+        // if the duration of the note contains the first 3 phases (ADS)
+        else if (timeDuration > this.attackDuration + this.decayDuration)
+        {
+            /* First compute the duration of the sustain phase, where the sustain duration is the time remaining after
+            ** subtracting the AD duration from the note full duration.*/
+            const sustainDuration = timeDuration - (this.attackDuration + this.decayDuration);
+
+            /* Until now, everything is just like the previous case, but the release (R) phase duration will be zero */
+            this.releaseDuration = 0;
+
+            // then compute all phases times:
+            // const currentTime = this.audioContext.currentTime; // the time when note was triggered
+            this.attackStartTime = currentTime; // save the attack start time also
+            this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
+            this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+            this.sustainEndTime = this.decayEndTime + sustainDuration;
+            this.releaseStartTime = this.sustainEndTime; // the time the release phase should start
+            this.releaseEndTime = this.sustainEndTime; // the time the release phase should end
+        }
+        // if the duration of the note contains the first 2 phases (AD)
+        else if (timeDuration > this.attackDuration)
+        {
+            /* First compute the duration of the decay phase, where the decay duration is the time remaining after
+            ** subtracting the attack duration from the note full duration.*/
+            this.decayDuration = timeDuration - this.attackDuration;
+
+            // the release (R) phase duration will be zero
+            this.releaseDuration = 0;
+
+            // then compute all phases times:
+            // const currentTime = this.audioContext.currentTime; // the time when note was triggered
+            this.attackStartTime = currentTime; // save the attack start time also
+            this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
+            this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+            this.sustainEndTime = this.decayEndTime;
+            this.releaseStartTime = this.decayEndTime; // the time the release phase should start
+            this.releaseEndTime = this.decayEndTime; // the time the release phase should end
+        }
+        else if (timeDuration <= this.attackDuration)
+        {
+            this.attackDuration = timeDuration;
+
+            // all other duration will be zero
+            this.decayDuration = 0;
+            this.releaseDuration = 0;
+
+            // then compute all phases times:
+            // const currentTime = this.audioContext.currentTime; // the time when note was triggered
+            this.attackStartTime = currentTime; // save the attack start time also
+            this.attackEndTime = currentTime + this.attackDuration; // the time the attack phase should end
+            this.decayEndTime = this.attackEndTime; // the time the decay phase should end
+            this.sustainEndTime = this.attackEndTime;
+            this.releaseStartTime = this.attackEndTime; // the time the release phase should start
+            this.releaseEndTime = this.attackEndTime; // the time the release phase should end
+        }
 
         // first phase: cancel all remaining events
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, currentTime);
         this.adsrGainNode.gain.cancelScheduledValues(currentTime + Settings.adsrSafetyDuration);
 
-        // before Attack: set gain to minimum, 'setValueAtTime()' acts like the first checkpoint before the first ramp
-        // the next ramps do not need a checkpoint, because the previous ramp is a checkpoint (an event)
-        this.adsrGainNode.gain.setValueAtTime(Settings.minAdsrSustainLevel, currentTime);
-
-        /* Attack phase: raise gain to maximum in 'attackTime' seconds;
-        ** we use linear ramp for this, because exponential ramp does not seem to work properly, it works like a delay instead;
-        ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
-        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
-
-        // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
-        // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
-        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
-
-        // Sustain phase: keep the value of the gain for the duration of the note
-        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, sustainEndTime);
-
-        // Release phase, lower gain to minimum (zero cannot be used with exponential ramp)
-        // for release phase we use linear ramp, not exponential, because exponential goes down to quick
-        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
+        this.startAtTime(currentTime);
+        this.stopAtTime(currentTime + timeDuration);
     }
 
     /* This method represents the ADS portion of the envelope, it basically coressponds to the 'noteOn' event */
@@ -106,6 +158,155 @@ export class AdsrEnvelope extends BaseAudioNode
 
         // the time when the current note was triggered
         const currentTime = this.audioContext.currentTime;
+
+        // the gain corresponding to the time the current note was triggered
+        let currentTimeGain = 0.0;
+
+        // if the current note has started during the previous note's 'attack' phase
+        if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
+        {
+            currentTimeGain = this.computeAttackCurrentGain(currentTime);
+        }
+        // if the current note has started during the previous note's 'decay' phase
+        else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
+        {
+            currentTimeGain = this.computeDecayCurrentGain(currentTime);
+        }
+        /* if the current note has started after the previous note's 'decay' phase
+        ** here we have only 2 possibilities:
+        ** - we are in the 'sustain' phase of the previous note
+        ** - we are in the 'release' phase of the previous note */
+        else if (currentTime > this.decayEndTime)
+        {
+            // we check if we are in the 'sustain' phase or 'release' phase of the previous note
+            if (this.hasReleasePhaseStarted === false) // are we in the 'sustain' phase?
+            {
+                // here we are for sure in the sustain phase of the previorus note, and the gain is constant
+                currentTimeGain = this.sustainLevel;
+            }
+            else // we are in the 'release' phase of the previous note
+            {
+                // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
+                currentTimeGain = this.computeReleaseCurrentGain(currentTime);
+            }
+        }
+        /* Ideal case: if the current note has started after the previous note's 'release' phase.
+        ** This means that the previous note has finished playin completely and there should not be other remaining events. */
+        else if (currentTime > this.releaseEndTime)
+        {
+            // we are no longer in 'release' phase
+            this.hasReleasePhaseStarted = false;
+
+            // after the 'release' phase has finished, the gain will surely be at it's minimum level
+            currentTimeGain = Settings.minAdsrSustainLevel;
+        }
+
+        // compute intermediate times based on brand new current time
+        const rampEndTime = this.audioContext.currentTime;
+        const checkPointTime = rampEndTime + Settings.adsrSafetyDuration;
+        // compute the time AFTER which all the events of the gain paramter should be canceled
+        const cancelationStartTime = checkPointTime + Settings.adsrSafetyDuration;
+
+        // compute and set relevant times
+        this.attackStartTime = cancelationStartTime + Settings.adsrSafetyDuration; // save the attack start time
+        this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
+        this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+
+        /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
+        ** and the we cancell all remaining events.
+        ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
+        ** before the cancelation, which is the value of this next line: */
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+
+        // then we cancel all events that start AFTER the previous cancelation time, this is not really necessary
+        this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+
+        /* Attack phase: raise gain to maximum in 'attackTime' seconds;
+        ** we use linear ramp for this, because exponential ramp does not seem to work properly, it instead delays the value;
+        ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
+        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.attackStartTime); // works better without
+        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
+
+        // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
+        // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
+        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
+    }
+
+    /* This method represents the R (release) portion of the envelope, it basically coressponds to the 'noteOff' event */
+    public stop(): void
+    {
+        // the time the 'noteOff' (stop) event was triggerd
+        const currentTime = this.audioContext.currentTime; // the time when note was released
+
+        // the gain corresponding to the time the current 'noteOff' event was triggered
+        let currentTimeGain = 0.0;
+
+        /* Release phase, lower gain to minimum (zero is not used because it does not work with exponential ramp).
+        **
+        ** It might be possible that the release phase has started before the attack-decay phase has finished, if
+        ** the user releases the key before these phases finish.
+        ** If we just add a 'release' event and not cancel all remaining events, the remaining events will trigger
+        ** as well, because, chronologically, they are scheduled AFTER this 'release' event.
+        ** In order to prevent this bug, we check if the release hapened before the attack was scheduled to end
+        ** and we cancel all remaining events: */
+
+        // if the release happened during the 'attack' phase of the previous note
+        if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
+        {
+            // compute the value at the time of the 'stop' phase, this is done by linear interpolation
+            currentTimeGain = this.computeAttackCurrentGain(currentTime);
+        }
+        // if the release happened during the 'decay phase' of the previous note
+        else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
+        {
+            currentTimeGain = this.computeDecayCurrentGain(currentTime);
+        }
+        /* Ideal case: if the current 'noteOff' event has started after the previous note's 'decay' phase.
+        ** This means we are in the 'sustain' phase, which where norammly the 'release' phase should be triggered.*/
+        else if (currentTime > this.decayEndTime)
+        {
+            // we set the fact that the release phase has started
+            this.hasReleasePhaseStarted = true;
+   
+            // in the 'sustain' phase, the gain is constant, so it's easy to compute
+            currentTimeGain = this.sustainLevel;
+        }
+
+        // compute intermediate times
+        const rampEndTime = this.audioContext.currentTime;
+        const checkPointTime = rampEndTime + Settings.adsrSafetyDuration;
+
+        // now we compute the time AFTER all scheduled events should be canceled
+        const cancelationStartTime = checkPointTime + Settings.adsrSafetyDuration;
+
+        // compute the start and end of the 'release' phase
+        this.releaseStartTime = cancelationStartTime + Settings.adsrSafetyDuration;
+        this.releaseEndTime = this.releaseStartTime + this.releaseDuration;
+
+        /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
+        ** and the we cancell all remaining events.
+        ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
+        ** before the cancelation, which is the value of this next line: */
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, checkPointTime);
+
+        // cancel all remaining events
+        this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
+
+        // then start the actual 'release' phase by ramping down to the minimum possible
+        // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.releaseStartTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
+    }
+
+    /* This method represents the ADS portion of the ADSR envelope, it basically coressponds to the 'noteOn' event,
+    ** but, unlike the previous 'start()' method */
+    private startAtTime(startTime: number): void
+    {
+        // AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
+
+        // the time when the current note was triggered
+        const currentTime = startTime;
 
         // the gain corresponding to the time the current note was triggered
         let currentTimeGain = 0.0;
@@ -192,11 +393,12 @@ export class AdsrEnvelope extends BaseAudioNode
         this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
     }
 
+
     /* This method represents the R (release) portion of the envelope, it basically coressponds to the 'noteOff' event */
-    public stop(): void
+    public stopAtTime(stopTime: number): void
     {
         // the time the 'noteOff' (stop) event was triggerd
-        const currentTime = this.audioContext.currentTime; // the time when note was released
+        const currentTime = stopTime; // the time when note was released
 
         // the gain corresponding to the time the current 'noteOff' event was triggered
         let currentTimeGain = 0.0;

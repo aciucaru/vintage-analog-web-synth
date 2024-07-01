@@ -24,24 +24,7 @@
     let step14: HTMLDivElement;
     let step15: HTMLDivElement;
 
-    let isEnabled0 = false;
-    let isEnabled1 = false;
-    let isEnabled2 = false;
-    let isEnabled3 = false;
-    let isEnabled4 = false;
-    let isEnabled5 = false;
-    let isEnabled6 = false;
-    let isEnabled7 = false;
-    let isEnabled8 = false;
-    let isEnabled9 = false;
-    let isEnabled10 = false;
-    let isEnabled11 = false;
-    let isEnabled12 = false;
-    let isEnabled13 = false;
-    let isEnabled14 = false;
-    let isEnabled15 = false;
-
-    const items: Array<HTMLDivElement> = new Array<HTMLDivElement>(16);
+    // const items: Array<HTMLDivElement> = new Array<HTMLDivElement>(16);
     const enabledItems: Array<boolean> = new Array<boolean>(16);
 
     let playStopButton: HTMLDivElement;
@@ -86,7 +69,7 @@
 
     function changeStepColor(stepIndex: number): void
     {
-        if (0 <= stepIndex && stepIndex < items.length)
+        if (0 <= stepIndex && stepIndex < enabledItems.length)
             enabledItems[stepIndex] = true;
         else
             enabledItems[stepIndex % 16] = true;
@@ -127,7 +110,7 @@
         const stepDuration = (60.0 / tempo) / 4.0;
     
         // this.voice.playNote(4, 2, stepDuration);
-        voice.playNote(4, 2, nextNoteTime);  
+        voice.playNote(4, 2, stepDuration);
     }
 
     function scheduler(): void
