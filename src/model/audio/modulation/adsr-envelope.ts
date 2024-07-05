@@ -553,8 +553,15 @@ export class AdsrEnvelope extends BaseAudioNode
         {
             AdsrEnvelope.logger.debug(`computeAttackCurrentGain(${currentTime})`);
 
-            const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
-            const currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+            let currentTimeGain = 0.0;
+
+            if (this.attackEndTime != this.attackStartTime) // avoid division by zero
+            {
+                const lineSlope = (Settings.maxAdsrSustainLevel - Settings.minAdsrSustainLevel) / (this.attackEndTime - this.attackStartTime);
+                currentTimeGain = lineSlope * (currentTime - this.attackStartTime) + Settings.minAdsrSustainLevel;
+            }
+            else
+                currentTimeGain = 0.0; // is it the correct value ?
 
             return currentTimeGain;
         }
@@ -572,8 +579,16 @@ export class AdsrEnvelope extends BaseAudioNode
         {
             AdsrEnvelope.logger.debug(`computeDecayCurrentGain(${currentTime})`);
 
-            const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
-            const currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+            let currentTimeGain = 0.0;
+
+            if (this.decayEndTime != this.attackEndTime) // avoid division by zero
+            {
+                const lineSlope = (this.sustainLevel - Settings.maxAdsrSustainLevel) / (this.decayEndTime - this.attackEndTime);
+                currentTimeGain = lineSlope * (currentTime - this.attackEndTime) + Settings.maxAdsrSustainLevel;
+            }
+            else
+                currentTimeGain = 0.0; // is it the correct value ?
+
 
             return currentTimeGain;
         }
@@ -591,8 +606,15 @@ export class AdsrEnvelope extends BaseAudioNode
         {
             AdsrEnvelope.logger.debug(`computeReleaseCurrentGain(${currentTime})`);
 
-            const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
-            const currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+            let currentTimeGain = 0.0;
+
+            if (this.releaseEndTime != this.releaseStartTime) // avoid division by zero
+            {
+                const lineSlope = (Settings.minAdsrSustainLevel - this.sustainLevel) / (this.releaseEndTime - this.releaseStartTime);
+                currentTimeGain = lineSlope * (currentTime - this.releaseStartTime) + this.sustainLevel;
+            }
+            else
+                currentTimeGain = 0.0; // is it the correct value ?
 
             return currentTimeGain;
         }

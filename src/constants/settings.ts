@@ -207,6 +207,7 @@ export class Settings
 
     // settings for sequencer ****************************************************************************
     public static readonly sequencerSteps = 16;
+    public static readonly notesPerStep = 2 * 12 + 1; // 2 octaves
 
     public static readonly minSequencerTempo = 20;
     public static readonly maxSequencerTempo = 300;

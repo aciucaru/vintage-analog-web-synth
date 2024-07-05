@@ -7,31 +7,15 @@
 
     import { onMount } from "svelte";
 
-    let step0: HTMLDivElement;
-    let step1: HTMLDivElement;
-    let step2: HTMLDivElement;
-    let step3: HTMLDivElement;
-    let step4: HTMLDivElement;
-    let step5: HTMLDivElement;
-    let step6: HTMLDivElement;
-    let step7: HTMLDivElement;
-    let step8: HTMLDivElement;
-    let step9: HTMLDivElement;
-    let step10: HTMLDivElement;
-    let step11: HTMLDivElement;
-    let step12: HTMLDivElement;
-    let step13: HTMLDivElement;
-    let step14: HTMLDivElement;
-    let step15: HTMLDivElement;
-
-    // const items: Array<HTMLDivElement> = new Array<HTMLDivElement>(16);
-    const enabledItems: Array<boolean> = new Array<boolean>(16);
+    const enabledItems: Array<boolean> = new Array<boolean>(Settings.sequencerSteps);
+    const notesSteps: Array<Array<boolean>> = new Array<Array<boolean>>(Settings.notesPerStep);
+    
+    for (let i = 0; i < notesSteps.length; i++)
+    {
+        notesSteps[i] = new Array<boolean>(Settings.sequencerSteps);
+    }
 
     let playStopButton: HTMLDivElement;
-
-    function onToggleChange(isToggled: boolean): void { }
-
-    function onModAmountChange(octavesOffset: number): void { }
 
     let isPlaying: boolean = false;
 
@@ -58,6 +42,18 @@
     // private timingWorker: Worker;
 
     let viteWorker: Worker;
+
+    function stepToggle(stepIndex: number): void
+    {
+        console.log(`stepToggle(${stepIndex})`);
+    }
+
+    function stepNoteToggle(noteIndex: number, stepIndex: number): void
+    {
+        console.log(`stepNoteToggle(${noteIndex}, ${stepIndex})`);
+
+        notesSteps[noteIndex][stepIndex] = !notesSteps[noteIndex][stepIndex];
+    }
 
     function resetAllSteps(): void
     {
@@ -272,109 +268,28 @@
     <div class="vertical-step-background unselectable" style="grid-column: 20 / 21; grid-row: 4 / 40;"></div>
     <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 4 / 40;"></div>
 
-    
+    <!-- notes selectors -->
+    {#each notesSteps as noteSteps, i}
+        {#each noteSteps as step, j}
+            <div 
+            class="stepNote unselectable"
+            class:stepNoteOn={notesSteps[i][j]}
+            class:stepNoteOff={!notesSteps[i][j]}
+            on:click={() => stepNoteToggle(i, j)}
+            style="grid-column: {i + 6} / {i + 7}; grid-row: {j + 4} / {j + 6};"></div>
+        {/each}
+    {/each}
+
     <!-- step buttons -->
-    <div class="step-buttons-container" style="grid-column: 25 / 26; grid-row: 2 / 41;">
-        <div bind:this={step0}
-        class="step unselectable"
-        class:stepOn={enabledItems[0]}
-        class:stepOff={!enabledItems[0]}
-        style="grid-column: 1 / 2; grid-row: 1 / 2;">1</div>
-
-        <div bind:this={step1}
-        class="step unselectable"
-        class:stepOn={enabledItems[1]}
-        class:stepOff={!enabledItems[1]}
-        style="grid-column: 2 / 3; grid-row: 1 / 2;">2</div>
-
-        <div bind:this={step2}
-        class="step unselectable"
-        class:stepOn={enabledItems[2]}
-        class:stepOff={!enabledItems[2]}
-        style="grid-column: 3 / 4; grid-row: 1 / 2;">3</div>
-
-        <div bind:this={step3}
-        class="step unselectable"
-        class:stepOn={enabledItems[3]}
-        class:stepOff={!enabledItems[3]}
-        style="grid-column: 4 / 5; grid-row: 1 / 2;">4</div>
-
-
-        <div bind:this={step4}
-        class="step unselectable"
-        class:stepOn={enabledItems[4]}
-        class:stepOff={!enabledItems[4]}
-        style="grid-column: 1 / 2; grid-row: 2 / 3;">5</div>
-
-        <div bind:this={step5}
-        class="step unselectable"
-        class:stepOn={enabledItems[5]}
-        class:stepOff={!enabledItems[5]}
-        style="grid-column: 2 / 3; grid-row: 2 / 3;">6</div>
-
-        <div bind:this={step6}
-        class="step unselectable"
-        class:stepOn={enabledItems[6]}
-        class:stepOff={!enabledItems[6]}
-        style="grid-column: 3 / 4; grid-row: 2 / 3;">7</div>
-
-        <div bind:this={step7}
-        class="step unselectable"
-        class:stepOn={enabledItems[7]}
-        class:stepOff={!enabledItems[7]}
-        style="grid-column: 4 / 5; grid-row: 2 / 3;">8</div>
-
-
-        <div bind:this={step8}
-        class="step unselectable"
-        class:stepOn={enabledItems[8]}
-        class:stepOff={!enabledItems[8]}
-        style="grid-column: 1 / 2; grid-row: 3 / 4;">9</div>
-
-        <div bind:this={step9}
-        class="step unselectable"
-        class:stepOn={enabledItems[9]}
-        class:stepOff={!enabledItems[9]}
-        style="grid-column: 2 / 3; grid-row: 3 / 4;">10</div>
-
-        <div bind:this={step10}
-        class="step unselectable"
-        class:stepOn={enabledItems[10]}
-        class:stepOff={!enabledItems[10]}
-        style="grid-column: 3 / 4; grid-row: 3 / 4;">11</div>
-
-        <div bind:this={step11}
-        class="step unselectable"
-        class:stepOn={enabledItems[11]}
-        class:stepOff={!enabledItems[11]}
-        style="grid-column: 4 / 5; grid-row: 3 / 4;">12</div>
-
-
-        <div bind:this={step12}
-        class="step unselectable"
-        class:stepOn={enabledItems[12]}
-        class:stepOff={!enabledItems[12]}
-        style="grid-column: 1 / 2; grid-row: 4 / 5;">13</div>
-
-        <div bind:this={step13}
-        class="step unselectable"
-        class:stepOn={enabledItems[13]}
-        class:stepOff={!enabledItems[13]}
-        style="grid-column: 2 / 3; grid-row: 4 / 5;">14</div>
-
-        <div bind:this={step14}
-        class="step unselectable"
-        class:stepOn={enabledItems[14]}
-        class:stepOff={!enabledItems[14]}
-        style="grid-column: 3 / 4; grid-row: 4 / 5;">15</div>
-
-        <div bind:this={step15}
-        class="step unselectable"
-        class:stepOn={enabledItems[15]}
-        class:stepOff={!enabledItems[15]}
-        style="grid-column: 4 / 5; grid-row: 4 / 5;">16</div>
-    </div>
-
+    {#each enabledItems as stepButton, i}
+        <div 
+            class="step unselectable"
+            class:stepOn={enabledItems[i]}
+            class:stepOff={!enabledItems[i]}
+            on:click={() => stepToggle(i)}
+            style="grid-column: {i + 6} / {i + 7}; grid-row: 41 / 42;">{i + 1}</div>
+    {/each}
+    
     <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 3 / 5; grid-row: 41 / 42;">Play/stop</div>
 </div>
 
@@ -383,7 +298,7 @@
     {
         box-sizing: border-box;
 
-        height: 250px;
+        height: 300px;
 
         display: grid;
         grid-template-columns: 16px
@@ -396,23 +311,19 @@
                                 repeat(4, 30px)
                                 16px;
 
-        grid-template-rows: 6px 10px
+        grid-template-rows: 5px 16px 5px
                             5px
-                            9px
-                            6px repeat(3, 3px 3px 6px)
-                            6px repeat(2, 3px 3px 6px)
-
-                            6px repeat(3, 3px 3px 6px)
-                            6px repeat(2, 3px 3px 6px)
-                            9px
                             5px
-                            10px 6px;
+                            repeat(50, 3px)
+                            6px 5px
+                            5px
+                            5px 30px 5px;
 
         justify-items: stretch;
         align-items: stretch;
         justify-content: space-between;
         align-content: space-between;
-        gap: 0px;
+        gap: 1px;
 
         margin: 1px;
         padding: 0px;
@@ -424,6 +335,9 @@
 
     .screen-frame
     {
+        margin: 0px;
+        padding: 0px;
+
         border-radius: 2px;
         background: linear-gradient(hsla(0, 0%, 5%, 0.8) 0%, hsla(0, 0%, 0%, 0.8) 50%),
                     url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
@@ -431,30 +345,45 @@
 
     .screen
     {
+        margin: 0px;
+        padding: 0px;
+
         background: linear-gradient(hsla(216, 30%, 31%, 0.4) 0%, hsla(216, 30%, 30%, 0.4) 50%),
                     url("../../../assets/texture/lcd-screen-color-seamless.png") repeat left top;
     }
 
     .white-key
     {
+        margin: 0px;
+        padding: 0px;
+
         border: solid 1px hsl(210, 50%, 15%);
         /* background: hsla(210, 50%, 50%, 0.5); */
     }
 
     .black-key
     {
+        margin: 0px;
+        padding: 0px;
+
         border: solid 1px hsl(210, 50%, 15%);
         background: hsl(210, 50%, 15%);
     }
 
     .white-key-step-background 
     {
+        margin: 0px;
+        padding: 0px;
+
         border-top: solid 1px hsla(210, 50%, 15%, 0.5);
         /* border-bottom: solid 1px hsla(210, 50%, 15%, 0.5); */
     }
 
     .black-key-step-background 
     {
+        margin: 0px;
+        padding: 0px;
+
         /* border: solid 1px hsl(210, 50%, 15%); */
         background: hsla(210, 50%, 15%, 0.5);
     }
@@ -479,7 +408,7 @@
         align-content: space-between;
         gap: 10px;
 
-        margin: 1px;
+        margin: 0px;
         padding: 0px;
 
     }
@@ -506,6 +435,31 @@
     .stepOn
     {
         background: linear-gradient(hsl(230, 20%, 60%) 0%, hsl(230, 20%, 40%) 50%);
+    }
+
+    .stepNote
+    {
+        box-sizing: border-box;
+
+        /* width: 30px;
+        height: 30px; */
+
+        margin: 0px;
+        padding: 0px;
+
+        border-radius: 0px;
+        border: solid 1px hsl(0, 0%, 50%);
+    }
+
+    .stepNoteOff
+    {
+        border: solid 1px hsl(210, 50%, 15%);
+    }
+
+    .stepNoteOn
+    {
+        border: solid 1px hsl(210, 50%, 15%);
+        background: hsl(210, 50%, 15%);
     }
 
     .play-stop-button
