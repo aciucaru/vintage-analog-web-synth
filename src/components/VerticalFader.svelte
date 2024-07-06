@@ -387,7 +387,7 @@
         box-sizing: border-box;
 
         width: 100%;
-        height: var(--thumbWidth);
+        height: var(--thumbHeight);
 
         margin: 0px;
         padding: 0px;
