@@ -13,7 +13,7 @@ This synthesizer has the folowing features:
 * a low pass filter with cutoff frequency and resonance
 * 2 ADSR envelopes: one for the filter and one for the volume/amplitude
 * 5 LFOs which can be mixed together in the "LFO Matrix"
-* 16 step sequencer
+* sequencer with 16 steps
 
 ### License
 The source code is licensed under the MIT license.
