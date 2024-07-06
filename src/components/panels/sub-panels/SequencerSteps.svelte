@@ -7,26 +7,42 @@
 
     import { onMount } from "svelte";
 
-    /* The main array of on/off steps; this array keeps track of which steps are enabled and which not and
-    ** it also keeps track of the currently animated step.
-    This array is used for the logic of the sequencer and, sometimes, for display purposes. */
-    const sequencerSteps: Array<{isEnabled: boolean, noteToPlay: number, showOnAnimation: boolean}> = new Array<{isEnabled: boolean, noteToPlay: number, showOnAnimation: boolean}>(Settings.sequencerSteps);
-
-    // initialize the sequencers steps array
-    for (let i = 0; i < sequencerSteps.length; i++)
+    class SequencerStep
     {
-        sequencerSteps[i] = {isEnabled: false, noteToPlay: 0, showOnAnimation: false};
+        public isEnabled: boolean;
+        public noteToPlay: number;
+        public showOnAnimation: boolean;
+
+        /* The array of available notes; each element of the array corresponds to one note. The array contains all possible
+        ** notes for one single step, as boolean values.
+        ** This array is not used for any logic, is only for display purposes, to allow the generation of UI steps
+        ** by using for loops instead of manually writing each of the 25 x 16 total number of steps. */
+        public dummyDisplayNotes: Array<boolean>;
+
+        public constructor()
+        {
+            this.isEnabled = false;
+            this.noteToPlay = 0;
+            this.showOnAnimation = false;
+
+            this.dummyDisplayNotes = new Array<boolean>(Settings.notesPerStep);
+        }
     }
 
-    /* The array of available notes; each element of the array corresponds to one note, and it contains
-    ** all the steps for that note;
-    ** This array is not for logic, it's for display purposes only, to allow the generation of UI steps
-    ** by using for loops instead of manually writing each of the 25 x 16 total number of steps. */
-    const notesDisplaySteps: Array<Array<boolean>> = new Array<Array<boolean>>(Settings.notesPerStep);
-    
-    for (let i = 0; i < notesDisplaySteps.length; i++)
+    /* The main array of on/off steps; this array keeps track of which steps are enabled/disabled and also keeps track
+    ** of the currently animated step.
+    ** This array is used for the logic of the sequencer and, sometimes, for display purposes. */
+    const sequencerSteps: Array<SequencerStep> = new Array<SequencerStep>(Settings.sequencerSteps);
+
+    // initialize the sequencer steps array
+    for (let i = 0; i < sequencerSteps.length; i++)
     {
-        notesDisplaySteps[i] = new Array<boolean>(Settings.sequencerSteps);
+        sequencerSteps[i] = new SequencerStep();
+
+        for (let j = 0; j < sequencerSteps[i].dummyDisplayNotes.length; j++)
+        {
+            sequencerSteps[i].dummyDisplayNotes[j] = false;
+        }
     }
 
     let playStopButton: HTMLDivElement;
@@ -57,16 +73,21 @@
 
     let viteWorker: Worker;
 
+    /* this function toggles a complete step on/off, it basically enables/disables a step regardless of
+    ** the note of that step */
     function stepToggle(stepIndex: number): void
     {
         console.log(`stepToggle(${stepIndex})`);
     }
 
-    function stepNoteToggle(noteIndex: number, stepIndex: number): void
+    /* This function sets the note of a sequencer step. The sequencer is monophonic, so there can be only
+    ** a single note per each step. */
+    function setStepNote(stepIndex: number, noteIndex: number): void
     {
         console.log(`stepNoteToggle(${noteIndex}, ${stepIndex})`);
 
-        notesDisplaySteps[noteIndex][stepIndex] = !notesDisplaySteps[noteIndex][stepIndex];
+        // notesDisplaySteps[noteIndex][stepIndex] = !notesDisplaySteps[noteIndex][stepIndex];
+        sequencerSteps[stepIndex].dummyDisplayNotes[noteIndex] = !sequencerSteps[stepIndex].dummyDisplayNotes[noteIndex];
     }
 
     function resetAllSteps(): void
@@ -284,14 +305,25 @@
     <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 5 / 55;"></div>
 
     <!-- notes selectors -->
-    {#each notesDisplaySteps as noteSteps, i}
+    <!-- {#each notesDisplaySteps as noteSteps, i}
         {#each noteSteps as step, j}
             <div 
             class="stepNote unselectable"
             class:stepNoteOn={notesDisplaySteps[i][j]}
             class:stepNoteOff={!notesDisplaySteps[i][j]}
-            on:click={() => stepNoteToggle(i, j)}
+            on:click={() => setStepNote(i, j)}
             style="grid-column: {j + 6} / {j + 7}; grid-row: {i*2 + 5} / {i*2 + 7};"></div>
+        {/each}
+    {/each} -->
+
+    {#each sequencerSteps as stepNotes, i}
+        {#each stepNotes.dummyDisplayNotes as displayNote, j}
+            <div 
+            class="stepNote unselectable"
+            class:stepNoteOn={displayNote}
+            class:stepNoteOff={!displayNote}
+            on:click={() => setStepNote(i, j)}
+            style="grid-column: {i + 6} / {i + 7}; grid-row: {j*2 + 5} / {j*2 + 7};"></div>
         {/each}
     {/each}
 
