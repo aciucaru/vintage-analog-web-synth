@@ -35,7 +35,7 @@
     {
         box-sizing: border-box;
 
-        height: 250px;
+        height: 300px;
 
         display: grid;
         grid-template-columns: 16px auto 5px auto 5px auto 16px;

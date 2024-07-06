@@ -25,6 +25,10 @@
     // how many decimals should the displayed value have
     export let decimals: number = 2;
 
+    export let width: number = 40;
+    export let height: number = 150;
+    export let thumbHeight: number = 25;
+
     /* for GUI purposes only: if the slider track is in one direction only (from min. to max.) or if is
     ** bidirectional (symmetrical), this setting does not change functionality, but only the track
     ** CSS background image */
@@ -77,9 +81,9 @@
     let faderThumbPrefill: HTMLDivElement;
 
     // the width and height of the canvas
-    const WIDTH = 40;
-    const HEIGHT = 150;
-    const THUMB_HEIGHT = 25;
+    const WIDTH = width;
+    const HEIGHT = height;
+    const THUMB_HEIGHT = thumbHeight;
     const PREFILL_MAX_HEIGHT = HEIGHT - THUMB_HEIGHT;
     const initialNormalizedValue = (initialValue - minValue) / (maxValue - minValue);
 
@@ -215,7 +219,7 @@
     }
 </script>
 
-<div class="main-container">
+<div class="main-container" style={`--faderWidth: ${WIDTH}px; --faderHeight: ${HEIGHT}px; --thumbHeight: ${THUMB_HEIGHT}px;`}>
     <div class="fader-container">
         <div class={faderTrackClass}></div>
         <div class="thumb-container">
@@ -234,9 +238,7 @@
 <style>
     .main-container
     {
-        --fader-width: 40px;
-        --fader-height: 150px;
-        --text-height: 12px;
+        --textHeight: 12px;
 
         box-sizing: border-box;
 
@@ -258,8 +260,8 @@
     {
         box-sizing: border-box;
 
-        width: var(--fader-width);
-        height: calc(var(--text-height) + 4px);
+        width: var(--faderWidth);
+        height: calc(var(--textHeight) + 4px);
 
         margin: 0px;
         padding: 0px;
@@ -268,34 +270,25 @@
         box-sizing: border-box;
 
         font-family: sans-serif;
-        font-size: var(--text-height);
+        font-size: var(--textHeight);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
-    }
-
-    /* custom local font definition; this defines a font named "LCD14" */
-    @font-face
-    {
-        font-family: LCD14;
-        src: url("../assets-external/LCD14.otf");
-        font-weight: normal;
-        font-style: italic;
     }
 
     .numeric-value
     {
         box-sizing: border-box;
 
-        width: var(--fader-width);
-        height: calc(var(--text-height) + 4px);
+        width: var(--faderWidth);
+        height: calc(var(--textHeight) + 4px);
 
         margin: 0px;
         padding: 0px;
 
         color: hsl(210, 30%, 60%);
         font-family: monospace, monospace; /* we use 'monospace' twice for browser compatibility */
-        font-size: var(--text-height);
+        font-size: var(--textHeight);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
@@ -305,8 +298,8 @@
     {
         box-sizing: border-box;
 
-        width: var(--fader-width);
-        height: var(--fader-height);
+        width: var(--faderWidth);
+        height: var(--faderHeight);
 
         display: grid;
         grid-template-columns: auto;
@@ -330,7 +323,7 @@
         grid-column: 1 / 2;
         grid-row: 1 / 2;
 
-        width: 40px;
+        width: var(--faderWidth);
         height: 100%;
 
         margin: 0px;
@@ -394,7 +387,7 @@
         box-sizing: border-box;
 
         width: 100%;
-        height: 25px;
+        height: var(--thumbWidth);
 
         margin: 0px;
         padding: 0px;

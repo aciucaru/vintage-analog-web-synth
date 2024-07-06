@@ -1,12 +1,13 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
+    import { voice } from "../../../model/audio/voice";
     import * as oscCallbacks from "../../../callbacks/oscillators-callbacks";
     import * as mixerCallbacks from "../../../callbacks/mixer-callbacks";
-
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
 
     import Knob from "../../Knob.svelte";
     import RadioGroup from "../../radio-button/RadioGroup.svelte";
+    import AudioOscilloscope from "../../AudioOscilloscope.svelte";
     
 
     // noise oscillator callbacks and data ****************************************************************************************
@@ -21,13 +22,20 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 1 / 3; grid-row: 3 / 4;">NOISE</div>
+    <div class="title unselectable" style="grid-column: 3 / 4; grid-row: 1 / 2;">NOISE</div>
 
-    <div class="toggle-buttons-group" style="grid-column: 1 / 3; grid-row: 5 / 6;">
+    <!-- noise oscillator oscilloscope -->
+    <div style="grid-column: 1 / 4; grid-row: 3 / 4;">
+        <AudioOscilloscope
+            audioNode={voice.getNoiseOscillator().getAnalyserGainNode()}
+            audioContext={voice.getAudioContext()}></AudioOscilloscope>
+    </div>
+
+    <div class="toggle-buttons-group" style="grid-column: 1 / 4; grid-row: 5 / 6;">
         <RadioGroup radioDataArray={radioDataArray}></RadioGroup>
     </div>
 
-    <div style="grid-column: 1 / 3; grid-row: 7 / 8;">
+    <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
         <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onNoiseOscLevelChange}></Knob>
     </div>
@@ -38,23 +46,26 @@
     {
         box-sizing: border-box;
 
-        height: 250px;
+        height: 300px;
 
         display: grid;
-        grid-template-columns: 16px auto;
+        grid-template-columns: 16px
+                                5px
+                                auto
+                                16px;
         grid-template-rows: 16px
-                            5px auto
-                            5px auto 5px auto 5px
+                            5px auto 5px auto 5px auto
+                            5px
                             16px;
 
-        justify-items: stretch;
-        align-items: start;
+        justify-items: center;
+        align-items: center;
         justify-content: space-between;
         align-content: space-between;
         gap: 0px;
 
         margin: 1px;
-        padding: 0px;
+        padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
 

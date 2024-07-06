@@ -11,6 +11,7 @@
     import VoiceEnvelopePanel from "./sub-panels/VoiceEnvelopePanel.svelte";
 
     import InvisibleKeyboard from "../InvisibleKeyboard.svelte";
+    import AdsrEnvelopesPanel from "./sub-panels/AdsrEnvelopesPanel.svelte";
 </script>
 
 <div class="main-container">
@@ -20,10 +21,11 @@
     <NoiseOscillatorPanel></NoiseOscillatorPanel>
 
     <FilterSettingsPanel></FilterSettingsPanel>
-    <FilterEnvelopePanel></FilterEnvelopePanel>
+    <!-- <FilterEnvelopePanel></FilterEnvelopePanel> -->
 
     <VoiceSettingsPanel></VoiceSettingsPanel>
-    <VoiceEnvelopePanel></VoiceEnvelopePanel>
+    <!-- <VoiceEnvelopePanel></VoiceEnvelopePanel> -->
+    <AdsrEnvelopesPanel></AdsrEnvelopesPanel>
     
     <InvisibleKeyboard></InvisibleKeyboard>
 </div>
