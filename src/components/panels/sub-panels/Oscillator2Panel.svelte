@@ -124,7 +124,9 @@
         border-left-color: hsla(0, 0%, 10%, 0.2);
         border-right-color: hsla(0, 0%, 80%, 0.2);
 
-        background: linear-gradient(hsl(216, 5%, 5%) 0%, hsl(207, 5%, 0%) 50%);
+        background: linear-gradient(hsl(216, 5%, 10%) 0%, hsl(207, 5%, 5%) 50%);
+
+        box-shadow: inset 1px 1px 4px 1px hsl(0, 0%, 0%);
     }
 
     .toggle-buttons-group
