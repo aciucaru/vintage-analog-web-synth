@@ -216,57 +216,58 @@
 
     <!-- horizontal backgrounds and guide lines for steps -->
     <!-- upper octave -->
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 5 / 7;"></div>
+    <div class="white-key-step-background-top unselectable" style="grid-column: 6 / 22; grid-row: 5 / 7;"></div>
 
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 7 / 10;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 10 / 14;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 14 / 18;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 18 / 21;"></div>
+    <div class="white-key-step-background-top unselectable" style="grid-column: 6 / 22; grid-row: 7 / 9;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 9 / 11;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 11 / 13;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 13 / 15;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 15 / 17;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 17 / 19;"></div>
+    <div class="white-key-step-background-bottom unselectable" style="grid-column: 6 / 22; grid-row: 19 / 21;"></div>
 
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 21 / 24;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 24 / 28;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 28 / 31;"></div>
+
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 21 / 23;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 23 / 25;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 25 / 27;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 27 / 29;"></div>
+    <div class="white-key-step-background-bottom unselectable" style="grid-column: 6 / 22; grid-row: 29 / 31;"></div>
 
     <!-- lower octave -->
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 31 / 34;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 34 / 38;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 38 / 42;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 42 / 45;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 31 / 33;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 33 / 35;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 35 / 37;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 37 / 39;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 39 / 41;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 41 / 43;"></div>
+    <div class="white-key-step-background-bottom unselectable" style="grid-column: 6 / 22; grid-row: 43 / 45;"></div>
 
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 45 / 48;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 48 / 52;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 52 / 55;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 45 / 47;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 47 / 49;"></div>
+    <div class="white-key-step-no-background unselectable" style="grid-column: 6 / 22; grid-row: 49 / 51;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 51 / 53;"></div>
+    <div class="white-key-step-background-bottom unselectable" style="grid-column: 6 / 22; grid-row: 53 / 55;"></div>
 
     <!-- vertical guidelines for steps -->
-    <div class="vertical-step-background unselectable" style="grid-column: 6 / 7; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 7 / 8; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 8 / 9; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 9 / 10; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 6 / 7; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 7 / 8; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 8 / 9; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 9 / 10; grid-row: 5 / 55;"></div>
 
-    <div class="vertical-step-background unselectable" style="grid-column: 10 / 11; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 11 / 12; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 12 / 13; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 13 / 14; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 10 / 11; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 11 / 12; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 12 / 13; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 13 / 14; grid-row: 5 / 55;"></div>
 
-    <div class="vertical-step-background unselectable" style="grid-column: 14 / 15; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 15 / 16; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 16 / 17; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 17 / 18; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 14 / 15; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 15 / 16; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 16 / 17; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 17 / 18; grid-row: 5 / 55;"></div>
 
-    <div class="vertical-step-background unselectable" style="grid-column: 18 / 19; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 19 / 20; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 20 / 21; grid-row: 5 / 54;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 18 / 19; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 19 / 20; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 20 / 21; grid-row: 5 / 55;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 5 / 55;"></div>
 
     <!-- notes selectors -->
     {#each notesSteps as noteSteps, i}
@@ -283,14 +284,19 @@
     <!-- step buttons -->
     {#each enabledItems as stepButton, i}
         <div 
-            class="step unselectable"
-            class:stepOn={enabledItems[i]}
-            class:stepOff={!enabledItems[i]}
-            on:click={() => stepToggle(i)}
-            style="grid-column: {i + 6} / {i + 7}; grid-row: 59 / 60;">{i + 1}</div>
+        class="stepIndicator unselectable"
+        class:stepIndicatorOn={enabledItems[i]}
+        class:stepIndicatorOff={!enabledItems[i]}
+        style="grid-column: {i + 6} / {i + 7}; grid-row: 55 / 56;">
+            <div
+            class="stepToggle unselectable"
+            class:stepToggleOn={enabledItems[i]}
+            class:stepToggleOff={!enabledItems[i]}
+            on:click={() => stepToggle(i)}></div>
+        </div>
     {/each}
     
-    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 3 / 5; grid-row: 59 / 60;">Play/stop</div>
+    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 3 / 5; grid-row: 59 / 60;">Play</div>
 </div>
 
 <style>
@@ -298,7 +304,7 @@
     {
         box-sizing: border-box;
 
-        height: 300px;
+        height: 400px;
 
         display: grid;
         grid-template-columns: 16px
@@ -307,17 +313,15 @@
                                 30px 20px repeat(16, 20px)
                                 5px
                                 10px
-                                5px
-                                repeat(4, 30px)
                                 16px;
 
         grid-template-rows: 16px 5px
                             5px
                             5px
-                            repeat(50, 3px)
-                            6px 5px
+                            repeat(50, 4px)
+                            20px 5px
                             5px
-                            5px 30px;
+                            5px 20px;
 
         justify-items: stretch;
         align-items: stretch;
@@ -370,13 +374,30 @@
         background: hsl(210, 50%, 15%);
     }
 
-    .white-key-step-background 
+    .white-key-step-background-top
     {
         margin: 0px;
         padding: 0px;
 
+        border: solid 1px hsla(0, 0%, 0%, 0);
         border-top: solid 1px hsla(210, 50%, 15%, 0.5);
-        /* border-bottom: solid 1px hsla(210, 50%, 15%, 0.5); */
+    }
+
+    .white-key-step-background-bottom
+    {
+        margin: 0px;
+        padding: 0px;
+
+        border: solid 1px hsla(0, 0%, 0%, 0);
+        border-bottom: solid 1px hsla(210, 50%, 15%, 0.5);
+    }
+
+    .white-key-step-no-background
+    {
+        margin: 0px;
+        padding: 0px;
+
+        border: solid 1px hsla(0, 0%, 0%, 0);
     }
 
     .black-key-step-background 
@@ -413,30 +434,75 @@
 
     }
 
-    .step
+    /* The stepIndicator* classes are for the outer boundary of the sequencer steps.
+    ** The elements that belong to these classes only serve as a visual indicator of the current step,
+    ** they are for animation purposes, they don't have user interaction. */
+    .stepIndicator
     {
         box-sizing: border-box;
 
-        /* width: 30px;
-        height: 30px; */
+        width: 20px;
+        height: 20px;
+
+        margin: 0px;
+        padding: 2px;
+
+        border-radius: 0px;
+        border: solid 2px transparent;
+
+        color: hsl(0, 0%, 85%);
+        font-family: sans-serif;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: clip;
+    }
+
+    .stepIndicatorOff
+    {
+        border-color: transparent;
+    }
+
+    .stepIndicatorOn
+    {
+        border-color: hsl(210, 50%, 15%);
+    }
+
+    /* The stepToggle* classes are for the inner content of the sequencer steps.
+    ** The elements that belong to these classes are ment to be clicked on to toggle on/off the clicked step.
+    ** These elements are never animated, they are only toggled on/off. */
+    .stepToggle
+    {
+        box-sizing: border-box;
+
+        width: 12px;
+        height: 12px;
 
         margin: 0px;
         padding: 0px;
 
-        border-radius: 4px;
-        border: solid 1px hsl(0, 0%, 50%);
+        border-radius: 0px;
+        border: solid 1px hsl(210, 50%, 15%);
+
+        color: hsl(0, 0%, 85%);
+        font-family: sans-serif;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: clip;
     }
 
-    .stepOff
+    .stepToggleOff
     {
-        background: linear-gradient(hsl(230, 20%, 30%) 0%, hsl(230, 20%, 10%) 50%);
+        background: transparent;
     }
 
-    .stepOn
+    .stepToggleOn
     {
-        background: linear-gradient(hsl(230, 20%, 60%) 0%, hsl(230, 20%, 40%) 50%);
+        background: hsl(210, 50%, 15%);
     }
 
+    /* the exact note selected on the screen, per each step */
     .stepNote
     {
         box-sizing: border-box;
