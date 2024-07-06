@@ -177,96 +177,96 @@
 </script>
 
 <div class="main-container">
-    <div class="screen-frame unselectable" style="grid-column: 2 / 24; grid-row: 2 / 42;"></div>
-    <div class="screen unselectable" style="grid-column: 3 / 23; grid-row: 3 / 41;"></div>
+    <div class="screen-frame unselectable" style="grid-column: 2 / 24; grid-row: 3 / 58;"></div>
+    <div class="screen unselectable" style="grid-column: 3 / 23; grid-row: 4 / 57;"></div>
 
     <!-- fake keyboard, serves as visual reference -->
     <!-- upper octave -->
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 4 / 5;"></div>
-
     <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 5 / 7;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 7 / 10;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 10 / 13;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 13 / 15;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 6 / 8;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 9 / 11;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 12 / 14;"></div>
 
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 15 / 17;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 17 / 20;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 20 / 22;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 16 / 18;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 19 / 21;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 7 / 10;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 10 / 14;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 14 / 18;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 18 / 21;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 9 / 11;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 13 / 15;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 17 / 19;"></div>
+
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 21 / 24;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 24 / 28;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 28 / 31;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 23 / 25;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 27 / 29;"></div>
 
     <!-- lower octave -->
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 22 / 24;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 24 / 27;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 27 / 30;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 30 / 32;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 23 / 25;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 26 / 28;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 29 / 31;"></div>
-
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 32 / 34;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 34 / 37;"></div>
-    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 37 / 39;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 31 / 34;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 34 / 38;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 38 / 42;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 42 / 45;"></div>
         <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 33 / 35;"></div>
-        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 36 / 38;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 37 / 39;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 41 / 43;"></div>
+
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 45 / 48;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 48 / 52;"></div>
+    <div class="white-key unselectable" style="grid-column: 4 / 6; grid-row: 52 / 55;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 47 / 49;"></div>
+        <div class="black-key unselectable" style="grid-column: 4 / 5; grid-row: 51 / 53;"></div>
 
 
     <!-- horizontal backgrounds and guide lines for steps -->
     <!-- upper octave -->
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 4 / 5;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 5 / 7;"></div>
 
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 5 / 6;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 8 / 9;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 11 / 12;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 14 / 15;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 6 / 8;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 7 / 10;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 10 / 14;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 14 / 18;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 18 / 21;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 9 / 11;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 12 / 14;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 13 / 15;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 17 / 19;"></div>
 
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 15 / 16;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 18 / 19;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 21 / 22;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 16 / 18;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 19 / 21;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 21 / 24;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 24 / 28;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 28 / 31;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 23 / 25;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 27 / 29;"></div>
 
     <!-- lower octave -->
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 22 / 23;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 25 / 26;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 28 / 29;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 31 / 32;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 23 / 25;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 26 / 28;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 29 / 31;"></div>
-
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 32 / 33;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 35 / 36;"></div>
-    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 38 / 39;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 31 / 34;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 34 / 38;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 38 / 42;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 42 / 45;"></div>
         <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 33 / 35;"></div>
-        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 36 / 38;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 37 / 39;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 41 / 43;"></div>
+
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 45 / 48;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 48 / 52;"></div>
+    <div class="white-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 52 / 55;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 47 / 49;"></div>
+        <div class="black-key-step-background unselectable" style="grid-column: 6 / 22; grid-row: 51 / 53;"></div>
 
     <!-- vertical guidelines for steps -->
-    <div class="vertical-step-background unselectable" style="grid-column: 6 / 7; grid-row: 4 / 39;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 7 / 8; grid-row: 4 / 39;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 8 / 9; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 9 / 10; grid-row: 4 / 40;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 6 / 7; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 7 / 8; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 8 / 9; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 9 / 10; grid-row: 5 / 54;"></div>
 
-    <div class="vertical-step-background unselectable" style="grid-column: 10 / 11; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 11 / 12; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 12 / 13; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 13 / 14; grid-row: 4 / 40;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 10 / 11; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 11 / 12; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 12 / 13; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 13 / 14; grid-row: 5 / 54;"></div>
 
-    <div class="vertical-step-background unselectable" style="grid-column: 14 / 15; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 15 / 16; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 16 / 17; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 17 / 18; grid-row: 4 / 40;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 14 / 15; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 15 / 16; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 16 / 17; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 17 / 18; grid-row: 5 / 54;"></div>
 
-    <div class="vertical-step-background unselectable" style="grid-column: 18 / 19; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 19 / 20; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 20 / 21; grid-row: 4 / 40;"></div>
-    <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 4 / 40;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 18 / 19; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 19 / 20; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 20 / 21; grid-row: 5 / 54;"></div>
+    <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 5 / 54;"></div>
 
     <!-- notes selectors -->
     {#each notesSteps as noteSteps, i}
@@ -276,7 +276,7 @@
             class:stepNoteOn={notesSteps[i][j]}
             class:stepNoteOff={!notesSteps[i][j]}
             on:click={() => stepNoteToggle(i, j)}
-            style="grid-column: {i + 6} / {i + 7}; grid-row: {j + 4} / {j + 6};"></div>
+            style="grid-column: {j + 6} / {j + 7}; grid-row: {i*2 + 5} / {i*2 + 7};"></div>
         {/each}
     {/each}
 
@@ -287,10 +287,10 @@
             class:stepOn={enabledItems[i]}
             class:stepOff={!enabledItems[i]}
             on:click={() => stepToggle(i)}
-            style="grid-column: {i + 6} / {i + 7}; grid-row: 41 / 42;">{i + 1}</div>
+            style="grid-column: {i + 6} / {i + 7}; grid-row: 59 / 60;">{i + 1}</div>
     {/each}
     
-    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 3 / 5; grid-row: 41 / 42;">Play/stop</div>
+    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 3 / 5; grid-row: 59 / 60;">Play/stop</div>
 </div>
 
 <style>
@@ -311,13 +311,13 @@
                                 repeat(4, 30px)
                                 16px;
 
-        grid-template-rows: 5px 16px 5px
+        grid-template-rows: 16px 5px
                             5px
                             5px
                             repeat(50, 3px)
                             6px 5px
                             5px
-                            5px 30px 5px;
+                            5px 30px;
 
         justify-items: stretch;
         align-items: stretch;
@@ -453,7 +453,7 @@
 
     .stepNoteOff
     {
-        border: solid 1px hsl(210, 50%, 15%);
+        border: solid 1px hsla(210, 50%, 15%, 0);
     }
 
     .stepNoteOn
