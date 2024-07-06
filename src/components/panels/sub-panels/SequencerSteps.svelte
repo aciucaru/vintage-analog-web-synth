@@ -7,12 +7,26 @@
 
     import { onMount } from "svelte";
 
-    const enabledItems: Array<boolean> = new Array<boolean>(Settings.sequencerSteps);
-    const notesSteps: Array<Array<boolean>> = new Array<Array<boolean>>(Settings.notesPerStep);
-    
-    for (let i = 0; i < notesSteps.length; i++)
+    /* The main array of on/off steps; this array keeps track of which steps are enabled and which not and
+    ** it also keeps track of the currently animated step.
+    This array is used for the logic of the sequencer and, sometimes, for display purposes. */
+    const sequencerSteps: Array<{isEnabled: boolean, noteToPlay: number, showOnAnimation: boolean}> = new Array<{isEnabled: boolean, noteToPlay: number, showOnAnimation: boolean}>(Settings.sequencerSteps);
+
+    // initialize the sequencers steps array
+    for (let i = 0; i < sequencerSteps.length; i++)
     {
-        notesSteps[i] = new Array<boolean>(Settings.sequencerSteps);
+        sequencerSteps[i] = {isEnabled: false, noteToPlay: 0, showOnAnimation: false};
+    }
+
+    /* The array of available notes; each element of the array corresponds to one note, and it contains
+    ** all the steps for that note;
+    ** This array is not for logic, it's for display purposes only, to allow the generation of UI steps
+    ** by using for loops instead of manually writing each of the 25 x 16 total number of steps. */
+    const notesDisplaySteps: Array<Array<boolean>> = new Array<Array<boolean>>(Settings.notesPerStep);
+    
+    for (let i = 0; i < notesDisplaySteps.length; i++)
+    {
+        notesDisplaySteps[i] = new Array<boolean>(Settings.sequencerSteps);
     }
 
     let playStopButton: HTMLDivElement;
@@ -52,23 +66,23 @@
     {
         console.log(`stepNoteToggle(${noteIndex}, ${stepIndex})`);
 
-        notesSteps[noteIndex][stepIndex] = !notesSteps[noteIndex][stepIndex];
+        notesDisplaySteps[noteIndex][stepIndex] = !notesDisplaySteps[noteIndex][stepIndex];
     }
 
     function resetAllSteps(): void
     {
-        for (let i = 0; i < enabledItems.length; i++)
+        for (let i = 0; i < sequencerSteps.length; i++)
         {
-            enabledItems[i] = false;
+            sequencerSteps[i].showOnAnimation = false;
         }
     }
 
     function enableStep(stepIndex: number): void
     {
-        if (0 <= stepIndex && stepIndex < enabledItems.length)
-            enabledItems[stepIndex] = true;
+        if (0 <= stepIndex && stepIndex < sequencerSteps.length)
+            sequencerSteps[stepIndex].showOnAnimation = true;
         else
-            enabledItems[stepIndex % 16] = true;
+            sequencerSteps[stepIndex % Settings.sequencerSteps].showOnAnimation = true;
     }
 
     function updateStep(stepIndex: number): void
@@ -157,9 +171,9 @@
     {
         console.log("onMount()");
 
-        for (let i = 0; i < enabledItems.length; i++)
+        for (let i = 0; i < sequencerSteps.length; i++)
         {
-            enabledItems[i] = false;
+            sequencerSteps[i].showOnAnimation = false;
         }
 
         viteWorker = new ViteWorker();
@@ -270,28 +284,28 @@
     <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 5 / 55;"></div>
 
     <!-- notes selectors -->
-    {#each notesSteps as noteSteps, i}
+    {#each notesDisplaySteps as noteSteps, i}
         {#each noteSteps as step, j}
             <div 
             class="stepNote unselectable"
-            class:stepNoteOn={notesSteps[i][j]}
-            class:stepNoteOff={!notesSteps[i][j]}
+            class:stepNoteOn={notesDisplaySteps[i][j]}
+            class:stepNoteOff={!notesDisplaySteps[i][j]}
             on:click={() => stepNoteToggle(i, j)}
             style="grid-column: {j + 6} / {j + 7}; grid-row: {i*2 + 5} / {i*2 + 7};"></div>
         {/each}
     {/each}
 
     <!-- step buttons -->
-    {#each enabledItems as stepButton, i}
+    {#each sequencerSteps as stepButton, i}
         <div 
         class="stepIndicator unselectable"
-        class:stepIndicatorOn={enabledItems[i]}
-        class:stepIndicatorOff={!enabledItems[i]}
+        class:stepIndicatorOn={sequencerSteps[i].showOnAnimation}
+        class:stepIndicatorOff={!sequencerSteps[i].showOnAnimation}
         style="grid-column: {i + 6} / {i + 7}; grid-row: 55 / 56;">
             <div
             class="stepToggle unselectable"
-            class:stepToggleOn={enabledItems[i]}
-            class:stepToggleOff={!enabledItems[i]}
+            class:stepToggleOn={sequencerSteps[i].showOnAnimation}
+            class:stepToggleOff={!sequencerSteps[i].showOnAnimation}
             on:click={() => stepToggle(i)}></div>
         </div>
     {/each}
