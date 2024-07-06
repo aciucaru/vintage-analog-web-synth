@@ -14,8 +14,8 @@
     <div class="title unselectable" style="grid-column: 3 / 8; grid-row: 1 / 2;">OSC</div>
 
     <!-- oscillator 1 oscilloscope -->
-    <div style="grid-column: 1 / 10; grid-row: 3 / 4;">
-        <AudioOscilloscope
+    <div class="oscilloscope" style="grid-column: 2 / 9; grid-row: 3 / 4;">
+        <AudioOscilloscope height={60}
             audioNode={voice.getMultiShapeOscillator1().getAnalyserGainNode()}
             audioContext={voice.getAudioContext()}></AudioOscilloscope>
     </div>
@@ -70,7 +70,7 @@
     {
         box-sizing: border-box;
 
-        height: 300px;
+        height: 350px;
 
         display: grid;
         grid-template-columns: 16px
@@ -117,6 +117,17 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .oscilloscope
+    {
+        border: solid 1px;
+        border-top-color: hsla(0, 0%, 0%, 0.2);
+        border-bottom-color: hsla(0, 0%, 40%, 0.2);
+        border-left-color: hsla(0, 0%, 10%, 0.2);
+        border-right-color: hsla(0, 0%, 80%, 0.2);
+
+        background: linear-gradient(hsl(216, 5%, 5%) 0%, hsl(207, 5%, 0%) 50%);
     }
 
     .toggle-buttons-group

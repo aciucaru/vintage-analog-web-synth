@@ -12,11 +12,10 @@
 
     export let label: string = "";
 
+    export let plotColor: {hue: number; saturation: number; lightness: number} = {hue: 210, saturation: 45, lightness: 20};
+
     let analyserCanvas: HTMLCanvasElement;
     let context2D: CanvasRenderingContext2D | null; // type: CanvasRenderingContext2D | null;
-
-    // const WIDTH = 160;
-    // const HEIGHT = 90;
 
     class Oscilloscope
     {
@@ -85,7 +84,7 @@
             const drawLoop = () =>
             {
                 this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-                this.ctx.strokeStyle = "hsl(210, 45%, 20%)";
+                this.ctx.strokeStyle = `hsl(${plotColor.hue}, ${plotColor.saturation}%, ${plotColor.lightness}%)`;
                 this.draw(x0, y0, this.ctx.canvas.width, this.ctx.canvas.height);
                 this.drawRequest = window.requestAnimationFrame(drawLoop);
             };
@@ -171,7 +170,8 @@
 
     .analyser-canvas
     {
-        border: solid 1px hsl(210, 45%, 20%);
+        margin: 0px;
+        padding: 0px;
     }
 
     .label

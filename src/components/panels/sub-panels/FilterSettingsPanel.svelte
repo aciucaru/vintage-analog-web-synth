@@ -35,7 +35,7 @@
     {
         box-sizing: border-box;
 
-        height: 300px;
+        height: 350px;
 
         display: grid;
         grid-template-columns: 16px auto 5px auto 5px auto 16px;
@@ -51,9 +51,7 @@
         gap: 0px;
 
         margin: 1px;
-        padding: 0px;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 5px;
 
         border-radius: 2px;
         background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),

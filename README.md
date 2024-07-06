@@ -4,7 +4,7 @@
 #### Description:
 This is a TypeScript, Svelte and Web Audio API virtual analog subtractive synthesizer.
 
-![screenshot](screenshots/screenshot-02.png)
+![screenshot](screenshots/screenshot-03.png)
 
 This synthesizer has the folowing features:
 * 2 general purpose oscillators (triangle, sawtooth, pulse), inspired be the Sequential Prophet

@@ -1,22 +1,28 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
+    import { voice } from "../../../model/audio/voice";
 
     import * as voiceCallbacks from "../../../callbacks/voice-callbacks";
 
     import Knob from "../../Knob.svelte";
-    import VerticalFader from "../../VerticalFader.svelte";
+    import AudioOscilloscope from "../../AudioOscilloscope.svelte";
 </script>
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 3 / 4;">VOICE</div>
+    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">VOICE</div>
 
-    <div style="grid-column: 1 / 3; grid-row: 5 / 6;">
+    <div class="oscilloscope" style="grid-column: 1 / 8; grid-row: 3 / 4;">
+        <AudioOscilloscope
+        audioNode={voice.outputNode()} audioContext={voice.getAudioContext()}></AudioOscilloscope>
+    </div>
+
+    <div style="grid-column: 1 / 4; grid-row: 5 / 6;">
         <Knob label={"Gain"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onVolumeChange}></Knob>
     </div>
 
-    <div style="grid-column: 4 / 5; grid-row: 5 / 6;">
+    <div style="grid-column: 5 / 6; grid-row: 5 / 6;">
         <Knob label={"Tremolo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onTremoloChange}></Knob>
     </div>
@@ -27,13 +33,18 @@
     {
         box-sizing: border-box;
 
-        height: 300px;
+        height: 350px;
 
         display: grid;
-        grid-template-columns: 16px auto 5px auto 16px;
+        grid-template-columns: 16px
+                                5px
+                                auto 5px auto
+                                5px
+                                16px;
         grid-template-rows: 16px
-                            5px auto
-                            5px auto 5px auto 5px
+                            5px
+                            auto 5px auto 5px auto
+                            5px
                             16px;
 
         justify-items: stretch;
@@ -43,9 +54,7 @@
         gap: 0px;
 
         margin: 1px;
-        padding: 0px;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 5px;
 
         border-radius: 2px;
         background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),
@@ -67,6 +76,17 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .oscilloscope
+    {
+        border: solid 1px;
+        border-top-color: hsla(0, 0%, 0%, 0.2);
+        border-bottom-color: hsla(0, 0%, 40%, 0.2);
+        border-left-color: hsla(0, 0%, 10%, 0.2);
+        border-right-color: hsla(0, 0%, 80%, 0.2);
+
+        background: linear-gradient(hsl(216, 5%, 5%) 0%, hsl(207, 5%, 0%) 50%);
     }
 
     .unselectable

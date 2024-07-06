@@ -68,7 +68,7 @@
     {
         box-sizing: border-box;
 
-        height: 340px;
+        height: 350px;
 
         display: grid;
         grid-template-columns: 16px
