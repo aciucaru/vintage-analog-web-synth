@@ -130,6 +130,26 @@ export class Voice
         this.filterNode.getAdsrEnvelope().startAndStop(duration);
     }
 
+    public playNoteWithOffset(octavesOffset: number, semitonesOffset: number, duration: number): void
+    {
+        Voice.logger.debug(`playNoteWithOffset(octaves: ${octavesOffset}, semitones: ${semitonesOffset})`);
+
+        // first, set the internal note offsets (as octaves and semitones) for all oscillators
+        this.unisonOscillator1.setOctavesOffset(octavesOffset);
+        this.unisonOscillator1.setSemitonesOffset(semitonesOffset);
+
+        this.unisonOscillator2.setOctavesOffset(octavesOffset);
+        this.unisonOscillator2.setSemitonesOffset(semitonesOffset);
+
+        this.subOscillator.setOctavesOffset(octavesOffset);
+        this.subOscillator.setSemitonesOffset(semitonesOffset);
+
+        // then trigger the ADSR envelope for the voice
+        this.voiceAdsrEnvelope.startAndStop(duration);
+        // and then trigger the ADSR envelopr for the filter as well
+        this.filterNode.getAdsrEnvelope().startAndStop(duration);
+    }
+
     public noteOn(octaves: number, semitones: number): void
     {
         Voice.logger.debug(`noteOn(octaves = ${octaves}, semitones = ${semitones})`);

@@ -250,5 +250,11 @@ export class Note
                             ` new freq: ${this.freq}`);
     }
 
+    public getOctaves(): number { return this.octaves; }
+
+    public getSemitones(): number { return this.semitones; }
+
+    public getCents(): number { return this.centsOffset; }
+
     public getFreq(): number { return this.freq; }
 }

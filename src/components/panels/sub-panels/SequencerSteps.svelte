@@ -1,16 +1,23 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { voice, type Voice } from "../../../model/audio/voice";
-    // import workerUrl from "$lib/worker?worker&url";
+    import { Note } from "../../../model/audio/note";
+    import { voice } from "../../../model/audio/voice";
 
+    // import workerUrl from "$lib/worker?worker&url";
     import ViteWorker from "$lib/sequencer-worker?worker";
 
     import { onMount } from "svelte";
 
+    import { Logger } from "tslog";
+    import type { ILogObj } from "tslog";
+
+    const logger: Logger<ILogObj> = new Logger({name: "StepSequencer", minLevel: Settings.minLogLevel });
+
     class SequencerStep
     {
         public isEnabled: boolean;
-        public noteToPlay: number;
+        public octavesOffset: number;
+        public semitonesOffset: number;
         public showOnAnimation: boolean;
 
         /* The array of available notes; each element of the array corresponds to one note. The array contains all possible
@@ -22,7 +29,8 @@
         public constructor()
         {
             this.isEnabled = false;
-            this.noteToPlay = 0;
+            this.octavesOffset = 0;
+            this.semitonesOffset = 0;
             this.showOnAnimation = false;
 
             this.dummyDisplayNotes = new Array<boolean>(Settings.notesPerStep);
@@ -43,6 +51,12 @@
         {
             sequencerSteps[i].dummyDisplayNotes[j] = false;
         }
+    }
+
+    // for each sequencer step, set the current note as the middle one
+    for (let i = 0; i < sequencerSteps.length; i++)
+    {
+        sequencerSteps[i].dummyDisplayNotes[11] = true;
     }
 
     let playStopButton: HTMLDivElement;
@@ -77,20 +91,55 @@
     ** the note of that step */
     function stepToggle(stepIndex: number): void
     {
-        console.log(`stepToggle(${stepIndex})`);
+        logger.debug(`stepToggle(${stepIndex})`);
     }
 
     /* This function sets the note of a sequencer step. The sequencer is monophonic, so there can be only
     ** a single note per each step. */
     function setStepNote(stepIndex: number, noteIndex: number): void
     {
-        console.log(`stepNoteToggle(${noteIndex}, ${stepIndex})`);
+        logger.debug(`stepNoteToggle(${stepIndex}, ${noteIndex})`);
 
-        // notesDisplaySteps[noteIndex][stepIndex] = !notesDisplaySteps[noteIndex][stepIndex];
-        sequencerSteps[stepIndex].dummyDisplayNotes[noteIndex] = !sequencerSteps[stepIndex].dummyDisplayNotes[noteIndex];
+        // toggle the note to determine the visual aspects of the note (this is for display purposes only)
+        // this must be done before we reset all the notes of this step
+        const noteVisualState = !sequencerSteps[stepIndex].dummyDisplayNotes[noteIndex];
+
+        // reset all notes of this step
+        for (let i = 0; i < sequencerSteps[stepIndex].dummyDisplayNotes.length; i++)
+        {
+            sequencerSteps[stepIndex].dummyDisplayNotes[i] = false;
+        }
+
+        // set the visual aspects of the note (this is for display purposes only)
+        sequencerSteps[stepIndex].dummyDisplayNotes[noteIndex] = noteVisualState;
+
+        // set the actual note of the specified step:
+        /* compute the note position (notes start from bottom to top, but the 'noteIndex' starts from top to bottom,
+        ** so we need to make a conversion) */
+        // const notePosition = Settings.notesPerStep - noteIndex;
+        const notePosition = noteIndex;
+
+        // determine the absolute octaves offset (from 0 to 2)
+        // and the absolute semitones offset (from 0 to 11)
+        const noteAbsoluteOctavesOffset = Math.floor(notePosition / 12);
+        const noteAbsoluteSemitonesOffset = notePosition - noteAbsoluteOctavesOffset * 12;
+
+        logger.debug(`stepNoteToggle(): abs octaves offset = ${noteAbsoluteOctavesOffset}, abs semitones offset = ${noteAbsoluteSemitonesOffset}`);
+
+        // determine the absolute octaves offset (from -1 to 1)
+        // and the absolute semitones offset (from -11 to 11)
+        const relativeOctavesOffset = noteAbsoluteOctavesOffset - 1;
+        let relativeSemitonesOffset = noteAbsoluteSemitonesOffset;
+        // if (relativeOctavesOffset >= 0)
+        //     relativeSemitonesOffset = noteAbsoluteSemitonesOffset;
+        // else
+        //     relativeSemitonesOffset = 12 - noteAbsoluteSemitonesOffset;
+
+        sequencerSteps[stepIndex].octavesOffset = relativeOctavesOffset;
+        sequencerSteps[stepIndex].semitonesOffset = relativeSemitonesOffset;
     }
 
-    function resetAllSteps(): void
+    function resetAnimationAllSteps(): void
     {
         for (let i = 0; i < sequencerSteps.length; i++)
         {
@@ -98,7 +147,7 @@
         }
     }
 
-    function enableStep(stepIndex: number): void
+    function enableAnimationStep(stepIndex: number): void
     {
         if (0 <= stepIndex && stepIndex < sequencerSteps.length)
             sequencerSteps[stepIndex].showOnAnimation = true;
@@ -108,14 +157,13 @@
 
     function updateStep(stepIndex: number): void
     {
-        resetAllSteps();
-        enableStep(stepIndex);
+        resetAnimationAllSteps();
+        enableAnimationStep(stepIndex);
     }
-
 
     function nextNote(): void
     {
-        console.log(`nextNote()`);
+        logger.debug(`nextNote()`);
 
         // advance current note and time by a 16th note
         const secondsPerBeat = 60.0 / tempo;
@@ -129,24 +177,26 @@
             currentNoteIndex = 0;
     }
 
-    function scheduleNote(beatNumber: number, time: number): void
+    function scheduleNote(currentStepIndex: number, time: number): void
     {
-        console.log(`scheduleNote(beatNumber: ${beatNumber}, time: ${time})`);
+        logger.debug(`scheduleNote(beatNumber: ${currentStepIndex}, time: ${time})`);
 
         // push the note on the queue, even if we're not playing
-        notesInQueue.push({noteIndex: beatNumber, time: time});
+        notesInQueue.push({noteIndex: currentStepIndex, time: time});
 
-        updateStep(beatNumber);
+        updateStep(currentStepIndex);
 
         const stepDuration = (60.0 / tempo) / 4.0;
     
-        // this.voice.playNote(4, 2, stepDuration);
-        voice.playNote(4, 2, stepDuration);
+        const octavesOffset = sequencerSteps[currentNoteIndex].octavesOffset;
+        const semitonesOffset = sequencerSteps[currentNoteIndex].semitonesOffset;
+
+        voice.playNoteWithOffset(octavesOffset, semitonesOffset, stepDuration);
     }
 
     function scheduler(): void
     {
-        console.log(`scheduler()`);
+        logger.debug(`scheduler()`);
 
         // while there are notes that will need to play before the next interval, 
         // schedule them and advance the pointer
@@ -164,7 +214,7 @@
 
         if (isPlaying)
         {
-            console.log("play(): is playing");
+            logger.debug("play(): is playing");
 
             currentNoteIndex = 0;
             nextNoteTime = voice.getAudioContext().currentTime;
@@ -174,7 +224,7 @@
         }
         else
         {
-            console.log("play(): not playing");
+            logger.debug("play(): not playing");
 
             // this.timingWorker.postMessage("stop");
             viteWorker.postMessage("stop");
@@ -183,14 +233,14 @@
 
     function onPlayStopClick(evt: Event): void
     {
-        console.log("onPlayStop");
+        logger.debug("onPlayStop");
 
         play();
     }
     
     onMount( () => 
     {
-        console.log("onMount()");
+        logger.debug("onMount()");
 
         for (let i = 0; i < sequencerSteps.length; i++)
         {
@@ -203,7 +253,7 @@
             if (event.data === "tick")
                 scheduler();
             else
-                console.log(`viteWorker onmessage(): ${event.data}`);
+                logger.debug(`viteWorker onmessage(): ${event.data}`);
         };
         viteWorker.postMessage(`viteWorker interval: ${lookAheadTime}`)
 
@@ -305,25 +355,14 @@
     <div class="vertical-step-background unselectable" style="grid-column: 21 / 22; grid-row: 5 / 55;"></div>
 
     <!-- notes selectors -->
-    <!-- {#each notesDisplaySteps as noteSteps, i}
-        {#each noteSteps as step, j}
-            <div 
-            class="stepNote unselectable"
-            class:stepNoteOn={notesDisplaySteps[i][j]}
-            class:stepNoteOff={!notesDisplaySteps[i][j]}
-            on:click={() => setStepNote(i, j)}
-            style="grid-column: {j + 6} / {j + 7}; grid-row: {i*2 + 5} / {i*2 + 7};"></div>
-        {/each}
-    {/each} -->
-
-    {#each sequencerSteps as stepNotes, i}
-        {#each stepNotes.dummyDisplayNotes as displayNote, j}
+    {#each sequencerSteps as stepNotes, stepIndex}
+        {#each stepNotes.dummyDisplayNotes as displayNote, noteIndex}
             <div 
             class="stepNote unselectable"
             class:stepNoteOn={displayNote}
             class:stepNoteOff={!displayNote}
-            on:click={() => setStepNote(i, j)}
-            style="grid-column: {i + 6} / {i + 7}; grid-row: {j*2 + 5} / {j*2 + 7};"></div>
+            on:click={() => setStepNote(stepIndex, noteIndex)}
+            style="grid-column: {stepIndex + 6} / {stepIndex + 7}; grid-row: {53 - noteIndex*2} / {55 - noteIndex*2};"></div>
         {/each}
     {/each}
 

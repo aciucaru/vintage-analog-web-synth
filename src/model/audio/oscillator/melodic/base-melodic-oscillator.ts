@@ -14,7 +14,7 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
 
     constructor(audioContext: AudioContext, initialGain: number)
     {
-        super(audioContext, initialGain);
+        super(audioContext);
 
         this.note = new Note(Settings.noteDefaultOctaves, Settings.noteDefaultSemitones);
     }
