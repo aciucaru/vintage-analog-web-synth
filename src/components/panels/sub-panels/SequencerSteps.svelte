@@ -432,7 +432,7 @@
         </div>
     {/each}
 
-    <div class="sequencer-settings-container" style="grid-column: 25 / 26; grid-row: 3 / 13;">
+    <div class="sequencer-settings-container" style="grid-column: 25 / 26; grid-row: 3 / 58;">
         <div class="toggle-button-group">
             <ToggleButton onToggleChange={onSequencerToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
             <div class="param-label unselectable">On/Off</div>
@@ -499,12 +499,9 @@
 
         display: flex;
         flex-flow: column nowrap;
-        /* set alignment on main axis */
-        justify-content: flex-start;
-        /* set alingment on cross-axis */
-        align-items: center;
-        /* set space between flex lines */
-        align-content: center;
+        justify-content: space-between; /* set alignment on main axis */
+        align-items: center; /* set alingment on cross-axis */
+        align-content: center; /* set space between flex lines */
 
         margin: 0px;
         padding: 0px;

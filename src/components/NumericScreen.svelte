@@ -197,7 +197,7 @@
         width: var(--screenWidth);
         height: calc(var(--label-text-height) + 4px);
 
-        margin: 0px;
+        margin: 5px;
         padding: 0px;
 
         color: hsl(0, 0%, 85%);
