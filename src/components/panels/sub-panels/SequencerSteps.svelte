@@ -434,32 +434,33 @@
 
     <!-- <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 45 / 49;">Drone</div> -->
 
-    <div class="waveform-button-icon-group" style="grid-column: 25 / 26; grid-row: 5 / 9;">
-        <ToggleButton onToggleChange={onSequencerToggle}></ToggleButton>
-        <div class="unselectable">On/Off</div>
+    <div class="toggle-button-group" style="grid-column: 25 / 26; grid-row: 3 / 8;">
+        <ToggleButton onToggleChange={onSequencerToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
+        <div class="param-label unselectable">On/Off</div>
     </div>
     
-    <div class="lcd-screen" style="grid-column: 25 / 26; grid-row: 9 / 19;">
-        <NumericScreen minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
+    <div style="grid-column: 25 / 26; grid-row: 9 / 19;">
+        <NumericScreen label={"Tempo"} minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
             step={1} decimals={0} onValueChange={onTempoChange}></NumericScreen>
     </div>
 
-    <div style="grid-column: 25 / 26; grid-row: 21 / 31;">
+
+    <div style="grid-column: 25 / 26; grid-row: 19 / 29;">
         <Knob label={"Multipl"} minValue={Settings.minSequencerTempoMultiplierExponent} maxValue={Settings.maxSequencerTempoMultiplierExponent}
             initialValue={Settings.defaultSequencerTempoMultiplierExponent}
             step={1} decimals={0} onValueChange={onTempoMultiplierExponentChange}></Knob>
     </div>
 
-    <div class="lcd-screen" style="grid-column: 25 / 26; grid-row: 33 / 43;">
-        <NumericScreen minValue={Settings.minSequencerSteps} maxValue={Settings.maxSequencerSteps} initialValue={Settings.defaultSequencerSteps}
+    <div style="grid-column: 25 / 26; grid-row: 33 / 43;">
+        <NumericScreen label={"Steps"} minValue={Settings.minSequencerSteps} maxValue={Settings.maxSequencerSteps} initialValue={Settings.defaultSequencerSteps}
             step={1} decimals={0} onValueChange={onPlayedStepsCountChange}></NumericScreen>
     </div>
 
     <!-- <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 45 / 49;">Drone</div> -->
     
-    <div class="waveform-button-icon-group" style="grid-column: 25 / 26; grid-row: 45 / 49;">
-        <ToggleButton onToggleChange={onDroneToggle}></ToggleButton>
-        <div class="unselectable">Drone</div>
+    <div class="toggle-button-group" style="grid-column: 25 / 26; grid-row: 45 / 49;">
+        <ToggleButton onToggleChange={onDroneToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
+        <div class="param-label unselectable">Drone</div>
     </div>
 </div>
 
@@ -512,6 +513,23 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .toggle-button-group
+    {
+        box-sizing: border-box;
+
+        width: auto;
+        height: auto;
+
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        align-content: center;
+
+        padding: 0px;
+        margin: 0px;
     }
 
     .screen-frame
@@ -726,29 +744,21 @@
         background: linear-gradient(hsl(230, 20%, 47%) 0%, hsl(228, 23%, 35%) 50%);
     }
 
-    .lcd-screen
+    .lcd-screen-group
     {
         box-sizing: border-box;
 
-        width: min-content;
-        height: min-content;
+        display: flex;
+        flex-flow: column nowrap;
+        /* set alignment on main axis */
+        justify-content: center;
+        /* set alingment on cross-axis */
+        align-items: flex-start;
+        /* set space between flex lines */
+        align-content: center;
 
         margin: 0px;
         padding: 0px;
-/* 
-        background: linear-gradient(hsl(200, 10%, 50%) 0%, hsl(200, 10%, 40%) 50%);
-        border: solid 1px hsl(0, 0%, 10%); */
-
-        border-radius: 3px;
-        border: solid 1px;
-        border-top-color: hsla(228, 47%, 0%, 0.2);
-        border-bottom-color: hsla(228, 47%, 40%, 0.2);
-        border-left-color: hsla(228, 47%, 10%, 0.2);
-        border-right-color: hsla(228, 47%, 80%, 0.2);
-
-        background: linear-gradient(hsl(216, 5%, 10%) 0%, hsl(207, 5%, 5%) 50%);
-
-        box-shadow: inset 1px 1px 4px 1px hsl(0, 0%, 0%);
     }
 
     .lfo-button-bg-on

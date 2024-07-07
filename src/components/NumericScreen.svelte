@@ -6,6 +6,9 @@
     import type { ILogObj } from "tslog";
 
     // props:
+    // the title below the screen
+    export let label: string = "";
+
     // the min. and max. absolute values the knob is supossed to set
     export let minValue: number = 0.0;
     export let maxValue: number = 1.0;
@@ -152,13 +155,22 @@
 </script>
 
 <div class="main-container unselectable" style={`--screenWidth: ${WIDTH}px; --screenTextColor: hsl(${textColor.hue}, ${textColor.saturation}%, ${textColor.lightness}%);`}>
-    <div bind:this={numericControl} on:mousedown={onMouseDown} class="numeric-value unselectable">{absoluteValueString}</div>
+    <slot name="screenBackground">
+        <div class="lcd-screen">
+            <div bind:this={numericControl} on:mousedown={onMouseDown} class="numeric-value unselectable">{absoluteValueString}</div>
+        </div>
+    </slot>
+
+    {#if label.length > 0}
+        <div class="label unselectable">{label}</div>
+    {/if}
 </div>
 
 <style>
     .main-container
     {
         --screenTextHeight: 16px;
+        --label-text-height: 12px;
 
         box-sizing: border-box;
 
@@ -176,6 +188,24 @@
 
         margin: 0px;
         padding: 0px;
+    }
+
+    .label
+    {
+        box-sizing: border-box;
+
+        width: var(--screenWidth);
+        height: calc(var(--label-text-height) + 4px);
+
+        margin: 0px;
+        padding: 0px;
+
+        color: hsl(0, 0%, 85%);
+        font-family: sans-serif;
+        font-size: var(--label-text-height);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: clip;
     }
 
     /* custom local font definition; this defines a font named "LCD14" */
@@ -206,6 +236,20 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .lcd-screen
+    {
+        border-radius: 3px;
+        border: solid 1px;
+        border-top-color: hsla(228, 47%, 0%, 0.2);
+        border-bottom-color: hsla(228, 47%, 40%, 0.2);
+        border-left-color: hsla(228, 47%, 10%, 0.2);
+        border-right-color: hsla(228, 47%, 80%, 0.2);
+
+        background: linear-gradient(hsl(216, 5%, 10%) 0%, hsl(207, 5%, 5%) 50%);
+
+        box-shadow: inset 1px 1px 4px 1px hsl(0, 0%, 0%);
     }
 
     .unselectable
