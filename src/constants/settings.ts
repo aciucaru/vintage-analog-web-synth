@@ -232,6 +232,15 @@ export class Settings
     public static readonly defaultSequencerOctaves = 0;
 
 
+    // settings for dely effect ***************************************************************************
+    public static readonly minDelayTime = 0.0; // 0 seconds
+    public static readonly maxDelayTime = 2.0; // 2 seconds
+    public static readonly defaultDelayTime = 0.0; // 0 seconds
+
+    public static readonly minDelayFeedbackGain = 0.0; // 0%
+    public static readonly maxDelayFeedbackGain = 0.9; // 90%
+    public static readonly defaultDelayFeedbackGain = 0.0; // 0%
+
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
 }

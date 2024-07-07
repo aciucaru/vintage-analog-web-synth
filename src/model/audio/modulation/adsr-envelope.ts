@@ -589,7 +589,6 @@ export class AdsrEnvelope extends BaseAudioNode
             else
                 currentTimeGain = 0.0; // is it the correct value ?
 
-
             return currentTimeGain;
         }
         else
