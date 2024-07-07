@@ -35,22 +35,22 @@
     </div>
 
     <div style="grid-column: 3 / 4; grid-row: 2 / 3;">
-        <NumericScreen title={"Min keys"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <NumericScreen label={"Min keys"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={arpegiatorCallbacks.onMinKeysChange}></NumericScreen>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 2 / 3;">
-        <NumericScreen title={"Tempo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <NumericScreen label={"Tempo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={arpegiatorCallbacks.onMinKeysChange}></NumericScreen>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 2 / 3;">
-        <NumericScreen title={"Clock"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <NumericScreen label={"Clock"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={arpegiatorCallbacks.onMinKeysChange}></NumericScreen>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 2 / 3;">
-        <NumericScreen title={"Octaves"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
+        <NumericScreen label={"Octaves"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={arpegiatorCallbacks.onMinKeysChange}></NumericScreen>
     </div>
 

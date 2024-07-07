@@ -7,7 +7,7 @@
 
     // props:
     // the title above the knob
-    export let title: string = "";
+    export let label: string = "";
 
     // the min. and max. absolute values the knob is supossed to set
     export let minValue: number = 0.0;
@@ -60,14 +60,16 @@
     absoluteValue = initialValue;
     newAbsoluteValue = initialValue;
 
-    // the width and height of the canvas
+    // the width and height of the LCD screen
     const WIDTH = 50;
-    const HEIGHT = 50;
+    const HEIGHT = 30;
 
     let numericControl: HTMLDivElement;
 
     function onMouseDown(event: Event): void
     {
+        logger.debug(`onMouseDown()`);
+
         onMouseDownY = (event as MouseEvent).clientY;
 
         numericControl.addEventListener('mousemove', onMouseMove);
@@ -89,7 +91,7 @@
         ** of the knob does not change either;
         ** so, when mouse movement = 0, the value change = 0
         **     when mouse movement = MAX_MOUSE_MOVEMENT, the value change = (maxValue - minValue), maximum possible */
-        const MAX_MOUSE_MOVEMENT = 120.0;
+        const MAX_MOUSE_MOVEMENT = 4 * HEIGHT;
 
         // how many pixels the mouse must move up or down to change the value by 1 step
         const PIXELS_PER_STEP = MAX_MOUSE_MOVEMENT / STEP_COUNT;
@@ -124,6 +126,8 @@
         ** could be larger or smaller than the actual stored absolute value */
         absoluteValueString = `${ (displayFactor * newAbsoluteValue).toFixed(decimals) }`;
 
+        logger.debug(`onMouseMove(): ${absoluteValueString}`);
+
         // // call the event handler (callback) and pass it the new value
         // onValueChange(newAbsoluteValue);
     }
@@ -148,18 +152,23 @@
     }
 </script>
 
-<div class="main-container">
-    {#if title.length > 0}
-        <div class="title">{title}</div>
-    {/if}
+<div class="main-container unselectable">
+    <div bind:this={numericControl} on:mousedown={onMouseDown} class="numeric-value unselectable" style={`--screenWidth: ${WIDTH}px;`}>{absoluteValueString}</div>
 
-    <div bind:this={numericControl} on:mousedown={onMouseDown} class="numeric-value">{absoluteValueString}</div>
+    {#if label.length > 0}
+        <div class="label unselectable">{label}</div>
+    {/if}
 </div>
 
 <style>
     .main-container
     {
+        --screenTextHeight: 16px;
+
         box-sizing: border-box;
+
+        width: var(--screenWidth);
+        height: calc(var(--textHeight) + 10px);
 
         display: flex;
         flex-flow: column nowrap;
@@ -169,19 +178,21 @@
         align-items: center;
         /* set space between flex lines */
         align-content: center;
-        gap: 5px;
 
         margin: 0px;
         padding: 0px;
     }
 
-    .title
+    .label
     {
         box-sizing: border-box;
         pointer-events: none;
 
-        margin: 0px;
-        padding: 3px;
+        width: var(--screenWidth);
+        height: calc(var(--textHeight) + 4px);
+
+        margin: 2px;
+        padding: 0px;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
@@ -203,19 +214,27 @@
     .numeric-value
     {
         box-sizing: border-box;
-        pointer-events: none;
 
-        margin: 0px;
-        padding: 2px;
+        width: var(--screenWidth);
+        height: calc(var(--screenTextHeight) + 10px);
+
+        margin: 2px;
+        padding: 0px;
 
         background-color: hsl(200, 10%, 50%);
         border: solid 1px hsl(0, 0%, 10%);
 
         color: hsl(220, 40%, 30%);
         font-family: LCD14, Tahoma, serif;
-        font-size: 14px;
+        font-size: var(--screenTextHeigh);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
+    }
+
+    .unselectable
+    {
+        user-select: none;
+        -webkit-user-select: none;
     }
 </style>

@@ -5,8 +5,10 @@
 
     // import workerUrl from "$lib/worker?worker&url";
     import ViteWorker from "$lib/sequencer-worker?worker";
-
     import { onMount } from "svelte";
+
+    import Knob from "../../Knob.svelte";
+    import NumericScreen from "../../NumericScreen.svelte";
 
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
@@ -39,15 +41,22 @@
         }
     }
 
-    let playStopButton: HTMLDivElement;
-
-    let isPlaying: boolean = false;
-
     // is the sequencer enabled?
     let isSequencerEnabled: boolean = false;
 
+    let isPlaying: boolean = false;
+
     // the tempo of the sequencer, in BPM
     let tempo = 120.0;
+
+    // the multiplier/divider of the tempo
+    let tempoMultiplier = 1.0;
+
+    // how many steps should be played out of the total number of possible steps
+    let playedSteps = Settings.sequencerSteps;
+
+    // should the sequencer play without a note being pressed? 
+    let latch = false;
 
     // What note is currently last scheduled?
     let currentNoteIndex = 0;
@@ -88,8 +97,6 @@
     }
 
     // the Web Worker used to fire timer messages
-    // private timingWorker: Worker;
-
     let viteWorker: Worker;
 
     /* this function toggles a complete step on/off, it basically enables/disables a step regardless of
@@ -224,16 +231,21 @@
             currentNoteIndex = 0;
             nextNoteTime = voice.getAudioContext().currentTime;
 
-            // this.timingWorker.postMessage("start");
             viteWorker.postMessage("start");
         }
         else
         {
             logger.debug("play(): not playing");
 
-            // this.timingWorker.postMessage("stop");
             viteWorker.postMessage("stop");
         }
+    }
+
+    // callbacks for UI elements (knobs, faders, etc.) ******************************************************
+
+    function onTempoChange(tempo: number): void
+    {
+        logger.debug(`onTempoChange(${tempo})`);
     }
 
     function onPlayStopClick(evt: Event): void
@@ -261,8 +273,6 @@
                 logger.debug(`viteWorker onmessage(): ${event.data}`);
         };
         viteWorker.postMessage(`viteWorker interval: ${lookAheadTime}`)
-
-        playStopButton.addEventListener("click", onPlayStopClick);
     });
 </script>
 
@@ -386,7 +396,17 @@
         </div>
     {/each}
     
-    <div bind:this={playStopButton} class="play-stop-button unselectable" style="grid-column: 3 / 5; grid-row: 59 / 60;">Play</div>
+    <div style="grid-column: 25 / 26; grid-row: 9 / 19;">
+        <NumericScreen label={"Tempo"} minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
+            step={1} decimals={0} onValueChange={onTempoChange}></NumericScreen>
+    </div>
+
+    <div style="grid-column: 25 / 26; grid-row: 21 / 31;">
+        <Knob label={"Clock"} minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
+            step={1} decimals={0} onValueChange={onTempoChange}></Knob>
+    </div>
+
+    <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 3 / 7;">Latch</div>
 </div>
 
 <style>

@@ -106,7 +106,7 @@
         ** of the knob does not change either;
         ** so, when mouse movement = 0, the value change = 0
         **     when mouse movement = MAX_MOUSE_MOVEMENT, the value change = (maxValue - minValue), maximum possible */
-        const MAX_MOUSE_MOVEMENT = 120.0;
+        const MAX_MOUSE_MOVEMENT = 2 * HEIGHT;
 
         // how many pixels the mouse must move up or down to change the value by 1 step
         const PIXELS_PER_STEP = MAX_MOUSE_MOVEMENT / STEP_COUNT;
