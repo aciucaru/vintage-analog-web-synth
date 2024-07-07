@@ -12,7 +12,8 @@
 
     export let label: string = "";
 
-    export let plotColor: {hue: number; saturation: number; lightness: number} = {hue: 210, saturation: 45, lightness: 20};
+    // the color of the oscilloscope graph
+    export let plotColor: {hue: number; saturation: number; lightness: number} = {hue: 210, saturation: 45, lightness: 30};
 
     let analyserCanvas: HTMLCanvasElement;
     let context2D: CanvasRenderingContext2D | null; // type: CanvasRenderingContext2D | null;

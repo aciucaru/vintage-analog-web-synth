@@ -99,14 +99,9 @@
 
     .title
     {
-        pointer-events: none;
-
         margin: 0px;
         padding: 0px;
 
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 25%, 0.6), hsla(220, 20%, 20%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 30%, 0.6), hsla(220, 20%, 25%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(45, 25%, 25%), hsl(45, 25%, 20%)); ok for orange */
         background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
 
         color: hsl(0, 0%, 85%);

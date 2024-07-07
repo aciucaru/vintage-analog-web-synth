@@ -6,7 +6,7 @@
     import type { ILogObj } from "tslog";
 
     // props:
-    // the title above the knob
+    // the title below the knob
     export let label: string = "";
 
     // the min. and max. absolute values the knob is supossed to set

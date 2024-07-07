@@ -6,9 +6,6 @@
     import type { ILogObj } from "tslog";
 
     // props:
-    // the title above the knob
-    export let label: string = "";
-
     // the min. and max. absolute values the knob is supossed to set
     export let minValue: number = 0.0;
     export let maxValue: number = 1.0;
@@ -24,6 +21,8 @@
 
     // how many decimals should the displayed value have
     export let decimals: number = 2;
+
+    export let textColor: {hue: number; saturation: number; lightness: number} = {hue: 210, saturation: 45, lightness: 40};
 
     /* the event handler (callback) prop the knob will call when it's rotated
     ** this event receives the new value set by the knob */
@@ -152,12 +151,8 @@
     }
 </script>
 
-<div class="main-container unselectable">
-    <div bind:this={numericControl} on:mousedown={onMouseDown} class="numeric-value unselectable" style={`--screenWidth: ${WIDTH}px;`}>{absoluteValueString}</div>
-
-    {#if label.length > 0}
-        <div class="label unselectable">{label}</div>
-    {/if}
+<div class="main-container unselectable" style={`--screenWidth: ${WIDTH}px; --screenTextColor: hsl(${textColor.hue}, ${textColor.saturation}%, ${textColor.lightness}%);`}>
+    <div bind:this={numericControl} on:mousedown={onMouseDown} class="numeric-value unselectable">{absoluteValueString}</div>
 </div>
 
 <style>
@@ -173,7 +168,7 @@
         display: flex;
         flex-flow: column nowrap;
         /* set alignment on main axis */
-        justify-content: flex-start;
+        justify-content: center;
         /* set alingment on cross-axis */
         align-items: center;
         /* set space between flex lines */
@@ -181,25 +176,6 @@
 
         margin: 0px;
         padding: 0px;
-    }
-
-    .label
-    {
-        box-sizing: border-box;
-        pointer-events: none;
-
-        width: var(--screenWidth);
-        height: calc(var(--textHeight) + 4px);
-
-        margin: 2px;
-        padding: 0px;
-
-        color: hsl(0, 0%, 85%);
-        font-family: sans-serif;
-        font-size: 12px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: clip;
     }
 
     /* custom local font definition; this defines a font named "LCD14" */
@@ -218,13 +194,13 @@
         width: var(--screenWidth);
         height: calc(var(--screenTextHeight) + 10px);
 
-        margin: 2px;
-        padding: 0px;
+        margin: 0px;
+        padding: 5px;
 
-        background-color: hsl(200, 10%, 50%);
-        border: solid 1px hsl(0, 0%, 10%);
+        /* background-color: hsl(200, 10%, 50%);
+        border: solid 1px hsl(0, 0%, 10%); */
 
-        color: hsl(220, 40%, 30%);
+        color: var(--screenTextColor);
         font-family: LCD14, Tahoma, serif;
         font-size: var(--screenTextHeigh);
         overflow: hidden;

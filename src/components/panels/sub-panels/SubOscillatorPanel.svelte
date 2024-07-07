@@ -76,8 +76,6 @@
 
     .title
     {
-        pointer-events: none;
-
         margin: 0px;
         padding: 0px;
 
