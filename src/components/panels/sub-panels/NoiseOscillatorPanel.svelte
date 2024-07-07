@@ -66,8 +66,6 @@
 
         margin: 1px;
         padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
 
         border-radius: 2px;
         background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),

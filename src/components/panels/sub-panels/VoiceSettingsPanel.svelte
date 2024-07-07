@@ -22,7 +22,7 @@
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onVolumeChange}></Knob>
     </div>
 
-    <div style="grid-column: 5 / 6; grid-row: 5 / 6;">
+    <div style="grid-column: 5 / 8; grid-row: 5 / 6;">
         <Knob label={"Tremolo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onTremoloChange}></Knob>
     </div>

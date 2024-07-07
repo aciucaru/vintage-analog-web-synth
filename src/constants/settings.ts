@@ -219,5 +219,5 @@ export class Settings
 
 
     // settings for logging
-    public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
+    public static readonly minLogLevel = 7; // 0: log everything; 7: log nothing (max level is 6)
 }

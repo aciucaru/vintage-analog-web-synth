@@ -187,7 +187,7 @@
         absoluteValueString = `${ (displayFactor * newAbsoluteValue).toFixed(decimals) }`;
 
         // // call the event handler (callback) and pass it the new value
-        // onValueChange(newAbsoluteValue);
+        onValueChange(newAbsoluteValue);
 
         // change the thumb preffil height to give the ilussion that the thumb is moving
         faderThumbPrefill.style.height = newPrefillHeight + "px";
@@ -202,7 +202,7 @@
         absoluteValue = newAbsoluteValue;
 
         // call the event handler (callback) and pass it the new value
-        onValueChange(newAbsoluteValue);
+        // onValueChange(newAbsoluteValue);
 
         // keep the thumb prefill latest height
         prefillHeight = newPrefillHeight;

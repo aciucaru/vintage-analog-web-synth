@@ -9,22 +9,22 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 3 / 4;">FILTER</div>
+    <div class="title unselectable" style="grid-column: 3 / 8; grid-row: 1 / 2;">FILTER</div>
 
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
     <div class="cutoff-background unselectable" style="grid-column: 1 / 3; grid-row: 3 / 4;"></div>
 
-    <div style="grid-column: 1 / 3; grid-row: 5 / 6;">
+    <div style="grid-column: 1 / 4; grid-row: 3 / 4;">
         <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
         step={1} decimals={0} onValueChange={filterCallbacks.onCutoffFreqChange}></Knob>
     </div>
 
-    <div style="grid-column: 4 / 5; grid-row: 5 / 6;">
+    <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
         <Knob label={"Reso"} minValue={Settings.minFilterResonance} maxValue={Settings.maxFilterResonance} initialValue={Settings.defaultFilterResonance}
             step={0.01} decimals={0} onValueChange={filterCallbacks.onResonanceChange}></Knob>
     </div>
 
-    <div style="grid-column: 6 / 7; grid-row: 5 / 6;">
+    <div style="grid-column: 7 / 8; grid-row: 3 / 4;">
         <Knob label={"Env amnt"} minValue={Settings.minFilterEnvelopeAmount} maxValue={Settings.maxFilterEnvelopeAmount}
         initialValue={Settings.defaultFilterEnvelopeAmount} step={10} decimals={0} onValueChange={filterCallbacks.onEnvelopeAmountChange}></Knob>
     </div>
@@ -38,12 +38,16 @@
         height: 350px;
 
         display: grid;
-        grid-template-columns: 16px auto 5px auto 5px auto 16px;
+        grid-template-columns: 16px
+                                5px
+                                auto 5px auto 5px auto
+                                5px
+                                16px;
         grid-template-rows: 16px
-                            5px auto
-                            5px auto 5px auto 5px
+                            5px auto 5px auto 5px auto
+                            5px
                             16px;
-        
+
         justify-items: stretch;
         align-items: start;
         justify-content: space-between;
