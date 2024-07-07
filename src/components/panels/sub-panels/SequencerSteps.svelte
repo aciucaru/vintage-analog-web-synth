@@ -381,7 +381,7 @@
         </div>
     {/each}
     
-    <div bind:this={playStopButton} class="play-stop-button" style="grid-column: 3 / 5; grid-row: 59 / 60;">Play</div>
+    <div bind:this={playStopButton} class="play-stop-button unselectable" style="grid-column: 3 / 5; grid-row: 59 / 60;">Play</div>
 </div>
 
 <style>
@@ -626,6 +626,11 @@
         border-radius: 4px;
         border: solid 1px hsl(0, 0%, 50%);
 
+        background: linear-gradient(hsl(230, 20%, 40%) 0%, hsl(228, 23%, 25%) 50%);
+    }
+
+    .play-stop-button:hover
+    {
         background: linear-gradient(hsl(230, 20%, 47%) 0%, hsl(228, 23%, 35%) 50%);
     }
 
