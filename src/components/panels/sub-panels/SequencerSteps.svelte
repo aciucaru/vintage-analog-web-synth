@@ -13,6 +13,8 @@
 
     const logger: Logger<ILogObj> = new Logger({name: "StepSequencer", minLevel: Settings.minLogLevel });
 
+    /* This class describes a single step out of a sequence of steps.
+    ** The step sequencer will contain multiple such steps. */
     class SequencerStep
     {
         public isEnabled: boolean;
@@ -37,6 +39,32 @@
         }
     }
 
+    let playStopButton: HTMLDivElement;
+
+    let isPlaying: boolean = false;
+
+    // is the sequencer enabled?
+    let isSequencerEnabled: boolean = false;
+
+    // the tempo of the sequencer, in BPM
+    let tempo = 120.0;
+
+    // What note is currently last scheduled?
+    let currentNoteIndex = 0;
+
+    // how frequently to call scheduling function (in milisec)
+    let lookAheadTime = 25.0; // 25 miliseconds
+
+    /* How far ahead to schedule audio (seconds).
+    ** This is calculated from lookahead, and overlaps with next interval (in case the timer is late) */
+    let scheduleAheadTime = 0.1; // 0.1 sec = 100 milisec
+
+    // when the next sequencer step is due
+    let nextNoteTime = 0.0;
+
+    // the notes that have been put into the web audio, and may or may not have played yet
+    let notesInQueue: Array<{noteIndex: number, time: number}> = new Array<{noteIndex: number, time: number}>();
+
     /* The main array of on/off steps; this array keeps track of which steps are enabled/disabled and also keeps track
     ** of the currently animated step.
     ** This array is used for the logic of the sequencer and, sometimes, for display purposes. */
@@ -58,29 +86,6 @@
     {
         sequencerSteps[i].dummyDisplayNotes[11] = true;
     }
-
-    let playStopButton: HTMLDivElement;
-
-    let isPlaying: boolean = false;
-
-    // the tempo of the sequencer, in BPM
-    let tempo = 120.0;
-
-    // What note is currently last scheduled?
-    let currentNoteIndex = 0;
-
-    // how frequently to call scheduling function (in milisec)
-    let lookAheadTime = 25.0; // 25 miliseconds
-
-    /* How far ahead to schedule audio (seconds).
-    ** This is calculated from lookahead, and overlaps with next interval (in case the timer is late) */
-    let scheduleAheadTime = 0.1; // 0.1 sec = 100 milisec
-
-    // when the next sequencer step is due
-    let nextNoteTime = 0.0;
-
-    // the notes that have been put into the web audio, and may or may not have played yet. {note, time}
-    let notesInQueue: Array<{noteIndex: number, time: number}> = new Array<{noteIndex: number, time: number}>();
 
     // the Web Worker used to fire timer messages
     // private timingWorker: Worker;
