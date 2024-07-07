@@ -96,11 +96,12 @@
 
     .oscilloscope
     {
+        border-radius: 3px;
         border: solid 1px;
-        border-top-color: hsla(0, 0%, 0%, 0.2);
-        border-bottom-color: hsla(0, 0%, 40%, 0.2);
-        border-left-color: hsla(0, 0%, 10%, 0.2);
-        border-right-color: hsla(0, 0%, 80%, 0.2);
+        border-top-color: hsla(228, 47%, 0%, 0.2);
+        border-bottom-color: hsla(228, 47%, 40%, 0.2);
+        border-left-color: hsla(228, 47%, 10%, 0.2);
+        border-right-color: hsla(228, 47%, 80%, 0.2);
 
         background: linear-gradient(hsl(216, 5%, 10%) 0%, hsl(207, 5%, 5%) 50%);
 
