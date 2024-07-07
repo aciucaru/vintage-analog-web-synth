@@ -432,35 +432,26 @@
         </div>
     {/each}
 
-    <!-- <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 45 / 49;">Drone</div> -->
-
-    <div class="toggle-button-group" style="grid-column: 25 / 26; grid-row: 3 / 8;">
-        <ToggleButton onToggleChange={onSequencerToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
-        <div class="param-label unselectable">On/Off</div>
-    </div>
-    
-    <div style="grid-column: 25 / 26; grid-row: 9 / 19;">
+    <div class="sequencer-settings-container" style="grid-column: 25 / 26; grid-row: 3 / 13;">
+        <div class="toggle-button-group">
+            <ToggleButton onToggleChange={onSequencerToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
+            <div class="param-label unselectable">On/Off</div>
+        </div>
+        
         <NumericScreen label={"Tempo"} minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
             step={1} decimals={0} onValueChange={onTempoChange}></NumericScreen>
-    </div>
-
-
-    <div style="grid-column: 25 / 26; grid-row: 19 / 29;">
+    
         <Knob label={"Multipl"} minValue={Settings.minSequencerTempoMultiplierExponent} maxValue={Settings.maxSequencerTempoMultiplierExponent}
             initialValue={Settings.defaultSequencerTempoMultiplierExponent}
             step={1} decimals={0} onValueChange={onTempoMultiplierExponentChange}></Knob>
-    </div>
-
-    <div style="grid-column: 25 / 26; grid-row: 33 / 43;">
+    
         <NumericScreen label={"Steps"} minValue={Settings.minSequencerSteps} maxValue={Settings.maxSequencerSteps} initialValue={Settings.defaultSequencerSteps}
             step={1} decimals={0} onValueChange={onPlayedStepsCountChange}></NumericScreen>
-    </div>
-
-    <!-- <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 45 / 49;">Drone</div> -->
     
-    <div class="toggle-button-group" style="grid-column: 25 / 26; grid-row: 45 / 49;">
-        <ToggleButton onToggleChange={onDroneToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
-        <div class="param-label unselectable">Drone</div>
+        <div class="toggle-button-group">
+            <ToggleButton onToggleChange={onDroneToggle} buttonWidth={36} buttonHeight={30}></ToggleButton>
+            <div class="param-label unselectable">Drone</div>
+        </div>
     </div>
 </div>
 
@@ -502,6 +493,24 @@
                     url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
     }
 
+    .sequencer-settings-container
+    {
+        box-sizing: border-box;
+
+        display: flex;
+        flex-flow: column nowrap;
+        /* set alignment on main axis */
+        justify-content: flex-start;
+        /* set alingment on cross-axis */
+        align-items: center;
+        /* set space between flex lines */
+        align-content: center;
+
+        margin: 0px;
+        padding: 0px;
+    }
+
+
     .param-label
     {
         margin: 0px;
@@ -523,7 +532,7 @@
         height: auto;
 
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: column nowrap;
         align-items: center;
         justify-content: flex-start;
         align-content: center;
