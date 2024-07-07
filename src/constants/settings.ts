@@ -206,12 +206,26 @@ export class Settings
 
 
     // settings for sequencer ****************************************************************************
-    public static readonly sequencerSteps = 16;
-    public static readonly notesPerStep = 2 * 12 + 1; // 2 octaves
+    public static readonly minSequencerSteps = 0;
+    public static readonly maxSequencerSteps = 16;
+    public static readonly defaultSequencerSteps = 16;
+
+    public static readonly notesPerSequencerStep = 2 * 12 + 1; // 2 octaves
 
     public static readonly minSequencerTempo = 20;
-    public static readonly maxSequencerTempo = 300;
+    public static readonly maxSequencerTempo = 200;
     public static readonly defaultSequencerTempo = 120;
+
+    /* Settings for the multiplier/divider of the tempo;
+    ** The multiplier/divider of the tempo is expressed as exponents, where the base is 2.
+    ** For example:
+    ** - an exponent of 0 means a multiplier of 2^0 = 1 (no multiplication/change of the tempo)
+    ** - an exponent of -1 means a multiplier of 2^(-1) = 0.5, so it's actually a divider and the tempo
+    **   will be half as samll
+    ** - an exponent of 1 means amultiplier of 2^1 = 2, so the tempo is doubled */ 
+    public static readonly minSequencerTempoMultiplierExponent = -3;
+    public static readonly maxSequencerTempoMultiplierExponent = 3;
+    public static readonly defaultSequencerTempoMultiplierExponent = 0;
 
     public static readonly minSequencerOctaves = 0;
     public static readonly maxSequencerOctaves = 2;

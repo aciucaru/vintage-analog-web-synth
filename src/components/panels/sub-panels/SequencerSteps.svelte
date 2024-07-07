@@ -9,6 +9,7 @@
 
     import Knob from "../../Knob.svelte";
     import NumericScreen from "../../NumericScreen.svelte";
+    import ToggleButton from "../../toggle/ToggleButton.svelte";
 
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
@@ -37,7 +38,7 @@
             this.semitonesOffset = 0;
             this.showOnAnimation = false;
 
-            this.dummyDisplayNotes = new Array<boolean>(Settings.notesPerStep);
+            this.dummyDisplayNotes = new Array<boolean>(Settings.notesPerSequencerStep);
         }
     }
 
@@ -49,11 +50,16 @@
     // the tempo of the sequencer, in BPM
     let tempo = 120.0;
 
-    // the multiplier/divider of the tempo
-    let tempoMultiplier = 1.0;
+    /* the multiplier/divider of the tempo, expressed as an exponent, where the base is 2
+    ** For example:
+    ** - an exponent of 0 means a multiplier of 2^0 = 1 (no multiplication/change of the tempo)
+    ** - an exponent of -1 means a multiplier of 2^(-1) = 0.5, so it's actually a divider and the tempo
+    **   will be half as samll
+    ** - an exponent of 1 means amultiplier of 2^1 = 2, so the tempo is doubled */ 
+    let tempoMultiplierExponent = 0.0;
 
     // how many steps should be played out of the total number of possible steps
-    let playedSteps = Settings.sequencerSteps;
+    let playedStepsCount = Settings.maxSequencerSteps;
 
     // should the sequencer play without a note being pressed? 
     let latch = false;
@@ -77,7 +83,7 @@
     /* The main array of on/off steps; this array keeps track of which steps are enabled/disabled and also keeps track
     ** of the currently animated step.
     ** This array is used for the logic of the sequencer and, sometimes, for display purposes. */
-    const sequencerSteps: Array<SequencerStep> = new Array<SequencerStep>(Settings.sequencerSteps);
+    const sequencerSteps: Array<SequencerStep> = new Array<SequencerStep>(Settings.maxSequencerSteps);
 
     // initialize the sequencer steps array
     for (let i = 0; i < sequencerSteps.length; i++)
@@ -164,7 +170,7 @@
         if (0 <= stepIndex && stepIndex < sequencerSteps.length)
             sequencerSteps[stepIndex].showOnAnimation = true;
         else
-            sequencerSteps[stepIndex % Settings.sequencerSteps].showOnAnimation = true;
+            sequencerSteps[stepIndex % Settings.maxSequencerSteps].showOnAnimation = true;
     }
 
     function updateStep(stepIndex: number): void
@@ -178,7 +184,7 @@
         logger.debug(`nextNote()`);
 
         // advance current note and time by a 16th note
-        const secondsPerBeat = 60.0 / tempo;
+        const secondsPerBeat = 60.0 / (tempo * 2**tempoMultiplierExponent);
 
         // Add beat length to last beat time
         nextNoteTime += secondsPerBeat / 4.0;
@@ -198,7 +204,8 @@
 
         updateStep(currentStepIndex);
 
-        const stepDuration = (60.0 / tempo) / 4.0;
+        // const stepDuration = (60.0 / (tempo * 2**tempoMultiplierExponent)) / 4.0;
+        const stepDuration = (60.0 / (tempo * 2**tempoMultiplierExponent));
     
         const octavesOffset = sequencerSteps[currentNoteIndex].octavesOffset;
         const semitonesOffset = sequencerSteps[currentNoteIndex].semitonesOffset;
@@ -242,15 +249,44 @@
     }
 
     // callbacks for UI elements (knobs, faders, etc.) ******************************************************
+    function onSequencerToggle(isToggled: boolean): void
+    {
+        logger.debug(`onSequencerToggle(${isToggled})`);
 
-    function onTempoChange(tempo: number): void
+        isSequencerEnabled = isToggled;
+    }
+
+    function onTempoChange(newTempo: number): void
     {
         logger.debug(`onTempoChange(${tempo})`);
+
+        tempo = newTempo;
+    }
+
+    function onTempoMultiplierExponentChange(newExponent: number): void
+    {
+        logger.debug(`onTempoMultiplierExponentChange(${newExponent})`);
+
+        tempoMultiplierExponent = newExponent;
+    }
+
+    function onPlayedStepsCountChange(newPlayedStepsCount: number): void
+    {
+        logger.debug(`onStepsCountChange(${newPlayedStepsCount})`);
+
+        playedStepsCount = newPlayedStepsCount;
     }
 
     function onPlayStopClick(evt: Event): void
     {
         logger.debug("onPlayStop");
+
+        play();
+    }
+
+    function onDroneToggle(isToggled: boolean): void
+    {
+        logger.debug(`onDroneToggle(${isToggled})`);
 
         play();
     }
@@ -395,6 +431,13 @@
             on:click={() => stepToggle(i)}></div>
         </div>
     {/each}
+
+    <!-- <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 45 / 49;">Drone</div> -->
+
+    <div class="waveform-button-icon-group" style="grid-column: 25 / 26; grid-row: 5 / 9;">
+        <ToggleButton onToggleChange={onSequencerToggle}></ToggleButton>
+        <div class="unselectable">On/Off</div>
+    </div>
     
     <div class="lcd-screen" style="grid-column: 25 / 26; grid-row: 9 / 19;">
         <NumericScreen minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
@@ -402,11 +445,22 @@
     </div>
 
     <div style="grid-column: 25 / 26; grid-row: 21 / 31;">
-        <Knob label={"Clock"} minValue={Settings.minSequencerTempo} maxValue={Settings.maxSequencerTempo} initialValue={Settings.defaultSequencerTempo}
-            step={1} decimals={0} onValueChange={onTempoChange}></Knob>
+        <Knob label={"Multipl"} minValue={Settings.minSequencerTempoMultiplierExponent} maxValue={Settings.maxSequencerTempoMultiplierExponent}
+            initialValue={Settings.defaultSequencerTempoMultiplierExponent}
+            step={1} decimals={0} onValueChange={onTempoMultiplierExponentChange}></Knob>
     </div>
 
-    <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 3 / 7;">Latch</div>
+    <div class="lcd-screen" style="grid-column: 25 / 26; grid-row: 33 / 43;">
+        <NumericScreen minValue={Settings.minSequencerSteps} maxValue={Settings.maxSequencerSteps} initialValue={Settings.defaultSequencerSteps}
+            step={1} decimals={0} onValueChange={onPlayedStepsCountChange}></NumericScreen>
+    </div>
+
+    <!-- <div on:click={onPlayStopClick} class="play-stop-button unselectable" style="grid-column: 25 / 26; grid-row: 45 / 49;">Drone</div> -->
+    
+    <div class="waveform-button-icon-group" style="grid-column: 25 / 26; grid-row: 45 / 49;">
+        <ToggleButton onToggleChange={onDroneToggle}></ToggleButton>
+        <div class="unselectable">Drone</div>
+    </div>
 </div>
 
 <style>
