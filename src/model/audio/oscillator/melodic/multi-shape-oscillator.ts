@@ -170,6 +170,44 @@ export class MultiShapeOscillator extends BasePulseOscillator
         return isChangeSuccessfull;
     }
 
+    public override setBeatOctavesOffset(beatOctavesOffset: number): boolean
+    {
+        // try to set the new value
+        const isChangeSuccessfull = this.note.setBeatOctavesOffset(beatOctavesOffset);
+
+        if (isChangeSuccessfull)
+        {
+            MultiShapeOscillator.logger.debug(`setBeatOctavesOffset(${beatOctavesOffset})`);
+
+            this.triangleOscillatorNode.setBeatOctavesOffset(beatOctavesOffset);
+            this.sawOscillatorNode.setBeatOctavesOffset(beatOctavesOffset);
+            this.pulseOscillatorNode.setBeatOctavesOffset(beatOctavesOffset);
+        }
+        else
+            MultiShapeOscillator.logger.warn(`setBeatOctavesOffset(${beatOctavesOffset}): value outside bounds`);
+
+        return isChangeSuccessfull;
+    }
+
+    public override setBeatSemitonesOffset(beatSemitonesOffset: number): boolean
+    {
+        // try to set the new value
+        const isChangeSuccessfull = this.note.setBeatSemitonesOffset(beatSemitonesOffset);
+
+        if (isChangeSuccessfull)
+        {
+            MultiShapeOscillator.logger.debug(`setBeatSemitonesOffset(${beatSemitonesOffset})`);
+
+            this.triangleOscillatorNode.setBeatSemitonesOffset(beatSemitonesOffset);
+            this.sawOscillatorNode.setBeatSemitonesOffset(beatSemitonesOffset);
+            this.pulseOscillatorNode.setBeatSemitonesOffset(beatSemitonesOffset);
+        }
+        else
+            MultiShapeOscillator.logger.warn(`setBeatSemitonesOffset(${beatSemitonesOffset}): value outside bounds`);
+
+        return isChangeSuccessfull;
+    }
+
     public override setUnisonDetune(centsDetune: number): boolean
     {
         if (Settings.minOscUnisonCentsDetune <= centsDetune && centsDetune <= Settings.maxOscUnisonCentsDetune)

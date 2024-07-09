@@ -133,6 +133,48 @@ export class SubOscillator extends BaseMelodicOscillator
         return isChangeSuccessfull;
     }
 
+    public override setBeatOctavesOffset(beatOctavesOffset: number): boolean
+    {
+        // try to set the new value
+        const isChangeSuccessfull = this.note.setBeatOctavesOffset(beatOctavesOffset);
+
+        if (isChangeSuccessfull)
+        {
+            SubOscillator.logger.debug(`setBeatOctavesOffset(${beatOctavesOffset})`);
+
+            // set the frequency
+            this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
+        }
+        else
+            SubOscillator.logger.warn(`setBeatOctavesOffset(${beatOctavesOffset}): value outside bounds`);
+
+        return isChangeSuccessfull;
+    }
+
+    public override setBeatSemitonesOffset(beatSemitonesOffset: number): boolean
+    {
+        // try to set the new value
+        const isChangeSuccessfull = this.note.setBeatSemitonesOffset(beatSemitonesOffset);
+
+        if (isChangeSuccessfull)
+        {
+            SubOscillator.logger.debug(`setBeatSemitonesOffset(${beatSemitonesOffset})`);
+
+            // set the frequency
+            this.subOsc.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
+        }
+        else
+            SubOscillator.logger.warn(`setBeatSemitonesOffset(${beatSemitonesOffset}): value outside bounds`);
+
+        return isChangeSuccessfull;
+    }
+
     public setOutputGain(gain: number): boolean
     {
         if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)

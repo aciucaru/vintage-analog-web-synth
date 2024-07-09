@@ -30,4 +30,9 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
     public abstract setSemitonesOffset(semitonesOffset: number): boolean;
 
     public abstract setCentsOffset(centsOffset: number): boolean;
+
+    // offsets for sequencer steps (beats)
+    public abstract setBeatOctavesOffset(octavesBeatOffset: number): boolean;
+
+    public abstract setBeatSemitonesOffset(semitonesBeatOffset: number): boolean;
 }

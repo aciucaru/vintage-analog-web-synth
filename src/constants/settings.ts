@@ -28,12 +28,25 @@ export class Settings
 
     public static readonly minOscOctavesOffset = -2;
     public static readonly maxOscOctavesOffset = 2;
+    public static readonly defaultOscOctavesOffset = 0;
+
+    // limits for sequencer beats (steps)
+    public static readonly minOscBeatOctavesOffset = -1; 
+    public static readonly maxOscBeatOctavesOffset = 1;
+    public static readonly defaultOscBeatOctavesOffset = 0;
 
     public static readonly minOscSemitonesOffset = -12; // 12 semitones = 1 octave
     public static readonly maxOscSemitonesOffset = 12;
+    public static readonly defaultOscSemitonesOffset = 0;
+
+    // limits for sequencer beats (steps)
+    public static readonly minOscBeatSemitonesOffset = -12; // 12 semitones = 1 octave
+    public static readonly maxOscBeatSemitonesOffset = 13;
+    public static readonly defaultOscBeatSemitonesOffset = 0;
 
     public static readonly minOscCentsOffset = -100; // 100 cents = 1 semitone
     public static readonly maxOscCentsOffset = 100;
+    public static readonly defaultOscCentsOffset = 0;
 
     public static readonly oscUnisonCount = 7; // the number of unison oscillators (including the main one)
 
@@ -211,6 +224,9 @@ export class Settings
     public static readonly defaultSequencerSteps = 16;
 
     public static readonly notesPerSequencerStep = 2 * 12 + 1; // 2 octaves
+    /* the note (semitone), between 0 and 'notesPerSequencerStep', which is considered to represent zero offset
+    ** (e.g the middle note). Above this note, the semitone offset is positive and, below this note, the offset is negative. */
+    public static readonly middleSemitone = 12;
 
     public static readonly minSequencerTempo = 20;
     public static readonly maxSequencerTempo = 200;

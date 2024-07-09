@@ -186,6 +186,48 @@ export class PulseOscillator extends BasePulseOscillator
         return isChangeSuccessfull;
     }
 
+    public override setBeatOctavesOffset(beatOctavesOffset: number): boolean
+    {
+        // try to set the new value
+        const isChangeSuccessfull = this.note.setBeatOctavesOffset(beatOctavesOffset);
+
+        if (isChangeSuccessfull)
+        {
+            PulseOscillator.logger.debug(`setBeatOctavesOffset(${beatOctavesOffset})`);
+
+            // set the frequency
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
+        }
+        else
+            PulseOscillator.logger.warn(`setBeatOctavesOffset(${beatOctavesOffset}): value outside bounds`);
+
+        return isChangeSuccessfull;
+    }
+
+    public override setBeatSemitonesOffset(beatSemitonesOffset: number): boolean
+    {
+        // try to set the new value
+        const isChangeSuccessfull = this.note.setBeatSemitonesOffset(beatSemitonesOffset);
+
+        if (isChangeSuccessfull)
+        {
+            PulseOscillator.logger.debug(`setBeatSemitonesOffset(${beatSemitonesOffset})`);
+
+            // set the frequency
+            this.sawOscillatorNode.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
+
+            // notify the modulation manager that the main value has changed
+            this.freqParamManager.setParameterCurrentValue(this.note.getFreq());
+        }
+        else
+            PulseOscillator.logger.warn(`setBeatSemitonesOffset(${beatSemitonesOffset}): value outside bounds`);
+
+        return isChangeSuccessfull;
+    }
+
     public override setUnisonDetune(centsDetune: number): boolean
     {
         if (Settings.minOscUnisonCentsDetune <= centsDetune && centsDetune <= Settings.maxOscUnisonCentsDetune)

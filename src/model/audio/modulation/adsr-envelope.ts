@@ -56,7 +56,8 @@ export class AdsrEnvelope extends BaseAudioNode
     ** this method is supposed to return the main node of the class */
     public override mainNode(): AudioNode { return this.adsrGainNode; }
 
-    public startAndStop(duration: number): void
+    // this method is for sequencer beats (steps)
+    public startBeat(duration: number): void
     {
         let timeDuration = 0;
 

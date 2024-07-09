@@ -24,8 +24,8 @@ export class Voice
     private audioContext: AudioContext;
 
     // the oscillators:
-    private unisonOscillator1: MultiShapeOscillator;
-    private unisonOscillator2: MultiShapeOscillator;
+    private multiShapeOscillator1: MultiShapeOscillator;
+    private multiShapeOscillator2: MultiShapeOscillator;
     private subOscillator: SubOscillator;
     private noiseOscillator: MultiNoiseOscillator;
 
@@ -79,13 +79,13 @@ export class Voice
                                                                         Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
 
         // instantiate the nodes:
-        this.unisonOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
-        this.unisonOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain, lfoArray);
+        this.multiShapeOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
+        this.multiShapeOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain, lfoArray);
         this.subOscillator = new SubOscillator(this.audioContext, Settings.minOscGain, lfoArray);
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
         // instantiate the mixer, filter and ADSR envelope
-        this.oscillatorMixer = new OscMixer(this.audioContext, this.unisonOscillator1, this.unisonOscillator2, this.subOscillator, this.noiseOscillator);
+        this.oscillatorMixer = new OscMixer(this.audioContext, this.multiShapeOscillator1, this.multiShapeOscillator2, this.subOscillator, this.noiseOscillator);
         this.filterNode = new OscFilter(this.audioContext,  this.filterCutoffFreqModulationManager, this.filterResonanceModulationManager);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
@@ -97,8 +97,8 @@ export class Voice
         this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
         // connect mixer with the filter (the mixer is already connected with the oscillators)
-        this.unisonOscillator1.outputNode().connect(this.filteredOscillatorsGainNode);
-        this.unisonOscillator2.outputNode().connect(this.filteredOscillatorsGainNode);
+        this.multiShapeOscillator1.outputNode().connect(this.filteredOscillatorsGainNode);
+        this.multiShapeOscillator2.outputNode().connect(this.filteredOscillatorsGainNode);
         this.noiseOscillator.outputNode().connect(this.filteredOscillatorsGainNode);
 
         // connect the merged result of the oscillators that should be filtered, to the filter itself
@@ -120,34 +120,34 @@ export class Voice
         Voice.logger.debug(`playNote(): playing: octaves: ${octaves} semitones: ${semitones}`);
 
         // first, set the internal note (as octaves and semitones) for all oscillators
-        this.unisonOscillator1.setNote(octaves, semitones);
-        this.unisonOscillator2.setNote(octaves, semitones);
+        this.multiShapeOscillator1.setNote(octaves, semitones);
+        this.multiShapeOscillator2.setNote(octaves, semitones);
         this.subOscillator.setNote(octaves, semitones);
 
         // then trigger the ADSR envelope for the voice
-        this.voiceAdsrEnvelope.startAndStop(duration);
+        this.voiceAdsrEnvelope.startBeat(duration);
         // and then trigger the ADSR envelopr for the filter as well
-        this.filterNode.getAdsrEnvelope().startAndStop(duration);
+        this.filterNode.getAdsrEnvelope().startBeat(duration);
     }
 
-    public playNoteWithOffset(octavesOffset: number, semitonesOffset: number, duration: number): void
+    public playSequencerStep(beatOctavesOffset: number, beatSemitonesOffset: number, stepDuration: number): void
     {
-        Voice.logger.debug(`playNoteWithOffset(octaves: ${octavesOffset}, semitones: ${semitonesOffset})`);
+        Voice.logger.debug(`playNoteWithOffset(octaves: ${beatOctavesOffset}, semitones: ${beatSemitonesOffset})`);
 
         // first, set the internal note offsets (as octaves and semitones) for all oscillators
-        this.unisonOscillator1.setOctavesOffset(octavesOffset);
-        this.unisonOscillator1.setSemitonesOffset(semitonesOffset);
+        this.multiShapeOscillator1.setBeatOctavesOffset(beatOctavesOffset);
+        this.multiShapeOscillator1.setBeatSemitonesOffset(beatSemitonesOffset);
 
-        this.unisonOscillator2.setOctavesOffset(octavesOffset);
-        this.unisonOscillator2.setSemitonesOffset(semitonesOffset);
+        this.multiShapeOscillator2.setBeatOctavesOffset(beatOctavesOffset);
+        this.multiShapeOscillator2.setBeatSemitonesOffset(beatSemitonesOffset);
 
-        this.subOscillator.setOctavesOffset(octavesOffset);
-        this.subOscillator.setSemitonesOffset(semitonesOffset);
+        this.subOscillator.setBeatOctavesOffset(beatOctavesOffset);
+        this.subOscillator.setBeatSemitonesOffset(beatSemitonesOffset);
 
         // then trigger the ADSR envelope for the voice
-        this.voiceAdsrEnvelope.startAndStop(duration);
+        this.voiceAdsrEnvelope.startBeat(stepDuration);
         // and then trigger the ADSR envelopr for the filter as well
-        this.filterNode.getAdsrEnvelope().startAndStop(duration);
+        this.filterNode.getAdsrEnvelope().startBeat(stepDuration);
     }
 
     public noteOn(octaves: number, semitones: number): void
@@ -155,8 +155,8 @@ export class Voice
         Voice.logger.debug(`noteOn(octaves = ${octaves}, semitones = ${semitones})`);
 
         // first, set the internal note (as octaves and semitones) for all melodic oscillators
-        this.unisonOscillator1.setNote(octaves, semitones);
-        this.unisonOscillator2.setNote(octaves, semitones);
+        this.multiShapeOscillator1.setNote(octaves, semitones);
+        this.multiShapeOscillator2.setNote(octaves, semitones);
         this.subOscillator.setNote(octaves, semitones);
 
         // then trigger the ADSR envelope for the voice
@@ -192,9 +192,9 @@ export class Voice
 
     public outputNode(): GainNode { return this.outputGainNode; }
 
-    public getMultiShapeOscillator1(): MultiShapeOscillator { return this.unisonOscillator1; }
+    public getMultiShapeOscillator1(): MultiShapeOscillator { return this.multiShapeOscillator1; }
 
-    public getMultiShapeOscillator2(): MultiShapeOscillator { return this.unisonOscillator2; }
+    public getMultiShapeOscillator2(): MultiShapeOscillator { return this.multiShapeOscillator2; }
 
     public getSubOscillator(): SubOscillator { return this.subOscillator; }
 

@@ -14,10 +14,14 @@ export class Note
     private octaves: number = 4;
     private semitones: number = 0; // note C, the first note of an octave
 
-    // offset parameters of a note:
+    // offset parameters for oscillators:
     private octavesOffset: number = 0;
     private semitonesOffset: number = 0;
     private centsOffset: number = 0;
+
+    // offset parameters for sequencer beats (steps)
+    private octavesBeatOffset: number = 0;
+    private semitonesBeatOffset: number = 0;
 
     // the final frequency of the note
     private freq: number = 440.0; // default value corresponds to 4 'octaves' and 9 'semitones'
@@ -66,15 +70,15 @@ export class Note
     {
         Note.logger.debug(`setNote(octaves = ${octaves}, semitones = ${semitones})`);
 
-        let result = true;
+        const result1 = this.setOctaves(octaves);
+        if (!result1)
+            Note.logger.warn(`setNote(): octaves outside bounds`);
 
-        result = this.setOctaves(octaves);
-        result = this.setSemitones(semitones);
+        const result2 = this.setSemitones(semitones);
+        if (!result2)
+            Note.logger.warn(`setNote(): semitones outside bounds`);
 
-        if (!result)
-            Note.logger.warn(`setNote(): octaves or semitones outside bounds`);
-
-        return result;
+        return result1 && result2;
     }
 
     // sets octaves only, rarely used
@@ -202,6 +206,57 @@ export class Note
         }
     }
 
+    // offset method for sequencer steps (beats) octave offset
+    public setBeatOctavesOffset(beatOctavesOffset: number): boolean
+    {
+        if (Settings.minOscBeatOctavesOffset <= beatOctavesOffset && beatOctavesOffset <= Settings.maxOscBeatOctavesOffset)
+        {
+            Note.logger.debug(`setBeatOctavesOffset(${beatOctavesOffset})`);
+
+            // set the new value
+            this.octavesBeatOffset = beatOctavesOffset;
+
+            // a note value has changed, so recompute the internal frequency
+            this.recomputeFreq();
+
+            // the change was succesfull
+            return true;
+        }
+        else
+        {
+            Note.logger.warn(`setBeatOctavesOffset(): could not set octaves offset to ${beatOctavesOffset}` +
+                            ` because it's outside bounds`);
+
+            // the change was unsuccesfull
+            return false;
+        }
+    }
+
+    public setBeatSemitonesOffset(beatSemitonesOffset: number): boolean
+    {
+        if (Settings.minOscBeatSemitonesOffset <= beatSemitonesOffset && beatSemitonesOffset <= Settings.maxOscBeatSemitonesOffset)
+        {
+            Note.logger.debug(`setBeatSemitonesOffset(${beatSemitonesOffset})`);
+
+            // set the new value
+            this.semitonesBeatOffset = beatSemitonesOffset;
+
+            // a note value has changed, so recompute the internal frequency
+            this.recomputeFreq();
+
+            // the change was succesfull
+            return true;
+        }
+        else
+        {
+            Note.logger.warn(`setBeatSemitonesOffset(): could not set semitones offset to ${beatSemitonesOffset}` +
+                            ` because it's outside bounds`);
+
+            // the change was unsuccesfull
+            return false;
+        }
+    }
+
     public setFromMidiNoteNumber(midiNoteNumber: number): boolean
     {
         if (Settings.minMidiNote <= midiNoteNumber && midiNoteNumber <= Settings.maxMidiNote)
@@ -239,8 +294,8 @@ export class Note
     private recomputeFreq(): void
     {
         // compute the number of offset semitones relative to A4 note
-        const semitonesOffset: number = (this.octaves + this.octavesOffset - Constants.a4Octaves) * 12 +
-                                        this.semitones + this.semitonesOffset - Constants.a4Semitones +
+        const semitonesOffset: number = (this.octaves + this.octavesOffset + this.octavesBeatOffset - Constants.a4Octaves) * 12 +
+                                        this.semitones + this.semitonesOffset + this.semitonesBeatOffset - Constants.a4Semitones +
                                         this.centsOffset / 100.0;
 
         // recompute frequency based on semitones offset from A4 note

@@ -139,19 +139,25 @@
 
         // determine the absolute octaves offset (from 0 to 2)
         // and the absolute semitones offset (from 0 to 11)
-        const noteAbsoluteOctavesOffset = Math.floor(notePosition / 12);
-        const noteAbsoluteSemitonesOffset = notePosition - noteAbsoluteOctavesOffset * 12;
-
-        logger.debug(`stepNoteToggle(): abs octaves offset = ${noteAbsoluteOctavesOffset}, abs semitones offset = ${noteAbsoluteSemitonesOffset}`);
+        const absoluteSemitonesOffset = notePosition - Settings.middleSemitone;
 
         // determine the absolute octaves offset (from -1 to 1)
         // and the absolute semitones offset (from -11 to 11)
-        const relativeOctavesOffset = noteAbsoluteOctavesOffset - 1;
-        let relativeSemitonesOffset = noteAbsoluteSemitonesOffset;
-        // if (relativeOctavesOffset >= 0)
-        //     relativeSemitonesOffset = noteAbsoluteSemitonesOffset;
-        // else
-        //     relativeSemitonesOffset = 12 - noteAbsoluteSemitonesOffset;
+        let relativeOctavesOffset = 0;
+        let relativeSemitonesOffset = 0;
+
+        if (absoluteSemitonesOffset >= 0)
+        {
+            relativeOctavesOffset = 0;
+            relativeSemitonesOffset = absoluteSemitonesOffset;
+        }
+        else
+        {
+            relativeOctavesOffset = -1;
+            relativeSemitonesOffset = Settings.middleSemitone + absoluteSemitonesOffset;
+        }
+
+        logger.debug(`stepNoteToggle(): abs semitones offset = ${absoluteSemitonesOffset}, rel semitones offset = ${relativeSemitonesOffset}`);
 
         sequencerSteps[stepIndex].octavesOffset = relativeOctavesOffset;
         sequencerSteps[stepIndex].semitonesOffset = relativeSemitonesOffset;
@@ -187,7 +193,8 @@
         const secondsPerBeat = 60.0 / (tempo * 2**tempoMultiplierExponent);
 
         // Add beat length to last beat time
-        nextNoteTime += secondsPerBeat / 4.0;
+        // nextNoteTime += secondsPerBeat / 4.0;
+        nextNoteTime += secondsPerBeat;
 
         // Advance the beat number, and (if necessar) wrap to zero
         currentNoteIndex++;
@@ -210,7 +217,7 @@
         const octavesOffset = sequencerSteps[currentNoteIndex].octavesOffset;
         const semitonesOffset = sequencerSteps[currentNoteIndex].semitonesOffset;
 
-        voice.playNoteWithOffset(octavesOffset, semitonesOffset, stepDuration);
+        voice.playSequencerStep(octavesOffset, semitonesOffset, stepDuration);
     }
 
     function scheduler(): void
