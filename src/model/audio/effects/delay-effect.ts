@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { BaseAudioNode } from "../base-audio-node";
+import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -10,7 +10,7 @@ export class DelayEffect
     ** must be supplied from outside the class */
     private audioContext: AudioContext;
 
-    private inputNode: BaseAudioNode;
+    private inputNode: NoInputBaseAudioNode;
 
     private delayNode: DelayNode;
     private delayFeedabackNode: GainNode;
@@ -18,7 +18,7 @@ export class DelayEffect
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "DelayEffect", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, inputNode: BaseAudioNode)
+    constructor(audioContext: AudioContext, inputNode: NoInputBaseAudioNode)
     {
         this.audioContext = audioContext;
 

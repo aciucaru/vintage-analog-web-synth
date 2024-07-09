@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { BaseAudioNode } from "../base-audio-node";
+import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
 import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
 import { UnipolarLfo } from "./unipolar-lfo";
 
@@ -7,7 +7,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class LfoManager extends BaseAudioNode
+export class LfoManager extends NoInputBaseAudioNode
 {
     /* The array of managed shareable LFOs.
     ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,

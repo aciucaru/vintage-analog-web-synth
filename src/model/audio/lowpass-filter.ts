@@ -1,13 +1,13 @@
 import { Settings } from "../../constants/settings";
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
-import { BaseAudioNode } from "./base-audio-node";
+import { NoInputBaseAudioNode } from "./no-input-base-audio-node";
 import { ModulationManager } from "./modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class OscFilter extends BaseAudioNode
+export class OscFilter extends NoInputBaseAudioNode
 {
     // the main node: the biquad filter
     protected filterNode: BiquadFilterNode;

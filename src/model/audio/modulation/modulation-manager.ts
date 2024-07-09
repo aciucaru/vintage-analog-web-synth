@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { BaseAudioNode } from "../base-audio-node";
+import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
 import { UnipolarLfo } from "./unipolar-lfo";
 import { LfoManager } from "./lfo-manager";
 
@@ -7,7 +7,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class ModulationManager extends BaseAudioNode
+export class ModulationManager extends NoInputBaseAudioNode
 {
     // modulator node
     private lfoManager: LfoManager;

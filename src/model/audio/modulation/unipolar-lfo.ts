@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { BaseAudioNode } from "../base-audio-node";
+import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -23,7 +23,7 @@ export enum LfoShape
 ** The class that represents an LFO that is actually connected to a synth parameter is called ShareableUnipolarOscillator,
 ** which can be turned on or off through the LfoManager class, which manages multiple LFOs that can modulate the same
 ** parameter (these LFOs can be enabled or disabled/muted at any time). */
-export class UnipolarLfo extends BaseAudioNode
+export class UnipolarLfo extends NoInputBaseAudioNode
 {
     // the LFO oscillator (oscillates between -1 and 1)
     private lfoOscillator: OscillatorNode;

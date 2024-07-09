@@ -3,10 +3,11 @@ import { Settings } from "../../constants/settings";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-/* represents a class that has a main node (ADSR gain, Biquad filter, etc.) that is both
+/* Represents a class that has a main node (ADSR gain, Biquad filter, etc.) that is both
 ** an input and an output in the audio graph;
-** this class contains a method that returs that main node, the 'mainNode()' method; */
-export abstract class BaseAudioNode
+** This class contains a method that returs that main node, the 'mainNode()' method;
+** Because this class does not require an audio input, it's called 'nullary' (zero/null inputs). */
+export abstract class NoInputBaseAudioNode
 {
     protected audioContext: AudioContext;
 
@@ -18,12 +19,12 @@ export abstract class BaseAudioNode
             this.audioContext = audioContext;
         else
         {
-            BaseAudioNode.baseAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            NoInputBaseAudioNode.baseAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
             this.audioContext = new AudioContext();
         }
 
         if (audioContext === null)
-            BaseAudioNode.baseAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            NoInputBaseAudioNode.baseAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
     }
 
     /* this is the method that returns the main audio specific to the particular class (ADSR envelope, filter, etc.);
