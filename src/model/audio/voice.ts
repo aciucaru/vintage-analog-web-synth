@@ -175,6 +175,20 @@ export class Voice
         this.filterNode.getAdsrEnvelope().stop();
     }
 
+    public resetBeatOffsets(): void
+    {
+        Voice.logger.debug(`resetBeatOffsets()`);
+
+        this.multiShapeOscillator1.setBeatOctavesOffset(0);
+        this.multiShapeOscillator1.setBeatSemitonesOffset(0);
+
+        this.multiShapeOscillator2.setBeatOctavesOffset(0);
+        this.multiShapeOscillator2.setBeatSemitonesOffset(0);
+
+        this.subOscillator.setBeatOctavesOffset(0);
+        this.subOscillator.setBeatSemitonesOffset(0);
+    }
+
     public setMainGain(gain: number): void
     {
         if (Settings.minVoiceGain <= gain && gain <= Settings.maxVoiceGain)

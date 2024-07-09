@@ -295,6 +295,11 @@
     {
         logger.debug(`onDroneToggle(${isToggled})`);
 
+        if (!isToggled) // if stop sequencer auto play
+        {
+            voice.resetBeatOffsets();
+        }
+
         play();
     }
     
