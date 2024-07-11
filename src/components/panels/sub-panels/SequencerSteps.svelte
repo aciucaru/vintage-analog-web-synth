@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { Note } from "../../../model/audio/note";
-    import { voice } from "../../../model/audio/voice";
+    import { monoSynth } from "../../../model/audio/synth";
 
     // import workerUrl from "$lib/worker?worker&url";
     import ViteWorker from "$lib/sequencer-worker?worker";
@@ -217,7 +216,7 @@
         const octavesOffset = sequencerSteps[currentNoteIndex].octavesOffset;
         const semitonesOffset = sequencerSteps[currentNoteIndex].semitonesOffset;
 
-        voice.playSequencerStep(octavesOffset, semitonesOffset, stepDuration);
+        monoSynth.getVoice().playSequencerStep(octavesOffset, semitonesOffset, stepDuration);
     }
 
     function scheduler(): void
@@ -226,7 +225,7 @@
 
         // while there are notes that will need to play before the next interval, 
         // schedule them and advance the pointer
-        while (nextNoteTime < voice.getAudioContext().currentTime + scheduleAheadTime)
+        while (nextNoteTime < monoSynth.getVoice().getAudioContext().currentTime + scheduleAheadTime)
         {
             scheduleNote(currentNoteIndex, nextNoteTime);
             nextNote();
@@ -243,7 +242,7 @@
             logger.debug("play(): is playing");
 
             currentNoteIndex = 0;
-            nextNoteTime = voice.getAudioContext().currentTime;
+            nextNoteTime = monoSynth.getVoice().getAudioContext().currentTime;
 
             viteWorker.postMessage("start");
         }
@@ -297,7 +296,7 @@
 
         if (!isToggled) // if stop sequencer auto play
         {
-            voice.resetBeatOffsets();
+            monoSynth.getVoice().resetBeatOffsets();
         }
 
         play();

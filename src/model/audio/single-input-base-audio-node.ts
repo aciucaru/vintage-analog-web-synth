@@ -5,13 +5,12 @@ import type { ILogObj } from "tslog";
 
 /* Represents a class that has a main node (ADSR gain, Biquad filter, etc.) that is both
 ** an input and an output in the audio graph;
-** This class contains a method that returs that main node, the 'mainNode()' method;
-** Because this class does not require an audio input, it's called 'nullary' (zero/null inputs). */
+** This class contains a method that returs that main node, the 'mainNode()' method; */
 export abstract class SingleInputBaseAudioNode
 {
     protected audioContext: AudioContext;
 
-    private static readonly baseAudioNodelogger: Logger<ILogObj> = new Logger({name: "SingleInputBaseAudioNode", minLevel: Settings.minLogLevel });
+    private static readonly singleInputAudioNodelogger: Logger<ILogObj> = new Logger({name: "SingleInputBaseAudioNode", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext)
     {
@@ -19,16 +18,19 @@ export abstract class SingleInputBaseAudioNode
             this.audioContext = audioContext;
         else
         {
-            SingleInputBaseAudioNode.baseAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            SingleInputBaseAudioNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
             this.audioContext = new AudioContext();
         }
 
         if (audioContext === null)
-            SingleInputBaseAudioNode.baseAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            SingleInputBaseAudioNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
     }
 
-    /* this is the method that returns the main audio specific to the particular class (ADSR envelope, filter, etc.);
+    // this method connect the input audio node to this audio node
+    public abstract connectInput(inputNode: AudioNode): void; 
+
+    /* this is the method that returns the output node;
     ** this method should be overriden by any extending class and it must return a node that extends 'AudioNode',
     ** such as 'GainNode' or 'BiquadFilterNode'; */
-    public abstract mainNode(): AudioNode;
+    public abstract outputNode(): AudioNode;
 }

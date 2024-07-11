@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { voice } from "../../../model/audio/voice";
+    import { monoSynth } from "../../../model/audio/synth";
 
     import Knob from "../../Knob.svelte";
     import ToggleButton from "../../toggle/ToggleButton.svelte";
@@ -14,46 +14,46 @@
     function onOscillator1FreqLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator1FreqLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator1FreqLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator1FreqLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator1FreqLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator1FreqLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator1().getFreqParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator1().getFreqParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -61,46 +61,46 @@
     function onOscillator1AmpLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator1AmpLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator1AmpLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator1AmpLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator1AmpLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator1AmpLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator1().getAmpParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator1().getAmpParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -108,46 +108,46 @@
     function onOscillator1PulseWidthLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator1PulseWidthLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator1PulseWidthLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator1PulseWidthLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator1PulseWidthLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator1PulseWidthLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator1().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -155,46 +155,46 @@
     function onOscillator1UnisonDetuneLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator1UnisonDetuneLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator1UnisonDetuneLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator1UnisonDetuneLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator1UnisonDetuneLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator1().getUnisonDetuneParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator1UnisonDetuneLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator1().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator1().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -203,46 +203,46 @@
     function onOscillator2FreqLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator2FreqLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator2FreqLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator2FreqLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator2FreqLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator2FreqLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator2().getFreqParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator2().getFreqParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -250,46 +250,46 @@
     function onOscillator2AmpLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator2AmpLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator2AmpLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator2AmpLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator2AmpLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator2AmpLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator2().getAmpParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator2().getAmpParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -297,46 +297,46 @@
     function onOscillator2PulseWidthLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator2PulseWidthLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator2PulseWidthLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator2PulseWidthLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator2PulseWidthLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator2PulseWidthLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator2().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -344,46 +344,46 @@
     function onOscillator2UnisonDetuneLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(0);
         else
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(0);
     }
 
     function onOscillator2UnisonDetuneLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(1);
         else
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(1);
     }
 
     function onOscillator2UnisonDetuneLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(2);
         else
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(2);
     }
 
     function onOscillator2UnisonDetuneLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(3);
         else
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(3);
     }
 
     function onOscillator2UnisonDetuneLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().enableLfo(4);
         else
-            voice.getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getMultiShapeOscillator2().getUnisonDetuneParamManager().getLfoManager().disableLfo(4);
     }
 
     function onOscillator2UnisonDetuneLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getMultiShapeOscillator2().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getMultiShapeOscillator2().getPulseWidthParamManager().setLfosModulationAmount(normalizedAmount);
     }
 
 
@@ -393,92 +393,92 @@
     function onLowPassFilterCutoffFreqLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(0);
         else
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(0);
     }
 
     function onLowPassFilterCutoffFreqLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(1);
         else
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(1);
     }
 
     function onLowPassFilterCutoffFreqLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(2);
         else
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(2);
     }
 
     function onLowPassFilterCutoffFreqLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(3);
         else
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(3);
     }
 
     function onLowPassFilterCutoffFreqLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().enableLfo(4);
         else
-            voice.getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().getLfoManager().disableLfo(4);
     }
 
     function onFilterCutoffFreqLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getFilter().getCutoffFreqModulationManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getFilter().getCutoffFreqModulationManager().setLfosModulationAmount(normalizedAmount);
     }
 
     // callbacks for Filter resonance **************************************************************
     function onLowPassFilterResonanceLfo1Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(0);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().enableLfo(0);
         else
-            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(0);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().disableLfo(0);
     }
 
     function onLowPassFilterResonanceLfo2Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(1);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().enableLfo(1);
         else
-            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(1);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().disableLfo(1);
     }
 
     function onLowPassFilterResonanceLfo3Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(2);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().enableLfo(2);
         else
-            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(2);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().disableLfo(2);
     }
 
     function onLowPassFilterResonanceLfo4Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(3);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().enableLfo(3);
         else
-            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(3);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().disableLfo(3);
     }
 
     function onLowPassFilterResonanceLfo5Toggle(isToggled: boolean): void
     {
         if (isToggled)
-            voice.getFilter().getResonanceModulationManager().getLfoManager().enableLfo(4);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().enableLfo(4);
         else
-            voice.getFilter().getResonanceModulationManager().getLfoManager().disableLfo(4);
+            monoSynth.getVoice().getFilter().getResonanceModulationManager().getLfoManager().disableLfo(4);
     }
 
     function onFilterResonanceLfoModAmountChange(normalizedAmount: number): void
     {
-        voice.getFilter().getResonanceModulationManager().setLfosModulationAmount(normalizedAmount);
+        monoSynth.getVoice().getFilter().getResonanceModulationManager().setLfosModulationAmount(normalizedAmount);
     }
 </script>
 

@@ -1,44 +1,49 @@
 import { Settings } from "../../../constants/settings";
-import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+import { SingleInputBaseAudioNode } from "../single-input-base-audio-node";
 
-export class DelayEffect
+export class DelayEffect extends SingleInputBaseAudioNode
 {
-    /* the audio context used to create and connect nodes;
-    ** must be supplied from outside the class */
-    private audioContext: AudioContext;
-
-    private inputNode: NoInputBaseAudioNode;
+    // the input and output audio nodes
+    private inputNode: AudioNode | null = null;
+    private outputGainNode: GainNode;
 
     private delayNode: DelayNode;
     private delayFeedabackNode: GainNode;
-    private outputGainNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "DelayEffect", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, inputNode: NoInputBaseAudioNode)
+    constructor(audioContext: AudioContext)
     {
-        this.audioContext = audioContext;
-
-        this.inputNode = inputNode;
-
+        super(audioContext);
+        
         this.delayNode = this.audioContext.createDelay();
         this.delayNode.delayTime.setValueAtTime(Settings.minDelayTime, this.audioContext.currentTime);
 
         this.delayFeedabackNode = this.audioContext.createGain();
-        this.delayFeedabackNode.gain.setValueAtTime(Settings.minDelayFeedbackGain, this.audioContext.currentTime);
+        this.delayFeedabackNode.gain.setValueAtTime(Settings.minDelayFeedback, this.audioContext.currentTime);
+
+        this.delayNode.connect(this.delayFeedabackNode);
+        this.delayFeedabackNode.connect(this.delayNode);
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
 
-        // connect the input node to the delay and also to the main output node
-        this.inputNode.mainNode().connect(this.delayNode);
-        this.inputNode.mainNode().connect(this.outputGainNode);
+        this.delayNode.connect(this.outputGainNode);
     }
 
-    public outputNode(): GainNode { return this.outputGainNode; }
+    public connectInput(inputNode: AudioNode): void
+    {
+        this.inputNode = inputNode;
+
+        // connect the input node to the delay and also to the main output node
+        this.inputNode.connect(this.delayNode);
+        this.inputNode.connect(this.outputGainNode);
+    }
+
+    public outputNode(): AudioNode { return this.outputGainNode; }
 
     public setDelayTime(delayTime: number): boolean
     {
@@ -59,7 +64,7 @@ export class DelayEffect
 
     public setFeedbackLevel(feedback: number): boolean
     {
-        if (Settings.minDelayFeedbackGain <= feedback && feedback <= Settings.maxDelayFeedbackGain)
+        if (Settings.minDelayFeedback <= feedback && feedback <= Settings.maxDelayFeedback)
         {
             DelayEffect.logger.debug(`setFeedbackLevel(${feedback})`);
 

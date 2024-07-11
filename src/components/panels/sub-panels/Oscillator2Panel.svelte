@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { voice } from "../../../model/audio/voice";
+    import { monoSynth } from "../../../model/audio/synth";
     import * as oscCallbacks from "../../../callbacks/oscillators-callbacks";
     import * as mixerCallbacks from "../../../callbacks/mixer-callbacks";
 
@@ -16,8 +16,8 @@
     <!-- oscillator 2 oscilloscope -->
     <div class="oscilloscope" style="grid-column: 2 / 9; grid-row: 3 / 4;">
         <AudioOscilloscope height={60}
-            audioNode={voice.getMultiShapeOscillator2().getAnalyserGainNode()}
-            audioContext={voice.getAudioContext()}></AudioOscilloscope>
+            audioNode={monoSynth.getVoice().getMultiShapeOscillator2().getAnalyserGainNode()}
+            audioContext={monoSynth.getVoice().getAudioContext()}></AudioOscilloscope>
     </div>
 
     <!-- oscillator 2 frequency controls -->

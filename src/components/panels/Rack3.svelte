@@ -1,9 +1,11 @@
 <script lang="ts">
     import SequencerSteps from "./sub-panels/SequencerSteps.svelte";
+    import DelayEffectPanel from "./sub-panels/DelayEffectPanel.svelte";
 </script>
 
 <div class="main-container">
     <SequencerSteps></SequencerSteps>
+    <DelayEffectPanel></DelayEffectPanel>
 </div>
 
 

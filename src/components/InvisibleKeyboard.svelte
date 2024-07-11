@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Settings } from "../constants/settings";
-    import keyboard5OctavesSVG from '../assets/keyboard/keyboard-5-octave-template-overlay-final-opt.svg?raw';
-    import { voice } from '../model/audio/voice';
+    import { monoSynth } from "../model/audio/synth";
 
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
@@ -38,13 +37,13 @@
             logger.debug(`onClick(): pressed note: ${noteString}, octave = ${octave}, semitone = ${semitone}`);
 
             // required for browser compliance so the audio is resumed after an user interaction
-            voice.resume();
+            monoSynth.getVoice().resume();
 
             // note duration is 0.05 sec (50 milisec)
             const duration = 0.05;
 
             // play the note for the specified duration
-            voice.playNote(octave + startOctave, semitone, duration);
+            monoSynth.getVoice().playNote(octave + startOctave, semitone, duration);
         }
     }
 
@@ -77,10 +76,10 @@
             // target.removeEventListener('click', onClick);
 
             // required for browser compliance so the audio is resumed after an user interaction
-            voice.resume();
+            monoSynth.getVoice().resume();
 
             // play the note
-            voice.noteOn(octave + startOctave, semitone);
+            monoSynth.getVoice().noteOn(octave + startOctave, semitone);
         }
     }
 
@@ -95,7 +94,7 @@
 
             const target = event.target as HTMLDivElement;
 
-            voice.noteOff();
+            monoSynth.getVoice().noteOff();
 
             target.removeEventListener('mouseup', onMouseUp);
             window.removeEventListener('mouseup', onMouseUp);
@@ -111,10 +110,10 @@
         isKeyPressed = true;
 
         // required for browser compliance so the audio is resumed after an user interaction
-        voice.resume();
+        monoSynth.getVoice().resume();
 
         // play the note
-        voice.noteOn(octave + startOctave, semitone);
+        monoSynth.getVoice().noteOn(octave + startOctave, semitone);
     }
 
     function onKeyDown(event: KeyboardEvent): void
@@ -265,7 +264,7 @@
         if (isKeyPressed === true)
         {
             isKeyPressed = false;
-            voice.noteOff();
+            monoSynth.getVoice().noteOff();
         }
 
 

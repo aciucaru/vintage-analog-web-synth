@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { voice } from "../../../model/audio/voice";
+    import { monoSynth } from "../../../model/audio/synth";
     import * as oscCallbacks from "../../../callbacks/oscillators-callbacks";
     import * as mixerCallbacks from "../../../callbacks/mixer-callbacks";
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
@@ -27,8 +27,8 @@
     <!-- noise oscillator oscilloscope -->
     <div class="oscilloscope" style="grid-column: 1 / 4; grid-row: 3 / 4;">
         <AudioOscilloscope height={60}
-            audioNode={voice.getNoiseOscillator().getAnalyserGainNode()}
-            audioContext={voice.getAudioContext()}></AudioOscilloscope>
+            audioNode={monoSynth.getVoice().getNoiseOscillator().getAnalyserGainNode()}
+            audioContext={monoSynth.getVoice().getAudioContext()}></AudioOscilloscope>
     </div>
 
     <div class="toggle-buttons-group" style="grid-column: 1 / 4; grid-row: 5 / 6;">

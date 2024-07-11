@@ -1,5 +1,4 @@
 import { Settings } from "../constants/settings";
-import { voice } from "../model/audio/voice";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

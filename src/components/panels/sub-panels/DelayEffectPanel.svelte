@@ -1,30 +1,23 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
     import { monoSynth } from "../../../model/audio/synth";
-
-    import * as voiceCallbacks from "../../../callbacks/voice-callbacks";
-
+    import * as effectsCallbacks from "../../../callbacks/effects-callbacks";
+    
     import Knob from "../../Knob.svelte";
-    import AudioOscilloscope from "../../AudioOscilloscope.svelte";
 </script>
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">VOICE</div>
-
-    <div class="oscilloscope" style="grid-column: 1 / 8; grid-row: 3 / 4;">
-        <AudioOscilloscope
-        audioNode={monoSynth.getVoice().outputNode()} audioContext={monoSynth.getVoice().getAudioContext()}></AudioOscilloscope>
-    </div>
+    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">Delay</div>
 
     <div style="grid-column: 1 / 4; grid-row: 5 / 6;">
-        <Knob label={"Gain"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.defaultMixerOscGain}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onVolumeChange}></Knob>
+        <Knob label={"Time"} minValue={Settings.minDelayTime} maxValue={Settings.maxDelayTime} initialValue={Settings.defaultDelayTime}
+            step={0.01} decimals={0} displayFactor={1000} onValueChange={effectsCallbacks.onDelayTimeChange}></Knob>
     </div>
 
     <div style="grid-column: 5 / 8; grid-row: 5 / 6;">
-        <Knob label={"Tremolo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onTremoloChange}></Knob>
+        <Knob label={"Feedback"} minValue={Settings.minDelayFeedback} maxValue={Settings.maxDelayFeedback} initialValue={Settings.defaultDelayFeedback}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayFeedbackLevelChange}></Knob>
     </div>
 </div>
 
@@ -42,8 +35,7 @@
                                 5px
                                 16px;
         grid-template-rows: 16px
-                            5px
-                            auto 5px auto 5px auto
+                            5px auto 5px auto 5px auto
                             5px
                             16px;
 
@@ -55,6 +47,8 @@
 
         margin: 1px;
         padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
 
         border-radius: 2px;
         background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),
@@ -63,8 +57,6 @@
 
     .title
     {
-        pointer-events: none;
-
         margin: 0px;
         padding: 0px;
 

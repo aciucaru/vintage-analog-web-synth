@@ -1,5 +1,5 @@
 import { Settings } from "../constants/settings";
-import { voice } from "../model/audio/voice";
+import { monoSynth } from "../model/audio/synth";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -10,21 +10,21 @@ export function onVolumeChange(volume: number): void
 {
     logger.debug(`onVolumeChange(): new value: ${volume}`);
 
-    voice.setMainGain(volume);
+    monoSynth.getVoice().setMainGain(volume);
 }
 
 export function onTremoloChange(volume: number): void
 {
     logger.debug(`onTremoloChange(): new value: ${volume}`);
 
-    voice.setMainGain(volume);
+    monoSynth.getVoice().setMainGain(volume);
 }
 
 export function onVibratoChange(volume: number): void
 {
     logger.debug(`onVibratoChange(): new value: ${volume}`);
 
-    voice.setMainGain(volume);
+    monoSynth.getVoice().setMainGain(volume);
 }
 
 // callbacks for ADSR envelope:
@@ -32,26 +32,26 @@ export function onAttackChange(attack: number): void
 {
     logger.debug(`onAttackChange(): new value: ${attack}`);
 
-    voice.getAdsrEnvelope().setAttackTime(attack);
+    monoSynth.getVoice().getAdsrEnvelope().setAttackTime(attack);
 }
 
 export function onDecayChange(decay: number): void
 {
     logger.debug(`onDecayChange(): new value: ${decay}`);
 
-    voice.getAdsrEnvelope().setDecayTime(decay);
+    monoSynth.getVoice().getAdsrEnvelope().setDecayTime(decay);
 }
 
 export function onSustainChange(sustain: number): void
 {
     logger.debug(`onSustainChange(): new value: ${sustain}`);
 
-    voice.getAdsrEnvelope().setSustainLevel(sustain);
+    monoSynth.getVoice().getAdsrEnvelope().setSustainLevel(sustain);
 }
 
 export function onReleaseChange(release: number): void
 {
     logger.debug(`onReleaseChange(): new value: ${release}`);
 
-    voice.getAdsrEnvelope().setReleaseTime(release);
+    monoSynth.getVoice().getAdsrEnvelope().setReleaseTime(release);
 }
