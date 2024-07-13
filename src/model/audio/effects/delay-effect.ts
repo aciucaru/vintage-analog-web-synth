@@ -1,8 +1,9 @@
 import { Settings } from "../../../constants/settings";
+import { SingleInputBaseAudioNode } from "../single-input-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-import { SingleInputBaseAudioNode } from "../single-input-base-audio-node";
+
 
 export class DelayEffect extends SingleInputBaseAudioNode
 {

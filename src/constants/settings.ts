@@ -248,7 +248,7 @@ export class Settings
     public static readonly defaultSequencerOctaves = 0;
 
 
-    // settings for dely effect ***************************************************************************
+    // settings for delay effect ***************************************************************************
     public static readonly minDelayTime = 0.0; // 0 seconds
     public static readonly maxDelayTime = 2.0; // 2 seconds
     public static readonly defaultDelayTime = 0.0; // 0 seconds
@@ -260,6 +260,9 @@ export class Settings
     public static readonly minDelayAtenuatorGain = 0.0; // 0%
     public static readonly maxDelayAtenuatorGain = 1.0; // 100%
     public static readonly defaultDelayAtenuatorGain = 0.5; // 100%
+
+    // settings for distortion effect ***********************************************************************
+    
 
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
