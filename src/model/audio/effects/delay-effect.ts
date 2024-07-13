@@ -28,9 +28,9 @@ export class DelayEffect extends SingleInputBaseAudioNode
         super(audioContext);
 
         this.inputAtenuatorGainNode = this.audioContext.createGain();
-        this.inputAtenuatorGainNode.gain.setValueAtTime(Settings.defaultDelayAtenuatorGain, this.audioContext.currentTime);
+        this.inputAtenuatorGainNode.gain.setValueAtTime(Settings.defaultEffectAtenuatorGain, this.audioContext.currentTime);
         this.delayAtenuatorGainNode = this.audioContext.createGain();
-        this.delayAtenuatorGainNode.gain.setValueAtTime(Settings.defaultDelayAtenuatorGain, this.audioContext.currentTime);
+        this.delayAtenuatorGainNode.gain.setValueAtTime(Settings.defaultEffectAtenuatorGain, this.audioContext.currentTime);
         
         this.delayNode = this.audioContext.createDelay();
         this.delayNode.delayTime.setValueAtTime(Settings.minDelayTime, this.audioContext.currentTime);
@@ -111,13 +111,13 @@ export class DelayEffect extends SingleInputBaseAudioNode
     ** the weight of the original ('dry') signal is 100% minus the weight of the 'wet' signal. */
     public setEffectAmount(effectAmount: number): boolean
     {
-        if (Settings.minDelayAtenuatorGain <= effectAmount && effectAmount <= Settings.maxDelayAtenuatorGain)
+        if (Settings.minEffectAtenuatorGain <= effectAmount && effectAmount <= Settings.maxEffectAtenuatorGain)
         {
             DelayEffect.logger.debug(`setEffectAmount(${effectAmount})`);
 
             const currentTime = this.audioContext.currentTime;
 
-            this.inputAtenuatorGainNode.gain.linearRampToValueAtTime(Settings.maxDelayAtenuatorGain - effectAmount, currentTime);
+            this.inputAtenuatorGainNode.gain.linearRampToValueAtTime(Settings.maxEffectAtenuatorGain - effectAmount, currentTime);
             this.delayAtenuatorGainNode.gain.linearRampToValueAtTime(effectAmount, currentTime);
 
             return true; // change was succesfull

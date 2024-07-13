@@ -1,9 +1,10 @@
 /* Aknowledgements:
 ** The curve for the distortion effect is inspired/adapted from the following sources:
-** Alexander Leon: https://alexanderleon.medium.com/web-audio-series-part-2-designing-distortion-using-javascript-and-the-web-audio-api-446301565541
+** https://alexanderleon.medium.com/web-audio-series-part-2-designing-distortion-using-javascript-and-the-web-audio-api-446301565541
 ** https://stackoverflow.com/questions/22312841/waveshaper-node-in-webaudio-how-to-emulate-distortion
 ** https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/createWaveShaper
 ** https://stackoverflow.com/questions/36146689/altering-the-curve-of-a-webaudio-waveshaper-node-while-playing
+** https://stackoverflow.com/questions/7840347/web-audio-api-waveshapernode
 ** Great thanks to these people for making this information available! */
 
 
@@ -25,6 +26,9 @@ export class DistortionEffect extends SingleInputBaseAudioNode
 
     // the delay node itself and a feedback node
     private distortionNode: WaveShaperNode;
+    private distortionAmount: number = Settings.defaultDistortionAmount;
+    private distortionAngle: number = Settings.defaultDistortionAngle;
+    private distortionConstantValue: number = Settings.defaultDistortionConstantValue;
 
     // the final output ot this effect
     private outputGainNode: GainNode;
@@ -38,12 +42,12 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         super(audioContext);
 
         this.inputAtenuatorGainNode = this.audioContext.createGain();
-        this.inputAtenuatorGainNode.gain.setValueAtTime(Settings.defaultDelayAtenuatorGain, this.audioContext.currentTime);
+        this.inputAtenuatorGainNode.gain.setValueAtTime(Settings.defaultEffectAtenuatorGain, this.audioContext.currentTime);
         this.distortionAtenuatorGainNode = this.audioContext.createGain();
-        this.distortionAtenuatorGainNode.gain.setValueAtTime(Settings.defaultDelayAtenuatorGain, this.audioContext.currentTime);
+        this.distortionAtenuatorGainNode.gain.setValueAtTime(Settings.defaultEffectAtenuatorGain, this.audioContext.currentTime);
         
         this.distortionNode = this.audioContext.createWaveShaper();
-        this.distortionNode.curve = this.makeDistortionCurve3(400);
+        this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
@@ -98,8 +102,23 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         return curveSamples;
     }
 
-    // best
     private makeDistortionCurve3(amount: number): Float32Array
+    {
+        const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
+
+        let x = 0.0;
+        for (let i = 0; i < curveSamples.length; i++)
+        {
+            x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
+
+            curveSamples[i] = ( (Math.PI + amount) * x * (1 / 6.0) ) / (Math.PI + amount * Math.abs(x));
+        }
+
+        return curveSamples;
+    }
+
+    // good
+    private makeDistortionCurve4(amount: number): Float32Array
     {
         const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
         const angle = 20 * Math.PI/180; // 20 degrees
@@ -115,24 +134,37 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         return curveSamples;
     }
 
-    private makeDistortionCurve4(amount: number): Float32Array
+    // best
+    private makeDistortionCurve5(amount: number, angle: number, constantValue: number): Float32Array
     {
         const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
+        const angleDeg = angle * Math.PI/180; // 20 degrees
 
         let x = 0.0;
         for (let i = 0; i < curveSamples.length; i++)
         {
             x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
 
-            curveSamples[i] = ( (Math.PI + amount) * x * (1 / 6.0) ) / (Math.PI + amount * Math.abs(x));
+            curveSamples[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) );
         }
 
         return curveSamples;
     }
 
-    public setDistortionAmount(distortionAmount:number): void
+    public setDistortionAmount(distortionAmount: number, angle: number): boolean
     {
+        if (Settings.minDistortionAmount <= distortionAmount && distortionAmount <= Settings.maxDistortionAmount)
+        {
+            this.distortionAmount = distortionAmount;
 
+            this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /* This method sets the wet/dry level of the distortion effect. It basically sets how much of the signal
@@ -149,13 +181,13 @@ export class DistortionEffect extends SingleInputBaseAudioNode
     ** the weight of the original ('dry') signal is 100% minus the weight of the 'wet' signal. */
     public setEffectAmount(effectAmount: number): boolean
     {
-        if (Settings.minDelayAtenuatorGain <= effectAmount && effectAmount <= Settings.maxDelayAtenuatorGain)
+        if (Settings.minEffectAtenuatorGain <= effectAmount && effectAmount <= Settings.maxEffectAtenuatorGain)
         {
             DistortionEffect.logger.debug(`setEffectAmount(${effectAmount})`);
 
             const currentTime = this.audioContext.currentTime;
 
-            this.inputAtenuatorGainNode.gain.linearRampToValueAtTime(Settings.maxDelayAtenuatorGain - effectAmount, currentTime);
+            this.inputAtenuatorGainNode.gain.linearRampToValueAtTime(Settings.maxEffectAtenuatorGain - effectAmount, currentTime);
             this.distortionAtenuatorGainNode.gain.linearRampToValueAtTime(effectAmount, currentTime);
 
             return true; // change was succesfull

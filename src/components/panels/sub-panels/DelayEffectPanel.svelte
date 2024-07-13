@@ -21,7 +21,7 @@
     </div>
 
     <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
-        <Knob label={"Wet/Dry"} minValue={Settings.minDelayAtenuatorGain} maxValue={Settings.maxDelayAtenuatorGain} initialValue={Settings.defaultDelayAtenuatorGain}
+        <Knob label={"Wet/Dry"} minValue={Settings.minEffectAtenuatorGain} maxValue={Settings.maxEffectAtenuatorGain} initialValue={Settings.defaultEffectAtenuatorGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayEffectAmountChange}></Knob>
     </div>
 </div>

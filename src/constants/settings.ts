@@ -248,6 +248,12 @@ export class Settings
     public static readonly defaultSequencerOctaves = 0;
 
 
+    // general settings for effects ************************************************************************
+    public static readonly minEffectAtenuatorGain = 0.0; // 0%
+    public static readonly maxEffectAtenuatorGain = 1.0; // 100%
+    public static readonly defaultEffectAtenuatorGain = 0.5; // 100%
+
+
     // settings for delay effect ***************************************************************************
     public static readonly minDelayTime = 0.0; // 0 seconds
     public static readonly maxDelayTime = 2.0; // 2 seconds
@@ -257,12 +263,19 @@ export class Settings
     public static readonly maxDelayFeedback = 0.9; // 90%
     public static readonly defaultDelayFeedback = 0.0; // 0%
 
-    public static readonly minDelayAtenuatorGain = 0.0; // 0%
-    public static readonly maxDelayAtenuatorGain = 1.0; // 100%
-    public static readonly defaultDelayAtenuatorGain = 0.5; // 100%
 
     // settings for distortion effect ***********************************************************************
-    
+    public static readonly minDistortionAmount = 0.0;
+    public static readonly maxDistortionAmount = 600.0;
+    public static readonly defaultDistortionAmount = 400.0;
+
+    public static readonly minDistortionAngle = 1.0; // 1 deg
+    public static readonly maxDistortionAngle = 90.0; // 90 deg
+    public static readonly defaultDistortionAngle = 20.0; // 20 deg
+
+    public static readonly minDistortionConstantValue = 1.0;
+    public static readonly maxDistortionConstantValue = 100; // 90 deg
+    public static readonly defaultDistortionConstantValue = Math.PI;
 
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
