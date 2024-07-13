@@ -19,3 +19,10 @@ export function onDelayFeedbackLevelChange(feedbackLevel: number): void
 
     monoSynth.getDelayEffect().setFeedbackLevel(feedbackLevel);
 }
+
+export function onDelayEffectAmountChange(effectAmount: number): void
+{
+    logger.debug(`onDelayWetDryLevelChange(): new value: ${effectAmount}`);
+
+    monoSynth.getDelayEffect().setEffectAmount(effectAmount);
+}

@@ -257,6 +257,10 @@ export class Settings
     public static readonly maxDelayFeedback = 0.9; // 90%
     public static readonly defaultDelayFeedback = 0.0; // 0%
 
+    public static readonly minDelayAtenuatorGain = 0.0; // 0%
+    public static readonly maxDelayAtenuatorGain = 1.0; // 100%
+    public static readonly defaultDelayAtenuatorGain = 0.5; // 100%
+
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
 }

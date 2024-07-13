@@ -19,6 +19,11 @@
         <Knob label={"Feedback"} minValue={Settings.minDelayFeedback} maxValue={Settings.maxDelayFeedback} initialValue={Settings.defaultDelayFeedback}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayFeedbackLevelChange}></Knob>
     </div>
+
+    <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
+        <Knob label={"Wet/Dry"} minValue={Settings.minDelayAtenuatorGain} maxValue={Settings.maxDelayAtenuatorGain} initialValue={Settings.defaultDelayAtenuatorGain}
+            step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayEffectAmountChange}></Knob>
+    </div>
 </div>
 
 <style>
