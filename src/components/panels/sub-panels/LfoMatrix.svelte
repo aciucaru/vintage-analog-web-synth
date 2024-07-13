@@ -387,6 +387,101 @@
     }
 
 
+    // Oscillator 2 callbacks ****************************************************************************
+    // callbacks for Oscillator 2 frequency **************************************************************
+    function onSubOscillatorFreqLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().enableLfo(0);
+        else
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().disableLfo(0);
+    }
+
+    function onSubOscillatorFreqLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().enableLfo(1);
+        else
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().disableLfo(1);
+    }
+
+    function onSubOscillatorFreqLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().enableLfo(2);
+        else
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().disableLfo(2);
+    }
+
+    function onSubOscillatorFreqLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().enableLfo(3);
+        else
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().disableLfo(3);
+    }
+
+    function onSubOscillatorFreqLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().enableLfo(4);
+        else
+            monoSynth.getVoice().getSubOscillator().getFreqParamManager().getLfoManager().disableLfo(4);
+    }
+
+    function onSubOscillatorFreqLfoModAmountChange(normalizedAmount: number): void
+    {
+        monoSynth.getVoice().getSubOscillator().getFreqParamManager().setLfosModulationAmount(normalizedAmount);
+    }
+
+
+    // callbacks for Oscillator 2 amplitude **************************************************************
+    function onSubOscillatorAmpLfo1Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().enableLfo(0);
+        else
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().disableLfo(0);
+    }
+
+    function onSubOscillatorAmpLfo2Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().enableLfo(1);
+        else
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().disableLfo(1);
+    }
+
+    function onSubOscillatorAmpLfo3Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().enableLfo(2);
+        else
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().disableLfo(2);
+    }
+
+    function onSubOscillatorAmpLfo4Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().enableLfo(3);
+        else
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().disableLfo(3);
+    }
+
+    function onSubOscillatorAmpLfo5Toggle(isToggled: boolean): void
+    {
+        if (isToggled)
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().enableLfo(4);
+        else
+            monoSynth.getVoice().getSubOscillator().getAmpParamManager().getLfoManager().disableLfo(4);
+    }
+
+    function onSubOscillatorAmpLfoModAmountChange(normalizedAmount: number): void
+    {
+        monoSynth.getVoice().getSubOscillator().getAmpParamManager().setLfosModulationAmount(normalizedAmount);
+    }
+
+
     // Filter callbacks ****************************************************************************
     // *********************************************************************************************
     // callbacks for Filter cutoff frequency **************************************************************
