@@ -9,26 +9,34 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">Delay</div>
+    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">Distortion</div>
 
     <div style="grid-column: 1 / 4; grid-row: 3 / 4;">
-        <ToggleButton onToggleChange={effectsCallbacks.onDelayEffectToggle}></ToggleButton>
+        <ToggleButton onToggleChange={effectsCallbacks.onDistortionEffectToggle}></ToggleButton>
         <div>On/Off</div>
     </div>
 
     <div style="grid-column: 1 / 4; grid-row: 5 / 6;">
-        <Knob label={"Time"} minValue={Settings.minDelayTime} maxValue={Settings.maxDelayTime} initialValue={Settings.defaultDelayTime}
-            step={0.01} decimals={0} displayFactor={1000} onValueChange={effectsCallbacks.onDelayTimeChange}></Knob>
+        <Knob label={"Amount"} minValue={Settings.minDistortionAmount} maxValue={Settings.maxDistortionAmount}
+            initialValue={Settings.defaultDistortionAmount}
+            step={0.1} decimals={1} onValueChange={effectsCallbacks.onDistortionAmountChange}></Knob>
     </div>
 
     <div style="grid-column: 5 / 8; grid-row: 5 / 6;">
-        <Knob label={"Feedback"} minValue={Settings.minDelayFeedback} maxValue={Settings.maxDelayFeedback} initialValue={Settings.defaultDelayFeedback}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayFeedbackLevelChange}></Knob>
+        <Knob label={"Angle"} minValue={Settings.minDistortionCurveAngle} maxValue={Settings.maxDistortionCurveAngle}
+            initialValue={Settings.defaultDistortionCurveAngle}
+            step={1} decimals={0} onValueChange={effectsCallbacks.onDistortionCurveAngleChange}></Knob>
     </div>
 
     <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
+        <Knob label={"Const"} minValue={Settings.minDistortionCurveConstantValue} maxValue={Settings.maxDistortionCurveConstantValue}
+            initialValue={Settings.defaultDistortionCurveConstantValue}
+            step={0.1} decimals={1} onValueChange={effectsCallbacks.onDistortionCurveConstantValueChange}></Knob>
+    </div>
+
+    <div style="grid-column: 5 / 8; grid-row: 7 / 8;">
         <Knob label={"Wet/Dry"} minValue={Settings.minEffectWetDryGain} maxValue={Settings.maxEffectWetDryGain} initialValue={Settings.defaultEffectWetDryGain}
-            step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayEffectAmountChange}></Knob>
+            step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDistortionEffectAmountChange}></Knob>
     </div>
 </div>
 

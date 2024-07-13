@@ -65,13 +65,13 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
 
         // connect effect on/off nodes
-        this.distortionOnOffGainNode.connect(this.distortionNode);
         this.inputOnOffGainNode.connect(this.outputGainNode);
+        this.distortionOnOffGainNode.connect(this.distortionNode);
+
+        this.distortionOnOffGainNode.connect(this.inputWetDryGainNode);
+        this.distortionNode.connect(this.distortionWetDryGainNode);
 
         // connect atenuators to final output gain node
-        this.distortionNode.connect(this.distortionWetDryGainNode);
-        this.distortionOnOffGainNode.connect(this.inputWetDryGainNode);
-
         this.distortionWetDryGainNode.connect(this.outputGainNode);
         this.inputWetDryGainNode.connect(this.outputGainNode);
     }
@@ -81,8 +81,8 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         this.inputNode = inputNode;
 
         // connect the input node to the delay and also to the main output node
-        this.inputNode.connect(this.distortionWetDryGainNode);
-        this.inputNode.connect(this.inputWetDryGainNode);
+        this.inputNode.connect(this.distortionOnOffGainNode);
+        this.inputNode.connect(this.inputOnOffGainNode);
     }
 
     public outputNode(): AudioNode { return this.outputGainNode; }
@@ -179,20 +179,20 @@ export class DistortionEffect extends SingleInputBaseAudioNode
             DistortionEffect.logger.debug(`toggleEffect(): on`);
 
             // set the input route (dry signal route) gain to min
-            this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
+            this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime + 0.05);
 
             // set the effect route (wet signal route) gain to max
-            this.distortionOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
+            this.distortionOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime + 0.05);
         }
         else
         {
             DistortionEffect.logger.debug(`toggleEffect(): off`);
 
             // set the input route (dry signal route) gain to max
-            this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
+            this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime + 0.05);
 
             // set the effect route (wet signal route) gain to min
-            this.distortionOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
+            this.distortionOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime + 0.05);
         }
     }
 
@@ -221,7 +221,7 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         {
             DistortionEffect.logger.debug(`setDistortionCurveAngle(${distortionCurveAngle})`);
 
-            this.distortionAngle= distortionCurveAngle;
+            this.distortionAngle = distortionCurveAngle;
 
             this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
 

@@ -9,7 +9,7 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">Distortion</div>
+    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">Delay</div>
 
     <div style="grid-column: 1 / 4; grid-row: 3 / 4;">
         <ToggleButton onToggleChange={effectsCallbacks.onDelayEffectToggle}></ToggleButton>
@@ -31,6 +31,7 @@
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayEffectAmountChange}></Knob>
     </div>
 </div>
+
 
 <style>
     .main-container
