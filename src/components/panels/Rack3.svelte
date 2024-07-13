@@ -1,6 +1,6 @@
 <script lang="ts">
     import SequencerSteps from "./sub-panels/SequencerSteps.svelte";
-    import DelayEffectPanel from "./sub-panels/DelayEffectPanel.svelte";
+    import DelayEffectPanel from "./sub-panels/DistortionEffectPanel.svelte";
 </script>
 
 <div class="main-container">

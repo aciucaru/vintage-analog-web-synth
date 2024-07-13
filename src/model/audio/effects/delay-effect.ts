@@ -10,9 +10,15 @@ export class DelayEffect extends SingleInputBaseAudioNode
     // the input node of this effect
     private inputNode: AudioNode | null = null;
 
+    private isEffectEnabled = false;
+
+    // atenuators for input and delay, these help obtain the on/off effect (they help turn the effect on/off)
+    private inputOnOffGainNode: GainNode;
+    private delayOnOffGainNode: GainNode;
+
     // atenuators for input and delay, these help obtain the wet/dry effect
-    private inputAtenuatorGainNode: GainNode;
-    private delayAtenuatorGainNode: GainNode;
+    private inputWetDryGainNode: GainNode;
+    private delayWetDryGainNode: GainNode;
 
     // the delay node itself and a feedback node
     private delayNode: DelayNode;
@@ -27,10 +33,15 @@ export class DelayEffect extends SingleInputBaseAudioNode
     {
         super(audioContext);
 
-        this.inputAtenuatorGainNode = this.audioContext.createGain();
-        this.inputAtenuatorGainNode.gain.setValueAtTime(Settings.defaultEffectAtenuatorGain, this.audioContext.currentTime);
-        this.delayAtenuatorGainNode = this.audioContext.createGain();
-        this.delayAtenuatorGainNode.gain.setValueAtTime(Settings.defaultEffectAtenuatorGain, this.audioContext.currentTime);
+        this.inputOnOffGainNode = this.audioContext.createGain();
+        this.inputOnOffGainNode.gain.setValueAtTime(Settings.maxEffectOnOffGain, this.audioContext.currentTime);
+        this.delayOnOffGainNode = this.audioContext.createGain();
+        this.delayOnOffGainNode.gain.setValueAtTime(Settings.minEffectWetDryGain, this.audioContext.currentTime);
+
+        this.inputWetDryGainNode = this.audioContext.createGain();
+        this.inputWetDryGainNode.gain.setValueAtTime(Settings.defaultEffectWetDryGain, this.audioContext.currentTime);
+        this.delayWetDryGainNode = this.audioContext.createGain();
+        this.delayWetDryGainNode.gain.setValueAtTime(Settings.defaultEffectWetDryGain, this.audioContext.currentTime);
         
         this.delayNode = this.audioContext.createDelay();
         this.delayNode.delayTime.setValueAtTime(Settings.minDelayTime, this.audioContext.currentTime);
@@ -41,14 +52,19 @@ export class DelayEffect extends SingleInputBaseAudioNode
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
 
-        // connect delay nodes togheter
+        // connect effect on/off nodes
+        this.delayOnOffGainNode.connect(this.delayNode);
+        this.inputOnOffGainNode.connect(this.outputGainNode);
+
+        // connect effect nodes togheter
         this.delayNode.connect(this.delayFeedabackNode);
         this.delayFeedabackNode.connect(this.delayNode);
-        this.delayNode.connect(this.delayAtenuatorGainNode);
+        this.delayNode.connect(this.delayWetDryGainNode);
+        this.delayOnOffGainNode.connect(this.inputWetDryGainNode);
 
         // connect atenuators to final output gain node
-        this.inputAtenuatorGainNode.connect(this.outputGainNode);
-        this.delayAtenuatorGainNode.connect(this.outputGainNode);
+        this.inputWetDryGainNode.connect(this.outputGainNode);
+        this.delayWetDryGainNode.connect(this.outputGainNode);
     }
 
     public connectInput(inputNode: AudioNode): void
@@ -56,11 +72,40 @@ export class DelayEffect extends SingleInputBaseAudioNode
         this.inputNode = inputNode;
 
         // connect the input node to the delay and also to the main output node
-        this.inputNode.connect(this.delayNode);
-        this.inputNode.connect(this.inputAtenuatorGainNode);
+        this.inputNode.connect(this.delayOnOffGainNode);
+        this.inputNode.connect(this.inputOnOffGainNode);
     }
 
     public outputNode(): AudioNode { return this.outputGainNode; }
+
+    // this method toggles the effect on/off (it enables or disables the effect)
+    public toggleEffect(): void
+    {
+        this.isEffectEnabled = !this.isEffectEnabled;
+
+        const currentTime = this.audioContext.currentTime;
+
+        if (this.isEffectEnabled)
+        {
+            DelayEffect.logger.debug(`toggleEffect(): on`);
+
+            // set the input route (dry signal route) gain to min
+            this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
+
+            // set the effect route (wet signal route) gain to max
+            this.delayOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
+        }
+        else
+        {
+            DelayEffect.logger.debug(`toggleEffect(): off`);
+
+            // set the input route (dry signal route) gain to max
+            this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
+
+            // set the effect route (wet signal route) gain to min
+            this.delayOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
+        }
+    }
 
     public setDelayTime(delayTime: number): boolean
     {
@@ -111,14 +156,14 @@ export class DelayEffect extends SingleInputBaseAudioNode
     ** the weight of the original ('dry') signal is 100% minus the weight of the 'wet' signal. */
     public setEffectAmount(effectAmount: number): boolean
     {
-        if (Settings.minEffectAtenuatorGain <= effectAmount && effectAmount <= Settings.maxEffectAtenuatorGain)
+        if (Settings.minEffectWetDryGain <= effectAmount && effectAmount <= Settings.maxEffectWetDryGain)
         {
             DelayEffect.logger.debug(`setEffectAmount(${effectAmount})`);
 
             const currentTime = this.audioContext.currentTime;
 
-            this.inputAtenuatorGainNode.gain.linearRampToValueAtTime(Settings.maxEffectAtenuatorGain - effectAmount, currentTime);
-            this.delayAtenuatorGainNode.gain.linearRampToValueAtTime(effectAmount, currentTime);
+            this.inputWetDryGainNode.gain.linearRampToValueAtTime(Settings.maxEffectWetDryGain - effectAmount, currentTime);
+            this.delayWetDryGainNode.gain.linearRampToValueAtTime(effectAmount, currentTime);
 
             return true; // change was succesfull
         }

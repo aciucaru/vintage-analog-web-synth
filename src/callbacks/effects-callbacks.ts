@@ -6,6 +6,13 @@ import type { ILogObj } from "tslog";
 
 const logger: Logger<ILogObj> = new Logger({name: "EffectsPanel", minLevel: Settings.minLogLevel });
 
+export function onDelayEffectToggle(isToggled: boolean): void
+{
+    logger.debug("onDelayEffectToggle()");
+
+    monoSynth.getDelayEffect().toggleEffect();
+}
+
 export function onDelayTimeChange(delayTime: number): void
 {
     logger.debug(`onDelayTimeChange(): new value: ${delayTime}`);

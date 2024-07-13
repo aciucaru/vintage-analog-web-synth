@@ -249,10 +249,13 @@ export class Settings
 
 
     // general settings for effects ************************************************************************
-    public static readonly minEffectAtenuatorGain = 0.0; // 0%
-    public static readonly maxEffectAtenuatorGain = 1.0; // 100%
-    public static readonly defaultEffectAtenuatorGain = 0.5; // 100%
+    public static readonly minEffectOnOffGain = 0.0; // 0% - off
+    public static readonly maxEffectOnOffGain = 1.0; // 100% - on
+    public static readonly defaultEffectOnOffGain = 0.0; // 0% - off
 
+    public static readonly minEffectWetDryGain = 0.0; // 0% - no effect (dry)
+    public static readonly maxEffectWetDryGain = 1.0; // 100% - full effect (wet)
+    public static readonly defaultEffectWetDryGain = 0.5; // 50% - the effect is contributing by 50% to the sound
 
     // settings for delay effect ***************************************************************************
     public static readonly minDelayTime = 0.0; // 0 seconds
@@ -263,19 +266,18 @@ export class Settings
     public static readonly maxDelayFeedback = 0.9; // 90%
     public static readonly defaultDelayFeedback = 0.0; // 0%
 
-
     // settings for distortion effect ***********************************************************************
     public static readonly minDistortionAmount = 0.0;
     public static readonly maxDistortionAmount = 600.0;
     public static readonly defaultDistortionAmount = 400.0;
 
-    public static readonly minDistortionAngle = 1.0; // 1 deg
-    public static readonly maxDistortionAngle = 90.0; // 90 deg
-    public static readonly defaultDistortionAngle = 20.0; // 20 deg
+    public static readonly minDistortionCurveAngle = 1.0; // 1 deg
+    public static readonly maxDistortionCurveAngle = 90.0; // 90 deg
+    public static readonly defaultDistortionCurveAngle = 20.0; // 20 deg
 
-    public static readonly minDistortionConstantValue = 1.0;
-    public static readonly maxDistortionConstantValue = 100; // 90 deg
-    public static readonly defaultDistortionConstantValue = Math.PI;
+    public static readonly minDistortionCurveConstantValue = 1.0;
+    public static readonly maxDistortionCurveConstantValue = 20;
+    public static readonly defaultDistortionCurveConstantValue = Math.PI;
 
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
