@@ -13,7 +13,7 @@ import type { ILogObj } from "tslog";
 export class ReverbEffect extends BaseEffect
 {
     // the delay node itself and a feedback node
-    private reverbNode: WaveShaperNode;
+    private reverbNode: ConvolverNode;
 
     private static readonly CURVE_SAMPLES_COUNT = 200;
 
@@ -23,7 +23,8 @@ export class ReverbEffect extends BaseEffect
     {
         super(audioContext);
 
-        this.reverbNode = this.audioContext.createWaveShaper();
+        this.reverbNode = this.audioContext.createConvolver();
+        this.reverbNode.buffer = this.createImpulseResponse(1, 1);
 
         // connect effect on/off nodes
         this.inputOnOffGainNode.connect(this.outputGainNode);
@@ -35,5 +36,20 @@ export class ReverbEffect extends BaseEffect
         // connect atenuators to final output gain node
         this.effectWetDryGainNode.connect(this.outputGainNode);
         this.inputWetDryGainNode.connect(this.outputGainNode);
+    }
+
+    private createImpulseResponse(secondsDuration: number, decayRate: number): AudioBuffer
+    {
+        // decay = 0... >1
+        const length = this.audioContext.sampleRate * secondsDuration;
+        const impulse: AudioBuffer = this.audioContext.createBuffer(1, length, this.audioContext.sampleRate);
+        const impulseResponse = impulse.getChannelData(0);
+
+        for (let i = 0; i < length; i++)
+        {
+            impulseResponse[i] = (2 * Math.random() - 1) * Math.pow(1 - i/length, decayRate);
+        }
+
+        return impulse;
     }
 }

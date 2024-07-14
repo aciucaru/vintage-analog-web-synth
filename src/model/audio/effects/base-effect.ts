@@ -4,7 +4,7 @@ import { SingleInputBaseAudioNode } from "../single-input-base-audio-node";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-/* This is the base class for all effect and it contains nodes and methos that are reaused in every effect:
+/* This is the base class for all effect and it contains nodes and methods that are reaused in every effect:
 ** - 'inputOnOffGainNode' and 'effectOnOffGainNode', used to turn the effect on/off
 ** - 'inputWetDryGainNode' and 'effectWetDryGainNode', used to set the wet/dry effect amount
 ** - 'toggleEffect()', used to turn the effect on/off
