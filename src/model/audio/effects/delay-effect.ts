@@ -14,11 +14,11 @@ export class DelayEffect extends SingleInputBaseAudioNode
 
     // atenuators for input and delay, these help obtain the on/off effect (they help turn the effect on/off)
     private inputOnOffGainNode: GainNode;
-    private delayOnOffGainNode: GainNode;
+    private effectOnOffGainNode: GainNode;
 
     // atenuators for input and delay, these help obtain the wet/dry effect
     private inputWetDryGainNode: GainNode;
-    private delayWetDryGainNode: GainNode;
+    private effectWetDryGainNode: GainNode;
 
     // the delay node itself and a feedback node
     private delayNode: DelayNode;
@@ -35,13 +35,13 @@ export class DelayEffect extends SingleInputBaseAudioNode
 
         this.inputOnOffGainNode = this.audioContext.createGain();
         this.inputOnOffGainNode.gain.setValueAtTime(Settings.maxEffectOnOffGain, this.audioContext.currentTime);
-        this.delayOnOffGainNode = this.audioContext.createGain();
-        this.delayOnOffGainNode.gain.setValueAtTime(Settings.minEffectWetDryGain, this.audioContext.currentTime);
+        this.effectOnOffGainNode = this.audioContext.createGain();
+        this.effectOnOffGainNode.gain.setValueAtTime(Settings.minEffectWetDryGain, this.audioContext.currentTime);
 
         this.inputWetDryGainNode = this.audioContext.createGain();
         this.inputWetDryGainNode.gain.setValueAtTime(Settings.defaultEffectWetDryGain, this.audioContext.currentTime);
-        this.delayWetDryGainNode = this.audioContext.createGain();
-        this.delayWetDryGainNode.gain.setValueAtTime(Settings.defaultEffectWetDryGain, this.audioContext.currentTime);
+        this.effectWetDryGainNode = this.audioContext.createGain();
+        this.effectWetDryGainNode.gain.setValueAtTime(Settings.defaultEffectWetDryGain, this.audioContext.currentTime);
         
         this.delayNode = this.audioContext.createDelay();
         this.delayNode.delayTime.setValueAtTime(Settings.minDelayTime, this.audioContext.currentTime);
@@ -53,18 +53,18 @@ export class DelayEffect extends SingleInputBaseAudioNode
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
 
         // connect effect on/off nodes
-        this.delayOnOffGainNode.connect(this.delayNode);
+        this.effectOnOffGainNode.connect(this.delayNode);
         this.inputOnOffGainNode.connect(this.outputGainNode);
 
         // connect effect nodes togheter
         this.delayNode.connect(this.delayFeedabackNode);
         this.delayFeedabackNode.connect(this.delayNode);
-        this.delayNode.connect(this.delayWetDryGainNode);
-        this.delayOnOffGainNode.connect(this.inputWetDryGainNode);
+        this.delayNode.connect(this.effectWetDryGainNode);
+        this.effectOnOffGainNode.connect(this.inputWetDryGainNode);
 
         // connect atenuators to final output gain node
         this.inputWetDryGainNode.connect(this.outputGainNode);
-        this.delayWetDryGainNode.connect(this.outputGainNode);
+        this.effectWetDryGainNode.connect(this.outputGainNode);
     }
 
     public connectInput(inputNode: AudioNode): void
@@ -72,7 +72,7 @@ export class DelayEffect extends SingleInputBaseAudioNode
         this.inputNode = inputNode;
 
         // connect the input node to the delay and also to the main output node
-        this.inputNode.connect(this.delayOnOffGainNode);
+        this.inputNode.connect(this.effectOnOffGainNode);
         this.inputNode.connect(this.inputOnOffGainNode);
     }
 
@@ -93,7 +93,7 @@ export class DelayEffect extends SingleInputBaseAudioNode
             this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
 
             // set the effect route (wet signal route) gain to max
-            this.delayOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
+            this.effectOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
         }
         else
         {
@@ -103,7 +103,7 @@ export class DelayEffect extends SingleInputBaseAudioNode
             this.inputOnOffGainNode.gain.linearRampToValueAtTime(Settings.maxEffectOnOffGain, currentTime);
 
             // set the effect route (wet signal route) gain to min
-            this.delayOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
+            this.effectOnOffGainNode.gain.linearRampToValueAtTime(Settings.minEffectOnOffGain, currentTime);
         }
     }
 
@@ -163,7 +163,7 @@ export class DelayEffect extends SingleInputBaseAudioNode
             const currentTime = this.audioContext.currentTime;
 
             this.inputWetDryGainNode.gain.linearRampToValueAtTime(Settings.maxEffectWetDryGain - effectAmount, currentTime);
-            this.delayWetDryGainNode.gain.linearRampToValueAtTime(effectAmount, currentTime);
+            this.effectWetDryGainNode.gain.linearRampToValueAtTime(effectAmount, currentTime);
 
             return true; // change was succesfull
         }
