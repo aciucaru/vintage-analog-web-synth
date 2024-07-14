@@ -1,13 +1,15 @@
 <script lang="ts">
     import SequencerSteps from "./sub-panels/SequencerSteps.svelte";
-    import DistortionEffectPanel from "./sub-panels/DistortionEffectPanel.svelte";
-    import DelayEffectPanel from "./sub-panels/DelayEffectPanel.svelte";
+    import DistortionEffectPanel from "./effects/DistortionEffectPanel.svelte";
+    import DelayEffectPanel from "./effects/DelayEffectPanel.svelte";
+    import ReverbEffectPanel from "./effects/ReverbEffectPanel.svelte";
 </script>
 
 <div class="main-container">
     <SequencerSteps></SequencerSteps>
     <DistortionEffectPanel></DistortionEffectPanel>
     <DelayEffectPanel></DelayEffectPanel>
+    <ReverbEffectPanel></ReverbEffectPanel>
 </div>
 
 

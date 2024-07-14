@@ -6,41 +6,19 @@ import type { ILogObj } from "tslog";
 
 const logger: Logger<ILogObj> = new Logger({name: "EffectsPanel", minLevel: Settings.minLogLevel });
 
-// delay effect callback *****************************************************************************
-export function onDelayEffectToggle(isToggled: boolean): void
-{
-    logger.debug("onDelayEffectToggle()");
-
-    monoSynth.getDelayEffect().toggleEffect();
-}
-
-export function onDelayTimeChange(delayTime: number): void
-{
-    logger.debug(`onDelayTimeChange(): new value: ${delayTime}`);
-
-    monoSynth.getDelayEffect().setDelayTime(delayTime);
-}
-
-export function onDelayFeedbackLevelChange(feedbackLevel: number): void
-{
-    logger.debug(`onDelayFeedbackLevelChange(): new value: ${feedbackLevel}`);
-
-    monoSynth.getDelayEffect().setFeedbackLevel(feedbackLevel);
-}
-
-export function onDelayEffectAmountChange(effectAmount: number): void
-{
-    logger.debug(`onDelayWetDryLevelChange(): new value: ${effectAmount}`);
-
-    monoSynth.getDelayEffect().setEffectAmount(effectAmount);
-}
-
 // distortion effect callback *****************************************************************************
 export function onDistortionEffectToggle(isToggled: boolean): void
 {
     logger.debug("onDistortionEffectToggle()");
 
     monoSynth.getDistortionEffect().toggleEffect();
+}
+
+export function onDistortionEffectAmountChange(effectAmount: number): void
+{
+    logger.debug(`onDistortionEffectAmountChange(): new value: ${effectAmount}`);
+
+    monoSynth.getDistortionEffect().setEffectAmount(effectAmount);
 }
 
 export function onDistortionAmountChange(amount: number): void
@@ -64,9 +42,53 @@ export function onDistortionCurveConstantValueChange(curveConstantValue: number)
     monoSynth.getDistortionEffect().setDistortionCurveConstantValue(curveConstantValue);
 }
 
-export function onDistortionEffectAmountChange(effectAmount: number): void
+// delay effect callback *****************************************************************************
+export function onDelayEffectToggle(isToggled: boolean): void
 {
-    logger.debug(`onDistortionEffectAmountChange(): new value: ${effectAmount}`);
+    logger.debug("onDelayEffectToggle()");
 
-    monoSynth.getDistortionEffect().setEffectAmount(effectAmount);
+    monoSynth.getDelayEffect().toggleEffect();
+}
+
+export function onDelayEffectAmountChange(effectAmount: number): void
+{
+    logger.debug(`onDelayWetDryLevelChange(): new value: ${effectAmount}`);
+
+    monoSynth.getDelayEffect().setEffectAmount(effectAmount);
+}
+
+export function onDelayTimeChange(delayTime: number): void
+{
+    logger.debug(`onDelayTimeChange(): new value: ${delayTime}`);
+
+    monoSynth.getDelayEffect().setDelayTime(delayTime);
+}
+
+export function onDelayFeedbackLevelChange(feedbackLevel: number): void
+{
+    logger.debug(`onDelayFeedbackLevelChange(): new value: ${feedbackLevel}`);
+
+    monoSynth.getDelayEffect().setFeedbackLevel(feedbackLevel);
+}
+
+// reverb effect callback *****************************************************************************
+export function onReverbEffectToggle(isToggled: boolean): void
+{
+    logger.debug("onDelayEffectToggle()");
+
+    monoSynth.getReverbEffect().toggleEffect();
+}
+
+export function onReverbEffectAmountChange(effectAmount: number): void
+{
+    logger.debug(`onDelayWetDryLevelChange(): new value: ${effectAmount}`);
+
+    monoSynth.getReverbEffect().setEffectAmount(effectAmount);
+}
+
+export function onReverbDecayChange(decayRate: number): void
+{
+    logger.debug(`onDelayTimeChange(): new value: ${decayRate}`);
+
+    monoSynth.getReverbEffect().setDecayRate(decayRate);
 }

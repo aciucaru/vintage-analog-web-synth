@@ -287,6 +287,11 @@ export class Settings
     public static readonly maxDistortionCurveConstantValue = Math.PI;
     public static readonly defaultDistortionCurveConstantValue = 0.01;
 
+    // settings for reverb effect ***********************************************************************
+    public static readonly minReverbDecayRate = 0.0;
+    public static readonly maxReverbDecayRate = 4.0;
+    public static readonly defaultReverbDecayRate = 1.0;
+
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
 }
