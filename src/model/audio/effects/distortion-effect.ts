@@ -16,30 +16,15 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-
 export class DistortionEffect extends BaseEffect
 {
-    // the input node of this effect
-    // private inputNode: AudioNode | null = null;
-
-    // private isEffectEnabled = false;
-
-    // atenuators for input and delay, these help obtain the on/off effect (they help turn the effect on/off)
-    // private inputOnOffGainNode: GainNode;
-    // private effectOnOffGainNode: GainNode;
-
-    // atenuators for input and delay, these help obtain the wet/dry effect
-    // private inputWetDryGainNode: GainNode;
-    // private effectWetDryGainNode: GainNode;
-
-    // the delay node itself and a feedback node
+    // the distortion node
     private distortionNode: WaveShaperNode;
+
+    // the parameters of the distorion effect
     private distortionAmount: number = Settings.defaultDistortionAmount;
     private distortionAngle: number = Settings.defaultDistortionCurveAngle;
     private distortionConstantValue: number = Settings.defaultDistortionCurveConstantValue;
-
-    // the final output ot this effect
-    // private outputGainNode: GainNode;
 
     private static readonly CURVE_SAMPLES_COUNT = 200;
 
