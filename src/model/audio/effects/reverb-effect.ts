@@ -2,7 +2,6 @@
 **
 ** Great thanks to these people for making this information available! */
 
-
 import { Settings } from "../../../constants/settings";
 import { BaseEffect } from "./base-effect";
 
@@ -30,7 +29,8 @@ export class ReverbEffect extends BaseEffect
         this.reverbNode = this.audioContext.createConvolver();
 
         this.reverbAudioBuffer = this.audioContext.createBuffer(1, ReverbEffect.BUFFER_DURATION_SECONDS, this.audioContext.sampleRate);
-        this.reverbNode.buffer = this.createImpulseResponse(ReverbEffect.BUFFER_DURATION_SECONDS, Settings.maxReverbDecayRate);
+        this.computeImpulseResponse(Settings.maxReverbDecayRate);
+        this.reverbNode.buffer = this.reverbAudioBuffer;
 
         // connect effect on/off nodes
         this.inputOnOffGainNode.connect(this.outputGainNode);
@@ -59,18 +59,16 @@ export class ReverbEffect extends BaseEffect
     //     return impulse;
     // }
 
-    private createImpulseResponse(secondsDuration: number, decayRate: number): AudioBuffer
+    private computeImpulseResponse(decayRate: number): void
     {
         // decay = 0... >1
-        const length = this.audioContext.sampleRate * secondsDuration;
+        const length = this.reverbAudioBuffer.length
         const impulseResponse = this.reverbAudioBuffer.getChannelData(0);
 
         for (let i = 0; i < length; i++)
         {
             impulseResponse[i] = (2 * Math.random() - 1) * Math.pow(1 - i/length, decayRate);
         }
-
-        return this.reverbAudioBuffer;
     }
 
     public setDecayRate(decayRate: number): boolean
@@ -80,16 +78,10 @@ export class ReverbEffect extends BaseEffect
             ReverbEffect.logger.debug(`setDecayRate(${decayRate})`);
 
             this.decayRate = decayRate;
-            
-            const length = this.audioContext.sampleRate * 1;
-            const impulseResponse = this.reverbAudioBuffer.getChannelData(0);
-    
-            for (let i = 0; i < length; i++)
-            {
-                impulseResponse[i] = (2 * Math.random() - 1) * Math.pow(1 - i/length, this.decayRate);
-            }
 
+            this.computeImpulseResponse(this.decayRate);
             this.reverbNode.buffer = this.reverbAudioBuffer;
+
             return true; // change was succesfull
         }
         else
