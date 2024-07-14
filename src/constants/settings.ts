@@ -267,17 +267,25 @@ export class Settings
     public static readonly defaultDelayFeedback = 0.0; // 0%
 
     // settings for distortion effect ***********************************************************************
+    // public static readonly minDistortionAmount = 0.0;
+    // public static readonly maxDistortionAmount = 400.0;
+    // public static readonly defaultDistortionAmount = 50.0;
+
     public static readonly minDistortionAmount = 0.0;
-    public static readonly maxDistortionAmount = 600.0;
-    public static readonly defaultDistortionAmount = 400.0;
+    public static readonly maxDistortionAmount = 20.0;
+    public static readonly defaultDistortionAmount = 10.0;
 
     public static readonly minDistortionCurveAngle = 1.0; // 1 deg
     public static readonly maxDistortionCurveAngle = 90.0; // 90 deg
     public static readonly defaultDistortionCurveAngle = 20.0; // 20 deg
 
-    public static readonly minDistortionCurveConstantValue = 1.0;
-    public static readonly maxDistortionCurveConstantValue = 20;
-    public static readonly defaultDistortionCurveConstantValue = Math.PI;
+    // public static readonly minDistortionCurveConstantValue = 0.0;
+    // public static readonly maxDistortionCurveConstantValue = 20.0;
+    // public static readonly defaultDistortionCurveConstantValue = Math.PI;
+
+    public static readonly minDistortionCurveConstantValue = -Math.PI;
+    public static readonly maxDistortionCurveConstantValue = Math.PI;
+    public static readonly defaultDistortionCurveConstantValue = 0.01;
 
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)

@@ -19,7 +19,7 @@
     <div style="grid-column: 1 / 4; grid-row: 5 / 6;">
         <Knob label={"Amount"} minValue={Settings.minDistortionAmount} maxValue={Settings.maxDistortionAmount}
             initialValue={Settings.defaultDistortionAmount}
-            step={0.1} decimals={1} onValueChange={effectsCallbacks.onDistortionAmountChange}></Knob>
+            step={0.01} decimals={2} onValueChange={effectsCallbacks.onDistortionAmountChange}></Knob>
     </div>
 
     <div style="grid-column: 5 / 8; grid-row: 5 / 6;">
@@ -31,7 +31,7 @@
     <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
         <Knob label={"Const"} minValue={Settings.minDistortionCurveConstantValue} maxValue={Settings.maxDistortionCurveConstantValue}
             initialValue={Settings.defaultDistortionCurveConstantValue}
-            step={0.1} decimals={1} onValueChange={effectsCallbacks.onDistortionCurveConstantValueChange}></Knob>
+            step={0.01} decimals={2} onValueChange={effectsCallbacks.onDistortionCurveConstantValueChange}></Knob>
     </div>
 
     <div style="grid-column: 5 / 8; grid-row: 7 / 8;">

@@ -59,7 +59,7 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         this.distortionWetDryGainNode.gain.setValueAtTime(Settings.defaultEffectWetDryGain, this.audioContext.currentTime);
         
         this.distortionNode = this.audioContext.createWaveShaper();
-        this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+        this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
@@ -87,71 +87,8 @@ export class DistortionEffect extends SingleInputBaseAudioNode
 
     public outputNode(): AudioNode { return this.outputGainNode; }
 
-    private makeDistortionCurve1(amount: number): Float32Array
-    {
-        const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
-
-        let x = 0.0;
-        for (let i = 0; i < curveSamples.length; i++)
-        {
-            x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
-
-            curveSamples[i] = (3 + amount) * Math.atan(Math.sinh(0.25 * x) * 5) / (Math.PI + amount * Math.abs(x));
-        }
-
-        return curveSamples;
-    }
-
-    private makeDistortionCurve2(amount: number): Float32Array
-    {
-        const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
-        const angle = 20 * Math.PI/180; // 20 degrees
-
-        let x = 0.0;
-        for (let i = 0; i < curveSamples.length; i++)
-        {
-            x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
-
-            curveSamples[i] = ( (3 + amount) * x * angle) / (Math.PI + amount * Math.abs(x));
-        }
-
-        return curveSamples;
-    }
-
-    private makeDistortionCurve3(amount: number): Float32Array
-    {
-        const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
-
-        let x = 0.0;
-        for (let i = 0; i < curveSamples.length; i++)
-        {
-            x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
-
-            curveSamples[i] = ( (Math.PI + amount) * x * (1 / 6.0) ) / (Math.PI + amount * Math.abs(x));
-        }
-
-        return curveSamples;
-    }
-
-    // good
-    private makeDistortionCurve4(amount: number): Float32Array
-    {
-        const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
-        const angle = 20 * Math.PI/180; // 20 degrees
-
-        let x = 0.0;
-        for (let i = 0; i < curveSamples.length; i++)
-        {
-            x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
-
-            curveSamples[i] = ( (Math.PI + amount) * x * angle) / (Math.PI + amount * Math.abs(x));
-        }
-
-        return curveSamples;
-    }
-
     // best version
-    private makeDistortionCurve5(amount: number, angle: number, constantValue: number): Float32Array
+    private makeDistortionCurve(amount: number, angle: number, constantValue: number): Float32Array
     {
         const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
         const angleDeg = angle * Math.PI/180; // 20 degrees
@@ -161,7 +98,11 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         {
             x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
 
-            curveSamples[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) );
+            // curveSamples[i] = (3 + amount) * Math.atan(Math.sinh(0.25 * x) * 5) / (Math.PI + amount * Math.abs(x)); // v1
+            // curveSamples[i] = ( (3 + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v2, pretty good
+            // curveSamples[i] = ( (Math.PI + amount) * x * (1.0 / 6.0) ) / (Math.PI + amount * Math.abs(x)); // v3
+            // curveSamples[i] = ( (Math.PI + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v4
+            curveSamples[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) ); // v5, good, most general
         }
 
         return curveSamples;
@@ -204,7 +145,7 @@ export class DistortionEffect extends SingleInputBaseAudioNode
 
             this.distortionAmount = distortionAmount;
 
-            this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
 
             return true; // change was succesfull
         }
@@ -223,7 +164,7 @@ export class DistortionEffect extends SingleInputBaseAudioNode
 
             this.distortionAngle = distortionCurveAngle;
 
-            this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
 
             return true; // change was succesfull
         }
@@ -240,9 +181,9 @@ export class DistortionEffect extends SingleInputBaseAudioNode
         {
             DistortionEffect.logger.debug(`setDistortionCurveConstantValue(${distortionCurveConstantValue})`);
 
-            this.distortionAngle= distortionCurveConstantValue;
+            this.distortionConstantValue = distortionCurveConstantValue;
 
-            this.distortionNode.curve = this.makeDistortionCurve5(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
 
             return true; // change was succesfull
         }
