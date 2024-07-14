@@ -26,6 +26,9 @@ export class DistortionEffect extends BaseEffect
     private distortionAngle: number = Settings.defaultDistortionCurveAngle;
     private distortionConstantValue: number = Settings.defaultDistortionCurveConstantValue;
 
+    // reusable buffer to hold distortion curve
+    private distortionCurveBuffer: Float32Array;
+
     private static readonly CURVE_SAMPLES_COUNT = 200;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "DistortionEffect", minLevel: Settings.minLogLevel });
@@ -33,9 +36,12 @@ export class DistortionEffect extends BaseEffect
     constructor(audioContext: AudioContext)
     {
         super(audioContext);
+
+        this.distortionCurveBuffer = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
         
         this.distortionNode = this.audioContext.createWaveShaper();
-        this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+        this.computeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+        this.distortionNode.curve = this.distortionCurveBuffer;
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
@@ -52,24 +58,21 @@ export class DistortionEffect extends BaseEffect
         this.inputWetDryGainNode.connect(this.outputGainNode);
     }
 
-    private makeDistortionCurve(amount: number, angle: number, constantValue: number): Float32Array
+    private computeDistortionCurve(amount: number, angle: number, constantValue: number): void
     {
-        const curveSamples = new Float32Array(DistortionEffect.CURVE_SAMPLES_COUNT);
-        const angleDeg = angle * Math.PI/180; // 20 degrees
+        const angleDeg = angle * Math.PI/180;
 
         let x = 0.0;
-        for (let i = 0; i < curveSamples.length; i++)
+        for (let i = 0; i < this.distortionCurveBuffer.length; i++)
         {
             x = 2.0 * i / DistortionEffect.CURVE_SAMPLES_COUNT - 1;
 
-            // curveSamples[i] = (3 + amount) * Math.atan(Math.sinh(0.25 * x) * 5) / (Math.PI + amount * Math.abs(x)); // v1
-            // curveSamples[i] = ( (3 + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v2, pretty good
-            // curveSamples[i] = ( (Math.PI + amount) * x * (1.0 / 6.0) ) / (Math.PI + amount * Math.abs(x)); // v3
-            // curveSamples[i] = ( (Math.PI + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v4
-            curveSamples[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) ); // v5, good, most general
+            // this.distortionCurveBuffer[i] = (3 + amount) * Math.atan(Math.sinh(0.25 * x) * 5) / (Math.PI + amount * Math.abs(x)); // v1
+            // this.distortionCurveBuffer[i] = ( (3 + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v2, pretty good
+            // this.distortionCurveBuffer[i] = ( (Math.PI + amount) * x * (1.0 / 6.0) ) / (Math.PI + amount * Math.abs(x)); // v3
+            // this.distortionCurveBuffer[i] = ( (Math.PI + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v4
+            this.distortionCurveBuffer[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) ); // v5, good, most general
         }
-
-        return curveSamples;
     }
 
     public setDistortionAmount(distortionAmount: number): boolean
@@ -80,7 +83,8 @@ export class DistortionEffect extends BaseEffect
 
             this.distortionAmount = distortionAmount;
 
-            this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.computeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.distortionNode.curve = this.distortionCurveBuffer;
 
             return true; // change was succesfull
         }
@@ -99,7 +103,8 @@ export class DistortionEffect extends BaseEffect
 
             this.distortionAngle = distortionCurveAngle;
 
-            this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.computeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.distortionNode.curve = this.distortionCurveBuffer;
 
             return true; // change was succesfull
         }
@@ -118,7 +123,8 @@ export class DistortionEffect extends BaseEffect
 
             this.distortionConstantValue = distortionCurveConstantValue;
 
-            this.distortionNode.curve = this.makeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.computeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
+            this.distortionNode.curve = this.distortionCurveBuffer;
 
             return true; // change was succesfull
         }
