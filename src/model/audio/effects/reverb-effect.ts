@@ -67,8 +67,48 @@ export class ReverbEffect extends BaseEffect
 
         for (let i = 0; i < length; i++)
         {
-            impulseResponse[i] = (2 * Math.random() - 1) * Math.pow(1 - i/length, decayRate);
+            impulseResponse[i] = (2 * Math.random() - 1) * Math.pow(1 - 1.0*i/length, decayRate);
+
+            // impulseResponse[i] = Math.random() * 2 - 1; // white noise
         }
+
+        // let b0 = 0.0;
+        // let b1 = 0.0;
+        // let b2 = 0.0;
+        // let b3 = 0.0;
+        // let b4 = 0.0;
+        // let b5 = 0.0;
+        // let b6 = 0.0;
+        // for (let i = 0; i < length; i++)
+        // {
+        //     // pink noise
+        //     let white = Math.random() * 2 - 1;
+
+        //     b0 = 0.99886 * b0 + white * 0.0555179;
+        //     b1 = 0.99332 * b1 + white * 0.0750759;
+        //     b2 = 0.96900 * b2 + white * 0.1538520;
+        //     b3 = 0.86650 * b3 + white * 0.3104856;
+        //     b4 = 0.55000 * b4 + white * 0.5329522;
+        //     b5 = -0.7616 * b5 - white * 0.0168980;
+
+        //     const gainCompens = 0.11; // (roughly) compensate for gain
+        //     impulseResponse[i] = gainCompens * (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362);
+
+        //     b6 = white * 0.115926; // update b6
+        // }
+
+        // let lastOut = 0.0;
+        // for (let i = 0; i < length; i++)
+        // {
+        //     // brown
+        //     const white = Math.random() * 2 - 1;
+
+        //     impulseResponse[i] = (lastOut + 0.02 * white) / 1.02;
+
+        //     lastOut = impulseResponse[i];
+            
+        //     impulseResponse[i] *= 3.5;
+        // }
     }
 
     public setDecayRate(decayRate: number): boolean
