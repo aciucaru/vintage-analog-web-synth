@@ -1,4 +1,5 @@
 /* Aknowledgements:
+** The algorithm for the reverb effect is inspired/adapted from the following sources:
 ** https://github.com/adelespinasse/reverbGen/tree/master
 
 ** Great thanks to these people for making this information available! */
