@@ -8,27 +8,27 @@
 </script>
 
 <div class="main-container">
-    <div class="border" style="grid-column: 1 / 6; grid-row: 1 / 4;"></div>
+    <div class="border" style="grid-column: 1 / 8; grid-row: 2 / 6;"></div>
+    <div class="title-background" style="grid-column: 1 / 8; grid-row: 1 / 3;">&nbsp;</div>
 
     <!-- title -->
-    <div class="title-background stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">&nbsp;</div>
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 5; grid-row: 1 / 2;">DELAY</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 3;">DELAY</div>
 
-    <div style="grid-column: 5 / 6; grid-row: 1 / 2;">
+    <div style="grid-column: 6 / 7; grid-row: 1 / 3;">
         <ToggleButton onToggleChange={effectsCallbacks.onDelayEffectToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
+    <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
         <Knob label={"Time"} minValue={Settings.minDelayTime} maxValue={Settings.maxDelayTime} initialValue={Settings.defaultDelayTime}
             step={0.01} decimals={0} displayFactor={1000} onValueChange={effectsCallbacks.onDelayTimeChange}></Knob>
     </div>
 
-    <div style="grid-column: 3 / 4; grid-row: 3 / 4;">
+    <div style="grid-column: 4 / 5; grid-row: 4 / 5;">
         <Knob label={"Feedback"} minValue={Settings.minDelayFeedback} maxValue={Settings.maxDelayFeedback} initialValue={Settings.defaultDelayFeedback}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayFeedbackLevelChange}></Knob>
     </div>
 
-    <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
+    <div style="grid-column: 6 / 7; grid-row: 4 / 5;">
         <Knob label={"Wet/Dry"} minValue={Settings.minEffectWetDryGain} maxValue={Settings.maxEffectWetDryGain} initialValue={Settings.defaultEffectWetDryGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDelayEffectAmountChange}></Knob>
     </div>
@@ -41,8 +41,8 @@
         box-sizing: border-box;
 
         display: grid;
-        grid-template-columns: auto 5px auto 5px auto;
-        grid-template-rows: auto 5px auto;
+        grid-template-columns: 10px auto 5px auto 5px auto 10px;
+        grid-template-rows: 10px auto 5px auto 5px;
 
         justify-items: center;
         align-items: stretch;
@@ -50,12 +50,8 @@
         align-content: space-between;
         gap: 0px;
 
-        margin: 0px;
-        padding: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-
-        border-radius: 2px;
+        margin: 10px;
+        padding: 0px;
     }
 
     .border
@@ -71,6 +67,9 @@
 
     .stretched-item
     {
+        margin: 0px;
+        padding: 0px;
+
         justify-self: stretch;
         align-self: center;
     }
@@ -78,9 +77,14 @@
     .title-background
     {
         margin: 0px;
-        padding: 0px;
+        padding: 4px;
+
+        justify-self: stretch;
+        align-self: center;
 
         background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
 
         font-size: 12px;
     }
@@ -89,6 +93,8 @@
     {
         margin: 0px;
         padding: 0px;
+
+        border-top-left-radius: 2px;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;

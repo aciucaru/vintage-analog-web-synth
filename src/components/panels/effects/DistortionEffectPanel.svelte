@@ -8,7 +8,7 @@
 </script>
 
 <div class="main-container">
-    <div class="border" style="grid-column: 1 / 10; grid-row: 2 / 5;"></div>
+    <div class="border" style="grid-column: 1 / 10; grid-row: 2 / 6;"></div>
     <div class="title-background" style="grid-column: 1 / 10; grid-row: 1 / 3;">&nbsp;</div>
 
     <!-- title -->
@@ -50,7 +50,7 @@
 
         display: grid;
         grid-template-columns: 10px auto 5px auto 5px auto 5px auto 10px;
-        grid-template-rows: 10px auto 5px auto;
+        grid-template-rows: 10px auto 5px auto 5px;
 
         justify-items: center;
         align-items: stretch;
