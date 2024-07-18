@@ -292,6 +292,27 @@ export class Settings
     public static readonly maxReverbDecayRate = 4.0;
     public static readonly defaultReverbDecayRate = 1.0;
 
+    // settings for compressor effect ***********************************************************************
+    public static readonly minCompressorThreshold = -100.0;
+    public static readonly maxCompressorThreshold = 0.0;
+    public static readonly defaultCompressorThreshold = -24.0;
+
+    public static readonly minCompressorKnee = 0.0;
+    public static readonly maxCompressorKnee = 40.0;
+    public static readonly defaultCompressorKnee = 30.0;
+
+    public static readonly minCompressorRatio = 1.0;
+    public static readonly maxCompressorRatio = 20.0;
+    public static readonly defaultCompressorRatio = 12.0;
+
+    public static readonly minCompressorAttack = 0.0;
+    public static readonly maxCompressorAttack = 1.0;
+    public static readonly defaultCompressorAttack = 0.003;
+
+    public static readonly minCompressorRelease = 0.0;
+    public static readonly maxCompressorRelease = 1.0;
+    public static readonly defaultCompressorRelease = 0.25;
+
     // settings for logging
     public static readonly minLogLevel = 0; // 0: log everything; 7: log nothing (max level is 6)
 }

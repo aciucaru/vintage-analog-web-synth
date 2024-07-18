@@ -26,6 +26,11 @@ export class CompressorEffect extends BaseEffect
         super(audioContext);
 
         this.compressorNode = this.audioContext.createDynamicsCompressor();
+        this.compressorNode.threshold.setValueAtTime(Settings.defaultCompressorThreshold, this.audioContext.currentTime);
+        this.compressorNode.knee.setValueAtTime(Settings.defaultCompressorKnee, this.audioContext.currentTime);
+        this.compressorNode.ratio.setValueAtTime(Settings.defaultCompressorRatio, this.audioContext.currentTime);
+        this.compressorNode.attack.setValueAtTime(Settings.defaultCompressorAttack, this.audioContext.currentTime);
+        this.compressorNode.release.setValueAtTime(Settings.defaultCompressorRelease, this.audioContext.currentTime);
 
         // connect effect on/off nodes
         this.inputOnOffGainNode.connect(this.outputGainNode);
