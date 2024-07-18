@@ -759,57 +759,57 @@
     </div>
 
     <!-- Oscillator 2 pulse width modulators ************************************************************************************************************* -->
-    <div class="mod-destination-title unselectable" style="grid-column: 16 / 17; grid-row: 13 / 15;">OSC2<br>PW</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 16 / 17; grid-row: 3 / 4;">OSC2<br>PW</div>
 
-    <div style="grid-column: 16 / 17; grid-row: 2 / 3;">
+    <div style="grid-column: 16 / 17; grid-row: 5 / 6;">
         <ToggleButton onToggleChange={onOscillator2PulseWidthLfo1Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 16 / 17; grid-row: 4 / 5;">
+    <div style="grid-column: 16 / 17; grid-row: 7 / 8;">
         <ToggleButton onToggleChange={onOscillator2PulseWidthLfo2Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 16 / 17; grid-row: 6 / 7;">
+    <div style="grid-column: 16 / 17; grid-row: 9 / 10;">
         <ToggleButton onToggleChange={onOscillator2PulseWidthLfo3Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 16 / 17; grid-row: 8 / 9;">
+    <div style="grid-column: 16 / 17; grid-row: 11 / 12;">
         <ToggleButton onToggleChange={onOscillator2PulseWidthLfo4Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 16 / 17; grid-row: 10 / 11;">
+    <div style="grid-column: 16 / 17; grid-row: 13 / 14;">
         <ToggleButton onToggleChange={onOscillator2PulseWidthLfo5Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 16 / 17; grid-row: 12 / 13;">
+    <div style="grid-column: 16 / 17; grid-row: 15 / 16;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
             step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator2PulseWidthLfoModAmountChange}></Knob>
     </div>
 
     <!-- Oscillator 2 unison detune modulators ************************************************************************************************************* -->
-    <div class="mod-destination-title unselectable" style="grid-column: 18 / 19; grid-row: 13 / 15;">OSC2<br>Detune</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 18 / 19; grid-row: 3 / 4;">OSC2<br>Detune</div>
 
-    <div style="grid-column: 18 / 19; grid-row: 2 / 3;">
+    <div style="grid-column: 18 / 19; grid-row: 5 / 6;">
         <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo1Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 4 / 5;">
+    <div style="grid-column: 18 / 19; grid-row: 7 / 8;">
         <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo2Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 6 / 7;">
+    <div style="grid-column: 18 / 19; grid-row: 9 / 10;">
         <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo3Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 8 / 9;">
+    <div style="grid-column: 18 / 19; grid-row: 11 / 12;">
         <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo4Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 10 / 11;">
+    <div style="grid-column: 18 / 19; grid-row: 13 / 14;">
         <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo5Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 18 / 19; grid-row: 12 / 13;">
+    <div style="grid-column: 18 / 19; grid-row: 15 / 16;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
             step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onOscillator2UnisonDetuneLfoModAmountChange}></Knob>
     </div>
@@ -817,58 +817,58 @@
 
     <!-- Sub Oscillator modulators *********************************************************************************************************************** -->
     <!-- Sub Oscillator frequency modulators ************************************************************************************************************* -->
-    <div class="mod-destination-title unselectable" style="grid-column: 20 / 21; grid-row: 13 / 15;">SUB<br>Freq</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 20 / 21; grid-row: 3 / 4;">SUB<br>Freq</div>
 
-    <div style="grid-column: 20 / 21; grid-row: 2 / 3;">
+    <div style="grid-column: 20 / 21; grid-row: 5 / 6;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 20 / 21; grid-row: 4 / 5;">
+    <div style="grid-column: 20 / 21; grid-row: 7 / 8;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 20 / 21; grid-row: 6 / 7;">
+    <div style="grid-column: 20 / 21; grid-row: 9 / 10;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 20 / 21; grid-row: 8 / 9;">
+    <div style="grid-column: 20 / 21; grid-row: 11 / 12;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 20 / 21; grid-row: 10 / 11;">
+    <div style="grid-column: 20 / 21; grid-row: 13 / 14;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 20 / 21; grid-row: 12 / 13;">
+    <div style="grid-column: 20 / 21; grid-row: 15 / 16;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
             step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onModAmountChange}></Knob>
     </div>
 
 
     <!-- Sub Oscillator amplitude modulators ************************************************************************************************************* -->
-    <div class="mod-destination-title unselectable" style="grid-column: 22 / 23; grid-row: 13 / 15;">SUB<br>Amp</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 22 / 23; grid-row: 3 / 4;">SUB<br>Amp</div>
 
-    <div style="grid-column: 22 / 23; grid-row: 2 / 3;">
+    <div style="grid-column: 22 / 23; grid-row: 5 / 6;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 4 / 5;">
+    <div style="grid-column: 22 / 23; grid-row: 7 / 8;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 6 / 7;">
+    <div style="grid-column: 22 / 23; grid-row: 9 / 10;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 8 / 9;">
+    <div style="grid-column: 22 / 23; grid-row: 11 / 12;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 10 / 11;">
+    <div style="grid-column: 22 / 23; grid-row: 13 / 14;">
         <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 22 / 23; grid-row: 12 / 13;">
+    <div style="grid-column: 22 / 23; grid-row: 15 / 16;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
             step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onModAmountChange}></Knob>
     </div>
@@ -876,29 +876,29 @@
 
     <!-- Filter modulators *********************************************************************************************************************** -->
     <!-- Filter cutoff frequency modulators ************************************************************************************************************* -->
-    <div class="mod-destination-title unselectable" style="grid-column: 24 / 25; grid-row: 13 / 15;">FILT<br>Cutoff</div>
+    <div class="mod-destination-title unselectable" style="grid-column: 24 / 25; grid-row: 3 / 4;">FILT<br>Cutoff</div>
 
-    <div style="grid-column: 24 / 25; grid-row: 2 / 3;">
+    <div style="grid-column: 24 / 25; grid-row: 5 / 6;">
         <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo1Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 24 / 25; grid-row: 4 / 5;">
+    <div style="grid-column: 24 / 25; grid-row: 7 / 8;">
         <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo2Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 24 / 25; grid-row: 6 / 7;">
+    <div style="grid-column: 24 / 25; grid-row: 9 / 10;">
         <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo3Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 24 / 25; grid-row: 8 / 9;">
+    <div style="grid-column: 24 / 25; grid-row: 11 / 12;">
         <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo4Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 24 / 25; grid-row: 10 / 11;">
+    <div style="grid-column: 24 / 25; grid-row: 13 / 14;">
         <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo5Toggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 24 / 25; grid-row: 12 / 13;">
+    <div style="grid-column: 24 / 25; grid-row: 15 / 16;">
         <Knob minValue={Settings.minLfoManagerModulationAmount} maxValue={Settings.maxLfoManagerModulationAmount} initialValue={Settings.defaultLfoManagerModulationAmount}
             step={0.01} decimals={0} displayFactor={100} knobWidth={32} onValueChange={onFilterCutoffFreqLfoModAmountChange}></Knob>
     </div>
