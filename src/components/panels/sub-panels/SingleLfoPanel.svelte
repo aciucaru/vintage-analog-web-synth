@@ -119,15 +119,11 @@
     {
         box-sizing: border-box;
 
-        height: 250px;
+        /* height: 250px; */
 
         display: grid;
-        grid-template-columns: 16px auto 5px auto 16px;
-        grid-template-rows: 16px
-                            5px auto
-                            5px auto 5px auto 5px auto 5px auto
-                            5px auto 5px
-                            16px;
+        grid-template-columns: auto 5px auto;
+        grid-template-rows: auto 5px auto 5px auto 5px auto 5px auto 5px auto;
 
         justify-items: stretch;
         align-items: center;
