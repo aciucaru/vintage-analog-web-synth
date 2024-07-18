@@ -986,8 +986,6 @@
         padding: 0px;
 
         border-radius: 2px;
-        background: linear-gradient(hsla(216, 20%, 30%, 0.7) 0%, hsla(207, 20%, 15%, 0.7) 50%),
-                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
     }
 
     .main-label

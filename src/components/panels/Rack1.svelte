@@ -48,6 +48,9 @@
 
         text-align: center;
 
-        background: linear-gradient(hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 50%);
+        /* background: linear-gradient(hsl(0, 0%, 0%) 0%, hsl(0, 0%, 0%) 50%); */
+
+        background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),
+                    url("../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
     }
 </style>
