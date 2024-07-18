@@ -7,20 +7,23 @@
 </script>
 
 <div class="main-container">
-    <!-- title -->
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;">REVERB</div>
+    <div class="border" style="grid-column: 1 / 6; grid-row: 2 / 6;"></div>
+    <div class="title-background" style="grid-column: 1 / 6; grid-row: 1 / 3;">&nbsp;</div>
 
-    <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
+    <!-- title -->
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 4; grid-row: 1 / 3;">REVERB</div>
+
+    <div style="grid-column: 4 / 5; grid-row: 1 / 3;">
         <ToggleButton onToggleChange={effectsCallbacks.onReverbEffectToggle}></ToggleButton>
     </div>
 
-    <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
+    <div style="grid-column: 2 / 3; grid-row: 4 / 5;">
         <Knob label={"Decay"} minValue={Settings.minReverbDecayRate} maxValue={Settings.maxReverbDecayRate}
             initialValue={Settings.defaultReverbDecayRate}
             step={0.01} decimals={2}  onValueChange={effectsCallbacks.onReverbDecayChange}></Knob>
     </div>
 
-    <div style="grid-column: 3 / 4; grid-row: 3 / 4;">
+    <div style="grid-column: 4 / 5; grid-row: 4 / 5;">
         <Knob label={"Wet/Dry"} minValue={Settings.minEffectWetDryGain} maxValue={Settings.maxEffectWetDryGain} initialValue={Settings.defaultEffectWetDryGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onReverbEffectAmountChange}></Knob>
     </div>
@@ -33,8 +36,8 @@
         box-sizing: border-box;
 
         display: grid;
-        grid-template-columns: auto 5px auto;
-        grid-template-rows: auto 5px auto;
+        grid-template-columns: 10px auto 5px auto 5px auto 5px auto 10px;
+        grid-template-rows: 10px auto 5px auto 5px;
 
         justify-items: center;
         align-items: stretch;
@@ -50,10 +53,39 @@
         border-radius: 2px;
     }
 
-    .stretched-item
+    .border
     {
         justify-self: stretch;
+        align-self: stretch;
+
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border: solid 1px hsl(224, 10%, 30%);
+        border-top: none;
+    }
+
+    .stretched-item
+    {
+        margin: 0px;
+        padding: 0px;
+
+        justify-self: stretch;
         align-self: center;
+    }
+
+    .title-background
+    {
+        margin: 0px;
+        padding: 4px;
+
+        justify-self: stretch;
+        align-self: center;
+
+        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+
+        font-size: 12px;
     }
 
     .title
@@ -61,7 +93,7 @@
         margin: 0px;
         padding: 0px;
 
-        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        border-top-left-radius: 2px;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;
@@ -69,20 +101,6 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;
-    }
-
-    .oscilloscope
-    {
-        border-radius: 3px;
-        border: solid 1px;
-        border-top-color: hsla(228, 47%, 0%, 0.2);
-        border-bottom-color: hsla(228, 47%, 40%, 0.2);
-        border-left-color: hsla(228, 47%, 10%, 0.2);
-        border-right-color: hsla(228, 47%, 80%, 0.2);
-
-        background: linear-gradient(hsl(216, 5%, 10%) 0%, hsl(207, 5%, 5%) 50%);
-
-        box-shadow: inset 1px 1px 4px 1px hsl(0, 0%, 0%);
     }
 
     .unselectable
