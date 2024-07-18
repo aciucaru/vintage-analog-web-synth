@@ -9,10 +9,10 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">FILTER</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">FILTER</div>
 
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
-    <div class="cutoff-background unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
+    <div class="cutoff-background stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
 
     <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
         <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
@@ -30,7 +30,7 @@
     </div>
 
     <!-- filter ADSR envelope -->
-    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER ENVELOPE</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER ENVELOPE</div>
     <div class="adsr-container" style="grid-column: 1 / 6; grid-row: 7 / 8;">
         <div>
             <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}
@@ -66,11 +66,11 @@
         /* height: 350px; */
 
         display: grid;
-        grid-template-columns: auto 5px auto 5px auto;
-        grid-template-rows: auto 5px auto 5px auto 5px auto;
+        grid-template-columns: auto 10px auto 10px auto;
+        grid-template-rows: auto 10px auto 10px auto 10px auto;
 
-        justify-items: stretch;
-        align-items: start;
+        justify-items: center;
+        align-items: stretch;
         justify-content: space-between;
         align-content: space-between;
         gap: 0px;
@@ -79,6 +79,11 @@
         padding: 5px;
 
         border-radius: 2px;
+    }
+
+    .stretched-item
+    {
+        justify-self: stretch;
     }
 
     .title

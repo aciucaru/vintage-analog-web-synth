@@ -11,7 +11,7 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">OSC 2</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">OSC 2</div>
 
     <!-- oscillator 2 oscilloscope -->
     <div class="oscilloscope" style="grid-column: 1 / 6; grid-row: 3 / 4;">
@@ -73,11 +73,11 @@
         /* height: 350px; */
 
         display: grid;
-        grid-template-columns: auto 5px auto 5px auto;
-        grid-template-rows: auto 5px auto 5px auto 5px auto;
+        grid-template-columns: auto 10px auto 10px auto;
+        grid-template-rows: auto 10px auto 10px auto 10px auto;
 
-        justify-items: stretch;
-        align-items: start;
+        justify-items: center;
+        align-items: stretch;
         justify-content: space-between;
         align-content: space-between;
         gap: 0px;
@@ -86,6 +86,11 @@
         padding: 5px;
 
         border-radius: 2px;
+    }
+
+    .stretched-item
+    {
+        justify-self: stretch;
     }
 
     .title
