@@ -2,9 +2,12 @@ import { Settings } from "../../constants/settings";
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
 import { NoInputBaseAudioNode } from "./no-input-base-audio-node";
 import { ModulationManager } from "./modulation/modulation-manager";
+import type { UnipolarLfo } from "./modulation/unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
+
 
 
 export class OscFilter extends NoInputBaseAudioNode
@@ -22,46 +25,56 @@ export class OscFilter extends NoInputBaseAudioNode
     private resonanceModulationManager: ModulationManager;
 
     // the ADSR envelope for the cutoff frequency
-    private cutoffAdsrEnvelope: AdsrEnvelope;
+    private cutoffAdsrEnvelope: SimpleAdsrEnvelope;
     // the gain node for the ADSR amount
     private envelopeAmountGainNode: GainNode;
     // the gain node for merging all frequency modulators
-    private mergeNode: GainNode;
+    // private mergeNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LowpassFilter", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, freqCutoffModulationManager: ModulationManager, resonanceModulationManager: ModulationManager)
+    // constructor(audioContext: AudioContext, freqCutoffModulationManager: ModulationManager, resonanceModulationManager: ModulationManager)
+    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>)
     {
         super(audioContext);
 
         this.filterNode = this.audioContext.createBiquadFilter();
         this.filterNode.type = "lowpass";
+        // set the cuttof frequency and detune to a default
+        this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
+        this.filterNode.detune.setValueAtTime(0, this.audioContext.currentTime);
 
         this.cutoffFreq = Settings.defaultFilterCutoffFreq;
         this.resonance = Settings.defaultFilterResonance;
         this.envelopeAmount = Settings.defaultFilterEnvelopeAmount;
         this.keyTrackingAmount = Settings.defaultFilterKeyTrackingAmount;
 
-        this.cutoffFreqModulationManager = freqCutoffModulationManager;
-        this.resonanceModulationManager = resonanceModulationManager;
+        // this.cutoffFreqModulationManager = freqCutoffModulationManager;
+        // this.resonanceModulationManager = resonanceModulationManager;
 
-        this.cutoffAdsrEnvelope = new AdsrEnvelope(this.audioContext);
+        this.cutoffFreqModulationManager = new ModulationManager(this.audioContext, lfoArray,
+                                            Settings.minFilterEnvelopeAmount, Settings.maxFilterEnvelopeAmount, Settings.defaultFilterEnvelopeAmount);
+        this.resonanceModulationManager = new ModulationManager(this.audioContext, lfoArray,
+                                            Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
+
+
+        this.cutoffAdsrEnvelope = new SimpleAdsrEnvelope(this.audioContext);
         this.envelopeAmountGainNode = this.audioContext.createGain();
         this.envelopeAmountGainNode.gain.setValueAtTime(Settings.defaultFilterEnvelopeAmount, this.audioContext.currentTime);
 
-        this.mergeNode = this.audioContext.createGain();
-        this.mergeNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
-
-        // set the cuttof frequency to a default
-        this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
+        // this.mergeNode = this.audioContext.createGain();
+        // this.mergeNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
 
         // connect modulators with filter frequency cutoff
         // this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
-        this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
-        this.envelopeAmountGainNode.connect(this.mergeNode);
-        this.cutoffFreqModulationManager.mainNode().connect(this.mergeNode);
+        // this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
+        // this.envelopeAmountGainNode.connect(this.mergeNode);
+        // this.cutoffFreqModulationManager.mainNode().connect(this.mergeNode);
+        // this.mergeNode.connect(this.filterNode.detune);
 
-        this.mergeNode.connect(this.filterNode.frequency);
+        this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
+        this.envelopeAmountGainNode.connect(this.filterNode.detune);
+        this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
 
         // connect modulators with resonance (Q factor)
         this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
@@ -192,7 +205,7 @@ export class OscFilter extends NoInputBaseAudioNode
     }
 
     // modulators getters
-    public getAdsrEnvelope(): AdsrEnvelope { return this.cutoffAdsrEnvelope; }
+    public getAdsrEnvelope(): SimpleAdsrEnvelope { return this.cutoffAdsrEnvelope; }
     public getCutoffFreqModulationManager(): ModulationManager { return this.cutoffFreqModulationManager; }
     public getResonanceModulationManager(): ModulationManager { return this.resonanceModulationManager; }
 }

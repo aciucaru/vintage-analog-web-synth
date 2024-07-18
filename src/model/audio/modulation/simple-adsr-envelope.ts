@@ -23,7 +23,7 @@ import type { ILogObj } from "tslog";
 ** The 'envelope amount' parameter is not inside the ADSR envelope, but inside the modulatable parameter.
 ** This means that maybe not all parameters accept an envelope. The parameters that accept an envelope must
 ** contain an 'evelope amount' parameter inside their implementation. */
-export class AdsrEnvelope extends NoInputBaseAudioNode
+export class SimpleAdsrEnvelope extends NoInputBaseAudioNode
 {
     private adsrGainNode: GainNode;
 
@@ -43,7 +43,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
 
     private hasReleasePhaseStarted: boolean = false;
     
-    private static readonly logger: Logger<ILogObj> = new Logger({name: "AdsrEnvelope", minLevel: Settings.minLogLevel});
+    private static readonly logger: Logger<ILogObj> = new Logger({name: "SimpleAdsrEnvelope", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext)
     {
@@ -64,12 +64,12 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
 
         if (duration > 0)
             timeDuration = duration;
-            // AdsrEnvelope.logger.debug(`startAndStop(${duration}): ADSR triggered for ${duration} seconds`);
+            // SimpleAdsrEnvelope.logger.debug(`startAndStop(${duration}): ADSR triggered for ${duration} seconds`);
         else
         {
             timeDuration = (60.0 / 120.0) / 4.0; // clip to 120 BPM 4/4
 
-            // AdsrEnvelope.logger.warn(`startAndStop(${duration}): ADSR triggerd, duration is negative, value clipped to ${timeDuration}`);
+            // SimpleAdsrEnvelope.logger.warn(`startAndStop(${duration}): ADSR triggerd, duration is negative, value clipped to ${timeDuration}`);
         }
 
         const currentTime = this.audioContext.currentTime; // the time when note was triggered
@@ -156,7 +156,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     /* This method represents the ADS portion of the envelope, it basically coressponds to the 'noteOn' event */
     public start(): void
     {
-        AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
+        SimpleAdsrEnvelope.logger.debug(`start(): ADSR triggered`);
 
         // the time when the current note was triggered
         const currentTime = this.audioContext.currentTime;
@@ -164,44 +164,14 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // the gain corresponding to the time the current note was triggered
         let currentTimeGain = 0.0;
 
-        // if the current note has started during the previous note's 'attack' phase
-        if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
-        {
-            currentTimeGain = this.computeAttackCurrentGain(currentTime);
-        }
-        // if the current note has started during the previous note's 'decay' phase
-        else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
-        {
-            currentTimeGain = this.computeDecayCurrentGain(currentTime);
-        }
-        /* if the current note has started after the previous note's 'decay' phase
-        ** here we have only 2 possibilities:
-        ** - we are in the 'sustain' phase of the previous note
-        ** - we are in the 'release' phase of the previous note */
-        else if (currentTime > this.decayEndTime)
-        {
-            // we check if we are in the 'sustain' phase or 'release' phase of the previous note
-            if (this.hasReleasePhaseStarted === false) // are we in the 'sustain' phase?
-            {
-                // here we are for sure in the sustain phase of the previorus note, and the gain is constant
-                currentTimeGain = this.sustainLevel;
-            }
-            else // we are in the 'release' phase of the previous note
-            {
-                // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
-                currentTimeGain = this.computeReleaseCurrentGain(currentTime);
-            }
-        }
         /* Ideal case: if the current note has started after the previous note's 'release' phase.
         ** This means that the previous note has finished playin completely and there should not be other remaining events. */
-        else if (currentTime > this.releaseEndTime)
-        {
-            // we are no longer in 'release' phase
-            this.hasReleasePhaseStarted = false;
 
-            // after the 'release' phase has finished, the gain will surely be at it's minimum level
-            currentTimeGain = Settings.minAdsrSustainLevel;
-        }
+        // we are no longer in 'release' phase
+        this.hasReleasePhaseStarted = false;
+
+        // after the 'release' phase has finished, the gain will surely be at it's minimum level
+        currentTimeGain = Settings.minAdsrSustainLevel;
 
         // compute intermediate times based on brand new current time
         const rampEndTime = this.audioContext.currentTime;
@@ -210,9 +180,11 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         const cancelationStartTime = checkPointTime + Settings.adsrSafetyDuration;
 
         // compute and set relevant times
-        this.attackStartTime = cancelationStartTime + Settings.adsrSafetyDuration; // save the attack start time
+        this.attackStartTime = currentTime; // save the attack start time
         this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
         this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+
+        this.adsrGainNode.gain.linearRampToValueAtTime(0, currentTime);
 
         /* Now that we have the correct starting gain value, we first schedule a value change to 'currentTimeGain' 
         ** and the we cancell all remaining events.
@@ -237,7 +209,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     /* This method represents the R (release) portion of the envelope, it basically coressponds to the 'noteOff' event */
     public stop(): void
     {
-        AdsrEnvelope.logger.debug(`stop(): stop triggered`);
+        SimpleAdsrEnvelope.logger.debug(`stop(): stop triggered`);
 
         // the time the 'noteOff' (stop) event was triggerd
         const currentTime = this.audioContext.currentTime; // the time when note was released
@@ -245,36 +217,11 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // the gain corresponding to the time the current 'noteOff' event was triggered
         let currentTimeGain = 0.0;
 
-        /* Release phase, lower gain to minimum.
-        **
-        ** It might be possible that the release phase has started before the attack-decay phase has finished, if
-        ** the user releases the key before these phases finish.
-        ** If we just add a 'release' event and not cancel all remaining events, the remaining events will trigger
-        ** as well, because, chronologically, they are scheduled AFTER this 'release' event.
-        ** In order to prevent this bug, we check if the release hapened before the attack was scheduled to end
-        ** and we cancel all remaining events: */
+        // we set the fact that the release phase has started
+        this.hasReleasePhaseStarted = true;
 
-        // if the release happened during the 'attack' phase of the previous note
-        if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
-        {
-            // compute the value at the time of the 'stop' phase, this is done by linear interpolation
-            currentTimeGain = this.computeAttackCurrentGain(currentTime);
-        }
-        // if the release happened during the 'decay phase' of the previous note
-        else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
-        {
-            currentTimeGain = this.computeDecayCurrentGain(currentTime);
-        }
-        /* Ideal case: if the current 'noteOff' event has started after the previous note's 'decay' phase.
-        ** This means we are in the 'sustain' phase, which where norammly the 'release' phase should be triggered.*/
-        else if (currentTime > this.decayEndTime)
-        {
-            // we set the fact that the release phase has started
-            this.hasReleasePhaseStarted = true;
-   
-            // in the 'sustain' phase, the gain is constant, so it's easy to compute
-            currentTimeGain = this.sustainLevel;
-        }
+        // in the 'sustain' phase, the gain is constant, so it's easy to compute
+        currentTimeGain = this.sustainLevel;
 
         // compute intermediate times
         const rampEndTime = this.audioContext.currentTime;
@@ -307,7 +254,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     ** but, unlike the previous 'start()' method */
     private startAtTime(startTime: number): void
     {
-        // AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
+        // SimpleAdsrEnvelope.logger.debug(`start(): ADSR triggered`);
 
         // the time when the current note was triggered
         const currentTime = startTime;
@@ -474,7 +421,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // just to be safe, cancell all events after thE release has finished
         // this.adsrGainNode.gain.cancelScheduledValues(this.releaseEndTime + Settings.adsrSafetyDuration);
 
-        // AdsrEnvelope.logger.debug(`start(): ADSR stoped`);
+        // SimpleAdsrEnvelope.logger.debug(`start(): ADSR stoped`);
     }
 
     public getAttackTime(): number { return this.attackDuration; }
@@ -483,14 +430,14 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     {
         if (Settings.minAdsrAttackDuration <= attackTime && attackTime <= Settings.maxAdsrAttackDuration)
         {
-            AdsrEnvelope.logger.debug(`setAttackTime(${attackTime})`);
+            SimpleAdsrEnvelope.logger.debug(`setAttackTime(${attackTime})`);
 
             this.attackDuration = attackTime;
             return true; // value change was succesfull
         }
         else
         {
-            AdsrEnvelope.logger.warn(`setAttackTime(${attackTime}): argument is outside bounds`);
+            SimpleAdsrEnvelope.logger.warn(`setAttackTime(${attackTime}): argument is outside bounds`);
             return false; // value change was not succesfull
         }
     }
@@ -501,14 +448,14 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     {
         if (Settings.minAdsrDecayDuration <= decayTime && decayTime <= Settings.maxAdsrDecayDuration)
         {
-            AdsrEnvelope.logger.debug(`setDecayTime(${decayTime})`);
+            SimpleAdsrEnvelope.logger.debug(`setDecayTime(${decayTime})`);
 
             this.decayDuration = decayTime;
             return true; // value change was succesfull
         }
         else
         {
-            AdsrEnvelope.logger.warn(`setDecayTime(${decayTime}): argument is outside bounds`);
+            SimpleAdsrEnvelope.logger.warn(`setDecayTime(${decayTime}): argument is outside bounds`);
             return false; // value change was not succesfull
         }
     }
@@ -519,14 +466,14 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     {
         if (Settings.minAdsrSustainLevel <= sustainLevel && sustainLevel <= Settings.maxAdsrSustainLevel)
         {
-            AdsrEnvelope.logger.debug(`setSustainLevel(${sustainLevel})`);
+            SimpleAdsrEnvelope.logger.debug(`setSustainLevel(${sustainLevel})`);
 
             this.sustainLevel = sustainLevel;
             return true; // value change was succesfull
         }
         else
         {
-            AdsrEnvelope.logger.warn(`setSustainLevel(${sustainLevel}): argument is outside bounds`);
+            SimpleAdsrEnvelope.logger.warn(`setSustainLevel(${sustainLevel}): argument is outside bounds`);
             return false; // value change was not succesfull
         }
     }
@@ -537,14 +484,14 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     {
         if (Settings.minAdsrReleaseDuration <= releaseTime && releaseTime <= Settings.maxAdsrReleaseDuration)
         {
-            AdsrEnvelope.logger.debug(`setReleaseTime(${releaseTime})`);
+            SimpleAdsrEnvelope.logger.debug(`setReleaseTime(${releaseTime})`);
 
             this.releaseDuration = releaseTime;
             return true; // value change was succesfull
         }
         else
         {
-            AdsrEnvelope.logger.warn(`setReleaseTime(${releaseTime}): argument is outside bounds`);
+            SimpleAdsrEnvelope.logger.warn(`setReleaseTime(${releaseTime}): argument is outside bounds`);
             return false; // value change was not succesfull
         }
     }
@@ -555,7 +502,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // first, check if the 'currentTime' is really in the 'attack' phase
         if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
         {
-            AdsrEnvelope.logger.debug(`computeAttackCurrentGain(${currentTime})`);
+            SimpleAdsrEnvelope.logger.debug(`computeAttackCurrentGain(${currentTime})`);
 
             let currentTimeGain = 0.0;
 
@@ -571,7 +518,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         }
         else
         {
-            AdsrEnvelope.logger.warn(`computeAttackCurrentGain(${currentTime}): currentTime is outside 'attack' phase`);
+            SimpleAdsrEnvelope.logger.warn(`computeAttackCurrentGain(${currentTime}): currentTime is outside 'attack' phase`);
             return -1; // computation was not succesfull
         }
     }
@@ -581,7 +528,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // first, check if the 'currentTime' is really in the 'attack' phase
         if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
         {
-            AdsrEnvelope.logger.debug(`computeDecayCurrentGain(${currentTime})`);
+            SimpleAdsrEnvelope.logger.debug(`computeDecayCurrentGain(${currentTime})`);
 
             let currentTimeGain = 0.0;
 
@@ -597,7 +544,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         }
         else
         {
-            AdsrEnvelope.logger.warn(`computeDecayCurrentGain(${currentTime}): currentTime is outside 'decay' phase`);
+            SimpleAdsrEnvelope.logger.warn(`computeDecayCurrentGain(${currentTime}): currentTime is outside 'decay' phase`);
             return -1; // computation was not succesfull
         }
     }
@@ -607,7 +554,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // first, check if the 'currentTime' is really in the 'attack' phase
         if (currentTime > this.decayEndTime)
         {
-            AdsrEnvelope.logger.debug(`computeReleaseCurrentGain(${currentTime})`);
+            SimpleAdsrEnvelope.logger.debug(`computeReleaseCurrentGain(${currentTime})`);
 
             let currentTimeGain = 0.0;
 
@@ -623,7 +570,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         }
         else
         {
-            AdsrEnvelope.logger.warn(`computeReleaseCurrentGain(${currentTime}): currentTime is outside 'release' phase`);
+            SimpleAdsrEnvelope.logger.warn(`computeReleaseCurrentGain(${currentTime}): currentTime is outside 'release' phase`);
             return -1; // computation was not succesfull
         }
     }

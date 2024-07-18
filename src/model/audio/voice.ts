@@ -68,7 +68,7 @@ export class Voice
         }
         
         this.filterCutoffFreqModulationManager = new ModulationManager(this.audioContext, lfoArray,
-                                                                        Settings.minFilterCutoffFreq, Settings.maxFilterCutoffFreq, Settings.defaultFilterCutoffFreq);
+                                                                        Settings.minFilterEnvelopeAmount, Settings.maxFilterEnvelopeAmount, Settings.defaultFilterEnvelopeAmount);
         this.filterResonanceModulationManager = new ModulationManager(this.audioContext, lfoArray,
                                                                         Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
 
@@ -80,7 +80,8 @@ export class Voice
 
         // instantiate the mixer, filter and ADSR envelope
         this.oscillatorMixer = new OscMixer(this.audioContext, this.multiShapeOscillator1, this.multiShapeOscillator2, this.subOscillator, this.noiseOscillator);
-        this.filterNode = new OscFilter(this.audioContext,  this.filterCutoffFreqModulationManager, this.filterResonanceModulationManager);
+        // this.filterNode = new OscFilter(this.audioContext,  this.filterCutoffFreqModulationManager, this.filterResonanceModulationManager);
+        this.filterNode = new OscFilter(this.audioContext, lfoArray);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
         // instantiate and connect the gain node that combines all oscillators that should pass through the cutoff filter

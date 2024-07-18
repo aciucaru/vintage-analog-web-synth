@@ -10,31 +10,31 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">SUB OSC</div>
+    <div class="title unselectable" style="grid-column: 1 / 4; grid-row: 1 / 2;">OSC 2</div>
 
     <!-- sub oscillator oscilloscope -->
-    <div class="oscilloscope" style="grid-column: 1 / 8; grid-row: 3 / 4;">
+    <div class="oscilloscope" style="grid-column: 1 / 4; grid-row: 3 / 4;">
         <AudioOscilloscope height={60}
             audioNode={monoSynth.getVoice().getSubOscillator().getAnalyserGainNode()}
             audioContext={monoSynth.getVoice().getAudioContext()}></AudioOscilloscope>
     </div>    
 
-    <div style="grid-column: 1 / 4; grid-row: 5 / 6;">
+    <div style="grid-column: 1 / 2; grid-row: 5 / 6;">
         <Knob label={"Octave"} minValue={Settings.minOscOctavesOffset} maxValue={Settings.maxOscOctavesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscOctavesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 5 / 8; grid-row: 5 / 6;">
+    <div style="grid-column: 3 / 4; grid-row: 5 / 6;">
         <Knob label={"Semitones"} minValue={Settings.minOscSemitonesOffset} maxValue={Settings.maxOscSemitonesOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscSemitonesOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
+    <div style="grid-column: 1 / 2; grid-row: 7 / 8;">
         <Knob label={"Cents"} minValue={Settings.minOscCentsOffset} maxValue={Settings.maxOscCentsOffset} initialValue={0}
             step={1} decimals={0} onValueChange={oscCallbacks.onSubOscCentsOffsetChange}></Knob>
     </div>
 
-    <div style="grid-column: 5 / 8; grid-row: 7 / 8;">
+    <div style="grid-column: 3 / 4; grid-row: 7 / 8;">
         <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onSubOscLevelChange}></Knob>
     </div>
@@ -45,18 +45,11 @@
     {
         box-sizing: border-box;
 
-        height: 350px;
+        /* height: 350px; */
 
         display: grid;
-        grid-template-columns: 16px
-                                5px
-                                auto 5px auto
-                                5px
-                                16px;
-        grid-template-rows: 16px
-                            5px auto 5px auto 5px auto
-                            5px
-                            16px;
+        grid-template-columns: auto 5px auto;
+        grid-template-rows: auto 5px auto 5px auto 5px auto;
 
         justify-items: stretch;
         align-items: start;
@@ -66,8 +59,6 @@
 
         margin: 1px;
         padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
 
         border-radius: 2px;
         background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),

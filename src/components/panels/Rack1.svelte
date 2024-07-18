@@ -18,11 +18,9 @@
     <NoiseOscillatorPanel></NoiseOscillatorPanel>
 
     <FilterSettingsPanel></FilterSettingsPanel>
-    <!-- <FilterEnvelopePanel></FilterEnvelopePanel> -->
-
     <VoiceSettingsPanel></VoiceSettingsPanel>
-    <!-- <VoiceEnvelopePanel></VoiceEnvelopePanel> -->
-    <AdsrEnvelopesPanel></AdsrEnvelopesPanel>
+
+    <!-- <AdsrEnvelopesPanel></AdsrEnvelopesPanel> -->
     
     <InvisibleKeyboard></InvisibleKeyboard>
 </div>

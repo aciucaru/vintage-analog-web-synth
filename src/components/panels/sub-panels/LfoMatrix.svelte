@@ -591,48 +591,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 4 / 5; grid-row: 13 / 15;">OSC1<br>Freq</div>
 
     <div style="grid-column: 4 / 5; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator1FreqLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1FreqLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator1FreqLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1FreqLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator1FreqLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1FreqLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator1FreqLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1FreqLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator1FreqLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1FreqLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 4 / 5; grid-row: 12 / 13;">
@@ -644,48 +619,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 6 / 7; grid-row: 13 / 15;">OSC1<br>Amp</div>
 
     <div style="grid-column: 6 / 7; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator1AmpLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1AmpLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator1AmpLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1AmpLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator1AmpLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1AmpLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator1AmpLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1AmpLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator1AmpLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1AmpLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 6 / 7; grid-row: 12 / 13;">
@@ -697,48 +647,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 8 / 9; grid-row: 13 / 15;">OSC1<br>PW</div>
 
     <div style="grid-column: 8 / 9; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 8 / 9; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 8 / 9; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 8 / 9; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 8 / 9; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1PulseWidthLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 8 / 9; grid-row: 12 / 13;">
@@ -750,48 +675,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 10 / 11; grid-row: 13 / 15;">OSC1<br>Detune</div>
 
     <div style="grid-column: 10 / 11; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 10 / 11; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 10 / 11; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 10 / 11; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 10 / 11; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator1UnisonDetuneLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 10 / 11; grid-row: 12 / 13;">
@@ -805,48 +705,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 12 / 13; grid-row: 13 / 15;">OSC2<br>Freq</div>
 
     <div style="grid-column: 12 / 13; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator2FreqLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator2FreqLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator2FreqLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator2FreqLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator2FreqLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2FreqLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 12 / 13; grid-row: 12 / 13;">
@@ -858,48 +733,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 14 / 15; grid-row: 13 / 15;">OSC2<br>Amp</div>
 
     <div style="grid-column: 14 / 15; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator2AmpLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator2AmpLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator2AmpLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator2AmpLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator2AmpLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2AmpLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 14 / 15; grid-row: 12 / 13;">
@@ -911,48 +761,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 16 / 17; grid-row: 13 / 15;">OSC2<br>PW</div>
 
     <div style="grid-column: 16 / 17; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 16 / 17; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 16 / 17; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 16 / 17; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 16 / 17; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2PulseWidthLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 16 / 17; grid-row: 12 / 13;">
@@ -964,48 +789,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 18 / 19; grid-row: 13 / 15;">OSC2<br>Detune</div>
 
     <div style="grid-column: 18 / 19; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 18 / 19; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 18 / 19; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 18 / 19; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 18 / 19; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onOscillator2UnisonDetuneLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 18 / 19; grid-row: 12 / 13;">
@@ -1019,48 +819,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 20 / 21; grid-row: 13 / 15;">SUB<br>Freq</div>
 
     <div style="grid-column: 20 / 21; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 20 / 21; grid-row: 12 / 13;">
@@ -1073,48 +848,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 22 / 23; grid-row: 13 / 15;">SUB<br>Amp</div>
 
     <div style="grid-column: 22 / 23; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 22 / 23; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 22 / 23; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 22 / 23; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 22 / 23; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 22 / 23; grid-row: 12 / 13;">
@@ -1128,48 +878,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 24 / 25; grid-row: 13 / 15;">FILT<br>Cutoff</div>
 
     <div style="grid-column: 24 / 25; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 24 / 25; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 24 / 25; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 24 / 25; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 24 / 25; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterCutoffFreqLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 24 / 25; grid-row: 12 / 13;">
@@ -1181,48 +906,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 26 / 27; grid-row: 13 / 15;">FILT<br>Res</div>
 
     <div style="grid-column: 26 / 27; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo1Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo1Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 26 / 27; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo2Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo2Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 26 / 27; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo3Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo3Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 26 / 27; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo4Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo4Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 26 / 27; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo5Toggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLowPassFilterResonanceLfo5Toggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 26 / 27; grid-row: 12 / 13;">
@@ -1234,48 +934,23 @@
     <div class="mod-destination-title unselectable" style="grid-column: 28 / 29; grid-row: 13 / 15;">FILT<br>Drive</div>
 
     <div style="grid-column: 28 / 29; grid-row: 2 / 3;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 4 / 5;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 6 / 7;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 8 / 9;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 10 / 11;">
-        <ToggleButton onToggleChange={onLfoToggle}>
-            <div slot="bgOnImage"   class="lfo-button-bg-on"></div>
-            <div slot="bgOffImage"  class="lfo-button-bg-off"></div>
-            <div slot="fgOnImage"   class="lfo-button-fg-on"></div>
-            <div slot="fgOffImage"  class="lfo-button-fg-off"></div>
-        </ToggleButton>
+        <ToggleButton onToggleChange={onLfoToggle}></ToggleButton>
     </div>
 
     <div style="grid-column: 28 / 29; grid-row: 12 / 13;">

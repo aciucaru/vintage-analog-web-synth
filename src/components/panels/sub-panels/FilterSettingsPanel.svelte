@@ -9,29 +9,29 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 8; grid-row: 1 / 2;">FILTER</div>
+    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">FILTER</div>
 
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
-    <div class="cutoff-background unselectable" style="grid-column: 1 / 3; grid-row: 3 / 4;"></div>
+    <div class="cutoff-background unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
 
-    <div style="grid-column: 2 / 4; grid-row: 3 / 4;">
+    <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
         <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
         step={1} decimals={0} onValueChange={filterCallbacks.onCutoffFreqChange}></Knob>
     </div>
 
-    <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
+    <div style="grid-column: 3 / 4; grid-row: 3 / 4;">
         <Knob label={"Reso"} minValue={Settings.minFilterResonance} maxValue={Settings.maxFilterResonance} initialValue={Settings.defaultFilterResonance}
             step={0.01} decimals={0} onValueChange={filterCallbacks.onResonanceChange}></Knob>
     </div>
 
-    <div style="grid-column: 7 / 8; grid-row: 3 / 4;">
+    <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
         <Knob label={"Env amnt"} minValue={Settings.minFilterEnvelopeAmount} maxValue={Settings.maxFilterEnvelopeAmount}
         initialValue={Settings.defaultFilterEnvelopeAmount} step={10} decimals={0} onValueChange={filterCallbacks.onEnvelopeAmountChange}></Knob>
     </div>
 
     <!-- filter ADSR envelope -->
-    <div class="title unselectable" style="grid-column: 3 / 10; grid-row: 5 / 6;">ADSR</div>
-    <div class="adsr-container" style="grid-column: 2 / 8; grid-row: 7 / 8;">
+    <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER ENVELOPE</div>
+    <div class="adsr-container" style="grid-column: 1 / 6; grid-row: 7 / 8;">
         <div>
             <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}
             initialValue={Settings.defaultAdsrFilterAttackDuration} decimals={1} height={120}
@@ -64,18 +64,11 @@
     {
         box-sizing: border-box;
 
-        height: 350px;
+        /* height: 350px; */
 
         display: grid;
-        grid-template-columns: 16px
-                                5px
-                                auto 5px auto 5px auto
-                                5px
-                                16px;
-        grid-template-rows: 16px
-                            5px auto 5px auto 5px auto
-                            5px
-                            16px;
+        grid-template-columns: auto 5px auto 5px auto;
+        grid-template-rows: auto 5px auto 5px auto 5px auto;
 
         justify-items: stretch;
         align-items: start;
@@ -120,6 +113,24 @@
         border-radius: 4px;
 
         background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+    }
+
+    .adsr-container
+    {
+        box-sizing: border-box;
+
+        display: flex;
+        flex-flow: row nowrap;
+        /* set alignment on main axis */
+        justify-content: flex-start;
+        /* set alingment on cross-axis */
+        align-items: center;
+        /* set space between flex lines */
+        align-content: center;
+        gap: 5px;
+
+        margin: 0px;
+        padding: 0px;
     }
 
     .unselectable

@@ -22,20 +22,20 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 4; grid-row: 1 / 2;">NOISE</div>
+    <div class="title unselectable" style="grid-column: 1 / 2; grid-row: 1 / 2;">NOISE</div>
 
     <!-- noise oscillator oscilloscope -->
-    <div class="oscilloscope" style="grid-column: 1 / 4; grid-row: 3 / 4;">
+    <div class="oscilloscope" style="grid-column: 1 / 2; grid-row: 3 / 4;">
         <AudioOscilloscope height={60}
             audioNode={monoSynth.getVoice().getNoiseOscillator().getAnalyserGainNode()}
             audioContext={monoSynth.getVoice().getAudioContext()}></AudioOscilloscope>
     </div>
 
-    <div class="toggle-buttons-group" style="grid-column: 1 / 4; grid-row: 5 / 6;">
+    <div class="toggle-buttons-group" style="grid-column: 1 / 2; grid-row: 5 / 6;">
         <RadioGroup radioDataArray={radioDataArray}></RadioGroup>
     </div>
 
-    <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
+    <div style="grid-column: 1 / 2; grid-row: 7 / 8;">
         <Knob label={"Volume"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={mixerCallbacks.onNoiseOscLevelChange}></Knob>
     </div>
@@ -46,20 +46,14 @@
     {
         box-sizing: border-box;
 
-        height: 350px;
+        /* height: 350px; */
 
         display: grid;
-        grid-template-columns: 16px
-                                5px
-                                auto
-                                16px;
-        grid-template-rows: 16px
-                            5px auto 5px auto 5px auto
-                            5px
-                            16px;
+        grid-template-columns: auto;
+        grid-template-rows: auto 5px auto 5px auto 5px auto;
 
-        justify-items: center;
-        align-items: center;
+        justify-items: stretch;
+        align-items: start;
         justify-content: space-between;
         align-content: space-between;
         gap: 0px;
