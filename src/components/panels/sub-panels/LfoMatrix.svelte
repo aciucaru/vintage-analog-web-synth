@@ -992,13 +992,14 @@
     {
         box-sizing: border-box;
 
-        /* writing-mode: vertical-rl;
-        text-orientation: mixed; */
-
         margin: 0px;
-        padding: 0px;
+        padding: 2px;
+        padding-left: 5px;
+        padding-right: 5px;
 
-        color: hsl(210, 40%, 10%);
+        background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
+
+        color: hsl(0, 0%, 85%);
         font-family: sans-serif;
         font-size: 12px;
         overflow: hidden;
@@ -1012,10 +1013,15 @@
         margin: 0px;
         padding: 2px;
 
-        background: linear-gradient(hsla(46, 100%, 88%, 0.5) 0%, hsla(46, 100%, 80%, 0.5) 50%),
-                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
+        /* background: linear-gradient(hsla(46, 100%, 88%, 0.5) 0%, hsla(46, 100%, 80%, 0.5) 50%),
+                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left; */
 
-        color: hsl(0, 0%, 20%);
+        background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
+
+        /* color: hsl(0, 0%, 20%);
+        font-family: sans-serif;
+        font-size: 12px; */
+        color: hsl(0, 0%, 85%);
         font-family: sans-serif;
         font-size: 12px;
         /* overflow: clip;
@@ -1027,6 +1033,8 @@
     {
         margin: 0px;
         padding: 2px;
+        padding-left: 5px;
+        padding-right: 5px;
 
         background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
 
@@ -1036,62 +1044,6 @@
         /* overflow: hidden; */
         /* white-space: nowrap; */
         /* text-overflow: clip; */
-    }
-
-    .lfo-button-bg-on
-    {
-        box-sizing: border-box;
-
-        width: 20px;
-        height: 16px;
-
-        padding: 0px;
-        margin: 0px;
-
-        border: solid 1px hsl(0, 0%, 10%);
-        background-color: hsl(0, 0%, 30%);
-    }
-
-    .lfo-button-bg-off
-    {
-        box-sizing: border-box;
-
-        width: 20px;
-        height: 16px;
-
-        padding: 0px;
-        margin: 0px;
-
-        border: solid 1px hsl(0, 0%, 10%);
-        background-color: hsl(0, 0%, 10%);
-    }
-
-    .lfo-button-fg-on
-    {
-        box-sizing: border-box;
-
-        width: 20px;
-        height: 16px;
-
-        padding: 0px;
-        margin: 0px;
-
-        border: solid 1px hsl(0, 0%, 20%);
-        background-image: radial-gradient(ellipse at center, hsl(210, 40%, 70%) 0%, hsl(210, 40%, 50%) 90%);
-    }
-
-    .lfo-button-fg-off
-    {
-        box-sizing: border-box;
-
-        width: 20px;
-        height: 16px;
-
-        padding: 0px;
-        margin: 0px;
-
-        border: solid 1px hsl(0, 0%, 20%);
-        background-image: radial-gradient(ellipse at center, hsl(0, 0%, 50%) 0%, hsl(0, 0%, 30%) 90%);
     }
 
     .unselectable
