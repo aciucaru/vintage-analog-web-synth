@@ -74,9 +74,6 @@
         margin: 0px;
         padding: 0px;
 
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 25%, 0.6), hsla(220, 20%, 20%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsla(220, 20%, 30%, 0.6), hsla(220, 20%, 25%, 0.6)); */
-        /* background: hsl(0, 0%, 20%) linear-gradient(160deg, hsl(45, 25%, 25%), hsl(45, 25%, 20%)); ok for orange */
         background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
 
         color: hsl(0, 0%, 85%);
@@ -92,7 +89,7 @@
         border-radius: 3px;
         border: solid 1px;
         border-top-color: hsla(228, 47%, 0%, 0.2);
-        border-bottom-color: hsla(228, 47%, 40%, 0.2);
+        border-bottom-color: hsla(228, 27%, 40%, 0.2);
         border-left-color: hsla(228, 47%, 10%, 0.2);
         border-right-color: hsla(228, 47%, 80%, 0.2);
 

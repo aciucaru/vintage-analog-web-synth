@@ -88,7 +88,7 @@
         border-radius: 3px;
         border: solid 1px;
         border-top-color: hsla(228, 47%, 0%, 0.2);
-        border-bottom-color: hsla(228, 47%, 40%, 0.2);
+        border-bottom-color: hsla(228, 27%, 40%, 0.2);
         border-left-color: hsla(228, 47%, 10%, 0.2);
         border-right-color: hsla(228, 47%, 80%, 0.2);
 
