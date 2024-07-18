@@ -25,6 +25,8 @@ export class OscFilter extends NoInputBaseAudioNode
     private cutoffAdsrEnvelope: AdsrEnvelope;
     // the gain node for the ADSR amount
     private envelopeAmountGainNode: GainNode;
+    // the gain node for merging all frequency modulators
+    private mergeNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LowpassFilter", minLevel: Settings.minLogLevel });
 
@@ -47,14 +49,20 @@ export class OscFilter extends NoInputBaseAudioNode
         this.envelopeAmountGainNode = this.audioContext.createGain();
         this.envelopeAmountGainNode.gain.setValueAtTime(Settings.defaultFilterEnvelopeAmount, this.audioContext.currentTime);
 
+        this.mergeNode = this.audioContext.createGain();
+        this.mergeNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
+
         // set the cuttof frequency to a default
         this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
 
         // connect modulators with filter frequency cutoff
         // this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
         this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
-        this.envelopeAmountGainNode.connect(this.filterNode.frequency);
-        this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.frequency);
+
+        this.envelopeAmountGainNode.connect(this.mergeNode);
+        this.cutoffFreqModulationManager.mainNode().connect(this.mergeNode);
+
+        this.mergeNode.connect(this.filterNode.frequency);
 
         // connect modulators with resonance (Q factor)
         this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
@@ -154,7 +162,7 @@ export class OscFilter extends NoInputBaseAudioNode
         {
             OscFilter.logger.debug(`setEnvelopeAmount(${amount})`);
 
-            const changeTime = this.audioContext.currentTime + 0.01; // + 10ms
+            const changeTime = this.audioContext.currentTime + 0.02; // + 20ms
             this.envelopeAmountGainNode.gain.linearRampToValueAtTime(amount, changeTime);
 
             return true; // change was succesfull

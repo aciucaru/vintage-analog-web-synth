@@ -5,7 +5,8 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 /* General-purpose ADSR envelope; this envelope does not have a predefined min and max value,
-** instead, it can vary between 0.0 , 1.0 and 'sustainLevel', where 'sustainLevel' can be maximum 1.0 (100%);
+** instead, it can vary between 0.0 and 1.0.
+** It also has a sustain level, where 'sustainLevel' can be maximum 1.0 (100%);
 **
 ** The ADSR enevelope is always between 0.0 and 1.0 and is first multiplied by the 'evelope amount',
 ** where the 'envelope amount' is no longer a relative value (between 0 and 1) but an absolute value,
@@ -155,7 +156,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     /* This method represents the ADS portion of the envelope, it basically coressponds to the 'noteOn' event */
     public start(): void
     {
-        // AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
+        AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
 
         // the time when the current note was triggered
         const currentTime = this.audioContext.currentTime;
@@ -236,6 +237,8 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     /* This method represents the R (release) portion of the envelope, it basically coressponds to the 'noteOff' event */
     public stop(): void
     {
+        AdsrEnvelope.logger.debug(`stop(): stop triggered`);
+
         // the time the 'noteOff' (stop) event was triggerd
         const currentTime = this.audioContext.currentTime; // the time when note was released
 
