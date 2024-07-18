@@ -23,6 +23,8 @@ export class OscFilter extends NoInputBaseAudioNode
 
     // the ADSR envelope for the cutoff frequency
     private cutoffAdsrEnvelope: AdsrEnvelope;
+    // the gain node for the ADSR amount
+    private envelopeAmountGainNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LowpassFilter", minLevel: Settings.minLogLevel });
 
@@ -42,12 +44,16 @@ export class OscFilter extends NoInputBaseAudioNode
         this.resonanceModulationManager = resonanceModulationManager;
 
         this.cutoffAdsrEnvelope = new AdsrEnvelope(this.audioContext);
+        this.envelopeAmountGainNode = this.audioContext.createGain();
+        this.envelopeAmountGainNode.gain.setValueAtTime(Settings.defaultFilterEnvelopeAmount, this.audioContext.currentTime);
 
         // set the cuttof frequency to a default
         this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
 
         // connect modulators with filter frequency cutoff
-        this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
+        // this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
+        this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
+        this.envelopeAmountGainNode.connect(this.filterNode.frequency);
         this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.frequency);
 
         // connect modulators with resonance (Q factor)
@@ -138,6 +144,24 @@ export class OscFilter extends NoInputBaseAudioNode
         else
         {
             OscFilter.logger.warn(`setQFactor(${qFactor}): value outside bounds`);
+            return false; // change was not succesfull
+        }
+    }
+
+    public setEnvelopeAmount(amount: number): boolean
+    {
+        if (Settings.minFilterEnvelopeAmount <= amount && amount <= Settings.maxFilterEnvelopeAmount)
+        {
+            OscFilter.logger.debug(`setEnvelopeAmount(${amount})`);
+
+            const changeTime = this.audioContext.currentTime + 0.01; // + 10ms
+            this.envelopeAmountGainNode.gain.linearRampToValueAtTime(amount, changeTime);
+
+            return true; // change was succesfull
+        }
+        else
+        {
+            OscFilter.logger.warn(`setEnvelopeAmount(${amount}): value outside bounds`);
             return false; // change was not succesfull
         }
     }

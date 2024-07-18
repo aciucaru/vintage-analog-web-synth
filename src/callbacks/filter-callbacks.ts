@@ -57,4 +57,6 @@ export function onReleaseChange(release: number): void
 export function onEnvelopeAmountChange(envelopeAmount: number): void
 {
     logger.debug(`onEnvelopeAmountChange(): new value: ${envelopeAmount}`);
+    
+    monoSynth.getVoice().getFilter().setEnvelopeAmount(envelopeAmount);
 }
