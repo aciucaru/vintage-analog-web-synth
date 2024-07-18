@@ -33,26 +33,25 @@
         <!-- amplitude ADSR envelope -->
         <div>
             <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}
-            initialValue={Settings.defaultAdsrVoiceAttackDuration} decimals={1} height={120}
+            initialValue={Settings.defaultAdsrVoiceAttackDuration} decimals={1}
             onValueChange={voiceCallbacks.onAttackChange}></VerticalFader>
         </div>
         
         <div>
             <VerticalFader label={"D"} minValue={Settings.minAdsrDecayDuration} maxValue={Settings.maxAdsrDecayDuration}
-            initialValue={Settings.defaultAdsrVoiceDecayDuration} decimals={1} height={120}
+            initialValue={Settings.defaultAdsrVoiceDecayDuration} decimals={1}
             onValueChange={voiceCallbacks.onDecayChange}></VerticalFader>
         </div>
 
         <div>
             <VerticalFader label={"S"} minValue={Settings.minAdsrSustainLevel} maxValue={Settings.maxAdsrSustainLevel}
             initialValue={Settings.defaultAdsrVoiceSustainLevel} displayFactor={100} step={0.01} decimals={0}
-            height={120}
             onValueChange={voiceCallbacks.onSustainChange}></VerticalFader>
         </div>
         
         <div>
             <VerticalFader label={"R"} minValue={Settings.minAdsrReleaseDuration} maxValue={Settings.maxAdsrReleaseDuration}
-            initialValue={Settings.defaultAdsrVoiceReleaseDuration} decimals={1} height={120}
+            initialValue={Settings.defaultAdsrVoiceReleaseDuration} decimals={1}
             onValueChange={voiceCallbacks.onReleaseChange}></VerticalFader>
         </div>
     </div>
