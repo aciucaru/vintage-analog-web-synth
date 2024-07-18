@@ -130,7 +130,7 @@
                             16px;
 
         justify-items: stretch;
-        align-items: start;
+        align-items: center;
         justify-content: space-between;
         align-content: space-between;
         gap: 0px;
@@ -160,6 +160,9 @@
 
     .waveform-icon
     {
+        width: 12px;
+        height: 12px;
+
         padding: 0px;
         margin: 0px;
         margin-left: 2px;
@@ -176,33 +179,21 @@
 
     .triangle-icon
     {
-        width: 16px;
-        height: 16px;
-
         background-image: url("../../../assets/icons/wave-triangle-single-opt.svg");
     }
 
     .saw-icon
     {
-        width: 16px;
-        height: 16px;
-
         background-image: url("../../../assets/icons/wave-saw-single-opt.svg");
     }
 
     .square-icon
     {
-        width: 16px;
-        height: 16px;
-
         background-image: url("../../../assets/icons/wave-pulse-single-opt.svg");
     }
 
     .sine-icon
     {
-        width: 16px;
-        height: 16px;
-
         background-image: url("../../../assets/icons/wave-sine-single-opt.svg");
     }
 

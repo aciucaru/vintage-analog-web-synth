@@ -280,7 +280,7 @@
 
     .knob-canvas
     {
-        background-image: url("../assets/knob/knob-128.png");
+        background-image: url("../assets/knob/knob-opt.svg");
         background-size: 100% auto;
         background-repeat: no-repeat;
         background-attachment: scroll;
