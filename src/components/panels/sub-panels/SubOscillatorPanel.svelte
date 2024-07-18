@@ -57,7 +57,7 @@
         align-content: space-between;
         gap: 0px;
 
-        margin: 1px;
+        margin: 0px;
         padding: 5px;
 
         border-radius: 2px;

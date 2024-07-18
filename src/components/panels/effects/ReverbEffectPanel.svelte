@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { monoSynth } from "../../../model/audio/synth";
     import * as effectsCallbacks from "../../../callbacks/effects-callbacks";
     
     import ToggleButton from "../../toggle/ToggleButton.svelte";
@@ -9,20 +8,19 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title unselectable" style="grid-column: 3 / 6; grid-row: 1 / 2;">Reverb</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;">REVERB</div>
 
-    <div style="grid-column: 1 / 4; grid-row: 3 / 4;">
+    <div style="grid-column: 3 / 4; grid-row: 1 / 2;">
         <ToggleButton onToggleChange={effectsCallbacks.onReverbEffectToggle}></ToggleButton>
-        <div>On/Off</div>
     </div>
 
-    <div style="grid-column: 1 / 4; grid-row: 5 / 6;">
+    <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
         <Knob label={"Decay"} minValue={Settings.minReverbDecayRate} maxValue={Settings.maxReverbDecayRate}
             initialValue={Settings.defaultReverbDecayRate}
             step={0.01} decimals={2}  onValueChange={effectsCallbacks.onReverbDecayChange}></Knob>
     </div>
 
-    <div style="grid-column: 1 / 4; grid-row: 7 / 8;">
+    <div style="grid-column: 3 / 4; grid-row: 3 / 4;">
         <Knob label={"Wet/Dry"} minValue={Settings.minEffectWetDryGain} maxValue={Settings.maxEffectWetDryGain} initialValue={Settings.defaultEffectWetDryGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onReverbEffectAmountChange}></Knob>
     </div>
@@ -34,33 +32,28 @@
     {
         box-sizing: border-box;
 
-        height: 350px;
-
         display: grid;
-        grid-template-columns: 16px
-                                5px
-                                auto 5px auto
-                                5px
-                                16px;
-        grid-template-rows: 16px
-                            5px auto 5px auto 5px auto
-                            5px
-                            16px;
+        grid-template-columns: auto 5px auto;
+        grid-template-rows: auto 5px auto;
 
-        justify-items: stretch;
-        align-items: start;
+        justify-items: center;
+        align-items: stretch;
         justify-content: space-between;
         align-content: space-between;
         gap: 0px;
 
-        margin: 1px;
+        margin: 0px;
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
 
         border-radius: 2px;
-        background: linear-gradient(hsla(216, 20%, 20%, 0.3) 0%, hsla(207, 20%, 5%, 0.3) 50%),
-                    url("../../../assets/texture/pad-texture-small-dark-blue-filt-seamless.jpg") repeat top left;
+    }
+
+    .stretched-item
+    {
+        justify-self: stretch;
+        align-self: center;
     }
 
     .title
