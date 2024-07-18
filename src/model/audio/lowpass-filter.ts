@@ -58,7 +58,6 @@ export class OscFilter extends NoInputBaseAudioNode
         // connect modulators with filter frequency cutoff
         // this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
         this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
-
         this.envelopeAmountGainNode.connect(this.mergeNode);
         this.cutoffFreqModulationManager.mainNode().connect(this.mergeNode);
 

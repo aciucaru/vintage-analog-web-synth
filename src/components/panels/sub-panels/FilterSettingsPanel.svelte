@@ -14,7 +14,7 @@
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
     <div class="cutoff-background unselectable" style="grid-column: 1 / 3; grid-row: 3 / 4;"></div>
 
-    <div style="grid-column: 1 / 4; grid-row: 3 / 4;">
+    <div style="grid-column: 2 / 4; grid-row: 3 / 4;">
         <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
         step={1} decimals={0} onValueChange={filterCallbacks.onCutoffFreqChange}></Knob>
     </div>
@@ -27,6 +27,35 @@
     <div style="grid-column: 7 / 8; grid-row: 3 / 4;">
         <Knob label={"Env amnt"} minValue={Settings.minFilterEnvelopeAmount} maxValue={Settings.maxFilterEnvelopeAmount}
         initialValue={Settings.defaultFilterEnvelopeAmount} step={10} decimals={0} onValueChange={filterCallbacks.onEnvelopeAmountChange}></Knob>
+    </div>
+
+    <!-- filter ADSR envelope -->
+    <div class="title unselectable" style="grid-column: 3 / 10; grid-row: 5 / 6;">ADSR</div>
+    <div class="adsr-container" style="grid-column: 2 / 8; grid-row: 7 / 8;">
+        <div>
+            <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}
+            initialValue={Settings.defaultAdsrFilterAttackDuration} decimals={1} height={120}
+            onValueChange={filterCallbacks.onAttackChange}></VerticalFader>
+        </div>
+
+        <div>
+            <VerticalFader label={"D"} minValue={Settings.minAdsrDecayDuration} maxValue={Settings.maxAdsrDecayDuration}
+            initialValue={Settings.defaultAdsrFilterDecayDuration} decimals={1} height={120}
+            onValueChange={filterCallbacks.onDecayChange}></VerticalFader>
+        </div>
+
+        <div>
+            <VerticalFader label={"S"} minValue={Settings.minAdsrSustainLevel} maxValue={Settings.maxAdsrSustainLevel}
+            initialValue={Settings.defaultAdsrFilterSustainLevel} displayFactor={100} step={0.01} decimals={0}
+            height={120}
+            onValueChange={filterCallbacks.onSustainChange}></VerticalFader>
+        </div>
+        
+        <div>
+            <VerticalFader label={"R"} minValue={Settings.minAdsrReleaseDuration} maxValue={Settings.maxAdsrReleaseDuration}
+            initialValue={Settings.defaultAdsrFilterReleaseDuration} decimals={1} height={120}
+            onValueChange={filterCallbacks.onReleaseChange}></VerticalFader>
+        </div>
     </div>
 </div>
 
