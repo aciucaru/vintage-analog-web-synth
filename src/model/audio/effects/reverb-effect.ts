@@ -1,5 +1,6 @@
 /* Aknowledgements:
-**
+** https://github.com/adelespinasse/reverbGen/tree/master
+
 ** Great thanks to these people for making this information available! */
 
 import { Settings } from "../../../constants/settings";
@@ -18,7 +19,12 @@ export class ReverbEffect extends BaseEffect
     private reverbAudioBuffer: AudioBuffer;
     private decayRate: number = Settings.defaultReverbDecayRate;
 
-    private static readonly BUFFER_DURATION_SECONDS = 1;
+    private static readonly DECAY_TIME = 1; // 1 second
+    private static readonly FADE_IN_TIME = 0.5; // 500 milisec
+    private static readonly TOTAL_TIME = ReverbEffect.DECAY_TIME * 1.5;
+    private decaySampleFrames = 0;
+    private fadeInSampleFrames = 0;
+    private totalSampleFrames = 0;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ReverbEffect", minLevel: Settings.minLogLevel });
 
@@ -26,9 +32,13 @@ export class ReverbEffect extends BaseEffect
     {
         super(audioContext);
 
+        this.decaySampleFrames = Math.round(ReverbEffect.DECAY_TIME * this.audioContext.sampleRate);
+        this.fadeInSampleFrames = Math.round(ReverbEffect.FADE_IN_TIME * this.audioContext.sampleRate);
+        this.totalSampleFrames = Math.round(ReverbEffect.TOTAL_TIME * this.audioContext.sampleRate);
+
         this.reverbNode = this.audioContext.createConvolver();
 
-        this.reverbAudioBuffer = this.audioContext.createBuffer(1, ReverbEffect.BUFFER_DURATION_SECONDS, this.audioContext.sampleRate);
+        this.reverbAudioBuffer = this.audioContext.createBuffer(1, this.totalSampleFrames, this.audioContext.sampleRate);
         this.computeImpulseResponse(Settings.maxReverbDecayRate);
         this.reverbNode.buffer = this.reverbAudioBuffer;
 
@@ -62,14 +72,25 @@ export class ReverbEffect extends BaseEffect
     private computeImpulseResponse(decayRate: number): void
     {
         // decay = 0... >1
-        const length = this.reverbAudioBuffer.length
         const impulseResponse = this.reverbAudioBuffer.getChannelData(0);
 
-        for (let i = 0; i < length; i++)
-        {
-            impulseResponse[i] = (2 * Math.random() - 1) * Math.pow(1 - 1.0*i/length, decayRate);
 
-            // impulseResponse[i] = Math.random() * 2 - 1; // white noise
+        // 60dB is a factor of 1 million in power, or 1000 in amplitude.
+        const decayBase = Math.pow(1.0 / 1000.0, 1.0 / this.decaySampleFrames);
+
+        let noiseSample = 0.0;
+        for (let i = 0; i < this.totalSampleFrames; i++)
+        {
+            noiseSample = 2 * Math.random() - 1; // white noise
+
+            impulseResponse[i] = noiseSample * Math.pow(decayBase, i);
+        }
+
+        for (let i = 0; i < this.fadeInSampleFrames; i++)
+        {
+            noiseSample = 2 * Math.random() - 1; // white noise
+
+            impulseResponse[i] *= (i / this.fadeInSampleFrames)**decayRate;
         }
 
         // let b0 = 0.0;
