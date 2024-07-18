@@ -30,7 +30,7 @@
     </div>
 
     <!-- filter ADSR envelope -->
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER ENVELOPE</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER &nbsp; ENVELOPE</div>
     <div class="adsr-container" style="grid-column: 1 / 6; grid-row: 7 / 8;">
         <div>
             <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}

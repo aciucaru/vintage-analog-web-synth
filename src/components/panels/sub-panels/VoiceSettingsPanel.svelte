@@ -28,7 +28,7 @@
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onTremoloChange}></Knob>
     </div>
 
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 8; grid-row: 5 / 6;">VOICE ENEVELOPE</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 8; grid-row: 5 / 6;">VOICE &nbsp; ENEVELOPE</div>
     <div class="adsr-container" style="grid-column: 1 / 8; grid-row: 7 / 8;">
         <!-- amplitude ADSR envelope -->
         <div>
