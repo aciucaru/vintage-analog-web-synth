@@ -43,4 +43,89 @@ export class CompressorEffect extends BaseEffect
         this.effectWetDryGainNode.connect(this.outputGainNode);
         this.inputWetDryGainNode.connect(this.outputGainNode);
     }
+
+    public setThreshold(threshold: number): boolean
+    {
+        if (Settings.minCompressorThreshold <= threshold && threshold <= Settings.maxCompressorThreshold)
+        {
+            CompressorEffect.logger.debug(`setThreshold(${threshold})`);
+
+            this.compressorNode.threshold.setValueAtTime(threshold, this.audioContext.currentTime);
+
+            return true; // change was succesfull;
+        }
+        else
+        {
+            CompressorEffect.logger.warn(`setThreshold(${threshold}): parameter outside bounds`);
+            return true; // change was not succesfull;
+        }
+    }
+
+    public setKnee(knee: number): boolean
+    {
+        if (Settings.minCompressorKnee <= knee && knee <= Settings.maxCompressorKnee)
+        {
+            CompressorEffect.logger.debug(`setKnee(${knee})`);
+
+            this.compressorNode.knee.setValueAtTime(knee, this.audioContext.currentTime);
+
+            return true; // change was succesfull;
+        }
+        else
+        {
+            CompressorEffect.logger.debug(`setKnee(${knee}): parameter outside bounds`);
+            return true; // change was not succesfull;
+        }
+    }
+
+    public setRatio(ratio: number): boolean
+    {
+        if (Settings.minCompressorRatio <= ratio && ratio <= Settings.maxCompressorRatio)
+        {
+            CompressorEffect.logger.debug(`setRatio(${ratio})`);
+
+            this.compressorNode.ratio.setValueAtTime(ratio, this.audioContext.currentTime);
+
+            return true; // change was succesfull;
+        }
+        else
+        {
+            CompressorEffect.logger.debug(`setRatio(${ratio}): parameter outside bounds`);
+            return true; // change was not succesfull;
+        }
+    }
+
+    public setAttack(attack: number): boolean
+    {
+        if (Settings.minCompressorAttack <= attack && attack <= Settings.maxCompressorAttack)
+        {
+            CompressorEffect.logger.debug(`setAttack(${attack})`);
+
+            this.compressorNode.attack.setValueAtTime(attack, this.audioContext.currentTime);
+
+            return true; // change was succesfull;
+        }
+        else
+        {
+            CompressorEffect.logger.debug(`setAttack(${attack}): parameter outside bounds`);
+            return true; // change was not succesfull;
+        }
+    }
+
+    public setRelease(release: number): boolean
+    {
+        if (Settings.minCompressorRelease <= release && release <= Settings.maxCompressorRelease)
+        {
+            CompressorEffect.logger.debug(`setRelease(${release})`);
+
+            this.compressorNode.release.setValueAtTime(release, this.audioContext.currentTime);
+
+            return true; // change was succesfull;
+        }
+        else
+        {
+            CompressorEffect.logger.debug(`setRelease(${release}): parameter outside bounds`);
+            return true; // change was not succesfull;
+        }
+    }
 }
