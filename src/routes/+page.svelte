@@ -14,6 +14,10 @@
         margin: 0px;
 
         color: hsl(0, 0%, 75%);
+        background: linear-gradient(hsl(216, 10%, 10%) 0%, hsl(207, 20%, 5%) 50%);
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
     }
 
     :global(body.dark-mode)
@@ -23,5 +27,9 @@
         margin: 0px;
 
         color: hsl(0, 0%, 75%);
+        background: linear-gradient(hsl(216, 10%, 10%) 0%, hsl(207, 20%, 5%) 50%);
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
     }
 </style>

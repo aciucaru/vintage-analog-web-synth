@@ -20,31 +20,32 @@
 
         /* width: min-content; */
         width: 100%;
+        height: 100%;
 
         display: flex;
         flex-flow: column nowrap;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
-        align-content: flex-start;
+        align-content: center;
 
         margin: 0px;
         padding: 0px;
 
         text-align: center;
 
-        background-color: hsl(0, 0%, 0%);
+        /* background: linear-gradient(hsl(216, 20%, 10%) 0%, hsl(207, 20%, 5%) 50%); */
     }
 
     .center-container
     {
         box-sizing: border-box;
 
-        /* width: 100%; */
+        width: min-content;
 
         display: flex;
         flex-flow: column nowrap;
         align-items: stretch;
-        justify-content: flex-start;
+        justify-content: stretch;
         align-content: flex-start;
 
         margin: 0px;
