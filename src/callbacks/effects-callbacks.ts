@@ -42,6 +42,7 @@ export function onDistortionCurveConstantValueChange(curveConstantValue: number)
     monoSynth.getDistortionEffect().setDistortionCurveConstantValue(curveConstantValue);
 }
 
+
 // delay effect callback *****************************************************************************
 export function onDelayEffectToggle(isToggled: boolean): void
 {
@@ -71,6 +72,7 @@ export function onDelayFeedbackLevelChange(feedbackLevel: number): void
     monoSynth.getDelayEffect().setFeedbackLevel(feedbackLevel);
 }
 
+
 // reverb effect callback *****************************************************************************
 export function onReverbEffectToggle(isToggled: boolean): void
 {
@@ -91,4 +93,48 @@ export function onReverbDecayChange(decayRate: number): void
     logger.debug(`onDelayTimeChange(): new value: ${decayRate}`);
 
     monoSynth.getReverbEffect().setDecayRate(decayRate);
+}
+
+
+// compressor effect callback *****************************************************************************
+export function onCompressorEffectToggle(isToggled: boolean): void
+{
+    logger.debug("onCompressorEffectToggle()");
+
+    monoSynth.getCompressorEffect().toggleEffect();
+}
+
+export function onCompressorThresholdChange(threshold: number): void
+{
+    logger.debug(`onCompressorThresholdChange(): new value: ${threshold}`);
+
+    monoSynth.getCompressorEffect().setThreshold(threshold);
+}
+
+export function onCompressorKneeChange(knee: number): void
+{
+    logger.debug(`onCompressorKneeChange(): new value: ${knee}`);
+
+    monoSynth.getCompressorEffect().setKnee(knee);
+}
+
+export function onCompressorRatioChange(ratio: number): void
+{
+    logger.debug(`onCompressorRatioChange(): new value: ${ratio}`);
+
+    monoSynth.getCompressorEffect().setRatio(ratio);
+}
+
+export function onCompressorAttackChange(attack: number): void
+{
+    logger.debug(`onCompressorAttackChange(): new value: ${attack}`);
+
+    monoSynth.getCompressorEffect().setAttack(attack);
+}
+
+export function onCompressorReleaseChange(release: number): void
+{
+    logger.debug(`onCompressorRelease Change(): new value: ${release}`);
+
+    monoSynth.getCompressorEffect().setRelease(release);
 }
