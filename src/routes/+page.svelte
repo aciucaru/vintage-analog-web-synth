@@ -14,8 +14,8 @@
         margin: 0px;
 
         color: hsl(0, 0%, 75%);
-        background: linear-gradient(hsl(216, 10%, 10%) 0%, hsl(207, 20%, 5%) 50%);
-        background-size: 100% auto;
+        background: linear-gradient(hsl(216, 10%, 10%) 0%, hsl(207, 20%, 1%) 50%);
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         background-attachment: scroll;
     }
@@ -27,8 +27,8 @@
         margin: 0px;
 
         color: hsl(0, 0%, 75%);
-        background: linear-gradient(hsl(216, 10%, 10%) 0%, hsl(207, 20%, 5%) 50%);
-        background-size: 100% auto;
+        background: linear-gradient(hsl(216, 10%, 10%) 0%, hsl(207, 20%, 1%) 50%);
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         background-attachment: scroll;
     }
