@@ -11,7 +11,7 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 8; grid-row: 1 / 2;">VOICE</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">VOICE</div>
 
     <div class="oscilloscope" style="grid-column: 1 / 4; grid-row: 3 / 4;">
         <AudioOscilloscope height={60}
@@ -23,13 +23,13 @@
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onVolumeChange}></Knob>
     </div>
 
-    <div style="grid-column: 7 / 8; grid-row: 3 / 4;">
+    <!-- <div style="grid-column: 7 / 8; grid-row: 3 / 4;">
         <Knob label={"Tremolo"} minValue={Settings.minMixerOscGain} maxValue={Settings.maxMixerOscGain} initialValue={Settings.minMixerOscGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={voiceCallbacks.onTremoloChange}></Knob>
-    </div>
+    </div> -->
 
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 8; grid-row: 5 / 6;">VOICE &nbsp; ENEVELOPE</div>
-    <div class="adsr-container" style="grid-column: 1 / 8; grid-row: 7 / 8;">
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">VOICE &nbsp; ENEVELOPE</div>
+    <div class="adsr-container" style="grid-column: 1 / 6; grid-row: 7 / 8;">
         <!-- amplitude ADSR envelope -->
         <div>
             <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}
@@ -65,7 +65,7 @@
         /* height: 350px; */
 
         display: grid;
-        grid-template-columns: auto 10px auto 10px auto 10px auto;
+        grid-template-columns: auto 10px auto 10px auto;
         grid-template-rows: auto 10px auto 10px auto 10px auto;
 
         justify-items: center;

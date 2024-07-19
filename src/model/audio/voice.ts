@@ -155,6 +155,10 @@ export class Voice
         this.voiceAdsrEnvelope.start();
         // and then trigger the ADSR envelopr for the filter as well
         this.filterNode.getAdsrEnvelope().start();
+
+        // const currentTime = this.audioContext.currentTime;
+        // this.voiceAdsrEnvelope.startAtTime(currentTime);
+        // this.filterNode.getAdsrEnvelope().startAtTime(currentTime);
     }
 
     public noteOff(): void

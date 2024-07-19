@@ -304,8 +304,8 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     }
 
     /* This method represents the ADS portion of the ADSR envelope, it basically coressponds to the 'noteOn' event,
-    ** but, unlike the previous 'start()' method */
-    private startAtTime(startTime: number): void
+    ** but, unlike the previous 'start()' method, it starts at the specified time */
+    public startAtTime(startTime: number): void
     {
         // AdsrEnvelope.logger.debug(`start(): ADSR triggered`);
 

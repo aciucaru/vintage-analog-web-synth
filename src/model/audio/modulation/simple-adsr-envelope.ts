@@ -199,11 +199,11 @@ export class SimpleAdsrEnvelope extends NoInputBaseAudioNode
         ** we use linear ramp for this, because exponential ramp does not seem to work properly, it instead delays the value;
         ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.attackStartTime); // works better without
-        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel * (-2000), this.attackEndTime);
 
         // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
         // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
-        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel * (-2000), this.decayEndTime);
     }
 
     /* This method represents the R (release) portion of the envelope, it basically coressponds to the 'noteOff' event */
@@ -238,21 +238,21 @@ export class SimpleAdsrEnvelope extends NoInputBaseAudioNode
         ** and the we cancell all remaining events.
         ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
         ** before the cancelation, which is the value of this next line: */
-        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
-        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, checkPointTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain * (-2000), rampEndTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain * (-2000), checkPointTime);
 
         // cancel all remaining events
         this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
 
         // then start the actual 'release' phase by ramping down to the minimum possible
         // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
-        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, this.releaseStartTime);
+        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain * (-2000), this.releaseStartTime);
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
     }
 
     /* This method represents the ADS portion of the ADSR envelope, it basically coressponds to the 'noteOn' event,
     ** but, unlike the previous 'start()' method */
-    private startAtTime(startTime: number): void
+    public startAtTime(startTime: number): void
     {
         // SimpleAdsrEnvelope.logger.debug(`start(): ADSR triggered`);
 

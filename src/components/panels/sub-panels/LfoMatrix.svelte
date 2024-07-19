@@ -993,7 +993,7 @@
         box-sizing: border-box;
 
         margin: 0px;
-        padding: 2px;
+        padding: 5px;
         padding-left: 5px;
         padding-right: 5px;
 
@@ -1011,12 +1011,9 @@
     .mod-destination-title
     {
         margin: 0px;
-        padding: 2px;
+        padding: 5px;
 
-        /* background: linear-gradient(hsla(46, 100%, 88%, 0.5) 0%, hsla(46, 100%, 80%, 0.5) 50%),
-                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left; */
-
-        background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
+        /* background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left; */
 
         /* color: hsl(0, 0%, 20%);
         font-family: sans-serif;
@@ -1036,7 +1033,7 @@
         padding-left: 5px;
         padding-right: 5px;
 
-        background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
+        /* background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left; */
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;

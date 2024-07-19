@@ -142,7 +142,7 @@
     .title
     {
         margin: 0px;
-        padding: 0px;
+        padding: 5px;
 
         background: url("../../../assets/texture/pad-texture-small-light-blue-filt-seamless.jpg") repeat top left;
 

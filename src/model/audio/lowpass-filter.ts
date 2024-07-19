@@ -72,8 +72,9 @@ export class OscFilter extends NoInputBaseAudioNode
         // this.cutoffFreqModulationManager.mainNode().connect(this.mergeNode);
         // this.mergeNode.connect(this.filterNode.detune);
 
-        this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
-        this.envelopeAmountGainNode.connect(this.filterNode.detune);
+        // this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
+        // this.envelopeAmountGainNode.connect(this.filterNode.detune);
+        this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.detune);
         this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
 
         // connect modulators with resonance (Q factor)

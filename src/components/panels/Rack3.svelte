@@ -3,6 +3,7 @@
     import DistortionEffectPanel from "./effects/DistortionEffectPanel.svelte";
     import DelayEffectPanel from "./effects/DelayEffectPanel.svelte";
     import ReverbEffectPanel from "./effects/ReverbEffectPanel.svelte";
+    import CompressorEffectPanel from "./effects/CompressorEffectPanel.svelte";
 </script>
 
 <div class="main-container">
@@ -10,6 +11,7 @@
     <DistortionEffectPanel></DistortionEffectPanel>
     <DelayEffectPanel></DelayEffectPanel>
     <ReverbEffectPanel></ReverbEffectPanel>
+    <CompressorEffectPanel></CompressorEffectPanel>
 </div>
 
 
