@@ -11,9 +11,8 @@ This synthesizer has the folowing features:
 * a noise oscillator (white, pink or brown noise)
 * a sine sub-oscillator, that overpasses the filter
 * a low pass filter with cutoff frequency and resonance
-* 2 ADSR envelopes: one for the filter and one for the volume/amplitude
+* one ADSR envelope for the volume/amplitude
 * 5 LFOs which can be mixed together in the "LFO Matrix"
-* sequencer with 16 steps
 
 ### License
 The source code is licensed under the MIT license.
