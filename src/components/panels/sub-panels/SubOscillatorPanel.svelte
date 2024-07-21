@@ -10,6 +10,7 @@
 
 <div class="main-container">
     <!-- title -->
+    <div class="border" style="grid-column: 1 / 4; grid-row: 1 / 8;"></div>
     <div class="title stretched-item unselectable" style="grid-column: 1 / 4; grid-row: 1 / 2;">SUB OSC</div>
 
     <!-- sub oscillator oscilloscope -->
@@ -61,6 +62,20 @@
         padding: 5px;
 
         border-radius: 2px;
+    }
+
+    .border
+    {
+        margin: 0px;
+        padding: 0px;
+
+        justify-self: stretch;
+        align-self: stretch;
+
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border: solid 1px hsl(224, 10%, 30%);
+        border-top: none;
     }
 
     .stretched-item

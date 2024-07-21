@@ -9,7 +9,8 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">FILTER</div>
+    <div class="border" style="grid-column: 1 / 2; grid-row: 1 / 6;"></div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 1 / 2;">FILTER</div>
 
     <div class="cutoff-background stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
 
@@ -79,7 +80,7 @@
 
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: auto 10px auto 10px auto 10px auto;
+        grid-template-rows: auto 10px auto 10px auto;
 
         /* grid-template-columns: auto 10px auto 10px auto;
         grid-template-rows: auto 10px auto 10px auto 10px auto; */
@@ -94,6 +95,20 @@
         padding: 5px;
 
         border-radius: 2px;
+    }
+
+    .border
+    {
+        margin: 0px;
+        padding: 0px;
+
+        justify-self: stretch;
+        align-self: stretch;
+
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border: solid 1px hsl(224, 10%, 30%);
+        border-top: none;
     }
 
     .stretched-item
