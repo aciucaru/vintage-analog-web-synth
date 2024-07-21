@@ -194,7 +194,7 @@ export class Voice
             const currentTime = this.audioContext.currentTime;
 
             // set the new value
-            this.outputGainNode.gain.linearRampToValueAtTime(gain / 2.0, currentTime + 0.1);
+            this.outputGainNode.gain.linearRampToValueAtTime(gain, currentTime + 0.1);
         }
         else
             Voice.logger.warn(`setGain(${gain}): value outside bounds`);
