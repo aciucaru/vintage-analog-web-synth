@@ -9,7 +9,7 @@
 
 <div class="main-container">
     <!-- title -->
-    <div class="border" style="grid-column: 1 / 2; grid-row: 1 / 6;"></div>
+    <!-- <div class="border" style="grid-column: 1 / 2; grid-row: 1 / 6;"></div>
     <div class="title stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 1 / 2;">FILTER</div>
 
     <div class="cutoff-background stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
@@ -22,10 +22,12 @@
     <div style="grid-column: 1 / 2; grid-row: 5 / 6;">
         <Knob label={"Reso"} minValue={Settings.minFilterResonance} maxValue={Settings.maxFilterResonance} initialValue={Settings.defaultFilterResonance}
             step={0.01} decimals={0} onValueChange={filterCallbacks.onResonanceChange}></Knob>
-    </div>
+    </div> -->
 
+
+    
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
-    <!-- <div class="cutoff-background stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
+    <div class="cutoff-background stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
 
     <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
         <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
@@ -40,10 +42,10 @@
     <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
         <Knob label={"Env amnt"} minValue={Settings.minFilterEnvelopeAmount} maxValue={Settings.maxFilterEnvelopeAmount}
         initialValue={Settings.defaultFilterEnvelopeAmount} step={10} decimals={0} onValueChange={filterCallbacks.onEnvelopeAmountChange}></Knob>
-    </div> -->
+    </div>
 
     <!-- filter ADSR envelope -->
-    <!-- <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER &nbsp; ENVELOPE</div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 5 / 6;">FILTER &nbsp; ENVELOPE</div>
     <div class="adsr-container" style="grid-column: 1 / 6; grid-row: 7 / 8;">
         <div>
             <VerticalFader label={"A"} minValue={Settings.minAdsrAttackDuration} maxValue={Settings.maxAdsrAttackDuration}
@@ -68,7 +70,7 @@
             initialValue={Settings.defaultAdsrFilterReleaseDuration} decimals={1}
             onValueChange={filterCallbacks.onReleaseChange}></VerticalFader>
         </div>
-    </div> -->
+    </div>
 </div>
 
 <style>

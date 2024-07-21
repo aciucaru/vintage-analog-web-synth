@@ -52,8 +52,12 @@ export class OscFilter extends NoInputBaseAudioNode
         // this.cutoffFreqModulationManager = freqCutoffModulationManager;
         // this.resonanceModulationManager = resonanceModulationManager;
 
+        const useFixedModulationRanges = false;
+        const lowerModulationFixedRange = Settings.minFilterLfoAmount;
+        const upperModulationFixedRange = Settings.maxFilterLfoAmount;
         this.cutoffFreqModulationManager = new ModulationManager(this.audioContext, lfoArray,
-                                            Settings.minFilterEnvelopeAmount, Settings.maxFilterEnvelopeAmount, Settings.defaultFilterEnvelopeAmount);
+                                            Settings.minFilterEnvelopeAmount, Settings.maxFilterEnvelopeAmount, Settings.defaultFilterEnvelopeAmount,
+                                            useFixedModulationRanges, lowerModulationFixedRange, upperModulationFixedRange);
         this.resonanceModulationManager = new ModulationManager(this.audioContext, lfoArray,
                                             Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
 

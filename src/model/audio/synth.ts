@@ -54,10 +54,10 @@ export class MonoSynth
         this.compressorEffect.connectInput(this.reverbEffect.outputNode());
         this.compressorEffect.outputNode().connect(this.outputGainNode);
 
-        this.testVoice.outputNode().connect(this.audioContext.destination);
+        // this.testVoice.outputNode().connect(this.audioContext.destination);
 
         // connect the main output gain to the audio context destination
-        // this.outputGainNode.connect(this.audioContext.destination);
+        this.outputGainNode.connect(this.audioContext.destination);
     }
 
     public getVoice(): Voice { return this.voice; }

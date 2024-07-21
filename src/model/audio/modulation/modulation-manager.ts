@@ -16,11 +16,11 @@ export class ModulationManager extends NoInputBaseAudioNode
     private mergerGainNode: GainNode;
 
     // the LFO modulation amount, in normalized form (between -1.0 and 1.0, where 0.0 means no modulation)
-    private lfoModulationAmount = 0; // 0% (no modulation)
+    // private lfoModulationAmount = 0; // 0% (no modulation)
 
     /* The limits of the modulated parameter, in absolute value (not in percentages).
-    ** These are the limits between which the modulated parameter varies, there are not the limits of the modulator.
-    ** The modulator (ParameterManager) needs to know these limits, in order to not exceed the limits of the modulated parameter. */
+    ** These are the limits between which the modulated parameter may vary, there are not the limits of the modulator.
+    ** The modulator (ModulationManager) needs to know these limits, in order to not exceed the limits of the modulated parameter. */
     private parameterLowerLimit: number;
     private parameterUpperLimit: number;
     // the current value of the modulated parameter
@@ -79,7 +79,7 @@ export class ModulationManager extends NoInputBaseAudioNode
         {
             ModulationManager.logger.debug(`setNormalizedModulationAmount(${normalizedModulationAmount})`);
 
-            this.lfoModulationAmount = normalizedModulationAmount;
+            // this.lfoModulationAmount = normalizedModulationAmount;
 
             this.lfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
 

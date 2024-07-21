@@ -20,7 +20,7 @@ export class LfoManager extends NoInputBaseAudioNode
     ** basically a multiplier that multiplies the merged LFOs signal).
     **
     ** The gain of this node is computed as below:
-    ** mergerGainNode.gain = (1.0 / numberOfEnabledLfos) * modulationAmount */
+    ** mergerGainNode.gain = (1.0 / numberOfEnabledLfos) * modulationAmount (when 'numberOfEnabledLfos' is different than zero) */
     private mergerGainNode: GainNode;
 
     // how many LFOs are enabled
