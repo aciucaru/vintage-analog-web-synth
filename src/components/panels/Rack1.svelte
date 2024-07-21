@@ -6,10 +6,12 @@
 
     import FilterSettingsPanel from "./sub-panels/FilterSettingsPanel.svelte";
     import VoiceSettingsPanel from "./sub-panels/VoiceSettingsPanel.svelte";
-    import TestOscillatorPanel from "./sub-panels/TestOscillatorPanel.svelte";
     import AdsrEnvelopesPanel from "./sub-panels/AdsrEnvelopesPanel.svelte";
-
     import InvisibleKeyboard from "../InvisibleKeyboard.svelte";
+
+    import TestOscillatorPanel from "./sub-panels/TestOscillatorPanel.svelte";
+    import TestFilterSettingsPanel from "./sub-panels/TestFilterSettingsPanel.svelte";
+    import TestInvisibleKeyboard from "../TestInvisibleKeyboard.svelte";
 </script>
 
 <div class="main-container">
@@ -23,8 +25,10 @@
     <!-- <AdsrEnvelopesPanel></AdsrEnvelopesPanel> -->
 
     <TestOscillatorPanel></TestOscillatorPanel>
+    <TestFilterSettingsPanel></TestFilterSettingsPanel>
     
-    <InvisibleKeyboard></InvisibleKeyboard>
+    <!-- <InvisibleKeyboard></InvisibleKeyboard> -->
+    <TestInvisibleKeyboard></TestInvisibleKeyboard>
 </div>
 
 

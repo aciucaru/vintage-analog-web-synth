@@ -93,9 +93,13 @@ export class Settings
     ** as the cuttof frequency (Hz);
     ** the envelope will get added to the cutoff frequency, but the envelope amount can also have negative values, in
     ** this case the envelope is upside down, and reduces the cutoff frequency while modulating; */
-    public static readonly minFilterEnvelopeAmount = -3600; // -3600 cents = -3 octaves
-    public static readonly maxFilterEnvelopeAmount = 3600; // 3600 cents = 3 octaves
+    public static readonly minFilterEnvelopeAmount = -2400; // -2400 cents = -2 octaves
+    public static readonly maxFilterEnvelopeAmount = 2400; // 2400 cents = 2 octaves
     public static readonly defaultFilterEnvelopeAmount = 0.0;
+
+    public static readonly minFilterLfoAmount = -2400; // -2400 cents = -2 octaves
+    public static readonly maxFilterLfoAmount = 2400; // 2400 cents = 2 octaves
+    public static readonly defaultFilterLfoAmount = 0.0;
 
     // key tracking amount
     public static readonly minFilterKeyTrackingAmount = 0.0;

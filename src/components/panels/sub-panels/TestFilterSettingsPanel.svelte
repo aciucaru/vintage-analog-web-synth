@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
 
-    import * as filterCallbacks from "../../../callbacks/filter-callbacks";
+    import * as filterCallbacks from "../../../callbacks/test-callbacks";
 
     import Knob from "../../Knob.svelte";
     import VerticalFader from "../../VerticalFader.svelte";
@@ -16,12 +16,12 @@
 
     <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
         <Knob label={"Cutoff"} minValue={Settings.minFilterCutoffFreq} maxValue={Settings.maxFilterCutoffFreq} initialValue={Settings.defaultFilterCutoffFreq}
-        step={1} decimals={0} onValueChange={filterCallbacks.onCutoffFreqChange}></Knob>
+        step={1} decimals={0} onValueChange={filterCallbacks.onTestCutoffFreqChange}></Knob>
     </div>
 
     <div style="grid-column: 1 / 2; grid-row: 5 / 6;">
         <Knob label={"Reso"} minValue={Settings.minFilterResonance} maxValue={Settings.maxFilterResonance} initialValue={Settings.defaultFilterResonance}
-            step={0.01} decimals={0} onValueChange={filterCallbacks.onResonanceChange}></Knob>
+            step={0.01} decimals={0} onValueChange={filterCallbacks.onTestResonanceChange}></Knob>
     </div>
 
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
@@ -107,7 +107,7 @@
 
         border-bottom-left-radius: 2px;
         border-bottom-right-radius: 2px;
-        border: solid 1px hsl(224, 10%, 30%);
+        border: solid 1px hsl(40, 40%, 40%);
         border-top: none;
     }
 
@@ -123,7 +123,8 @@
         margin: 0px;
         padding: 0px;
 
-        background: url("../../../assets/texture/title-texture-filt-seamless.jpg") repeat top left;
+        background: linear-gradient(hsla(40, 65%, 40%, 0.5) 0%, hsla(40, 65%, 40%, 0.5) 50%),
+                    url("../../../assets/texture/texture-large-filt-seamless.jpg") repeat top left;
 
         color: hsl(0, 0%, 85%);
         font-family: sans-serif;

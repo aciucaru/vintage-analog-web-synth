@@ -68,7 +68,7 @@ export class TestVoice
 
         // instantiate and set the gain node
         this.outputGainNode = this.audioContext.createGain();
-        this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
+        this.outputGainNode.gain.setValueAtTime(Settings.minOscGain, this.audioContext.currentTime);
 
         this.multiShapeOscillator.outputNode().connect(this.filterNode.mainNode());
         this.filterNode.mainNode().connect(this.outputGainNode);
@@ -110,8 +110,10 @@ export class TestVoice
 
         // then trigger the ADSR envelope for the voice
         this.outputGainNode.gain.linearRampToValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime + 0.1);
+        this.filterNode.noteOn();
+        // this.outputGainNode.gain.linearRampToValueAtTime(Settings.minVoiceGain, this.audioContext.currentTime + 2.1);
         // and then trigger the ADSR envelopr for the filter as well
-        this.filterNode.getAdsrEnvelope().start();
+        // this.filterNode.getAdsrEnvelope().start();
     }
 
     public noteOff(): void
@@ -120,8 +122,9 @@ export class TestVoice
 
         // stop the ADSR envelope for the voice
         this.outputGainNode.gain.linearRampToValueAtTime(Settings.minVoiceGain, this.audioContext.currentTime + 0.1);
+        this.filterNode.noteOff();
         // stop the ADSR envelope for rhe filter as well
-        this.filterNode.getAdsrEnvelope().stop();
+        // this.filterNode.getAdsrEnvelope().stop();
     }
 
     public setMainGain(gain: number): void

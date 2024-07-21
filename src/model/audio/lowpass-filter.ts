@@ -42,7 +42,7 @@ export class OscFilter extends NoInputBaseAudioNode
         this.filterNode.type = "lowpass";
         // set the cuttof frequency and detune to a default
         this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
-        this.filterNode.detune.setValueAtTime(0, this.audioContext.currentTime);
+        this.filterNode.detune.setValueAtTime(Settings.defaultFilterDetune, this.audioContext.currentTime);
 
         this.cutoffFreq = Settings.defaultFilterCutoffFreq;
         this.resonance = Settings.defaultFilterResonance;
@@ -203,6 +203,18 @@ export class OscFilter extends NoInputBaseAudioNode
             OscFilter.logger.warn(`setGain(${gain}): value outside bounds`);
             return false; // change was not succesfull
         }
+    }
+
+    public noteOn()
+    {
+        // this.filterNode.frequency.linearRampToValueAtTime(100, this.audioContext.currentTime + 0.2);
+        this.filterNode.detune.linearRampToValueAtTime(-4800, this.audioContext.currentTime + 0.2);
+    }
+
+    public noteOff()
+    {
+        // this.filterNode.frequency.linearRampToValueAtTime(6000, this.audioContext.currentTime + 0.2);
+        this.filterNode.detune.linearRampToValueAtTime(4800, this.audioContext.currentTime + 0.2);
     }
 
     // modulators getters
