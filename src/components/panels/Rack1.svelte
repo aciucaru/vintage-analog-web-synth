@@ -27,8 +27,8 @@
     <TestOscillatorPanel></TestOscillatorPanel>
     <TestFilterSettingsPanel></TestFilterSettingsPanel>
     
-    <InvisibleKeyboard></InvisibleKeyboard>
-    <!-- <TestInvisibleKeyboard></TestInvisibleKeyboard> -->
+    <!-- <InvisibleKeyboard></InvisibleKeyboard> -->
+    <TestInvisibleKeyboard></TestInvisibleKeyboard>
 </div>
 
 

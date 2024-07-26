@@ -209,18 +209,6 @@ export class OscFilter extends NoInputBaseAudioNode
         }
     }
 
-    public noteOn()
-    {
-        // this.filterNode.frequency.linearRampToValueAtTime(100, this.audioContext.currentTime + 0.2);
-        this.filterNode.detune.linearRampToValueAtTime(-4800, this.audioContext.currentTime + 0.2);
-    }
-
-    public noteOff()
-    {
-        // this.filterNode.frequency.linearRampToValueAtTime(6000, this.audioContext.currentTime + 0.2);
-        this.filterNode.detune.linearRampToValueAtTime(4800, this.audioContext.currentTime + 0.2);
-    }
-
     // modulators getters
     public getAdsrEnvelope(): SimpleAdsrEnvelope { return this.cutoffAdsrEnvelope; }
     public getCutoffFreqModulationManager(): ModulationManager { return this.cutoffFreqModulationManager; }

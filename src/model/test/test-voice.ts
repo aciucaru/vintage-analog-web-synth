@@ -25,6 +25,8 @@ export class TestVoice
 
     // the filter and envelope:
     private filterNode: OscFilter;
+    private filterAdsrEnvelope: AdsrEnvelope;
+    private filterAdsrAmount: GainNode;
 
     private outputGainNode: GainNode;
 
@@ -65,6 +67,16 @@ export class TestVoice
         this.multiShapeOscillator = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
 
         this.filterNode = new OscFilter(this.audioContext, lfoArray);
+        this.filterAdsrEnvelope = new AdsrEnvelope(this.audioContext);
+
+        // this.filterAdsrEnvelope.mainNode().connect(filter.detune);
+
+        this.filterAdsrAmount = this.audioContext.createGain();
+        this.filterAdsrAmount.gain.setValueAtTime(-4800, this.audioContext.currentTime);
+
+        this.filterAdsrEnvelope.mainNode().connect(this.filterAdsrAmount);
+        const filter = this.filterNode.mainNode() as BiquadFilterNode;
+        this.filterAdsrAmount.connect(filter.detune);
 
         // instantiate and set the gain node
         this.outputGainNode = this.audioContext.createGain();
@@ -72,33 +84,6 @@ export class TestVoice
 
         this.multiShapeOscillator.outputNode().connect(this.filterNode.mainNode());
         this.filterNode.mainNode().connect(this.outputGainNode);
-    }
-
-    public playNote(octaves: number, semitones: number, duration: number): void
-    {
-        TestVoice.logger.debug(`playNote(): playing: octaves: ${octaves} semitones: ${semitones}`);
-
-        // first, set the internal note (as octaves and semitones) for all oscillators
-        this.multiShapeOscillator.setNote(octaves, semitones);
-
-        // then trigger the ADSR envelope for the voice
-        this.outputGainNode.gain.linearRampToValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime + 0.1);
-        // and then trigger the ADSR envelopr for the filter as well
-        this.filterNode.getAdsrEnvelope().startBeat(duration);
-    }
-
-    public playSequencerStep(beatOctavesOffset: number, beatSemitonesOffset: number, stepDuration: number): void
-    {
-        TestVoice.logger.debug(`playNoteWithOffset(octaves: ${beatOctavesOffset}, semitones: ${beatSemitonesOffset})`);
-
-        // first, set the internal note offsets (as octaves and semitones) for all oscillators
-        this.multiShapeOscillator.setBeatOctavesOffset(beatOctavesOffset);
-        this.multiShapeOscillator.setBeatSemitonesOffset(beatSemitonesOffset);
-
-        // then trigger the ADSR envelope for the voice
-        this.outputGainNode.gain.linearRampToValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime + 0.1);
-        // and then trigger the ADSR envelopr for the filter as well
-        this.filterNode.getAdsrEnvelope().startBeat(stepDuration);
     }
 
     public noteOn(octaves: number, semitones: number): void
@@ -110,7 +95,11 @@ export class TestVoice
 
         // then trigger the ADSR envelope for the voice
         this.outputGainNode.gain.linearRampToValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime + 0.1);
-        this.filterNode.noteOn();
+
+        const filter = this.filterNode.mainNode() as BiquadFilterNode;
+        // filter.detune.linearRampToValueAtTime(-4800, this.audioContext.currentTime + 1.2);
+        this.filterAdsrEnvelope.start();
+
         // this.outputGainNode.gain.linearRampToValueAtTime(Settings.minVoiceGain, this.audioContext.currentTime + 2.1);
         // and then trigger the ADSR envelopr for the filter as well
         // this.filterNode.getAdsrEnvelope().start();
@@ -122,9 +111,14 @@ export class TestVoice
 
         // stop the ADSR envelope for the voice
         this.outputGainNode.gain.linearRampToValueAtTime(Settings.minVoiceGain, this.audioContext.currentTime + 0.1);
-        this.filterNode.noteOff();
+
+        const filter = this.filterNode.mainNode() as BiquadFilterNode;
+        // filter.detune.linearRampToValueAtTime(4800, this.audioContext.currentTime + 1.2);
+
         // stop the ADSR envelope for rhe filter as well
         // this.filterNode.getAdsrEnvelope().stop();
+
+        this.filterAdsrEnvelope.stop();
     }
 
     public setMainGain(gain: number): void

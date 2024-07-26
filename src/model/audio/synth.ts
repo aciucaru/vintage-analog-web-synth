@@ -49,12 +49,10 @@ export class MonoSynth
         this.reverbEffect.connectInput(this.delayEffect.outputNode());
 
         // connect the final effect node to the final output node
-        this.reverbEffect.outputNode().connect(this.outputGainNode);
-
         this.compressorEffect.connectInput(this.reverbEffect.outputNode());
-        this.compressorEffect.outputNode().connect(this.outputGainNode);
 
-        // this.testVoice.outputNode().connect(this.audioContext.destination);
+        // this.compressorEffect.outputNode().connect(this.outputGainNode);
+        this.testVoice.outputNode().connect(this.audioContext.destination);
 
         // connect the main output gain to the audio context destination
         this.outputGainNode.connect(this.audioContext.destination);

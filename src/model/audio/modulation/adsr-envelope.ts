@@ -218,7 +218,10 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         ** and the we cancell all remaining events.
         ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
         ** before the cancelation, which is the value of this next line: */
-        this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+        if (currentTime >= 0)
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+        else
+            AdsrEnvelope.logger.warn("currentTimeGain < 0");
 
         // then we cancel all events that start AFTER the previous cancelation time, this is not really necessary
         this.adsrGainNode.gain.cancelScheduledValues(cancelationStartTime);
@@ -555,8 +558,6 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // first, check if the 'currentTime' is really in the 'attack' phase
         if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
         {
-            AdsrEnvelope.logger.debug(`computeAttackCurrentGain(${currentTime})`);
-
             let currentTimeGain = 0.0;
 
             if (this.attackEndTime != this.attackStartTime) // avoid division by zero
@@ -567,11 +568,13 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
             else
                 currentTimeGain = 0.0; // is it the correct value ?
 
+            AdsrEnvelope.logger.debug(`computeAttackCurrentGain(time=${currentTime}): gain = ${currentTimeGain}`);
+
             return currentTimeGain;
         }
         else
         {
-            AdsrEnvelope.logger.warn(`computeAttackCurrentGain(${currentTime}): currentTime is outside 'attack' phase`);
+            AdsrEnvelope.logger.warn(`computeAttackCurrentGain(time${currentTime}): currentTime is outside 'attack' phase`);
             return -1; // computation was not succesfull
         }
     }
@@ -581,8 +584,6 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // first, check if the 'currentTime' is really in the 'attack' phase
         if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
         {
-            AdsrEnvelope.logger.debug(`computeDecayCurrentGain(${currentTime})`);
-
             let currentTimeGain = 0.0;
 
             if (this.decayEndTime != this.attackEndTime) // avoid division by zero
@@ -592,6 +593,8 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
             }
             else
                 currentTimeGain = 0.0; // is it the correct value ?
+
+            AdsrEnvelope.logger.debug(`computeAttackCurrentGain(time=${currentTime}): gain = ${currentTimeGain}`);
 
             return currentTimeGain;
         }
@@ -607,8 +610,6 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // first, check if the 'currentTime' is really in the 'attack' phase
         if (currentTime > this.decayEndTime)
         {
-            AdsrEnvelope.logger.debug(`computeReleaseCurrentGain(${currentTime})`);
-
             let currentTimeGain = 0.0;
 
             if (this.releaseEndTime != this.releaseStartTime) // avoid division by zero
@@ -618,6 +619,8 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
             }
             else
                 currentTimeGain = 0.0; // is it the correct value ?
+
+            AdsrEnvelope.logger.debug(`computeAttackCurrentGain(time=${currentTime}): gain = ${currentTimeGain}`);
 
             return currentTimeGain;
         }
