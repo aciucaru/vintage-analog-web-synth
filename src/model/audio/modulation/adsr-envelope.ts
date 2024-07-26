@@ -26,7 +26,7 @@ import type { ILogObj } from "tslog";
 export class AdsrEnvelope extends NoInputBaseAudioNode
 {
     private adsrGainNode: GainNode;
-
+    
     // main parameters: durations (not times/moments!) and sustain level
     private attackDuration: number = Settings.defaultAdsrAttackDuration;
     private decayDuration: number = Settings.defaultAdsrDecayDuration;

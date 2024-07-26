@@ -12,7 +12,7 @@ import type { ILogObj } from "tslog";
 export class BaseEffect extends SingleInputBaseAudioNode
 {
     // the input node of this effect
-    protected inputNode: AudioNode | null = null;
+    protected inputGainNode: GainNode;
 
     protected isEffectEnabled = false;
 
@@ -33,6 +33,9 @@ export class BaseEffect extends SingleInputBaseAudioNode
     {
         super(audioContext);
 
+        this.inputGainNode = this.audioContext.createGain();
+        this.inputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
+
         this.inputOnOffGainNode = this.audioContext.createGain();
         this.inputOnOffGainNode.gain.setValueAtTime(Settings.maxEffectOnOffGain, this.audioContext.currentTime);
         this.effectOnOffGainNode = this.audioContext.createGain();
@@ -46,19 +49,16 @@ export class BaseEffect extends SingleInputBaseAudioNode
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
 
+        // connect the input node to the delay and also to the main output node
+        this.inputGainNode.connect(this.effectOnOffGainNode);
+        this.inputGainNode.connect(this.inputOnOffGainNode);
+
         // the audio nodes are supposed to be connect in the extending classes, so here they won't be connected
     }
 
-    public connectInput(inputNode: AudioNode): void
-    {
-        this.inputNode = inputNode;
+    public override inputnode(): AudioNode { return this.inputGainNode; }
 
-        // connect the input node to the delay and also to the main output node
-        this.inputNode.connect(this.effectOnOffGainNode);
-        this.inputNode.connect(this.inputOnOffGainNode);
-    }
-
-    public outputNode(): AudioNode { return this.outputGainNode; }
+    public override outputNode(): AudioNode { return this.outputGainNode; }
 
     // this method toggles the effect on/off (it enables or disables the effect)
     public toggleEffect(): void

@@ -40,19 +40,22 @@ export class MonoSynth
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
-        this.distortionEffect.connectInput(this.voice.outputNode());
+        this.voice.outputNode().connect(this.distortionEffect.inputnode());
+        // this.testVoice.outputNode().connect(this.distortionEffect.inputnode());
 
         // connect the output from the voice to the delay effect
-        this.delayEffect.connectInput(this.distortionEffect.outputNode());
+        // this.delayEffect.connectInput(this.distortionEffect.outputNode());
+        this.distortionEffect.outputNode().connect(this.delayEffect.inputnode());
 
         // connect output from delay effect to reverb effect
-        this.reverbEffect.connectInput(this.delayEffect.outputNode());
+        // this.reverbEffect.connectInput(this.delayEffect.outputNode());
+        this.delayEffect.outputNode().connect(this.reverbEffect.inputnode());
 
         // connect the final effect node to the final output node
-        this.compressorEffect.connectInput(this.reverbEffect.outputNode());
+        // this.compressorEffect.connectInput(this.reverbEffect.outputNode());
+        this.reverbEffect.outputNode().connect(this.compressorEffect.inputnode());
 
-        // this.compressorEffect.outputNode().connect(this.outputGainNode);
-        this.testVoice.outputNode().connect(this.audioContext.destination);
+        this.compressorEffect.outputNode().connect(this.outputGainNode);
 
         // connect the main output gain to the audio context destination
         this.outputGainNode.connect(this.audioContext.destination);

@@ -3,9 +3,10 @@ import { Settings } from "../../constants/settings";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-/* Represents a class that has a main node (ADSR gain, Biquad filter, etc.) that is both
-** an input and an output in the audio graph;
-** This class contains a method that returs that main node, the 'mainNode()' method; */
+/* Represents a class that has a complex graph of nodes (more than one node) in order to work properly.
+** Because it's hard to know to wich nodes you should connect to when using such a class, this base class
+** has two methods: 'inputNode()' and 'outputNode()' that always return the nodes used to connect to this
+** class, no matter how complex the graph is between these input and output nodes. */
 export abstract class SingleInputBaseAudioNode
 {
     protected audioContext: AudioContext;
@@ -27,10 +28,11 @@ export abstract class SingleInputBaseAudioNode
     }
 
     // this method connect the input audio node to this audio node
-    public abstract connectInput(inputNode: AudioNode): void; 
+    // public abstract connectInput(inputNode: AudioNode): void;
 
-    /* this is the method that returns the output node;
-    ** this method should be overriden by any extending class and it must return a node that extends 'AudioNode',
+    /* These are the methods that return the input and output node.
+    ** These methods should be overriden by any extending class and they must return a node that extends 'AudioNode',
     ** such as 'GainNode' or 'BiquadFilterNode'; */
+    public abstract inputnode(): AudioNode;
     public abstract outputNode(): AudioNode;
 }
