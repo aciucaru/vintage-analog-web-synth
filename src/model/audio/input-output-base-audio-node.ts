@@ -3,16 +3,26 @@ import { Settings } from "../../constants/settings";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-/* Represents a class that has a complex graph of nodes (more than one node) in order to work properly.
-** Because it's hard to know to wich nodes you should connect to when using such a class, this base class
-** has two methods: 'inputNode()' and 'outputNode()' that always return the nodes used to connect to this
-** class, no matter how complex the graph is between these input and output nodes.
-** The 'inputNode()' method returns the node to which an external node should connect.
-** The 'outputNode()' method returns the node that should be used to connect an instance of this class to
-** other external nodes. */
-export abstract class InputOutputBaseAudioNode
+/* This represents a custom audio node that has one input node and one output node.
+** This is a base class for custom audio nodes that can be connected with other nodes (including Web Audio API nodes).
+** In order to avoid duplicate code, this class contains the input and output nodes (which are GainNodes) and
+** also the methods to return them.
+**
+** Any node that wishes to connect to an instance of this class, must connect to this class instance's 'inputGainNode'.
+** When we want to connect an instance of this class to other nodes, we use the 'outputGainNode' of this class to
+** connect to external nodes.
+**
+** Classes that inherit from this base class usually have a complex graph of nodes (usually more than one node)
+** in order to work properly. */
+export class InputOutputBaseAudioNode
 {
     protected audioContext: AudioContext;
+
+    // the node to wich inputs are connected with this filter
+    protected inputGainNode: GainNode;
+
+    // the output node, this is the sound resulting from this class
+    protected outputGainNode: GainNode;
 
     private static readonly singleInputAudioNodelogger: Logger<ILogObj> = new Logger({name: "SingleInputBaseAudioNode", minLevel: Settings.minLogLevel });
 
@@ -28,11 +38,15 @@ export abstract class InputOutputBaseAudioNode
 
         if (audioContext === null)
             InputOutputBaseAudioNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+
+        this.inputGainNode = this.audioContext.createGain();
+        this.inputGainNode.gain.setValueAtTime(Settings.inputGain, this.audioContext.currentTime);
+
+        this.outputGainNode = this.audioContext.createGain();
+        this.outputGainNode.gain.setValueAtTime(Settings.outputGain, this.audioContext.currentTime);
     }
 
-    /* These are the methods that return the input and output node.
-    ** These methods should be overriden by any extending class and they must return a node that extends 'AudioNode',
-    ** such as 'GainNode' or 'BiquadFilterNode'; */
-    public abstract inputNode(): AudioNode;
-    public abstract outputNode(): AudioNode;
+    // these are the methods that return the input and output node
+    public inputNode(): AudioNode { return this.inputGainNode; }
+    public outputNode(): AudioNode { return this.outputGainNode; }
 }

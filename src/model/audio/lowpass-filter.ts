@@ -11,11 +11,7 @@ import type { ILogObj } from "tslog";
 
 export class OscFilter extends InputOutputBaseAudioNode
 {
-    // the node to wich inputs are connected with this filter
-    private inputGainNode: GainNode;
 
-    // the output node, this is the sound resulting from this class
-    private outputGainNode: GainNode;
 
     // the main node: the biquad filter, this node sits between 'inputNode' and 'outputNode'
     private filterNode: BiquadFilterNode;
@@ -86,8 +82,8 @@ export class OscFilter extends InputOutputBaseAudioNode
 
         // this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
         // this.envelopeAmountGainNode.connect(this.filterNode.detune);
-        this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.detune);
         this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
+        this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.detune);
 
         // connect modulators with resonance (Q factor)
         this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);

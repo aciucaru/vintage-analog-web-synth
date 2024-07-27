@@ -70,6 +70,11 @@ export class Settings
     public static readonly defaultNoiseKeyTrackingLevel = 0; // default is no key tracking
 
 
+    /* settings for InputOutputBaseAudioNode *****************************************************************/
+    public static readonly inputGain = 1.0;
+    public static readonly outputGain = 1.0;
+
+
     /* settings for oscillators mixer ****************************************************************
     ** these settings refere to the gain of a single oscillator that is part of the mixer */
     public static readonly minMixerOscGain = 0.0;
