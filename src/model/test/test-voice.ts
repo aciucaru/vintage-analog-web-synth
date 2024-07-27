@@ -72,7 +72,7 @@ export class TestVoice
         // this.filterAdsrEnvelope.mainNode().connect(filter.detune);
 
         this.filterAdsrAmount = this.audioContext.createGain();
-        this.filterAdsrAmount.gain.setValueAtTime(-4800, this.audioContext.currentTime);
+        this.filterAdsrAmount.gain.setValueAtTime(-2400, this.audioContext.currentTime);
 
         this.filterAdsrEnvelope.mainNode().connect(this.filterAdsrAmount);
         const filter = this.filterNode.mainNode() as BiquadFilterNode;
