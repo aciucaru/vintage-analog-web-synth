@@ -4,6 +4,17 @@ import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
+/* An enum that describes the main phases that an ADSR envelope could be in:
+** - attack-decay-sutain phase
+** - release phase
+** - finished - the ADSR envelope has finished completely */
+enum AdsrPhase
+{
+    ADS, // Attack Decay Sustain phase
+    R, // Release phase
+    Finished
+}
+
 /* General-purpose ADSR envelope; this envelope does not have a predefined min and max value,
 ** instead, it can vary between 0.0 and 1.0.
 ** It also has a sustain level, where 'sustainLevel' can be maximum 1.0 (100%);
@@ -23,6 +34,7 @@ import type { ILogObj } from "tslog";
 ** The 'envelope amount' parameter is not inside the ADSR envelope, but inside the modulatable parameter.
 ** This means that maybe not all parameters accept an envelope. The parameters that accept an envelope must
 ** contain an 'evelope amount' parameter inside their implementation. */
+
 export class AdsrEnvelope extends NoInputBaseAudioNode
 {
     private adsrGainNode: GainNode;
@@ -32,6 +44,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     private decayDuration: number = Settings.defaultAdsrDecayDuration;
     private sustainLevel: number = Settings.defaultAdsrSustainLevel;
     private releaseDuration: number = Settings.defaultAdsrReleaseDuration;
+    private phase: AdsrPhase = AdsrPhase.ADS;
 
     // time parameters:
     private attackStartTime = this.audioContext.currentTime;
