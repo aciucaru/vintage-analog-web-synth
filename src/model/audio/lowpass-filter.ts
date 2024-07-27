@@ -37,14 +37,15 @@ export class OscFilter extends InputOutputBaseAudioNode
     {
         super(audioContext);
 
-        this.inputGainNode = this.audioContext.createGain();
-        this.outputGainNode = this.audioContext.createGain();
-
         this.filterNode = this.audioContext.createBiquadFilter();
         this.filterNode.type = "lowpass";
         // set the cuttof frequency and detune to a default
         this.filterNode.frequency.setValueAtTime(Settings.defaultFilterCutoffFreq, this.audioContext.currentTime);
         this.filterNode.detune.setValueAtTime(Settings.defaultFilterDetune, this.audioContext.currentTime);
+
+        // connect inherited input and output to the low-pass filter node
+        this.inputGainNode.connect(this.filterNode);
+        this.filterNode.connect(this.outputGainNode);
 
         this.cutoffFreq = Settings.defaultFilterCutoffFreq;
         this.resonance = Settings.defaultFilterResonance;
