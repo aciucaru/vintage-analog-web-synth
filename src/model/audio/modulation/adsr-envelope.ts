@@ -1,4 +1,5 @@
 import { Settings } from "../../../constants/settings";
+import { InputOutputBaseAudioNode } from "../base/input-output-base-audio-node";
 import { NoInputBaseAudioNode } from "../base/no-input-base-audio-node";
 
 import { Logger } from "tslog";
@@ -24,7 +25,7 @@ import type { ILogObj } from "tslog";
 ** This means that maybe not all parameters accept an envelope. The parameters that accept an envelope must
 ** contain an 'evelope amount' parameter inside their implementation. */
 
-export class AdsrEnvelope extends NoInputBaseAudioNode
+export class AdsrEnvelope extends InputOutputBaseAudioNode
 {
     private adsrGainNode: GainNode;
     
@@ -49,11 +50,15 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
 
         this.adsrGainNode = this.audioContext.createGain();
         this.adsrGainNode.gain.setValueAtTime(Settings.minAdsrSustainLevel, this.audioContext.currentTime);
+
+        // connect inherited input and output to the low-pass filter node
+        this.inputGainNode.connect(this.adsrGainNode);
+        this.adsrGainNode.connect(this.outputGainNode);
     }
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.adsrGainNode; }
+    // public mainNode(): AudioNode { return this.adsrGainNode; }
 
     // this method is for sequencer beats (steps)
     public startBeat(duration: number): void

@@ -74,7 +74,7 @@ export class TestVoice
         this.filterAdsrAmount = this.audioContext.createGain();
         this.filterAdsrAmount.gain.setValueAtTime(-2400, this.audioContext.currentTime);
 
-        this.filterAdsrEnvelope.mainNode().connect(this.filterAdsrAmount);
+        this.filterAdsrEnvelope.outputNode().connect(this.filterAdsrAmount);
         const filter = this.filterNode.getLowPassFilter() as BiquadFilterNode;
         this.filterAdsrAmount.connect(filter.detune);
 

@@ -100,11 +100,11 @@ export class Voice
         this.filteredOscillatorsGainNode.connect(this.filterNode.inputNode());
 
         // connect the sub oscillator and the filter result with the ADSR volume envelope
-        this.subOscillator.outputNode().connect(this.voiceAdsrEnvelope.mainNode());
-        this.filterNode.outputNode().connect(this.voiceAdsrEnvelope.mainNode());
+        this.subOscillator.outputNode().connect(this.voiceAdsrEnvelope.inputNode());
+        this.filterNode.outputNode().connect(this.voiceAdsrEnvelope.inputNode());
         
         // connect ADSR envelope with main output node
-        this.voiceAdsrEnvelope.mainNode().connect(this.outputGainNode);
+        this.voiceAdsrEnvelope.outputNode().connect(this.outputGainNode);
     }
 
     public playNote(octaves: number, semitones: number, duration: number): void
