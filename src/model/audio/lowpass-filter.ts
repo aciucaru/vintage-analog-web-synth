@@ -1,7 +1,7 @@
 import { Settings } from "../../constants/settings";
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
 import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
-import { InputOutputBaseAudioNode } from "./input-output-base-audio-node";
+import { InputOutputBaseAudioNode } from "./base/input-output-base-audio-node";
 import { ModulationManager } from "./modulation/modulation-manager";
 import type { UnipolarLfo } from "./modulation/unipolar-lfo";
 

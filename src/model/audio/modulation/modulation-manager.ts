@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { NoInputBaseAudioNode } from "../no-input-base-audio-node";
+import { NoInputBaseAudioNode } from "../base/no-input-base-audio-node";
 import { UnipolarLfo } from "./unipolar-lfo";
 import { LfoManager } from "./lfo-manager";
 
