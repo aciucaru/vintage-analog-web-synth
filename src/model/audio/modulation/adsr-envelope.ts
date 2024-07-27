@@ -175,17 +175,43 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         const currentTime = this.audioContext.currentTime;
 
         // the gain corresponding to the time the current note was triggered
-        let currentTimeGain = 0.0;
+        let currentGain = 0.0;
+
+        // most ideal case: the current event has started after the previous event has finished completely
+        if (this.phase === AdsrPhase.Finished) // if the ADSR envelope is in 'finished' state
+        {
+            // compute and set relevant times
+            this.attackStartTime = currentTime; // save the attack start time
+            this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
+            this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+
+            // set the gain 
+            currentGain = Settings.minAdsrSustainLevel;
+
+            /* Attack phase: raise gain to maximum in 'attackTime' seconds;
+            ** we use linear ramp for this, because exponential ramp does not seem to work properly, it instead delays the value;
+            ** exponential ramp should be prefered, because it will be perceived as linear by the human ear; */
+            this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.attackStartTime); // works better without
+            this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime);
+
+            // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
+            // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
+            this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
+        }
+        else if (this.phase === AdsrPhase.ADS)
+        {
+            
+        }
 
         // if the current note has started during the previous note's 'attack' phase
         if (this.attackStartTime <= currentTime && currentTime <= this.attackEndTime)
         {
-            currentTimeGain = this.computeAttackCurrentGain(currentTime);
+            currentGain = this.computeAttackCurrentGain(currentTime);
         }
         // if the current note has started during the previous note's 'decay' phase
         else if (this.attackEndTime < currentTime && currentTime <= this.decayEndTime)
         {
-            currentTimeGain = this.computeDecayCurrentGain(currentTime);
+            currentGain = this.computeDecayCurrentGain(currentTime);
         }
         /* if the current note has started after the previous note's 'decay' phase
         ** here we have only 2 possibilities:
@@ -197,12 +223,12 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
             if (this.hasReleasePhaseStarted === false) // are we in the 'sustain' phase?
             {
                 // here we are for sure in the sustain phase of the previorus note, and the gain is constant
-                currentTimeGain = this.sustainLevel;
+                currentGain = this.sustainLevel;
             }
             else // we are in the 'release' phase of the previous note
             {
                 // in this case, we first compute the gain value that would correspond to the 'currentTime', through linear interpolation
-                currentTimeGain = this.computeReleaseCurrentGain(currentTime);
+                currentGain = this.computeReleaseCurrentGain(currentTime);
             }
         }
         /* Ideal case: if the current note has started after the previous note's 'release' phase.
@@ -213,7 +239,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
             this.hasReleasePhaseStarted = false;
 
             // after the 'release' phase has finished, the gain will surely be at it's minimum level
-            currentTimeGain = Settings.minAdsrSustainLevel;
+            currentGain = Settings.minAdsrSustainLevel;
         }
 
         // compute intermediate times based on brand new current time
@@ -232,7 +258,7 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         ** The cancelation of remaining events will trigger the parameter to go back to the last scheduled value
         ** before the cancelation, which is the value of this next line: */
         if (currentTime >= 0)
-            this.adsrGainNode.gain.linearRampToValueAtTime(currentTimeGain, rampEndTime);
+            this.adsrGainNode.gain.linearRampToValueAtTime(currentGain, rampEndTime);
         else
             AdsrEnvelope.logger.warn("currentTimeGain < 0");
 
@@ -248,6 +274,9 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
         // Decay phase: lower gain to 'sustainLevel' in 'decayTime' seconds
         // for decay phase we use linear ramp, not exponential, because exponential goes down to quick
         this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime);
+
+        // change the current phase the ADSR envelope is in
+        this.phase = AdsrPhase.ADS;
     }
 
     /* This method represents the R (release) portion of the envelope, it basically coressponds to the 'noteOff' event */
