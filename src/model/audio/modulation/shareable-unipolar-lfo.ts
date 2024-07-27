@@ -1,5 +1,4 @@
 import { Settings } from "../../../constants/settings";
-import { NoInputBaseAudioNode } from "../base/no-input-base-audio-node";
 import { UnipolarLfo } from "./unipolar-lfo";
 
 import { Logger } from "tslog";
@@ -18,8 +17,10 @@ import type { ILogObj } from "tslog";
 ** This class is called 'shareable' because, by being able to turn an LFO on/off, we can modulate multiple parameters with the same LFO
 ** In this way, we can reuse the same LFO for multiple synth parameters, if we want to, but we are not obligated to use that LFO for all
 ** synth parameters because the 'shareable' LFO cand be enabled/disabled for each synth paramter separately. */
-export class ShareableUnipolarLfo extends NoInputBaseAudioNode
+export class ShareableUnipolarLfo
 {
+    private audioContext: AudioContext;
+
     // the unipolar LFO that oscillates continously once started, it never stops
     private lfo: UnipolarLfo;
 
@@ -33,7 +34,7 @@ export class ShareableUnipolarLfo extends NoInputBaseAudioNode
 
     constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)
     {
-        super(audioContext);
+        this.audioContext = audioContext;
 
         this.lfo = unipolarLfo;
 
@@ -49,7 +50,7 @@ export class ShareableUnipolarLfo extends NoInputBaseAudioNode
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.toggleGainNode; }
+    public mainNode(): AudioNode { return this.toggleGainNode; }
 
     public isEnabled(): boolean { return this.isLfoEnabled; }
 

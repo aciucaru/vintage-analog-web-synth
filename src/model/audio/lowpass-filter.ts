@@ -82,7 +82,7 @@ export class OscFilter extends InputOutputBaseAudioNode
         // this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
         // this.envelopeAmountGainNode.connect(this.filterNode.detune);
         this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
-        this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.detune);
+        this.cutoffAdsrEnvelope.outputNode().connect(this.filterNode.detune);
 
         // connect modulators with resonance (Q factor)
         this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
