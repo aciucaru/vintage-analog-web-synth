@@ -36,7 +36,7 @@
         box-sizing: border-box;
 
         display: grid;
-        grid-template-columns: 10px auto 5px auto 5px auto 5px auto 10px;
+        grid-template-columns: 10px auto 5px auto 10px;
         grid-template-rows: 10px auto 5px auto 5px;
 
         justify-items: center;
@@ -45,12 +45,8 @@
         align-content: space-between;
         gap: 0px;
 
-        margin: 0px;
-        padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-
-        border-radius: 2px;
+        margin: 10px;
+        padding: 0px;
     }
 
     .border
