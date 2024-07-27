@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { InputOutputBaseAudioNode } from "../single-input-base-audio-node";
+import { InputOutputBaseAudioNode } from "../input-output-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
