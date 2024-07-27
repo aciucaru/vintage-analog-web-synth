@@ -1,5 +1,4 @@
 import { Settings } from "../../../constants/settings";
-import { NoInputBaseAudioNode } from "../base/no-input-base-audio-node";
 import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
 import { UnipolarLfo } from "./unipolar-lfo";
 
@@ -7,8 +6,10 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class LfoManager extends NoInputBaseAudioNode
+export class LfoManager
 {
+    private audioContext: AudioContext;
+
     /* The array of managed shareable LFOs.
     ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,
     ** meaning that the shreable LFO is shared between modulation destinations. */
@@ -58,7 +59,7 @@ export class LfoManager extends NoInputBaseAudioNode
                 parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
                 useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
-        super(audioContext);
+        this.audioContext = audioContext;
 
         // initialize limits of the modulated parameter
         if (parameterLowerLimit < parameterUpperLimit)
@@ -114,13 +115,13 @@ export class LfoManager extends NoInputBaseAudioNode
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.mergerGainNode; }
+    public mainNode(): AudioNode { return this.mergerGainNode; }
 
     // public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
 
     public enableLfo(lfoIndex: number): boolean
     {
-        if (0 <= lfoIndex && lfoIndex <= this.shareableLfoArray.length)
+        if (0 <= lfoIndex && lfoIndex < this.shareableLfoArray.length)
         {
             LfoManager.logger.debug(`enableLfo(${lfoIndex})`);
 
@@ -145,7 +146,7 @@ export class LfoManager extends NoInputBaseAudioNode
 
     public disableLfo(lfoIndex: number): boolean
     {
-        if (0 <= lfoIndex && lfoIndex <= this.shareableLfoArray.length)
+        if (0 <= lfoIndex && lfoIndex < this.shareableLfoArray.length)
         {
             LfoManager.logger.debug(`disableLfo(${lfoIndex})`);
 
