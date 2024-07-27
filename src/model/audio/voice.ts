@@ -97,11 +97,11 @@ export class Voice
         this.noiseOscillator.outputNode().connect(this.filteredOscillatorsGainNode);
 
         // connect the merged result of the oscillators that should be filtered, to the filter itself
-        this.filteredOscillatorsGainNode.connect(this.filterNode.mainNode());
+        this.filteredOscillatorsGainNode.connect(this.filterNode.inputNode());
 
         // connect the sub oscillator and the filter result with the ADSR volume envelope
         this.subOscillator.outputNode().connect(this.voiceAdsrEnvelope.mainNode());
-        this.filterNode.mainNode().connect(this.voiceAdsrEnvelope.mainNode());
+        this.filterNode.outputNode().connect(this.voiceAdsrEnvelope.mainNode());
         
         // connect ADSR envelope with main output node
         this.voiceAdsrEnvelope.mainNode().connect(this.outputGainNode);

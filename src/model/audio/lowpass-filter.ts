@@ -1,24 +1,29 @@
 import { Settings } from "../../constants/settings";
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
-import { NoInputBaseAudioNode } from "./no-input-base-audio-node";
+import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
+import { InputOutputBaseAudioNode } from "./input-output-base-audio-node";
 import { ModulationManager } from "./modulation/modulation-manager";
 import type { UnipolarLfo } from "./modulation/unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
 
 
-
-export class OscFilter extends NoInputBaseAudioNode
+export class OscFilter extends InputOutputBaseAudioNode
 {
-    // the main node: the biquad filter
-    protected filterNode: BiquadFilterNode;
+    // the node to wich inputs are connected with this filter
+    private inputGainNode: GainNode;
 
-    protected cutoffFreq: number;
-    protected resonance: number;
-    protected keyTrackingAmount: number;
-    protected envelopeAmount: number;
+    // the output node, this is the sound resulting from this class
+    private outputGainNode: GainNode;
+
+    // the main node: the biquad filter, this node sits between 'inputNode' and 'outputNode'
+    private filterNode: BiquadFilterNode;
+
+    private cutoffFreq: number;
+    private resonance: number;
+    private keyTrackingAmount: number;
+    private envelopeAmount: number;
 
     // parameter manager nodes
     private cutoffFreqModulationManager: ModulationManager;
@@ -37,6 +42,9 @@ export class OscFilter extends NoInputBaseAudioNode
     constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>)
     {
         super(audioContext);
+
+        this.inputGainNode = this.audioContext.createGain();
+        this.outputGainNode = this.audioContext.createGain();
 
         this.filterNode = this.audioContext.createBiquadFilter();
         this.filterNode.type = "lowpass";
@@ -87,7 +95,10 @@ export class OscFilter extends NoInputBaseAudioNode
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.filterNode; }
+    public getLowPassFilter(): AudioNode { return this.filterNode; }
+
+    public override inputNode(): AudioNode { return this.inputGainNode; }
+    public override outputNode(): AudioNode { return this.outputGainNode; }
 
     // sets the cutoff frequency of the filter, in Hz
     public setCutoffFrequency(freq: number): boolean

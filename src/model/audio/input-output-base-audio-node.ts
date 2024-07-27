@@ -33,6 +33,6 @@ export abstract class InputOutputBaseAudioNode
     /* These are the methods that return the input and output node.
     ** These methods should be overriden by any extending class and they must return a node that extends 'AudioNode',
     ** such as 'GainNode' or 'BiquadFilterNode'; */
-    public abstract inputnode(): AudioNode;
+    public abstract inputNode(): AudioNode;
     public abstract outputNode(): AudioNode;
 }

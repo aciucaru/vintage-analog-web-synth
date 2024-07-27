@@ -75,15 +75,15 @@ export class TestVoice
         this.filterAdsrAmount.gain.setValueAtTime(-2400, this.audioContext.currentTime);
 
         this.filterAdsrEnvelope.mainNode().connect(this.filterAdsrAmount);
-        const filter = this.filterNode.mainNode() as BiquadFilterNode;
+        const filter = this.filterNode.getLowPassFilter() as BiquadFilterNode;
         this.filterAdsrAmount.connect(filter.detune);
 
         // instantiate and set the gain node
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.minOscGain, this.audioContext.currentTime);
 
-        this.multiShapeOscillator.outputNode().connect(this.filterNode.mainNode());
-        this.filterNode.mainNode().connect(this.outputGainNode);
+        this.multiShapeOscillator.outputNode().connect(this.filterNode.inputNode());
+        this.filterNode.outputNode().connect(this.outputGainNode);
     }
 
     public noteOn(octaves: number, semitones: number): void
@@ -96,7 +96,7 @@ export class TestVoice
         // then trigger the ADSR envelope for the voice
         this.outputGainNode.gain.linearRampToValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime + 0.1);
 
-        const filter = this.filterNode.mainNode() as BiquadFilterNode;
+        const filter = this.filterNode.getLowPassFilter() as BiquadFilterNode;
         // filter.detune.linearRampToValueAtTime(-4800, this.audioContext.currentTime + 1.2);
         this.filterAdsrEnvelope.start();
 
@@ -112,7 +112,7 @@ export class TestVoice
         // stop the ADSR envelope for the voice
         this.outputGainNode.gain.linearRampToValueAtTime(Settings.minVoiceGain, this.audioContext.currentTime + 0.1);
 
-        const filter = this.filterNode.mainNode() as BiquadFilterNode;
+        const filter = this.filterNode.getLowPassFilter() as BiquadFilterNode;
         // filter.detune.linearRampToValueAtTime(4800, this.audioContext.currentTime + 1.2);
 
         // stop the ADSR envelope for rhe filter as well
