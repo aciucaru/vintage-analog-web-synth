@@ -30,9 +30,6 @@ export abstract class InputOutputBaseAudioNode
             InputOutputBaseAudioNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
     }
 
-    // this method connect the input audio node to this audio node
-    // public abstract connectInput(inputNode: AudioNode): void;
-
     /* These are the methods that return the input and output node.
     ** These methods should be overriden by any extending class and they must return a node that extends 'AudioNode',
     ** such as 'GainNode' or 'BiquadFilterNode'; */
