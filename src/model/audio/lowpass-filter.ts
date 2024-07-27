@@ -24,7 +24,8 @@ export class OscFilter extends InputOutputBaseAudioNode
     private resonanceModulationManager: ModulationManager;
 
     // the ADSR envelope for the cutoff frequency
-    private cutoffAdsrEnvelope: SimpleAdsrEnvelope;
+    // private cutoffAdsrEnvelope: SimpleAdsrEnvelope;
+    private cutoffAdsrEnvelope: AdsrEnvelope;
     // the gain node for the ADSR amount
     private envelopeAmountGainNode: GainNode;
     // the gain node for merging all frequency modulators
@@ -65,24 +66,14 @@ export class OscFilter extends InputOutputBaseAudioNode
                                             Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
 
 
-        this.cutoffAdsrEnvelope = new SimpleAdsrEnvelope(this.audioContext);
+        // this.cutoffAdsrEnvelope = new SimpleAdsrEnvelope(this.audioContext);
+        this.cutoffAdsrEnvelope = new AdsrEnvelope(this.audioContext);
         this.envelopeAmountGainNode = this.audioContext.createGain();
-        this.envelopeAmountGainNode.gain.setValueAtTime(Settings.defaultFilterEnvelopeAmount, this.audioContext.currentTime);
+        this.envelopeAmountGainNode.gain.setValueAtTime(-2400, this.audioContext.currentTime);
 
-        // this.mergeNode = this.audioContext.createGain();
-        // this.mergeNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
-
-        // connect modulators with filter frequency cutoff
-        // this.cutoffAdsrEnvelope.mainNode().connect(this.filterNode.frequency);
-        // this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
-        // this.envelopeAmountGainNode.connect(this.mergeNode);
-        // this.cutoffFreqModulationManager.mainNode().connect(this.mergeNode);
-        // this.mergeNode.connect(this.filterNode.detune);
-
-        // this.cutoffAdsrEnvelope.mainNode().connect(this.envelopeAmountGainNode);
-        // this.envelopeAmountGainNode.connect(this.filterNode.detune);
         this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
-        this.cutoffAdsrEnvelope.outputNode().connect(this.filterNode.detune);
+        this.cutoffAdsrEnvelope.outputNode().connect(this.envelopeAmountGainNode);
+        this.envelopeAmountGainNode.connect(this.filterNode.detune);
 
         // connect modulators with resonance (Q factor)
         this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
@@ -212,7 +203,8 @@ export class OscFilter extends InputOutputBaseAudioNode
     }
 
     // modulators getters
-    public getAdsrEnvelope(): SimpleAdsrEnvelope { return this.cutoffAdsrEnvelope; }
+    // public getAdsrEnvelope(): SimpleAdsrEnvelope { return this.cutoffAdsrEnvelope; }
+    public getAdsrEnvelope(): AdsrEnvelope { return this.cutoffAdsrEnvelope; }
     public getCutoffFreqModulationManager(): ModulationManager { return this.cutoffFreqModulationManager; }
     public getResonanceModulationManager(): ModulationManager { return this.resonanceModulationManager; }
 }
