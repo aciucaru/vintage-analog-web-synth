@@ -40,8 +40,8 @@ export class MonoSynth
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
-        this.voice.outputNode().connect(this.distortionEffect.inputnode());
-        // this.testVoice.outputNode().connect(this.distortionEffect.inputnode());
+        // this.voice.outputNode().connect(this.distortionEffect.inputnode());
+        this.testVoice.outputNode().connect(this.distortionEffect.inputnode());
 
         // connect the output from the voice to the delay effect
         // this.delayEffect.connectInput(this.distortionEffect.outputNode());
