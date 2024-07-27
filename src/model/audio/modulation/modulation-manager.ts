@@ -1,5 +1,4 @@
 import { Settings } from "../../../constants/settings";
-import { NoInputBaseAudioNode } from "../base/no-input-base-audio-node";
 import { UnipolarLfo } from "./unipolar-lfo";
 import { LfoManager } from "./lfo-manager";
 
@@ -7,8 +6,10 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class ModulationManager extends NoInputBaseAudioNode
+export class ModulationManager
 {
+    private audioContext: AudioContext;
+
     // modulator node
     private lfoManager: LfoManager;
 
@@ -32,7 +33,7 @@ export class ModulationManager extends NoInputBaseAudioNode
                 parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
                 useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
-        super(audioContext);
+        this.audioContext = audioContext;
 
         // initialize limits of the modulated parameter
         if (parameterLowerLimit < parameterUpperLimit)
@@ -71,7 +72,7 @@ export class ModulationManager extends NoInputBaseAudioNode
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.mergerGainNode; }
+    public mainNode(): AudioNode { return this.mergerGainNode; }
 
     public setLfosModulationAmount(normalizedModulationAmount: number): boolean
     {
