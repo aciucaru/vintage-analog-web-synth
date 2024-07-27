@@ -38,11 +38,8 @@ export class AdsrEnvelope extends NoInputBaseAudioNode
     private attackStartTime = this.audioContext.currentTime;
     private attackEndTime = this.audioContext.currentTime + this.attackDuration; // the time the attack phase should end
     private decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
-    private sustainEndTime = this.decayEndTime + Settings.adsrSafetyDuration;
     private releaseStartTime = this.decayEndTime + Settings.adsrSafetyDuration; // the time the release should start
     private releaseEndTime = this.releaseStartTime + this.releaseDuration; // the time the release phase should end
-
-    private hasReleasePhaseStarted: boolean = false;
     
     private static readonly logger: Logger<ILogObj> = new Logger({name: "AdsrEnvelope", minLevel: Settings.minLogLevel});
 
