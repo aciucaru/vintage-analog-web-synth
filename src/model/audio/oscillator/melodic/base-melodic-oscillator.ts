@@ -1,8 +1,8 @@
 import { Settings } from "../../../../constants/settings";
 import { Note } from "../../note";
-import { BaseOscillator } from "./base-oscillator";
+import { BaseOscillator } from "../base/base-oscillator";
 
-/* the 'MelodicOscillator' class refers to an oscillator that has the concept of musical note,
+/* This class refers to an oscillator that has the concept of musical note,
 ** e.g. an oscillator who's frequency corresponds to musical notes and can change acording to the
 ** key pressed;
 **

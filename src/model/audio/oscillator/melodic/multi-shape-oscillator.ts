@@ -349,9 +349,6 @@ export class MultiShapeOscillator extends BasePulseOscillator
 
         // recompute the gain values for all oscillators
         this.computeGainValues();
-
-        // reset the gain values for all oscillators (based on computed values from 'computeGainValues()')
-        // this.setGainValues();
     }
 
     public toggleSawShape(): void
@@ -375,9 +372,6 @@ export class MultiShapeOscillator extends BasePulseOscillator
 
         // recompute the gain values for all oscillators
         this.computeGainValues();
-
-        // reset the gain values for all oscillators (based on computed values from 'computeGainValues()')
-        // this.setGainValues();
     }
 
     public togglePulseShape(): void
@@ -401,9 +395,6 @@ export class MultiShapeOscillator extends BasePulseOscillator
 
         // recompute the gain values for all oscillators
         this.computeGainValues();
-
-        // reset the gain values for all oscillators (based on computed values from 'computeGainValues()')
-        // this.setGainValues();
     }
 
     public getFreqParamManager(): ModulationManager { return this.freqLfoManager; }

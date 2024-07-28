@@ -5,12 +5,14 @@
 ** https://github.com/meenie/band.js/blob/master/src/instrument-packs/noises.js */
 
 import { Settings } from "../../../../constants/settings";
+import { BaseOscillator } from "../base/base-oscillator";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
+
 // base class for all custom noise oscillators
-export abstract class BaseNoiseOscillator
+export abstract class BaseNoiseOscillator extends BaseOscillator
 {
     protected audioContext: AudioContext = new AudioContext();
 
@@ -18,7 +20,7 @@ export abstract class BaseNoiseOscillator
     protected noiseBuffer: AudioBuffer;
     protected output: Float32Array;
 
-    private outputGainNode: GainNode;
+    // private outputGainNode: GainNode;
 
     private static readonly NOISE_DURATION = 2; // the duration of the noise, in seconds
 
@@ -26,6 +28,8 @@ export abstract class BaseNoiseOscillator
 
     constructor(audioContext: AudioContext, initialGain: number)
     {
+        super(audioContext);
+        
         if (audioContext !== undefined)
             this.audioContext = audioContext;
         else
@@ -82,7 +86,7 @@ export abstract class BaseNoiseOscillator
         }
     }
 
-    public outputNode(): GainNode { return this.outputGainNode; }
+    // public outputNode(): GainNode { return this.outputGainNode; }
 
     /* this method is supposed to fill the buffer with a specific noise (white, pink or brown);
     ** this method should be overriden by the extending class that implements a specific type of noise;
