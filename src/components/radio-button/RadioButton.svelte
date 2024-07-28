@@ -7,6 +7,7 @@
 
     // props:
     export let radioData: RadioButtonData;
+    export let buttonWidth: number = 20; // default is 20px
 
     /* callback prop, received from the parent (the group of radio buttons), in order to tell the container
     ** which is the active button, through the 'radioButtonOrder' and 'isToggled' arguments, which
@@ -41,7 +42,7 @@
     }
 </script>
 
-<div class="main-container">
+<div class="main-container" style={`--buttonWidth: ${buttonWidth}px;`}>
     <!-- the button -->
     <div class={ligthPartClass} on:click={handleToogleClick}></div>
 
@@ -72,8 +73,8 @@
     .button-part
     {
         /* width and height are necessary in order to display the background image */
-        width: 20px;
-        height: 20px;
+        width: var(--buttonWidth);
+        height: var(--buttonWidth);
 
         grid-column: 1 / 2;
         grid-row: 1 / 2;

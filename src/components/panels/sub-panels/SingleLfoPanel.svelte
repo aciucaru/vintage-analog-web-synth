@@ -64,7 +64,7 @@
     lfoRadioDataArray[2] = new RadioButtonData(2, "", onLfoSquareShapeSelect);
     lfoRadioDataArray[3] = new RadioButtonData(3, "", onLfoSineShapeSelect);
 
-    function lfo1RadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
+    function lfoRadioContainerCallback(radioButtonIndex: number, isToggled: boolean)
     {
         logger.debug(`containerCallback(${radioButtonIndex}, ${isToggled})`);
 
@@ -86,29 +86,49 @@
 
 <div class="main-container">
         <!-- title -->
-        <div class="title unselectable" style="grid-column: 1 / 6; grid-row: 3 / 4;">LFO {lfoIndex + 1}</div>
+        <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 1 / 2;">LFO {lfoIndex + 1}</div>
 
-        <div style="grid-column: 1 / 3; grid-row: 5 / 6;">
-            <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+        <!-- <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
+            <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
         </div>
-        <div class="waveform-icon triangle-icon" style="grid-column: 4 / 6; grid-row: 5 / 6;"></div>
+        <div class="waveform-icon triangle-icon" style="grid-column: 3 / 4; grid-row: 3 / 4;"></div>
 
-        <div style="grid-column: 1 / 3; grid-row: 7 / 8;">
-            <RadioButton radioData={lfoRadioDataArray[1]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+        <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
+            <RadioButton radioData={lfoRadioDataArray[1]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
         </div>
-        <div class="waveform-icon saw-icon" style="grid-column: 4 / 6; grid-row: 7 / 8;"></div>
+        <div class="waveform-icon saw-icon" style="grid-column: 7 / 8; grid-row: 3 / 4;"></div>
 
-        <div style="grid-column: 1 / 3; grid-row: 9 / 10;">
-            <RadioButton radioData={lfoRadioDataArray[2]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+        <div style="grid-column: 1 / 2; grid-row: 5 / 6;">
+            <RadioButton radioData={lfoRadioDataArray[2]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
         </div>
-        <div class="waveform-icon square-icon" style="grid-column: 4 / 6; grid-row: 9 / 10;"></div>
+        <div class="waveform-icon square-icon" style="grid-column: 3 / 4; grid-row: 5 / 6;"></div>
 
-        <div style="grid-column: 1 / 3; grid-row: 11 / 12;">
-            <RadioButton radioData={lfoRadioDataArray[3]} containerCallback={lfo1RadioContainerCallback}></RadioButton>
+        <div style="grid-column: 5 / 6; grid-row: 5 / 6;">
+            <RadioButton radioData={lfoRadioDataArray[3]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
         </div>
-        <div class="waveform-icon sine-icon" style="grid-column: 4 / 6; grid-row: 11 / 12;"></div>
+        <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div> -->
 
-        <div style="grid-column: 1 / 6; grid-row: 13 / 14;">
+        <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
+            <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
+        </div>
+        <div class="waveform-icon triangle-icon" style="grid-column: 1 / 2; grid-row: 5 / 6;"></div>
+
+        <div style="grid-column: 3 / 4; grid-row: 3 / 4;">
+            <RadioButton radioData={lfoRadioDataArray[1]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
+        </div>
+        <div class="waveform-icon saw-icon" style="grid-column: 3 / 4; grid-row: 5 / 6;"></div>
+
+        <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
+            <RadioButton radioData={lfoRadioDataArray[2]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
+        </div>
+        <div class="waveform-icon square-icon" style="grid-column: 5 / 6; grid-row: 5 / 6;"></div>
+
+        <div style="grid-column: 7 / 8; grid-row: 3 / 4;">
+            <RadioButton radioData={lfoRadioDataArray[3]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
+        </div>
+        <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div>
+
+        <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
             <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
                 step={1} decimals={0} onValueChange={onLfoFreqChange}></Knob>
         </div>
@@ -122,8 +142,15 @@
         /* height: 250px; */
 
         display: grid;
-        grid-template-columns: auto 5px auto;
-        grid-template-rows: auto 5px auto 5px auto 5px auto 5px auto 5px auto;
+        grid-template-columns: auto 2px /* toggle button */
+                                auto 5px /* icon */
+                                auto 2px /* toggle button */
+                                auto; /* icon */
+        grid-template-rows: auto 5px /* label */
+                            auto 5px /* toggle buttons */
+                            auto 5px /* toggle buttons */
+                            auto 5px /* frequency range selector */
+                            auto; /* frequency knob */
 
         justify-items: stretch;
         align-items: center;
