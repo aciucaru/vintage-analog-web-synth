@@ -318,15 +318,15 @@ export class MultiShapeOscillator extends BasePulseOscillator
         }
     }
 
-    private setGainValues(): void
-    {
-        const currentTime = this.audioContext.currentTime;
+    // private setGainValues(): void
+    // {
+    //     const currentTime = this.audioContext.currentTime;
 
-        // set the gain values for all oscillators (using their associated gain values)
-        this.triangleOscillatorGainNode.gain.setValueAtTime(this.triangleOscillatorGainValue, currentTime);
-        this.sawOscillatorGainNode.gain.setValueAtTime(this.sawOscillatorGainValue, currentTime);
-        this.pulseOscillatorGainNode.gain.setValueAtTime(this.pulseOscillatorGainValue, currentTime);
-    }
+    //     // set the gain values for all oscillators (using their associated gain values)
+    //     this.triangleOscillatorGainNode.gain.setValueAtTime(this.triangleOscillatorGainValue, currentTime);
+    //     this.sawOscillatorGainNode.gain.setValueAtTime(this.sawOscillatorGainValue, currentTime);
+    //     this.pulseOscillatorGainNode.gain.setValueAtTime(this.pulseOscillatorGainValue, currentTime);
+    // }
 
     public toggleTriangleShape(): void
     {

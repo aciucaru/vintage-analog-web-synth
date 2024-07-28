@@ -42,7 +42,24 @@ export abstract class BaseOscillator
     // returns the main gain node
     public outputNode(): GainNode { return this.outputGainNode; }
 
-    // public getGainLfoManager(): LfoManager { return this.gainLfoManager; }
+    // sets the gain of the oscillator
+    public setOutputGain(gain: number): boolean
+    {
+        if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
+        {
+            BaseOscillator.baseOscLogger.debug(`setOutputGain(${gain})`);
+
+            // set the new value
+            this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
+            return true; // change was successfull
+        }
+        else
+        {
+            BaseOscillator.baseOscLogger.warn(`setOutputGain(${gain}): value outside bounds`);
+
+            return false; // change was not successfull
+        }
+    }
 
     public getAnalyserGainNode(): GainNode { return this.analyserGainNode; }
 }
