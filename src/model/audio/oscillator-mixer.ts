@@ -27,38 +27,44 @@ export class OscillatorMixer
     /* The array of oscillators and their gain weights */
     private oscillators: Array<OscillatorData> = new Array<OscillatorData>();
 
-    // the final output of the oscillator; this is used to connect he oscillator to other nodes
-    // private outputGainNode: GainNode;
+    // the main outputs of the oscillator;
+    // one output is for the oscillators that will pass through the filter;
+    // another output is for the oscillators that will bypass the filter
+    private filteredOutputGainNode: GainNode;
+    private nonFilteredOutputGainNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "OscMixer", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext)
     {
-        if (audioContext !== undefined)
-            this.audioContext = audioContext;
-        else
-        {
-            OscillatorMixer.logger.warn("constructor(): audioContext is null, separate audioContext was created");
-            this.audioContext = new AudioContext();
-        }
+        this.audioContext = audioContext;
 
-        if (audioContext === null)
-            OscillatorMixer.logger.warn("constructor(): audioContext is null, separate audioContext was created");
+        this.filteredOutputGainNode = this.audioContext.createGain();
+        this.filteredOutputGainNode.gain.setValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime);
+
+        this.nonFilteredOutputGainNode = this.audioContext.createGain();
+        this.nonFilteredOutputGainNode.gain.setValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime);
 
         // set the gain for the all the oscillators
         this.computeAndSetGainValues();
     }
 
-    public addOscillator(oscillator: BaseOscillator): void
+    public filteredOutput(): GainNode { return this.filteredOutputGainNode; }
+
+    public nonFilteredOutput(): GainNode { return this.nonFilteredOutputGainNode; }
+
+    /* this method add an oscillator to the mixer and connects it to the output dedicated for the
+    ** filter (this oscillator will be filter eventually) */
+    public addFilteredOscillator(oscillator: BaseOscillator): void
     {
         /* If the oscillators array does not have any elements, this means that the currently
         ** added element is the first.
-        ** The first oscillator receives a max gain by default, while the rest of the oscillators
-        ** receive a min gain by default. */
+        ** The first oscillator receives a max. gain by default, while the rest of the oscillators
+        ** receive a min. gain by default. */
         let gain = Settings.maxMixerOscGain;
 
         if (this.oscillators.length > 0)
-            gain = Settings.minMixerOscGain;
+            gain = Settings.minMixerOscGain; // the rest of the oscillators receive a min. gain
         else
             OscillatorMixer.logger.warn(`addOscillator(): gain = ${gain}`);
 
@@ -70,8 +76,37 @@ export class OscillatorMixer
         // (re)compute the gain levels of all oscillators
         this.computeAndSetGainValues();
 
-        // connect the new oscillator to the mixer output
-        // oscillator.outputNode().connect(this.outputGainNode);
+        // connect the new oscillator to the mixer output for filtered oscillators (oscillators that will
+        // pass through a filter)
+        oscillator.outputNode().connect(this.filteredOutputGainNode);
+    }
+
+    /* this method add an oscillator to the mixer and connects it to the output dedicated for the
+    ** non-filtered oscillators (this oscillator will bypass the filter) */
+    public addNonFilteredOscillator(oscillator: BaseOscillator): void
+    {
+        /* If the oscillators array does not have any elements, this means that the currently
+        ** added element is the first.
+        ** The first oscillator receives a max. gain by default, while the rest of the oscillators
+        ** receive a min. gain by default. */
+        let gain = Settings.maxMixerOscGain;
+
+        if (this.oscillators.length > 0)
+            gain = Settings.minMixerOscGain; // the rest of the oscillators receive a min. gain
+        else
+            OscillatorMixer.logger.warn(`addOscillator(): gain = ${gain}`);
+
+        const oscData: OscillatorData = { oscillator: oscillator, gainWeight: gain };
+
+        // add the new oscillator to the array of oscillators
+        this.oscillators.push(oscData);
+
+        // (re)compute the gain levels of all oscillators
+        this.computeAndSetGainValues();
+
+        // connect the new oscillator to the mixer output for filtered oscillators (oscillators that will
+        // pass through a filter)
+        oscillator.outputNode().connect(this.nonFilteredOutputGainNode);
     }
 
     // sets the gain value for the oscillator at specified index

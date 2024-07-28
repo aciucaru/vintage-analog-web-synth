@@ -1,5 +1,4 @@
 import { Settings } from "../../constants/settings";
-import { audioContext } from "../../constants/shareable-audio-nodes";
 
 import { SubOscillator } from "./oscillator/melodic/sub-oscillator";
 import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
@@ -29,9 +28,6 @@ export class Voice
 
     // the mixer (the mixer only sets gain levels, it does not combine oscillators togheter)
     private oscillatorMixer: OscillatorMixer;
-
-    // a gain node that merges all oscillators that pas trough the cutoff filter
-    private filteredOscillatorsGainNode: GainNode;
 
     // the filter and envelope:
     private filterNode: OscFilter;
@@ -79,35 +75,26 @@ export class Voice
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
         // instantiate the mixer, filter and ADSR envelope
-        // the mixer only manages the gain of the oscillators, it does not add them togheter
         this.oscillatorMixer = new OscillatorMixer(this.audioContext);
 
         // add the oscillators to the mixer, in the exact order below
-        this.oscillatorMixer.addOscillator(this.multiShapeOscillator1); // must be at index 0
-        this.oscillatorMixer.addOscillator(this.multiShapeOscillator2); // must be at index 1
-        this.oscillatorMixer.addOscillator(this.subOscillator); // must be at index 2
-        this.oscillatorMixer.addOscillator(this.noiseOscillator); // must be at index 3
+        this.oscillatorMixer.addFilteredOscillator(this.multiShapeOscillator1); // must be at index 0
+        this.oscillatorMixer.addFilteredOscillator(this.multiShapeOscillator2); // must be at index 1
+        this.oscillatorMixer.addNonFilteredOscillator(this.subOscillator); // must be at index 2
+        this.oscillatorMixer.addFilteredOscillator(this.noiseOscillator); // must be at index 3
 
         this.filterNode = new OscFilter(this.audioContext, lfoArray);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
-
-        // instantiate and connect the gain node that combines all oscillators that should pass through the cutoff filter
-        this.filteredOscillatorsGainNode = this.audioContext.createGain();
 
         // instantiate and set the gain node
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
-        // connect mixer with the filter (the mixer is already connected with the oscillators)
-        this.multiShapeOscillator1.outputNode().connect(this.filteredOscillatorsGainNode);
-        this.multiShapeOscillator2.outputNode().connect(this.filteredOscillatorsGainNode);
-        this.noiseOscillator.outputNode().connect(this.filteredOscillatorsGainNode);
-
         // connect the merged result of the oscillators that should be filtered, to the filter itself
-        this.filteredOscillatorsGainNode.connect(this.filterNode.inputNode());
+        this.oscillatorMixer.filteredOutput().connect(this.filterNode.inputNode());
 
-        // connect the sub oscillator and the filter result with the ADSR volume envelope
-        this.subOscillator.outputNode().connect(this.voiceAdsrEnvelope.inputNode());
+        // connect the filtered and non filtered result with the ADSR volume envelope
+        this.oscillatorMixer.nonFilteredOutput().connect(this.voiceAdsrEnvelope.inputNode());
         this.filterNode.outputNode().connect(this.voiceAdsrEnvelope.inputNode());
         
         // connect ADSR envelope with main output node
