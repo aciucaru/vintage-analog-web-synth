@@ -25,7 +25,7 @@ export class OscillatorMixer
     private audioContext: AudioContext = new AudioContext();
 
     /* The array of oscillators and their gain weights */
-    private oscillators: Array<OscillatorData> = new Array<OscillatorData>(0);
+    private oscillators: Array<OscillatorData> = new Array<OscillatorData>();
 
     // the final output of the oscillator; this is used to connect he oscillator to other nodes
     // private outputGainNode: GainNode;
