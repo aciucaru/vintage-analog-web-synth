@@ -47,6 +47,6 @@ export class InputOutputBaseAudioNode
     }
 
     // these are the methods that return the input and output node
-    public inputNode(): AudioNode { return this.inputGainNode; }
-    public outputNode(): AudioNode { return this.outputGainNode; }
+    public inputNode(): GainNode { return this.inputGainNode; }
+    public outputNode(): GainNode { return this.outputGainNode; }
 }

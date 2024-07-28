@@ -56,9 +56,9 @@ export class BaseEffect extends InputOutputBaseAudioNode
         // the audio nodes are supposed to be connect in the extending classes, so here they won't be connected
     }
 
-    public override inputNode(): AudioNode { return this.inputGainNode; }
+    // public override inputNode(): AudioNode { return this.inputGainNode; }
 
-    public override outputNode(): AudioNode { return this.outputGainNode; }
+    // public override outputNode(): AudioNode { return this.outputGainNode; }
 
     // this method toggles the effect on/off (it enables or disables the effect)
     public toggleEffect(): void
