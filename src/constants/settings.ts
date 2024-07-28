@@ -81,6 +81,13 @@ export class Settings
     public static readonly maxMixerOscGain = 1.0;
     public static readonly defaultMixerOscGain = 1.0;
 
+    /* Each voice has the same number of oscillators, and the mixer stores those oscillators in an array.
+    ** This is why we need the indexes coresponding to each oscillator. */
+    public static readonly mixerOsc1Index = 0;
+    public static readonly mixerOsc2Index = 1;
+    public static readonly mixerSubOscIndex = 2;
+    public static readonly mixerNoiseOscIndex = 3;
+
 
     // settings for the filter: **********************************************************************
     // cutoff frequency, in Hz

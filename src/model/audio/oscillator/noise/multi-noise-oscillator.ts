@@ -6,6 +6,7 @@
 
 import { Settings } from "../../../../constants/settings";
 import { Note } from "../../note";
+import { BaseOscillator } from "../base/base-oscillator";
 import { WhiteNoiseOscillator } from "./white-noise";
 import { PinkNoiseOscillator } from "./pink-noise";
 import { BrownNoiseOscillator } from "./brown-noise";
@@ -21,9 +22,9 @@ export enum NoiseType
     Brown = "Brown",
 }
 
-export class MultiNoiseOscillator
+export class MultiNoiseOscillator extends BaseOscillator
 {
-    private audioContext: AudioContext;
+    // private audioContext: AudioContext;
 
     // the note corresponding to key tracking
     private note: Note;
@@ -52,8 +53,8 @@ export class MultiNoiseOscillator
     // private multiplierGainNode: GainNode;
 
     private noiseMergerGainNode: GainNode;
-    private analyserGainNode: GainNode;
-    private outputGainNode: GainNode;
+    // private analyserGainNode: GainNode;
+    // private outputGainNode: GainNode;
 
     private whiteAnalyserNode: AnalyserNode;
     private pinkAnalyserNode: AnalyserNode;
@@ -63,16 +64,7 @@ export class MultiNoiseOscillator
 
     constructor(audioContext: AudioContext, initialGain: number)
     {
-        if (audioContext !== undefined)
-            this.audioContext = audioContext;
-        else
-        {
-            MultiNoiseOscillator.logger.warn("constructor(): audioContext is null, separate audioContext was created");
-            this.audioContext = new AudioContext();
-        }
-
-        if (audioContext === null)
-            MultiNoiseOscillator.logger.warn("constructor(): audioContext is null, separate audioContext was created");
+        super(audioContext);
 
         this.note = new Note(Settings.noteDefaultOctaves, Settings.noteDefaultSemitones);
         // this.note.setOctavesOffset(-1);
