@@ -27,14 +27,15 @@ export class OscillatorMixer
     private audioContext: AudioContext = new AudioContext();
 
     /* The array of oscillators and their gain weights */
-    private oscillators: Array<OscillatorData> = new Array<OscillatorData>();
+    private oscillators: Array<OscillatorData> = new Array<OscillatorData>(0);
 
     // the final output of the oscillator; this is used to connect he oscillator to other nodes
     private outputGainNode: GainNode;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "OscMixer", minLevel: Settings.minLogLevel });
 
-    constructor(audioContext: AudioContext, osc1: MultiShapeOscillator, osc2: MultiShapeOscillator, subOsc: SubOscillator, noiseOsc: MultiNoiseOscillator)
+    // constructor(audioContext: AudioContext, osc1: MultiShapeOscillator, osc2: MultiShapeOscillator, subOsc: SubOscillator, noiseOsc: MultiNoiseOscillator)
+    constructor(audioContext: AudioContext)
     {
         if (audioContext !== undefined)
             this.audioContext = audioContext;
@@ -48,20 +49,20 @@ export class OscillatorMixer
             OscillatorMixer.logger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         // add oscillators to the array of oscillators
-        this.oscillators.push( {oscillator: osc1, gainWeight: Settings.maxMixerOscGain} );
-        this.oscillators.push( {oscillator: osc2, gainWeight: Settings.minMixerOscGain} );
-        this.oscillators.push( {oscillator: subOsc, gainWeight: Settings.minMixerOscGain} );
-        this.oscillators.push( {oscillator: noiseOsc, gainWeight: Settings.minMixerOscGain} );
+        // this.oscillators.push( {oscillator: osc1, gainWeight: Settings.maxMixerOscGain} );
+        // this.oscillators.push( {oscillator: osc2, gainWeight: Settings.minMixerOscGain} );
+        // this.oscillators.push( {oscillator: subOsc, gainWeight: Settings.minMixerOscGain} );
+        // this.oscillators.push( {oscillator: noiseOsc, gainWeight: Settings.minMixerOscGain} );
 
         // instantiate and set main output node
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.maxVoiceGain, this.audioContext.currentTime);
 
         // connect nodes with main output node
-        osc1.outputNode().connect(this.outputGainNode);
-        osc2.outputNode().connect(this.outputGainNode);
-        subOsc.outputNode().connect(this.outputGainNode);
-        noiseOsc.outputNode().connect(this.outputGainNode);
+        // osc1.outputNode().connect(this.outputGainNode);
+        // osc2.outputNode().connect(this.outputGainNode);
+        // subOsc.outputNode().connect(this.outputGainNode);
+        // noiseOsc.outputNode().connect(this.outputGainNode);
 
         // set the gain for the all the oscillators
         this.computeAndSetGainValues();
@@ -77,10 +78,19 @@ export class OscillatorMixer
 
         if (this.oscillators.length > 0)
             gain = Settings.minMixerOscGain;
+        else
+            OscillatorMixer.logger.warn(`addOscillator(): gain = ${gain}`);
 
         const oscData: OscillatorData = { oscillator: oscillator, gainWeight: gain };
 
+        // add the new oscillator to the array of oscillators
         this.oscillators.push(oscData);
+
+        // (re)compute the gain levels of all oscillators
+        this.computeAndSetGainValues();
+
+        // connect the new oscillator to the mixer output
+        oscillator.outputNode().connect(this.outputGainNode);
     }
 
     // sets the gain value for the oscillator at specified index

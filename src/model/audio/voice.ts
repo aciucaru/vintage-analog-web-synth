@@ -79,8 +79,14 @@ export class Voice
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
         // instantiate the mixer, filter and ADSR envelope
-        this.oscillatorMixer = new OscillatorMixer(this.audioContext, this.multiShapeOscillator1, this.multiShapeOscillator2, this.subOscillator, this.noiseOscillator);
-        // this.filterNode = new OscFilter(this.audioContext,  this.filterCutoffFreqModulationManager, this.filterResonanceModulationManager);
+        this.oscillatorMixer = new OscillatorMixer(this.audioContext);
+
+        // add the oscillators to the mixer, in the exact order below
+        this.oscillatorMixer.addOscillator(this.multiShapeOscillator1); // must be at index 0
+        this.oscillatorMixer.addOscillator(this.multiShapeOscillator2); // must be at index 1
+        this.oscillatorMixer.addOscillator(this.subOscillator); // must be at index 2
+        this.oscillatorMixer.addOscillator(this.noiseOscillator); // must be at index 3
+
         this.filterNode = new OscFilter(this.audioContext, lfoArray);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
