@@ -23,8 +23,10 @@ export enum LfoShape
 ** The class that represents an LFO that is actually connected to a synth parameter is called ShareableUnipolarOscillator,
 ** which can be turned on or off through the LfoManager class, which manages multiple LFOs that can modulate the same
 ** parameter (these LFOs can be enabled or disabled/muted at any time). */
-export class UnipolarLfo extends NoInputBaseAudioNode
+export class UnipolarLfo
 {
+    private audioContext: AudioContext;
+
     // the LFO oscillator (oscillates between -1 and 1)
     private lfoOscillator: OscillatorNode;
 
@@ -49,7 +51,7 @@ export class UnipolarLfo extends NoInputBaseAudioNode
 
     constructor(audioContext: AudioContext)
     {
-        super(audioContext);
+        this.audioContext = audioContext;
 
         this.lfoOscillator = this.audioContext.createOscillator();
         this.lfoOscillator.type = "triangle";
@@ -70,9 +72,7 @@ export class UnipolarLfo extends NoInputBaseAudioNode
         this.constantOscillator.start();
     }
 
-    /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
-    ** this method is supposed to return the main node of the class */
-    public override mainNode(): AudioNode { return this.mergerGainNode; }
+    public mainNode(): AudioNode { return this.mergerGainNode; }
 
     public setShape(shape: LfoShape): void
     {

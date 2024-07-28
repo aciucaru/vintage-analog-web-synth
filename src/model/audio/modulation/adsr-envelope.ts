@@ -142,7 +142,6 @@ export class AdsrEnvelope extends InputOutputBaseAudioNode
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime); // attack
         this.adsrGainNode.gain.linearRampToValueAtTime(this.sustainLevel, this.decayEndTime); // decay
 
-
         /* Release phase */
         this.releaseStartTime = stopTime;
         this.releaseEndTime = this.releaseStartTime + this.releaseDuration;
