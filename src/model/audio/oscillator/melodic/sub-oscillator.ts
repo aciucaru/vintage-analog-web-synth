@@ -175,27 +175,27 @@ export class SubOscillator extends BaseMelodicOscillator
         return isChangeSuccessfull;
     }
 
-    public setOutputGain(gain: number): boolean
-    {
-        if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
-        {
-            SubOscillator.logger.debug(`setOutputGain(${gain})`);
+    // public setOutputGain(gain: number): boolean
+    // {
+    //     if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
+    //     {
+    //         SubOscillator.logger.debug(`setOutputGain(${gain})`);
 
-            // set the new value
-            this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
+    //         // set the new value
+    //         this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
 
-            // notify the modulation manager that the main value has changed
-            this.ampParamManager.setParameterCurrentValue(gain);
+    //         // notify the modulation manager that the main value has changed
+    //         this.ampParamManager.setParameterCurrentValue(gain);
 
-            return true; // change was successfull
-        }
-        else
-        {
-            SubOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
+    //         return true; // change was successfull
+    //     }
+    //     else
+    //     {
+    //         SubOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
 
-            return false; // change was not successfull
-        }
-    }
+    //         return false; // change was not successfull
+    //     }
+    // }
     
     // getters for the LFO managers of this oscillator
     public getFreqParamManager(): ModulationManager { return this.freqParamManager; }

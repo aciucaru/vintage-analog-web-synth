@@ -296,27 +296,27 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.pulseOscillatorGainNode.gain.setValueAtTime(this.pulseOscillatorGainValue, currentTime);
     }
 
-    public setOutputGain(gain: number): boolean
-    {
-        if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
-        {
-            MultiShapeOscillator.logger.debug(`setOutputGain(${gain})`);
+    // public setOutputGain(gain: number): boolean
+    // {
+    //     if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
+    //     {
+    //         MultiShapeOscillator.logger.debug(`setOutputGain(${gain})`);
 
-            // set the new value
-            this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
+    //         // set the new value
+    //         this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
 
-            // notify the modulation manager that the main values has changed
-            this.ampLfoManager.setParameterCurrentValue(gain);
+    //         // notify the modulation manager that the main values has changed
+    //         this.ampLfoManager.setParameterCurrentValue(gain);
 
-            return true; // change was successfull
-        }
-        else
-        {
-            MultiShapeOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
+    //         return true; // change was successfull
+    //     }
+    //     else
+    //     {
+    //         MultiShapeOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
 
-            return false; // change was not successfull
-        }
-    }
+    //         return false; // change was not successfull
+    //     }
+    // }
 
     // private setGainValues(): void
     // {
