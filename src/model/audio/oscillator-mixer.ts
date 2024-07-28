@@ -32,7 +32,6 @@ export class OscillatorMixer
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "OscMixer", minLevel: Settings.minLogLevel });
 
-    // constructor(audioContext: AudioContext, osc1: MultiShapeOscillator, osc2: MultiShapeOscillator, subOsc: SubOscillator, noiseOsc: MultiNoiseOscillator)
     constructor(audioContext: AudioContext)
     {
         if (audioContext !== undefined)
