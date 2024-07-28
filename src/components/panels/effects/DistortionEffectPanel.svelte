@@ -38,7 +38,7 @@
     </div>
 
     <div style="grid-column: 8 / 9; grid-row: 4 / 5;">
-        <Knob label={"Wet/Dry"} minValue={Settings.minEffectWetDryGain} maxValue={Settings.maxEffectWetDryGain} initialValue={Settings.defaultEffectWetDryGain}
+        <Knob label={"Wet/Dry"} minValue={Settings.minEffectWetDryGain} maxValue={Settings.maxEffectWetDryGain} initialValue={Settings.defaultDistortionEffectGain}
             step={0.01} decimals={0} displayFactor={100} onValueChange={effectsCallbacks.onDistortionEffectAmountChange}></Knob>
     </div>
 </div>

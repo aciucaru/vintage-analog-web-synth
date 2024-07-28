@@ -5,7 +5,7 @@ import { SubOscillator } from "./oscillator/melodic/sub-oscillator";
 import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
 import { MultiNoiseOscillator } from "./oscillator/noise/multi-noise-oscillator";
 
-import { OscMixer } from "./mixer";
+import { OscMixer } from "./oscillator-mixer";
 import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "./modulation/adsr-envelope";

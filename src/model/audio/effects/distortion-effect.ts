@@ -43,9 +43,6 @@ export class DistortionEffect extends BaseEffect
         this.computeDistortionCurve(this.distortionAmount, this.distortionAngle, this.distortionConstantValue);
         this.distortionNode.curve = this.distortionCurveBuffer;
 
-        this.outputGainNode = this.audioContext.createGain();
-        this.outputGainNode.gain.setValueAtTime(1.0, this.audioContext.currentTime);
-
         // connect effect on/off nodes
         this.inputOnOffGainNode.connect(this.outputGainNode);
         this.effectOnOffGainNode.connect(this.distortionNode);
@@ -56,6 +53,12 @@ export class DistortionEffect extends BaseEffect
         // connect atenuators to final output gain node
         this.effectWetDryGainNode.connect(this.outputGainNode);
         this.inputWetDryGainNode.connect(this.outputGainNode);
+
+        // set special dry/wet gains for distortion effect, in oder to keep it completely dry (disabled)
+        // by default. This must be done so the compressor effect does not accentuate the small distortion
+        // that remains even when the distortion effect is disabled.
+        this.inputWetDryGainNode.gain.setValueAtTime(Settings.defaultDistortionInputGain, this.audioContext.currentTime);
+        this.effectWetDryGainNode.gain.setValueAtTime(Settings.defaultDistortionEffectGain, this.audioContext.currentTime);
     }
 
     private computeDistortionCurve(amount: number, angle: number, constantValue: number): void
@@ -71,7 +74,7 @@ export class DistortionEffect extends BaseEffect
             // this.distortionCurveBuffer[i] = ( (3 + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v2, pretty good
             // this.distortionCurveBuffer[i] = ( (Math.PI + amount) * x * (1.0 / 6.0) ) / (Math.PI + amount * Math.abs(x)); // v3
             // this.distortionCurveBuffer[i] = ( (Math.PI + amount) * x * angleDeg) / (Math.PI + amount * Math.abs(x)); // v4
-            this.distortionCurveBuffer[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) ); // v5, good, most general
+            this.distortionCurveBuffer[i] = ( (constantValue + amount) * x * angleDeg) / (constantValue + amount * Math.abs(x) ); // v5, good, most general formula
         }
     }
 

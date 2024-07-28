@@ -280,6 +280,9 @@ export class Settings
     // public static readonly maxDistortionAmount = 400.0;
     // public static readonly defaultDistortionAmount = 50.0;
 
+    public static readonly defaultDistortionInputGain = 1.0; // the input is audible 100%
+    public static readonly defaultDistortionEffectGain = 0.0; // the effect is not audible at all
+
     public static readonly minDistortionAmount = 0.0;
     public static readonly maxDistortionAmount = 20.0;
     public static readonly defaultDistortionAmount = 10.0;
