@@ -79,6 +79,7 @@ export class Voice
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
         // instantiate the mixer, filter and ADSR envelope
+        // the mixer only manages the gain of the oscillators, it does not add them togheter
         this.oscillatorMixer = new OscillatorMixer(this.audioContext);
 
         // add the oscillators to the mixer, in the exact order below
