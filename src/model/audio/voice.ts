@@ -5,7 +5,7 @@ import { SubOscillator } from "./oscillator/melodic/sub-oscillator";
 import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
 import { MultiNoiseOscillator } from "./oscillator/noise/multi-noise-oscillator";
 
-import { OscMixer } from "./oscillator-mixer";
+import { OscillatorMixer } from "./oscillator-mixer";
 import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
@@ -28,7 +28,7 @@ export class Voice
     private noiseOscillator: MultiNoiseOscillator;
 
     // the mixer (the mixer only sets gain levels, it does not combine oscillators togheter)
-    private oscillatorMixer: OscMixer;
+    private oscillatorMixer: OscillatorMixer;
 
     // a gain node that merges all oscillators that pas trough the cutoff filter
     private filteredOscillatorsGainNode: GainNode;
@@ -79,7 +79,7 @@ export class Voice
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
         // instantiate the mixer, filter and ADSR envelope
-        this.oscillatorMixer = new OscMixer(this.audioContext, this.multiShapeOscillator1, this.multiShapeOscillator2, this.subOscillator, this.noiseOscillator);
+        this.oscillatorMixer = new OscillatorMixer(this.audioContext, this.multiShapeOscillator1, this.multiShapeOscillator2, this.subOscillator, this.noiseOscillator);
         // this.filterNode = new OscFilter(this.audioContext,  this.filterCutoffFreqModulationManager, this.filterResonanceModulationManager);
         this.filterNode = new OscFilter(this.audioContext, lfoArray);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
@@ -212,7 +212,7 @@ export class Voice
 
     // public getAnalyserNode(): AnalyserNode { return this.analyserNode; }
 
-    public getMixer(): OscMixer { return this.oscillatorMixer; }
+    public getMixer(): OscillatorMixer { return this.oscillatorMixer; }
 
     public getFilter(): OscFilter { return this.filterNode; }
 
