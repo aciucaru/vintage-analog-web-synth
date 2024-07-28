@@ -113,8 +113,6 @@ export class LfoManager
         }
     }
 
-    /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
-    ** this method is supposed to return the main node of the class */
     public mainNode(): AudioNode { return this.mergerGainNode; }
 
     // public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }

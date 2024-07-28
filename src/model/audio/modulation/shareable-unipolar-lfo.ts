@@ -48,8 +48,6 @@ export class ShareableUnipolarLfo
         this.toggleGainNode.gain.setValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime);
     }
 
-    /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
-    ** this method is supposed to return the main node of the class */
     public mainNode(): AudioNode { return this.toggleGainNode; }
 
     public isEnabled(): boolean { return this.isLfoEnabled; }
