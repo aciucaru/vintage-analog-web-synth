@@ -74,6 +74,7 @@ export class OscFilter extends InputOutputBaseAudioNode
         this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
         this.cutoffAdsrEnvelope.outputNode().connect(this.envelopeAmountGainNode);
         this.envelopeAmountGainNode.connect(this.filterNode.detune);
+        // this.envelopeAmountGainNode.connect(this.filterNode.frequency);
 
         // connect modulators with resonance (Q factor)
         this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
@@ -172,7 +173,7 @@ export class OscFilter extends InputOutputBaseAudioNode
         {
             OscFilter.logger.debug(`setEnvelopeAmount(${amount})`);
 
-            const changeTime = this.audioContext.currentTime + 0.02; // + 20ms
+            const changeTime = this.audioContext.currentTime;
             this.envelopeAmountGainNode.gain.linearRampToValueAtTime(amount, changeTime);
 
             return true; // change was succesfull

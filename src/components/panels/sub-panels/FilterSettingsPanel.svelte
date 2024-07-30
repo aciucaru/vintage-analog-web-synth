@@ -24,8 +24,10 @@
             step={0.01} decimals={0} onValueChange={filterCallbacks.onResonanceChange}></Knob>
     </div> -->
 
+    <!-- title -->
+    <div class="border" style="grid-column: 1 / 6; grid-row: 1 / 8;"></div>
+    <div class="title stretched-item unselectable" style="grid-column: 1 / 6; grid-row: 1 / 2;">FILTER</div>
 
-    
     <!-- background for cutoff freq knob (does not work, works only in stretch mode) -->
     <div class="cutoff-background stretched-item unselectable" style="grid-column: 1 / 2; grid-row: 3 / 4;"></div>
 

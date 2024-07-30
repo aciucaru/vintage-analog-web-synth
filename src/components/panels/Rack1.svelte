@@ -24,8 +24,8 @@
     <VoiceSettingsPanel></VoiceSettingsPanel>
     <!-- <AdsrEnvelopesPanel></AdsrEnvelopesPanel> -->
 
-    <TestOscillatorPanel></TestOscillatorPanel>
-    <TestFilterSettingsPanel></TestFilterSettingsPanel>
+    <!-- <TestOscillatorPanel></TestOscillatorPanel> -->
+    <!-- <TestFilterSettingsPanel></TestFilterSettingsPanel> -->
     
     <InvisibleKeyboard></InvisibleKeyboard>
     <!-- <TestInvisibleKeyboard></TestInvisibleKeyboard> -->
