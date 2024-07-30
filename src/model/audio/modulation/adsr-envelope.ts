@@ -82,6 +82,9 @@ export class AdsrEnvelope
         // connect nodes betweem them
         this.adsrConstantSource.connect(this.adsrGainNode);
         this.adsrGainNode.connect(this.onOffGainNode);
+
+        // start the emitter
+        this.adsrConstantSource.start();
     }
 
     public outputNode(): AudioNode { return this.onOffGainNode; }
@@ -102,6 +105,7 @@ export class AdsrEnvelope
         /* then we cancel all events that start AFTER the previous cancelation time but we keep the value
         ** that the parameter had when the cancelation started */ 
         this.adsrGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
+        this.onOffGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
 
         /* After we checked the current ADSR phase based on ADSR times, we can now compute and overwrite ADSR times
         ** with new values.
@@ -135,6 +139,7 @@ export class AdsrEnvelope
 
         // cancel all remaining events
         this.adsrGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
+        this.onOffGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
 
         // compute the start and end of the 'release' phase
         this.releaseStartTime = cancelationStartTime;
