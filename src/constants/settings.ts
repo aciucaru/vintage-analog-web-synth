@@ -147,13 +147,16 @@ export class Settings
 
     public static readonly minAdsrSustainLevel = 0.0001; // almost 0%, exponential ramp does not allow 0
     public static readonly maxAdsrSustainLevel = 1.0; // 100%, the full value of the modulated parameter
-    public static readonly defaultAdsrSustainLevel = 0.8; // 80%
+    public static readonly defaultAdsrSustainLevel = 0.5; // 50%
 
     public static readonly adsrSafetyDuration = 0.01; // 10 milisec
 
-    public static readonly minAdsrReleaseDuration = Settings.adsrSafetyDuration + 0.01; // 20 miliseconds
+    public static readonly minAdsrReleaseDuration = Settings.adsrSafetyDuration + 0.01; // 10 + 10 miliseconds
     public static readonly maxAdsrReleaseDuration = 8.0; // 8 seconds
     public static readonly defaultAdsrReleaseDuration = 1.0; // 1 second
+
+    public static readonly adsrOffLevel = 0.0; // 0%, should completely turn off the ADSR envelope
+    public static readonly adsrOnLevel = 1.0; // 100%, the full value of the modulated parameter
 
     // ADSR defaults for cutoff filter:
     public static readonly defaultAdsrFilterAttackDuration = 0.0; // 0 seconds

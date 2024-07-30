@@ -1,5 +1,4 @@
 import { Settings } from "../../../constants/settings";
-import { InputOutputBaseAudioNode } from "../base/input-output-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -8,25 +7,42 @@ import type { ILogObj } from "tslog";
 ** instead, it can vary between 0.0 and 1.0.
 ** It also has a sustain level, where 'sustainLevel' can be maximum 1.0 (100%);
 **
-** The ADSR enevelope is always between 0.0 and 1.0 and is first multiplied by the 'evelope amount',
+** The ADSR enevelope is always between 0.0 and 1.0 and it supposed to by multiplied by the 'evelope amount',
 ** where the 'envelope amount' is no longer a relative value (between 0 and 1) but an absolute value,
-** in the same measurement units as the parameter (destination) it's modulating.
+** in the same measurement units as the parameter (destination) it's modulating. This multiplication
+** is optional and is made outside this class, usually through a GainNode.
 **
 ** Then, the ADSR envelope is added to the current value of the parameter it's modulating.
 **
-** The 'envelope amount' can be positive or negative. When it's positive, the ADSR envelope is added to
+** The optional 'envelope amount' can be positive or negative. When it's positive, the ADSR envelope is added to
 ** the current value of the parameter is' modulating. When the 'envelope amount' is negative, the result of
 ** the ADSR envelope is subtracted from the current value of the parameter it's modulating.
 ** But regardless of the sign, the ADSR envelope is first multiplied with the 'envelope amount' and then
 ** added to the current value of the parameter it's modulating.
 **
-** The 'envelope amount' parameter is not inside the ADSR envelope, but inside the modulatable parameter.
-** This means that maybe not all parameters accept an envelope. The parameters that accept an envelope must
-** contain an 'evelope amount' parameter inside their implementation. */
+** The ADSR envelope is a modulator, thus is must emit a signal. The main functionality of the ADSR envelope comes
+** from a GainNode, but the GainNode itself does not emit any signal, it is just a multiplier that multiplies a
+** input signal. So the ADSR envelope will not work with just a GainNode. It also needs en emitter of signal.
+** That emitter is a ConstanSourceNode, which is fed through the GainNode.
+** Whithout the ConstantSourceNode, the ADSR envelope will not work, because it won't emit any signal. */
 
-export class AdsrEnvelope extends InputOutputBaseAudioNode
+export class AdsrEnvelope
 {
+    private audioContext: AudioContext;
+
+    // the emitter of a continous constant signal 
+    private adsrConstantSource: ConstantSourceNode;
+
+    // a multiplier to multiply the previous 'adsrConstantSource' constant signal with
     private adsrGainNode: GainNode;
+
+    /* A second gain node, for completely turning off the ADSR envelope.
+    ** This node is necessary because the 'adsrGainNode' cannot have a totaly zero gain, because
+    ** the 'adsrGainNode' could also be used with exponential ramps, which cannot ramp to exactly zero,
+    ** leaving a very small signal that might still be audible.
+    ** But the 'onOffGainNode' never uses an exponential ramp, so it can go completely to zero, making the
+    ** ADSR truly silent when necessary (in the 'release' phase). */
+    private onOffGainNode: GainNode;
     
     // main parameters: durations (not times/moments!) and sustain level
     private attackDuration: number = Settings.defaultAdsrAttackDuration;
@@ -35,25 +51,40 @@ export class AdsrEnvelope extends InputOutputBaseAudioNode
     private releaseDuration: number = Settings.defaultAdsrReleaseDuration;
 
     // time parameters:
-    private attackStartTime = this.audioContext.currentTime;
-    private attackEndTime = this.audioContext.currentTime + this.attackDuration; // the time the attack phase should end
+    // private attackStartTime = this.audioContext.currentTime;
+    // private attackEndTime = this.audioContext.currentTime + this.attackDuration; // the time the attack phase should end
+    // private decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+    // private releaseStartTime = this.decayEndTime + Settings.adsrSafetyDuration; // the time the release should start
+    // private releaseEndTime = this.releaseStartTime + this.releaseDuration; // the time the release phase should end
+    private onTime = 0; // time when the ADSR is turned on
+    private attackStartTime = this.onTime + Settings.adsrSafetyDuration;
+    private attackEndTime = this.attackDuration; // the time the attack phase should end
     private decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
     private releaseStartTime = this.decayEndTime + Settings.adsrSafetyDuration; // the time the release should start
     private releaseEndTime = this.releaseStartTime + this.releaseDuration; // the time the release phase should end
+    private offtTime = this.releaseEndTime + Settings.adsrSafetyDuration; // time when ADSR is turned off
     
     private static readonly logger: Logger<ILogObj> = new Logger({name: "AdsrEnvelope", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext)
     {
-        super(audioContext);
+        this.audioContext = audioContext;
+
+        this.adsrConstantSource = this.audioContext.createConstantSource();
+        this.adsrConstantSource.offset.setValueAtTime(1.0, this.audioContext.currentTime);
 
         this.adsrGainNode = this.audioContext.createGain();
         this.adsrGainNode.gain.setValueAtTime(Settings.minAdsrSustainLevel, this.audioContext.currentTime);
 
-        // connect inherited input and output to the low-pass filter node
-        this.inputGainNode.connect(this.adsrGainNode);
-        this.adsrGainNode.connect(this.outputGainNode);
+        this.onOffGainNode = this.audioContext.createGain();
+        this.onOffGainNode.gain.setValueAtTime(Settings.adsrOffLevel, this.audioContext.currentTime);
+
+        // connect nodes betweem them
+        this.adsrConstantSource.connect(this.adsrGainNode);
+        this.adsrGainNode.connect(this.onOffGainNode);
     }
+
+    public outputNode(): AudioNode { return this.onOffGainNode; }
 
     /* This method represents the ADS portion of the envelope, it basically coressponds to the 'noteOn' event */
     public start(): void
@@ -76,9 +107,13 @@ export class AdsrEnvelope extends InputOutputBaseAudioNode
         ** with new values.
         ** Overwriting the ADSR times should only be done after we used them to check what phase we are in!
         ** These new ADSR times will be used in the stop() method as well. */
-        this.attackStartTime = cancelationStartTime; // save the attack start time
+        this.onTime = cancelationStartTime + Settings.adsrSafetyDuration;
+        this.attackStartTime = this.onTime + Settings.adsrSafetyDuration; // save the attack start time
         this.attackEndTime = this.attackStartTime + this.attackDuration; // the time the attack phase should end
         this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
+
+        // First, turn on the ADSR envelope, otherwise the emitted signal will be zero
+        this.onOffGainNode.gain.linearRampToValueAtTime(Settings.adsrOnLevel, this.onTime);
 
         /* Attack and decay phases */
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime); // attack
@@ -104,10 +139,12 @@ export class AdsrEnvelope extends InputOutputBaseAudioNode
         // compute the start and end of the 'release' phase
         this.releaseStartTime = cancelationStartTime;
         this.releaseEndTime = this.releaseStartTime + this.releaseDuration;
+        this.offtTime = this.releaseEndTime + Settings.adsrSafetyDuration;
 
         // then start the actual 'release' phase by ramping down to the minimum possible
         // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
+        this.onOffGainNode.gain.linearRampToValueAtTime(Settings.adsrOffLevel, this.offtTime);
     }
 
     // this method is for sequencer beats (steps)

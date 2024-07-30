@@ -31,7 +31,9 @@ export class Voice
 
     // the filter and envelope:
     private filterNode: OscFilter;
+
     private voiceAdsrEnvelope: AdsrEnvelope;
+    private voiceAdsrGainNode: GainNode;
 
     private outputGainNode: GainNode;
 
@@ -86,19 +88,31 @@ export class Voice
         this.filterNode = new OscFilter(this.audioContext, lfoArray);
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
-        // instantiate and set the gain node
+        this.voiceAdsrGainNode = this.audioContext.createGain();
+        this.voiceAdsrGainNode.gain.setValueAtTime(Settings.adsrOffLevel, this.audioContext.currentTime);
+
+        // instantiate and set the final gain node
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
         // connect the merged result of the oscillators that should be filtered, to the filter itself
         this.oscillatorMixer.filteredOutput().connect(this.filterNode.inputNode());
 
-        // connect the filtered and non filtered result with the ADSR volume envelope
-        this.oscillatorMixer.nonFilteredOutput().connect(this.voiceAdsrEnvelope.inputNode());
-        this.filterNode.outputNode().connect(this.voiceAdsrEnvelope.inputNode());
+        /* Connect the filtered and non filtered signals with the ADSR gain envelope.
+        // These are not connected to the ADSR envelope itself, because the ADSR envelope is an emitter,
+        // not destination, these are connected to a GainNode who's .gain property is modulated by the ADSR. */
+        // the non filtered oscillators aretaken from the mixer
+        this.oscillatorMixer.nonFilteredOutput().connect(this.voiceAdsrGainNode);
+        // the filtered oscillators are taken from the filter output
+        this.filterNode.outputNode().connect(this.voiceAdsrGainNode);
         
-        // connect ADSR envelope with main output node
-        this.voiceAdsrEnvelope.outputNode().connect(this.outputGainNode);
+        /* Connect ADSR envelope with GainNode dedicated to ADSR envelope modulation.
+        ** Important! this ADSR modulation gets ADDED to the current value of .gain parameter, it does not overwrite it!
+        ** This is why the .gain parameter's value should be zero. */
+        this.voiceAdsrEnvelope.outputNode().connect(this.voiceAdsrGainNode.gain);
+
+        // finally, connect the output from the GainNode modulated by ADSR to the final output GainNode
+        this.voiceAdsrGainNode.connect(this.outputGainNode);
     }
 
     public playNote(octaves: number, semitones: number, duration: number): void
