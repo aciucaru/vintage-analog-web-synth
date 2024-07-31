@@ -129,7 +129,7 @@
         </div>
         <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div>
 
-        <div style="grid-column: 1 / 8; grid-row: 5 / 6;">
+        <div style="grid-column: 1 / 8; grid-row: 7 / 8;">
             <SlideSwitch optionsArray={["1", "2", "3"]}></SlideSwitch>
         </div>
 
@@ -153,7 +153,7 @@
                                 auto; /* icon */
         grid-template-rows: auto 5px /* label */
                             auto 5px /* toggle buttons */
-                            auto 5px /* toggle buttons */
+                            auto 10px /* toggle buttons */
                             auto 5px /* frequency range selector */
                             auto; /* frequency knob */
 

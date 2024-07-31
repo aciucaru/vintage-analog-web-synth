@@ -17,31 +17,31 @@
 </script>
 
 <div class="main-container">
-    <div class="slide-switch-bg left-bg unselectable"></div>
-    <div class="slide-switch-bg right-bg unselectable"></div>
-    {#each optionsArray as option, index}
-        <div class="slide-switch-bg center-bg unselectable"></div>
+    <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
+    <div class="slide-switch-bg right-bg unselectable" style="grid-column: {optionsArray.length + 1} / {optionsArray.length + 3}; grid-row: 1 / 2;"></div>
+    {#each optionsArray.slice(1, optionsArray.length) as option, index}
+        <div class="slide-switch-bg center-bg unselectable" style="grid-column: {index + 3} / {index + 4}; grid-row: 1 / 2;"></div>
     {/each}
 
-    <div class="slide-switch unselectable"></div>
+    <div class="slide-switch unselectable" style="grid-column: 3 / 4; grid-row: 1 / 2;"></div>
 </div>
 
 <style>
     .main-container
     {
-        --switchHeight: 20px;
+        --switchHeight: 24px;
         --textHeight: 12px;
 
         box-sizing: border-box;
 
         display: grid;
-        grid-template-columns: 22px 20px 22px;
-        grid-template-rows: 20px 5px var(--textHeight);
+        grid-template-columns: 4px 20px 20px 20px 4px;
+        grid-template-rows: var(--switchHeight) 5px var(--textHeight);
 
         justify-items: center;
-        align-items: stretch;
-        justify-content: space-between;
-        align-content: space-between;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
         gap: 0px;
 
         margin: 0px;
@@ -51,9 +51,6 @@
     .slide-switch-bg
     {
         box-sizing: border-box;
-
-        width: 100%;
-        height: var(--switchHeight);
 
         margin: 0px;
         padding: 0px;
@@ -69,16 +66,25 @@
 
     .left-bg
     {
+        width: 24px;
+        height: var(--switchHeight);
+
         content: url("../assets/slide-switch/slide-switch-left-bg-opt.svg");
     }
 
     .center-bg
     {
+        width: 20px;
+        height: var(--switchHeight);
+
         content: url("../assets/slide-switch/slide-switch-center-bg-opt.svg");
     }
 
     .right-bg
     {
+        width: 24px;
+        height: var(--switchHeight);
+        
         content: url("../assets/slide-switch/slide-switch-right-bg-opt.svg");
     }
 
@@ -86,7 +92,7 @@
     {
         box-sizing: border-box;
 
-        width: 100%;
+        width: 20px;
         height: var(--switchHeight);
 
         margin: 0px;

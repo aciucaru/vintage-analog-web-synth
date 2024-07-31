@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="20mm" height="20mm" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="20mm" height="24mm" version="1.1" viewBox="0 0 20 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
       <linearGradient id="a">
          <stop stop-color="#1a1a1a" offset="0"/>
@@ -28,7 +28,7 @@
       </clipPath>
    </defs>
    <g>
-      <g transform="translate(-29.67761 -55.65338)" clip-path="url(#h)">
+      <g transform="translate(-29.67761 -53.65338)" clip-path="url(#h)">
          <rect x="29.67761" y="58.15338" width="20" height="15" rx="0" ry="0" fill="url(#g)" stop-color="#000000" stroke-width=".148932" style="-inkscape-stroke:none"/>
          <rect x="31.67761" y="58.15338" width="2" height="15" fill="url(#f)" stop-color="#000000" style="-inkscape-stroke:none;font-variation-settings:normal"/>
          <rect x="35.67761" y="58.15338" width="2" height="15" fill="url(#e)" stop-color="#000000" style="-inkscape-stroke:none;font-variation-settings:normal"/>
