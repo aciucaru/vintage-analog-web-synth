@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24mm" height="24mm" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="27mm" height="30mm" version="1.1" viewBox="0 0 27 30" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
    <defs>
       <filter id="a" x="-.1200001" y="-.4499983" width="1.24" height="1.899997" color-interpolation-filters="sRGB">
          <feGaussianBlur result="blur" stdDeviation="3"/>
@@ -11,11 +11,11 @@
          <rect x="218.723" y="119.8359" width="60" height="16" rx="2" ry="2" fill="#606060" stop-color="#000000" stroke-width=".148932" style="-inkscape-stroke:none"/>
       </clipPath>
       <clipPath id="d">
-         <rect width="24" height="24" fill="#181818" stop-color="#000000" stroke-width=".151145" style="-inkscape-stroke:none"/>
+         <rect x="-3" y="-3" width="27" height="30" fill="#181818" stop-color="#000000" stroke-width=".151145" style="-inkscape-stroke:none"/>
       </clipPath>
    </defs>
    <g>
-      <g clip-path="url(#d)">
+      <g transform="translate(3,3)" clip-path="url(#d)">
          <rect x="3" y="3" width="60" height="16" rx="2" ry="2" fill="#020202" fill-opacity=".7" filter="url(#a)" stop-color="#000000" stroke-width=".154904" style="-inkscape-stroke:none;font-variation-settings:normal"/>
          <rect x="5" y="5" width="60" height="16" rx="2" ry="2" fill="#ffffff" fill-opacity=".202825" filter="url(#b)" stop-color="#000000" stroke-width=".151145" style="-inkscape-stroke:none;font-variation-settings:normal"/>
          <g transform="translate(-214.723 -115.8359)" clip-path="url(#c)">

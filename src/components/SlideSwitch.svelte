@@ -33,14 +33,14 @@
 <style>
     .main-container
     {
-        --switchHeight: 24px;
+        --switchHeight: 30px;
         --textHeight: 12px;
 
         box-sizing: border-box;
 
         display: grid;
-        grid-template-columns: 4px 20px 20px 20px 4px;
-        grid-template-rows: 24px 5px 12px;
+        grid-template-columns: 7px 20px 20px 20px 7px;
+        grid-template-rows: 30px 5px 12px;
 
         justify-items: center;
         align-items: center;
@@ -70,7 +70,7 @@
 
     .left-bg
     {
-        width: 24px;
+        width: 27px;
         height: var(--switchHeight);
         background-size: 100% auto;
 
@@ -88,7 +88,7 @@
 
     .right-bg
     {
-        width: 24px;
+        width: 27px;
         height: var(--switchHeight);
         background-size: 100% auto;
         
