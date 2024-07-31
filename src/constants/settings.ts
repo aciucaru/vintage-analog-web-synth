@@ -305,8 +305,8 @@ export class Settings
     // public static readonly maxDistortionCurveConstantValue = 20.0;
     // public static readonly defaultDistortionCurveConstantValue = Math.PI;
 
-    public static readonly minDistortionCurveConstantValue = -Math.PI;
-    public static readonly maxDistortionCurveConstantValue = Math.PI;
+    public static readonly minDistortionCurveConstantValue = 0.01;
+    public static readonly maxDistortionCurveConstantValue = Math.PI / 4.0;
     public static readonly defaultDistortionCurveConstantValue = 0.01;
 
     // settings for reverb effect ***********************************************************************
