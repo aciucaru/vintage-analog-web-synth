@@ -153,7 +153,7 @@
                                 auto; /* icon */
         grid-template-rows: auto 5px /* label */
                             auto 5px /* toggle buttons */
-                            auto 10px /* toggle buttons */
+                            auto 15px /* toggle buttons */
                             auto 5px /* frequency range selector */
                             auto; /* frequency knob */
 

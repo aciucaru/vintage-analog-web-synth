@@ -17,10 +17,14 @@
 </script>
 
 <div class="main-container">
-    <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
-    <div class="slide-switch-bg right-bg unselectable" style="grid-column: {optionsArray.length + 1} / {optionsArray.length + 3}; grid-row: 1 / 2;"></div>
-    {#each optionsArray.slice(1, optionsArray.length) as option, index}
-        <div class="slide-switch-bg center-bg unselectable" style="grid-column: {index + 3} / {index + 4}; grid-row: 1 / 2;"></div>
+    {#each optionsArray as option, index}
+        {#if index === 0}
+            <div class="slide-switch-bg left-bg unselectable" style="grid-column: {index + 1} / {index + 3}; grid-row: 1 / 2;"></div>
+        {:else if index === (optionsArray.length - 1)}
+            <div class="slide-switch-bg right-bg unselectable" style="grid-column: {index + 2} / {index + 4}; grid-row: 1 / 2;"></div>
+        {:else}
+            <div class="slide-switch-bg center-bg unselectable" style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
+        {/if}
     {/each}
 
     <div class="slide-switch unselectable" style="grid-column: 3 / 4; grid-row: 1 / 2;"></div>
@@ -36,7 +40,7 @@
 
         display: grid;
         grid-template-columns: 4px 20px 20px 20px 4px;
-        grid-template-rows: var(--switchHeight) 5px var(--textHeight);
+        grid-template-rows: 24px 5px 12px;
 
         justify-items: center;
         align-items: center;
@@ -68,6 +72,7 @@
     {
         width: 24px;
         height: var(--switchHeight);
+        background-size: 100% auto;
 
         content: url("../assets/slide-switch/slide-switch-left-bg-opt.svg");
     }
@@ -76,6 +81,7 @@
     {
         width: 20px;
         height: var(--switchHeight);
+        background-size: 100% auto;
 
         content: url("../assets/slide-switch/slide-switch-center-bg-opt.svg");
     }
@@ -84,6 +90,7 @@
     {
         width: 24px;
         height: var(--switchHeight);
+        background-size: 100% auto;
         
         content: url("../assets/slide-switch/slide-switch-right-bg-opt.svg");
     }
