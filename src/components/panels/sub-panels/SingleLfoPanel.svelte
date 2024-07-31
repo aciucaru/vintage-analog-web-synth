@@ -9,6 +9,7 @@
 
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
+    import SlideSwitch from "../../SlideSwitch.svelte";
 
     // all the LFOs are inside an array and this is the index of the LFO this component should control
     // this index is a Svelte prop, so it must be passed to this component
@@ -127,6 +128,10 @@
             <RadioButton radioData={lfoRadioDataArray[3]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
         </div>
         <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div>
+
+        <div style="grid-column: 1 / 8; grid-row: 5 / 6;">
+            <SlideSwitch optionsArray={["1", "2", "3"]}></SlideSwitch>
+        </div>
 
         <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
             <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
