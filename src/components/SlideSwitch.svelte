@@ -15,28 +15,41 @@
 
     const logger: Logger<ILogObj> = new Logger({name: "SlideSwitch", minLevel: Settings.minLogLevel });
 
+    // the index of the selected option (starts at zero)
+    let selectionIndex = 0;
+
+    // the CSS grid columns for the main container
     let mainContainerGridTemplateColumns = "";
 
+    // the last column coordinate of the (the first is always 2)
+    let labelLastColumn = 1;
+
+    // compute the grid columns of the main container
     if (optionsArray.length >= 2)
     {
         mainContainerGridTemplateColumns = "5px";
 
+        let labelLastColumn = 1;
+
         for (let option of optionsArray)
         {
             mainContainerGridTemplateColumns = mainContainerGridTemplateColumns.concat(" 20px");
+
+            labelLastColumn++;
         }
 
         mainContainerGridTemplateColumns = mainContainerGridTemplateColumns.concat("5px");
     }
     else
         mainContainerGridTemplateColumns = "5px 20px 20px 5px";
-
     
     // the event handler for the 'click' event, this methods gets called when the toggle button is clicked
     function handleToggleClick(optionIndex: number): void
     {
         // switch toggled state
         logger.debug(`handleToggleClick(${optionIndex})`);
+
+        selectionIndex = optionIndex + 2;
 
         // call the supplied callback
         onToggleChange(optionIndex);
@@ -55,12 +68,17 @@
                 <div class="slide-switch-bg center-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
             {/if}
         {/each}
-        
-        <div class="slide-switch unselectable" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
+
+        <div class="slide-switch unselectable" style="grid-column: {selectionIndex + 2} / {selectionIndex + 3}; grid-row: 1 / 2;"></div>
 
     {:else}
         <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
         <div class="slide-switch-bg right-bg unselectable" style="grid-column: 3 / 5; grid-row: 1 / 2;"></div>
+    {/if}
+
+    <!-- option label -->
+    {#if 0 <= selectionIndex && selectionIndex < optionsArray.length}
+        <div class="label unselectable" style="grid-column: 2 / {labelLastColumn}; grid-row: 3 / 4;">{optionsArray[selectionIndex]}</div>
     {/if}
 </div>
 
@@ -74,7 +92,7 @@
 
         display: grid;
         /* grid-template-columns is not necessary, because it's defined algoritmically as inline stlye */
-        grid-template-rows: 26px 5px 12px;
+        grid-template-rows: 26px 5px 16px;
 
         justify-items: center;
         align-items: center;
@@ -84,6 +102,24 @@
 
         margin: 0px;
         padding: 0px;
+    }
+
+    .label
+    {
+        box-sizing: border-box;
+
+        width: var(--containerWidth);
+        height: calc(var(--textHeight) + 4px);
+
+        margin: 0px;
+        padding: 0px;
+
+        color: hsl(0, 0%, 85%);
+        font-family: sans-serif;
+        font-size: var(--textHeight);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: clip;
     }
 
     .slide-switch-bg
