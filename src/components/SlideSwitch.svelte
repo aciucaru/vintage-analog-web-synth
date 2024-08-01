@@ -55,8 +55,9 @@
                 <div class="slide-switch-bg center-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
             {/if}
         {/each}
-
+        
         <div class="slide-switch unselectable" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
+
     {:else}
         <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
         <div class="slide-switch-bg right-bg unselectable" style="grid-column: 3 / 5; grid-row: 1 / 2;"></div>

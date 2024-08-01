@@ -9,12 +9,21 @@ import type { ILogObj } from "tslog";
 //     BarDivisions4by4 = "BarDivisions4by4"
 // }
 
+/* An enum that describes the posible shapes of the LFO */
 export enum LfoShape
 {
     Triangle = "Triangle",
     Sawtooth = "Sawtooth",
     Square = "Square",
     Sine = "Sine"
+}
+
+/* An enum that describes the possible frequency ranges of the LFO */
+export enum LfoFreqRange
+{
+    Low = 0,
+    Mid = 1,
+    High = 2
 }
 
 /* Low frequency oscillator implementation, this LFO is always unipolar and positive (it oscillates between 0 and 1).
@@ -39,8 +48,11 @@ export class UnipolarLfo
     ** oscillator SHOULD ALWAYS BE 0.5, so the end result oscillates between 0.5*0 and 0.5*2 (e.g. between 0 and 1). */
     private mergerGainNode: GainNode;
 
+    // the allowable frequency range of the LFO
+    private freqRange: LfoFreqRange = LfoFreqRange.Low;
+
     // the absolute frequency of the LFO, in Hz
-    private absoluteFrequency: number = Settings.defaultLfoAbsoluteFrequency;
+    private absoluteFrequency: number = Settings.defaultLfoLowAbsoluteFrequency;
 
     // these values are for the 'constant' oscillator and for the merger gain node, they are fixed and should never change
     private static readonly CONSTANT_OSCILLATOR_OFFSET = 1;
@@ -77,7 +89,7 @@ export class UnipolarLfo
     {
         UnipolarLfo.logger.debug(`setShape(${shape})`);
 
-        switch(shape)
+        switch (shape)
         {
             case LfoShape.Triangle: this.lfoOscillator.type = "triangle"; break;
 
@@ -91,24 +103,71 @@ export class UnipolarLfo
         }
     }
 
+    public setFrequencyRange(freqRange: LfoFreqRange): void
+    {
+        UnipolarLfo.logger.debug(`setFrequencyRange(${freqRange})`);
+
+        this.freqRange = freqRange;
+    }
+
     // sets the absolute frequency of the LFO, in Hz
     public setFrequency(freq: number): boolean
     {
-        if (Settings.minLfoAbsoluteFrequency <= freq && freq <= Settings.maxLfoAbsoluteFrequency)
+        switch (this.freqRange)
         {
-            UnipolarLfo.logger.debug(`setFrequency(${freq})`);
+            case LfoFreqRange.Low:
+                if (Settings.minLfoLowAbsoluteFrequency <= freq && freq <= Settings.maxLfoLowAbsoluteFrequency)
+                {
+                    UnipolarLfo.logger.debug(`setFrequency(${freq})`);
+        
+                    this.absoluteFrequency = freq;  // set the new value
+        
+                    // assign the newly recomputed frequency to the LFO oscillator
+                    this.lfoOscillator.frequency.linearRampToValueAtTime(freq, this.audioContext.currentTime);
+        
+                    return true; // change was succesfull
+                }
+                else
+                {
+                    UnipolarLfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
+                    return false; // change was not succesfull
+                }
 
-            this.absoluteFrequency = freq;  // set the new value
+            case LfoFreqRange.Mid:
+                if (Settings.minLfoMidAbsoluteFrequency <= freq && freq <= Settings.maxLfoMidAbsoluteFrequency)
+                {
+                    UnipolarLfo.logger.debug(`setFrequency(${freq})`);
+        
+                    this.absoluteFrequency = freq;  // set the new value
+        
+                    // assign the newly recomputed frequency to the LFO oscillator
+                    this.lfoOscillator.frequency.linearRampToValueAtTime(freq, this.audioContext.currentTime);
+        
+                    return true; // change was succesfull
+                }
+                else
+                {
+                    UnipolarLfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
+                    return false; // change was not succesfull
+                }
 
-            // assign the newly recomputed frequency to the LFO oscillator
-            this.lfoOscillator.frequency.linearRampToValueAtTime(freq, this.audioContext.currentTime);
-
-            return true; // change was succesfull
-        }
-        else
-        {
-            UnipolarLfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
-            return false; // change was not succesfull
+            case LfoFreqRange.High:
+                if (Settings.minLfoHighAbsoluteFrequency <= freq && freq <= Settings.maxLfoHighAbsoluteFrequency)
+                {
+                    UnipolarLfo.logger.debug(`setFrequency(${freq})`);
+        
+                    this.absoluteFrequency = freq;  // set the new value
+        
+                    // assign the newly recomputed frequency to the LFO oscillator
+                    this.lfoOscillator.frequency.linearRampToValueAtTime(freq, this.audioContext.currentTime);
+        
+                    return true; // change was succesfull
+                }
+                else
+                {
+                    UnipolarLfo.logger.warn(`setFrequency(${freq}): value is outside bounds`);
+                    return false; // change was not succesfull
+                }
         }
     }
 }

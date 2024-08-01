@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { LfoShape } from "../../../model/audio/modulation/unipolar-lfo";
+    import { LfoFreqRange, LfoShape } from "../../../model/audio/modulation/unipolar-lfo";
     import { lfoArray } from "../../../constants/shareable-audio-nodes";
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
 
@@ -17,6 +17,9 @@
     export let lfoIndex: number;
 
     const logger: Logger<ILogObj> = new Logger({name: "RadioGroup", minLevel: Settings.minLogLevel });
+
+    // variable that stores the frequency range of the singel LFO
+    let frequencyRange: LfoFreqRange = LfoFreqRange.Low;
 
     // LFO callbacks and data ****************************************************************************************
     function onLfoTriangleShapeSelect(): void
@@ -61,6 +64,14 @@
 
     function onFrequencyRangeChange(selectedOptionIndex: number)
     {
+        switch (selectedOptionIndex)
+        {
+            case 0: frequencyRange = LfoFreqRange.Low; break;
+
+            case 1: frequencyRange = LfoFreqRange.Mid; break;
+
+            case 2: frequencyRange = LfoFreqRange.High; break;
+        }
         // lfoArray[lfoIndex].setFrequencyRange();
     }
 
@@ -138,11 +149,24 @@
         <div style="grid-column: 1 / 8; grid-row: 7 / 8;">
             <SlideSwitch optionsArray={["0 - 20 Hz", "20 - 100 Hz", "100 - 1000 Hz"]} onToggleChange={onFrequencyRangeChange}></SlideSwitch>
         </div>
-
-        <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
-            <Knob label={"Rate"} minValue={Settings.minLfoAbsoluteFrequency} maxValue={Settings.maxLfoAbsoluteFrequency} initialValue={Settings.defaultLfoAbsoluteFrequency}
-                step={1} decimals={0} onValueChange={onLfoFreqChange}></Knob>
-        </div>
+    
+        <!-- the knob for frequency change is different depending on the frequency range of the LFO (the min. and max. limits vary)-->
+        {#if frequencyRange === LfoFreqRange.Low}
+            <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
+                <Knob label={"Rate"} minValue={Settings.minLfoLowAbsoluteFrequency} maxValue={Settings.maxLfoLowAbsoluteFrequency} initialValue={Settings.defaultLfoLowAbsoluteFrequency}
+                    step={0.01} decimals={2} onValueChange={onLfoFreqChange}></Knob>
+            </div>
+        {:else if frequencyRange === LfoFreqRange.Mid}
+            <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
+                <Knob label={"Rate"} minValue={Settings.minLfoMidAbsoluteFrequency} maxValue={Settings.maxLfoMidAbsoluteFrequency} initialValue={Settings.defaultLfoMidAbsoluteFrequency}
+                    step={1} decimals={1} onValueChange={onLfoFreqChange}></Knob>
+            </div>
+        {:else if frequencyRange === LfoFreqRange.High}
+            <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
+                <Knob label={"Rate"} minValue={Settings.minLfoHighAbsoluteFrequency} maxValue={Settings.maxLfoHighAbsoluteFrequency} initialValue={Settings.defaultLfoHighAbsoluteFrequency}
+                    step={1} decimals={0} onValueChange={onLfoFreqChange}></Knob>
+            </div>
+        {/if}
 </div>
 
 <style>
