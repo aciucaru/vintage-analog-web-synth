@@ -11,36 +11,69 @@
 
     /* the event handler (callback) prop the knob will call when it's rotated
     ** this event receives the new value set by the knob */
-    // export let onValueChange: (selectedOption: string) => void;
+    export let onToggleChange: (selectedOptionIndex: number) => void;
 
     const logger: Logger<ILogObj> = new Logger({name: "SlideSwitch", minLevel: Settings.minLogLevel });
+
+    let mainContainerGridTemplateColumns = "";
+
+    if (optionsArray.length >= 2)
+    {
+        mainContainerGridTemplateColumns = "5px";
+
+        for (let option of optionsArray)
+        {
+            mainContainerGridTemplateColumns = mainContainerGridTemplateColumns.concat(" 20px");
+        }
+
+        mainContainerGridTemplateColumns = mainContainerGridTemplateColumns.concat("5px");
+    }
+    else
+        mainContainerGridTemplateColumns = "5px 20px 20px 5px";
+
+    
+    // the event handler for the 'click' event, this methods gets called when the toggle button is clicked
+    function handleToggleClick(optionIndex: number): void
+    {
+        // switch toggled state
+        logger.debug(`handleToggleClick(${optionIndex})`);
+
+        // call the supplied callback
+        onToggleChange(optionIndex);
+    }
+
 </script>
 
-<div class="main-container">
-    {#each optionsArray as option, index}
-        {#if index === 0}
-            <div class="slide-switch-bg left-bg unselectable" style="grid-column: {index + 1} / {index + 3}; grid-row: 1 / 2;"></div>
-        {:else if index === (optionsArray.length - 1)}
-            <div class="slide-switch-bg right-bg unselectable" style="grid-column: {index + 2} / {index + 4}; grid-row: 1 / 2;"></div>
-        {:else}
-            <div class="slide-switch-bg center-bg unselectable" style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
-        {/if}
-    {/each}
+<div class="main-container" style="grid-template-columns: {mainContainerGridTemplateColumns}">
+    {#if optionsArray.length >= 2}
+        {#each optionsArray as option, index}
+            {#if index === 0}
+                <div class="slide-switch-bg left-bg unselectable" on:click={ (event) => handleToggleClick(index) }  style="grid-column: {index + 1} / {index + 3}; grid-row: 1 / 2;"></div>
+            {:else if index === (optionsArray.length - 1)}
+                <div class="slide-switch-bg right-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 4}; grid-row: 1 / 2;"></div>
+            {:else}
+                <div class="slide-switch-bg center-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
+            {/if}
+        {/each}
 
-    <div class="slide-switch unselectable" style="grid-column: 3 / 4; grid-row: 1 / 2;"></div>
+        <div class="slide-switch unselectable" style="grid-column: 2 / 3; grid-row: 1 / 2;"></div>
+    {:else}
+        <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
+        <div class="slide-switch-bg right-bg unselectable" style="grid-column: 3 / 5; grid-row: 1 / 2;"></div>
+    {/if}
 </div>
 
 <style>
     .main-container
     {
-        --switchHeight: 30px;
+        --switchHeight: 26px;
         --textHeight: 12px;
 
         box-sizing: border-box;
 
         display: grid;
-        grid-template-columns: 7px 20px 20px 20px 7px;
-        grid-template-rows: 30px 5px 12px;
+        /* grid-template-columns is not necessary, because it's defined algoritmically as inline stlye */
+        grid-template-rows: 26px 5px 12px;
 
         justify-items: center;
         align-items: center;
@@ -70,9 +103,9 @@
 
     .left-bg
     {
-        width: 27px;
+        width: 25px;
         height: var(--switchHeight);
-        background-size: 100% auto;
+        /* background-size: 100% auto; */
 
         content: url("../assets/slide-switch/slide-switch-left-bg-opt.svg");
     }
@@ -81,16 +114,16 @@
     {
         width: 20px;
         height: var(--switchHeight);
-        background-size: 100% auto;
+        /* background-size: 100% auto; */
 
         content: url("../assets/slide-switch/slide-switch-center-bg-opt.svg");
     }
 
     .right-bg
     {
-        width: 27px;
+        width: 25px;
         height: var(--switchHeight);
-        background-size: 100% auto;
+        /* background-size: 100% auto; */
         
         content: url("../assets/slide-switch/slide-switch-right-bg-opt.svg");
     }

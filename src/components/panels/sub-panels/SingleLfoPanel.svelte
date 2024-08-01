@@ -6,10 +6,11 @@
 
     import RadioButton from "../../radio-button/RadioButton.svelte";
     import Knob from "../../Knob.svelte";
+    import SlideSwitch from "../../SlideSwitch.svelte";
 
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
-    import SlideSwitch from "../../SlideSwitch.svelte";
+
 
     // all the LFOs are inside an array and this is the index of the LFO this component should control
     // this index is a Svelte prop, so it must be passed to this component
@@ -56,6 +57,11 @@
 
         if (lfoArray.length > lfoIndex)
             lfoArray[lfoIndex].setFrequency(lfoFreq);
+    }
+
+    function onFrequencyRangeChange(selectedOptionIndex: number)
+    {
+        // lfoArray[lfoIndex].setFrequencyRange();
     }
 
     // the data for a single radio button consists of an index, a label and the callback
@@ -130,7 +136,7 @@
         <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div>
 
         <div style="grid-column: 1 / 8; grid-row: 7 / 8;">
-            <SlideSwitch optionsArray={["1", "2", "3"]}></SlideSwitch>
+            <SlideSwitch optionsArray={["0 - 20 Hz", "20 - 100 Hz", "100 - 1000 Hz"]} onToggleChange={onFrequencyRangeChange}></SlideSwitch>
         </div>
 
         <div style="grid-column: 3 / 6; grid-row: 9 / 10;">
