@@ -18,7 +18,8 @@
 
     const logger: Logger<ILogObj> = new Logger({name: "RadioGroup", minLevel: Settings.minLogLevel });
 
-    // variable that stores the frequency range of the singel LFO
+    /* Variable that stores the frequency range of the singel LFO.
+    ** This variable is used bothe be the callback and Svelte UI, so it must have this high scope */
     let frequencyRange: LfoFreqRange = LfoFreqRange.Low;
 
     // LFO callbacks and data ****************************************************************************************
@@ -72,7 +73,8 @@
 
             case 2: frequencyRange = LfoFreqRange.High; break;
         }
-        // lfoArray[lfoIndex].setFrequencyRange();
+
+        lfoArray[lfoIndex].setFrequencyRange(frequencyRange);
     }
 
     // the data for a single radio button consists of an index, a label and the callback
@@ -106,26 +108,6 @@
         <!-- title -->
         <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 1 / 2;">LFO {lfoIndex + 1}</div>
 
-        <!-- <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
-            <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
-        </div>
-        <div class="waveform-icon triangle-icon" style="grid-column: 3 / 4; grid-row: 3 / 4;"></div>
-
-        <div style="grid-column: 5 / 6; grid-row: 3 / 4;">
-            <RadioButton radioData={lfoRadioDataArray[1]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
-        </div>
-        <div class="waveform-icon saw-icon" style="grid-column: 7 / 8; grid-row: 3 / 4;"></div>
-
-        <div style="grid-column: 1 / 2; grid-row: 5 / 6;">
-            <RadioButton radioData={lfoRadioDataArray[2]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
-        </div>
-        <div class="waveform-icon square-icon" style="grid-column: 3 / 4; grid-row: 5 / 6;"></div>
-
-        <div style="grid-column: 5 / 6; grid-row: 5 / 6;">
-            <RadioButton radioData={lfoRadioDataArray[3]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
-        </div>
-        <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div> -->
-
         <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
             <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
         </div>
@@ -147,7 +129,7 @@
         <div class="waveform-icon sine-icon" style="grid-column: 7 / 8; grid-row: 5 / 6;"></div>
 
         <div style="grid-column: 1 / 8; grid-row: 7 / 8;">
-            <SlideSwitch optionsArray={["0 - 20 Hz", "20 - 100 Hz", "100 - 1000 Hz"]} onToggleChange={onFrequencyRangeChange}></SlideSwitch>
+            <SlideSwitch optionsArray={["0 - 5 Hz", "5 - 50 Hz", "50 - 2k Hz"]} onToggleChange={onFrequencyRangeChange}></SlideSwitch>
         </div>
     
         <!-- the knob for frequency change is different depending on the frequency range of the LFO (the min. and max. limits vary)-->

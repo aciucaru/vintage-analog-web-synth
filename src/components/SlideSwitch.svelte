@@ -49,7 +49,7 @@
         // switch toggled state
         logger.debug(`handleToggleClick(${optionIndex})`);
 
-        selectionIndex = optionIndex + 2;
+        selectionIndex = optionIndex;
 
         // call the supplied callback
         onToggleChange(optionIndex);
@@ -57,30 +57,38 @@
 
 </script>
 
-<div class="main-container" style="grid-template-columns: {mainContainerGridTemplateColumns}">
-    {#if optionsArray.length >= 2}
-        {#each optionsArray as option, index}
-            {#if index === 0}
-                <div class="slide-switch-bg left-bg unselectable" on:click={ (event) => handleToggleClick(index) }  style="grid-column: {index + 1} / {index + 3}; grid-row: 1 / 2;"></div>
-            {:else if index === (optionsArray.length - 1)}
-                <div class="slide-switch-bg right-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 4}; grid-row: 1 / 2;"></div>
-            {:else}
-                <div class="slide-switch-bg center-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
-            {/if}
-        {/each}
+<div class="main-container">
+    <div class="slide-container" style="grid-template-columns: {mainContainerGridTemplateColumns}">
+        <!-- general cas, when the number of options is at least 2 -->
+        {#if optionsArray.length >= 2}
+            <!-- background -->
+            {#each optionsArray as option, index}
+                {#if index === 0}
+                    <div class="slide-switch-bg left-bg unselectable" on:click={ (event) => handleToggleClick(index) }  style="grid-column: {index + 1} / {index + 3}; grid-row: 1 / 2;"></div>
+                {:else if index === (optionsArray.length - 1)}
+                    <div class="slide-switch-bg right-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 4}; grid-row: 1 / 2;"></div>
+                {:else}
+                    <div class="slide-switch-bg center-bg unselectable" on:click={ (event) => handleToggleClick(index) } style="grid-column: {index + 2} / {index + 3}; grid-row: 1 / 2;"></div>
+                {/if}
+            {/each}
+    
+            <!-- the slide switch -->
+            <div class="slide-switch unselectable" style="grid-column: {selectionIndex + 2} / {selectionIndex + 3}; grid-row: 1 / 2;"></div>
+    
+        <!-- fallback case: when the number of options is smaller than 2 (0 or 1) -->
+        <!-- in this case there is nothing to select and the switch is not visible (only the background is visible) -->
+        {:else}
+            <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
+            <div class="slide-switch-bg right-bg unselectable" style="grid-column: 3 / 5; grid-row: 1 / 2;"></div>
+        {/if}
+    </div>
 
-        <div class="slide-switch unselectable" style="grid-column: {selectionIndex + 2} / {selectionIndex + 3}; grid-row: 1 / 2;"></div>
-
-    {:else}
-        <div class="slide-switch-bg left-bg unselectable" style="grid-column: 1 / 3; grid-row: 1 / 2;"></div>
-        <div class="slide-switch-bg right-bg unselectable" style="grid-column: 3 / 5; grid-row: 1 / 2;"></div>
-    {/if}
-
-    <!-- option label -->
+    <!-- label for selected option -->
     {#if 0 <= selectionIndex && selectionIndex < optionsArray.length}
-        <div class="label unselectable" style="grid-column: 2 / {labelLastColumn}; grid-row: 3 / 4;">{optionsArray[selectionIndex]}</div>
+        <div class="label unselectable">{optionsArray[selectionIndex]}</div>
     {/if}
 </div>
+
 
 <style>
     .main-container
@@ -90,9 +98,23 @@
 
         box-sizing: border-box;
 
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center; /* set alignment on main axis */
+        align-items: center; /* set alingment on cross-axis */
+        align-content: center; /* set space between flex lines */
+
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .slide-container
+    {
+        box-sizing: border-box;
+
         display: grid;
         /* grid-template-columns is not necessary, because it's defined algoritmically as inline stlye */
-        grid-template-rows: 26px 5px 16px;
+        grid-template-rows: 26px;
 
         justify-items: center;
         align-items: center;
