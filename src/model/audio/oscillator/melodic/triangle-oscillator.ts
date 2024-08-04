@@ -1,6 +1,7 @@
 import { Settings } from "../../../../constants/settings";
-import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
 import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
+import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
+
 import { ModulationManager } from "../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
