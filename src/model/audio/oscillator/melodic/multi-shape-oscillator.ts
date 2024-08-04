@@ -80,7 +80,7 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.sawOscillatorNode.outputNode().connect(this.sawOscillatorGainNode);
         this.pulseOscillatorNode.outputNode().connect(this.pulseOscillatorGainNode);
 
-        // connect the gain nodes for the 3 oscillators to the same intermediate gain node, to combine them
+        // connect the gain nodes for the 3 oscillators to the same output gain node, to combine them
         this.triangleOscillatorGainNode.connect(this.outputGainNode);
         this.sawOscillatorGainNode.connect(this.outputGainNode);
         this.pulseOscillatorGainNode.connect(this.outputGainNode);
