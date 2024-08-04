@@ -1,8 +1,10 @@
 import { Settings } from "../../../../constants/settings";
-import { PulseOscillator } from "./pulse-oscillator";
-import { BasePulseOscillator } from "./base-pulse-oscillator";
+import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
+import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
+import type { BasePulseOscillator } from "../../source/oscillator/melodic/base-pulse-oscillator";
 import { TriangleOscillator } from "./triangle-oscillator";
 import { SawOscillator } from "./saw-oscillator";
+import { PulseOscillator } from "./pulse-oscillator";
 
 import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
 import { ModulationManager } from "../../modulation/modulation-manager";
@@ -11,7 +13,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class MultiShapeOscillator extends BasePulseOscillator
+export class MultiShapeOscillator extends BaseMelodicOscillator implements BaseUnisonOscillator, BasePulseOscillator
 {
     private triangleOscillatorNode: TriangleOscillator;
     private sawOscillatorNode: SawOscillator;
@@ -208,7 +210,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
         return isChangeSuccessfull;
     }
 
-    public override setUnisonDetune(centsDetune: number): boolean
+    // method from 'BaseUnisonOscillator' interface
+    public setUnisonDetune(centsDetune: number): boolean
     {
         if (Settings.minOscUnisonCentsDetune <= centsDetune && centsDetune <= Settings.maxOscUnisonCentsDetune)
         {
@@ -227,7 +230,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
         }
     }
 
-    public override setPulseWidth(pulseWidth: number): boolean
+    // method from 'BasePulseOscillator' interface
+    public setPulseWidth(pulseWidth: number): boolean
     {
         const isChangeSuccsefull = this.pulseOscillatorNode.setPulseWidth(pulseWidth);
 
@@ -295,38 +299,6 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.sawOscillatorGainNode.gain.setValueAtTime(this.sawOscillatorGainValue, currentTime);
         this.pulseOscillatorGainNode.gain.setValueAtTime(this.pulseOscillatorGainValue, currentTime);
     }
-
-    // public setOutputGain(gain: number): boolean
-    // {
-    //     if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
-    //     {
-    //         MultiShapeOscillator.logger.debug(`setOutputGain(${gain})`);
-
-    //         // set the new value
-    //         this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
-
-    //         // notify the modulation manager that the main values has changed
-    //         this.ampLfoManager.setParameterCurrentValue(gain);
-
-    //         return true; // change was successfull
-    //     }
-    //     else
-    //     {
-    //         MultiShapeOscillator.logger.warn(`setOutputGain(${gain}): value outside bounds`);
-
-    //         return false; // change was not successfull
-    //     }
-    // }
-
-    // private setGainValues(): void
-    // {
-    //     const currentTime = this.audioContext.currentTime;
-
-    //     // set the gain values for all oscillators (using their associated gain values)
-    //     this.triangleOscillatorGainNode.gain.setValueAtTime(this.triangleOscillatorGainValue, currentTime);
-    //     this.sawOscillatorGainNode.gain.setValueAtTime(this.sawOscillatorGainValue, currentTime);
-    //     this.pulseOscillatorGainNode.gain.setValueAtTime(this.pulseOscillatorGainValue, currentTime);
-    // }
 
     public toggleTriangleShape(): void
     {

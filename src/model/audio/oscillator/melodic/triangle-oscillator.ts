@@ -1,13 +1,15 @@
 import { Settings } from "../../../../constants/settings";
-import { BaseUnisonOscillator } from "./base-unison-oscillator";
-import type { ModulationManager } from "../../modulation/modulation-manager";
+import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
+import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
+import { ModulationManager } from "../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
 
-export class TriangleOscillator extends BaseUnisonOscillator
+
+export class TriangleOscillator extends BaseMelodicOscillator implements BaseUnisonOscillator
 {
     // main node
     private triangleOscillator: OscillatorNode;
@@ -172,7 +174,8 @@ export class TriangleOscillator extends BaseUnisonOscillator
         return isChangeSuccessfull;
     }
 
-    public override setUnisonDetune(centsDetune: number): boolean
+    // from 'BaseUnisonOscillator' interface
+    public setUnisonDetune(centsDetune: number): boolean
     {
         if (Settings.minOscUnisonCentsDetune <= centsDetune && centsDetune <= Settings.maxOscUnisonCentsDetune)
         {

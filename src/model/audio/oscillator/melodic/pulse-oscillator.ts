@@ -18,15 +18,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import { Settings } from "../../../../constants/settings";
-import { BasePulseOscillator } from "./base-pulse-oscillator";
-
-import type { ModulationManager } from "../../modulation/modulation-manager";
+import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
+import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
+import type { BasePulseOscillator } from "../../source/oscillator/melodic/base-pulse-oscillator";
+import { ModulationManager } from "../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class PulseOscillator extends BasePulseOscillator
+export class PulseOscillator extends BaseMelodicOscillator implements BaseUnisonOscillator, BasePulseOscillator
 {
     // the saw oscillator is the main 'ingredient' in making a pulse oscillator
     private sawOscillatorNode: OscillatorNode;
@@ -228,7 +229,8 @@ export class PulseOscillator extends BasePulseOscillator
         return isChangeSuccessfull;
     }
 
-    public override setUnisonDetune(centsDetune: number): boolean
+    // method from 'BaseUnisonOscillator' interface
+    public setUnisonDetune(centsDetune: number): boolean
     {
         if (Settings.minOscUnisonCentsDetune <= centsDetune && centsDetune <= Settings.maxOscUnisonCentsDetune)
         {
@@ -249,7 +251,8 @@ export class PulseOscillator extends BasePulseOscillator
         }
     }
 
-    public override setPulseWidth(pulseWidth: number): boolean
+    // method from 'BasePulseOscillator'
+    public setPulseWidth(pulseWidth: number): boolean
     {
         if (Settings.minOscPulseWidth <= pulseWidth && pulseWidth <= Settings.maxOscPulseWidth)
         {
