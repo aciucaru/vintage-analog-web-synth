@@ -1,7 +1,5 @@
 import { Settings } from "../../../../constants/settings";
-import { NoteSettings } from "../../../../constants/note-settings";
 import { BaseUnisonOscillator } from "./base-unison-oscillator";
-import { LfoManager } from "../../modulation/lfo-manager";
 import type { ModulationManager } from "../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
