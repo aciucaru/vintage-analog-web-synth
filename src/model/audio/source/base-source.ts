@@ -24,7 +24,7 @@ export class BaseSource
     // the final output of the oscillator; this is used to connect the oscillator to other nodes
     protected outputGainNode: GainNode;
 
-    private static readonly baseSourceLogger: Logger<ILogObj> = new Logger({name: "BaseOscillator", minLevel: Settings.minLogLevel });
+    private static readonly baseSourceLogger: Logger<ILogObj> = new Logger({name: "BaseSource", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext)
     {
