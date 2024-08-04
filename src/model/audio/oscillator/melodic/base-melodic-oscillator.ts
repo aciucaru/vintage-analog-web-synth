@@ -31,6 +31,18 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
 
     public abstract setCentsOffset(centsOffset: number): boolean;
 
+    /* Methods for FM and ring modulation between main oscillators. These methods are only for connecting the main oscillators
+    ** of a voice between them, for FM or ring modulation. For connecting LFOs or other modulators, other methods or logic are used. */
+
+    /* This method returns the node to which another main oscillators is supossed to be connected to, when that main oscillator is
+    ** an FM or ring modulator of this OscillatorNode.
+    ** This method basically returns a node to wich to connect a modulation source input. */
+    public abstract fmModulationInput(): GainNode;
+
+    /* This method does the same as the 'fmModulationInput()' method, but for ring modulation, not FM modulation. It give a node
+    ** where to connect a main oscillator that will be a ring modulator. */
+    public abstract ringModulationInput(): GainNode;
+
     // offsets for sequencer steps (beats)
     public abstract setBeatOctavesOffset(octavesBeatOffset: number): boolean;
 
