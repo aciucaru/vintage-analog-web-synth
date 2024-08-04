@@ -143,8 +143,7 @@ export class OscillatorMixer
         const length = this.oscillators.length;
 
         // compute and set the actual gain levels for each oscillator:
-        // if there is at least one oscillator, then compute the gain
-        if (length > 0)
+        if (length > 0) // if there is at least one oscillator, then compute the gain
         {
             for (let oscillatorData of this.oscillators)
             {
