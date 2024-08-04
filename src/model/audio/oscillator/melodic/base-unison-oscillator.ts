@@ -1,8 +1,9 @@
 import { BaseMelodicOscillator } from "./base-melodic-oscillator";
 
-/* this class represents a single oscillator that can be joined with other oscillators in unison;
-** this class is not itself a unison oscillator, but a single oscillator that can be part of a
-** unison oscillator (e.g. can be 'joined' in unison with multiple other oscillators of the same type);  */
+/*     This class represents a single oscillator that can be joined with other oscillators in unison.
+**     This class is not itself a unison oscillator, but a single oscillator that can be part of a
+** unison oscillator (e.g. can be 'joined' in unison with multiple other oscillators of the same type);
+**     This class is used for voice unison, for having multiple voices stacked togheter in unison.  */
 export abstract class BaseUnisonOscillator extends BaseMelodicOscillator
 {
     constructor(audioContext: AudioContext, initialGain: number)
