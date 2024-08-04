@@ -1,13 +1,13 @@
-import { Settings } from "../../../../constants/settings";
-import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
-import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
-import type { BasePulseOscillator } from "../../source/oscillator/melodic/base-pulse-oscillator";
-import { TriangleOscillator } from "../../source/oscillator/melodic/triangle-oscillator";
-import { SawOscillator } from "../../source/oscillator/melodic/saw-oscillator";
-import { PulseOscillator } from "../../source/oscillator/melodic/pulse-oscillator";
+import { Settings } from "../../../../../constants/settings";
+import { BaseMelodicOscillator } from "./base-melodic-oscillator";
+import type { BaseUnisonOscillator } from "./base-unison-oscillator";
+import type { BasePulseOscillator } from "./base-pulse-oscillator";
+import { TriangleOscillator } from "./triangle-oscillator";
+import { SawOscillator } from "./saw-oscillator";
+import { PulseOscillator } from "./pulse-oscillator";
 
-import type { UnipolarLfo } from "../../modulation/unipolar-lfo";
-import { ModulationManager } from "../../modulation/modulation-manager";
+import type { UnipolarLfo } from "../../../modulation/unipolar-lfo";
+import { ModulationManager } from "../../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

@@ -1,7 +1,7 @@
 import { Settings } from "../../constants/settings";
 
 import { SubOscillator } from "./source/oscillator/melodic/sub-oscillator";
-import { MultiShapeOscillator } from "./oscillator/melodic/multi-shape-oscillator";
+import { MultiShapeOscillator } from "./source/oscillator/melodic/multi-shape-oscillator";
 import { MultiNoiseOscillator } from "./oscillator/noise/multi-noise-oscillator";
 
 import { OscillatorMixer } from "./oscillator-mixer";
