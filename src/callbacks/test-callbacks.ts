@@ -1,5 +1,5 @@
 import { Settings } from "../constants/settings";
-import { NoiseType } from "../model/audio/oscillator/noise/multi-noise-oscillator";
+import { NoiseType } from "../model/audio/source/oscillator/noise/multi-noise-oscillator";
 import { monoSynth } from "../model/audio/synth";
 
 import { Logger } from "tslog";

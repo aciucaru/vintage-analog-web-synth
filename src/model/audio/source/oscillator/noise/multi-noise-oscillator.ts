@@ -4,9 +4,9 @@
 ** https://noisehack.com/generate-noise-web-audio-api/
 ** https://github.com/meenie/band.js/blob/master/src/instrument-packs/noises.js */
 
-import { Settings } from "../../../../constants/settings";
-import { Note } from "../../note";
-import { BaseOscillator } from "../../source/oscillator/base-oscillator";
+import { Settings } from "../../../../../constants/settings";
+import { Note } from "../../../note";
+import { BaseOscillator } from "../base-oscillator";
 import { WhiteNoiseOscillator } from "./white-noise";
 import { PinkNoiseOscillator } from "./pink-noise";
 import { BrownNoiseOscillator } from "./brown-noise";
