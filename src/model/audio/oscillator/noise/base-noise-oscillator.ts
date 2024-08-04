@@ -5,7 +5,7 @@
 ** https://github.com/meenie/band.js/blob/master/src/instrument-packs/noises.js */
 
 import { Settings } from "../../../../constants/settings";
-import { BaseOscillator } from "../base/base-oscillator";
+import { BaseOscillator } from "../../source/oscillator/base-oscillator";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

@@ -6,7 +6,7 @@
 
 import { Settings } from "../../../../constants/settings";
 import { Note } from "../../note";
-import { BaseOscillator } from "../base/base-oscillator";
+import { BaseOscillator } from "../../source/oscillator/base-oscillator";
 import { WhiteNoiseOscillator } from "./white-noise";
 import { PinkNoiseOscillator } from "./pink-noise";
 import { BrownNoiseOscillator } from "./brown-noise";

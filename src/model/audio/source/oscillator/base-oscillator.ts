@@ -4,7 +4,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export abstract class BaseOscillator
+export class BaseOscillator
 {
     /* the audio context used to create and connect nodes;
     ** must be supplied from outside the class */
