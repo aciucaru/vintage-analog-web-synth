@@ -13,7 +13,7 @@ import type { ILogObj } from "tslog";
 ** connect to external nodes.
 **
 ** Classes that inherit from this base class usually have a complex graph of nodes (usually more than one node)
-** in order to work properly. */
+** in order to work properly. All those nodes are between 'unputGainNode' and 'outputGainNode'. */
 export class InputOutputBaseAudioNode
 {
     protected audioContext: AudioContext;
