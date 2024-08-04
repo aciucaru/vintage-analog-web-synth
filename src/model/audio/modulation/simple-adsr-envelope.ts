@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { InputOutputBaseAudioNode } from "../base/input-output-base-audio-node";
+import { IntermediateBaseAudioNode } from "../base/intermediate-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -23,7 +23,7 @@ import type { ILogObj } from "tslog";
 ** The 'envelope amount' parameter is not inside the ADSR envelope, but inside the modulatable parameter.
 ** This means that maybe not all parameters accept an envelope. The parameters that accept an envelope must
 ** contain an 'evelope amount' parameter inside their implementation. */
-export class SimpleAdsrEnvelope extends InputOutputBaseAudioNode
+export class SimpleAdsrEnvelope extends IntermediateBaseAudioNode
 {
     private adsrGainNode: GainNode;
 
