@@ -17,10 +17,6 @@ export class BaseSource
     ** must be supplied from outside the class */
     protected audioContext: AudioContext;
 
-    /* the gain node that should be used for drawing the sound (for AnalyserNode)
-    ** this gain is always at max. level, so the drawing is full size */
-    // protected analyserGainNode: GainNode;
-
     // the final output of the oscillator; this is used to connect the oscillator to other nodes
     protected outputGainNode: GainNode;
 
@@ -38,9 +34,6 @@ export class BaseSource
 
         if (audioContext === null)
             BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
-
-        // this.analyserGainNode = this.audioContext.createGain();
-        // this.analyserGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
@@ -67,6 +60,4 @@ export class BaseSource
             return false; // change was not successfull
         }
     }
-
-    // public getAnalyserGainNode(): GainNode { return this.analyserGainNode; }
 }
