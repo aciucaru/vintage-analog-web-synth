@@ -13,7 +13,7 @@ This synthesizer has the folowing features:
 * a low pass filter with cutoff frequency and resonance
 * one ADSR envelope for the volume/amplitude
 * another ADSR envelope for filter cutoff frequency (works, but change is not very noticeable, still needs tweeking)
-* 5 LFOs which can be mixed together in the "LFO Matrix", with 4 shapes, 3 frequency ranges (0 - 5 Hz, 5 - 50 Hz, 50 - 2000 Hz)
+* 5 LFOs with 4 shapes, 3 frequency ranges (0 - 5 Hz, 5 - 50 Hz, 50 - 2000 Hz); these LFOs can be mixed together in the "LFO Matrix"
 * effects: distortion, delay, reverb, compressor
 * currently only monophonic, polyphony will be added soon
 
