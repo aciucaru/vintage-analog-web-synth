@@ -12,8 +12,8 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
     // the note that the oscillator is supposed to produce
     protected note: Note;
 
-    protected fmModulationInputNode: GainNode;
-    protected ringModulationInputNode: GainNode;
+    // protected fmModulationInputNode: GainNode;
+    // protected ringModulationInputNode: GainNode;
 
     protected fmModulationOnOffNode: GainNode;
     protected ringModulationOnOffNode: GainNode;
@@ -24,8 +24,8 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
 
         this.note = new Note(Settings.noteDefaultOctaves, Settings.noteDefaultSemitones);
 
-        this.fmModulationInputNode = this.audioContext.createGain();
-        this.ringModulationInputNode = this.audioContext.createGain();
+        // this.fmModulationInputNode = this.audioContext.createGain();
+        // this.ringModulationInputNode = this.audioContext.createGain();
 
         this.fmModulationOnOffNode = this.audioContext.createGain();
         this.ringModulationOnOffNode = this.audioContext.createGain();
@@ -36,11 +36,11 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
     /* This method returns the node to which another main oscillators is supossed to be connected to, when that main oscillator is
     ** an FM or ring modulator of this OscillatorNode.
     ** This method basically returns a node to wich to connect a modulation source input. */
-    public fmModulationInput(): GainNode { return this.fmModulationInputNode; }
+    public fmModulationInput(): GainNode { return this.fmModulationOnOffNode; }
 
     /* This method does the same as the 'fmModulationInput()' method, but for ring modulation, not FM modulation. It give a node
     ** where to connect a main oscillator that will be a ring modulator. */
-    public ringModulationInput(): GainNode { return this.ringModulationInputNode; }
+    public ringModulationInput(): GainNode { return this.ringModulationOnOffNode; }
 
     /* these note methods are specific to every type of oscillator class that extends this class, because an oscillator
     ** class that extends this abstract class could be arbitrarily complex (it might contain one internal
