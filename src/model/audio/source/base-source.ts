@@ -19,12 +19,12 @@ export class BaseSource
 
     /* the gain node that should be used for drawing the sound (for AnalyserNode)
     ** this gain is always at max. level, so the drawing is full size */
-    protected analyserGainNode: GainNode;
+    // protected analyserGainNode: GainNode;
 
     // the final output of the oscillator; this is used to connect the oscillator to other nodes
     protected outputGainNode: GainNode;
 
-    private static readonly baseOscLogger: Logger<ILogObj> = new Logger({name: "BaseOscillator", minLevel: Settings.minLogLevel });
+    private static readonly baseSourceLogger: Logger<ILogObj> = new Logger({name: "BaseOscillator", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext)
     {
@@ -32,15 +32,15 @@ export class BaseSource
             this.audioContext = audioContext;
         else
         {
-            BaseSource.baseOscLogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
             this.audioContext = new AudioContext();
         }
 
         if (audioContext === null)
-            BaseSource.baseOscLogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
 
-        this.analyserGainNode = this.audioContext.createGain();
-        this.analyserGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
+        // this.analyserGainNode = this.audioContext.createGain();
+        // this.analyserGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
@@ -54,7 +54,7 @@ export class BaseSource
     {
         if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
         {
-            BaseSource.baseOscLogger.debug(`setOutputGain(${gain})`);
+            BaseSource.baseSourceLogger.debug(`setOutputGain(${gain})`);
 
             // set the new value
             this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
@@ -62,11 +62,11 @@ export class BaseSource
         }
         else
         {
-            BaseSource.baseOscLogger.warn(`setOutputGain(${gain}): value outside bounds`);
+            BaseSource.baseSourceLogger.warn(`setOutputGain(${gain}): value outside bounds`);
 
             return false; // change was not successfull
         }
     }
 
-    public getAnalyserGainNode(): GainNode { return this.analyserGainNode; }
+    // public getAnalyserGainNode(): GainNode { return this.analyserGainNode; }
 }
