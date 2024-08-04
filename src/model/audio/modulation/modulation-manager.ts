@@ -5,7 +5,9 @@ import { LfoManager } from "./lfo-manager";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-
+/* This class is modulator that can merge modulation from different sources, such as LFOs, ADSR envelopes and other
+** sources.
+** This class basically manages all the modulators of a parameter. Currently only LFO modulators are supported. */
 export class ModulationManager
 {
     private audioContext: AudioContext;
@@ -15,9 +17,6 @@ export class ModulationManager
 
     // final node
     private mergerGainNode: GainNode;
-
-    // the LFO modulation amount, in normalized form (between -1.0 and 1.0, where 0.0 means no modulation)
-    // private lfoModulationAmount = 0; // 0% (no modulation)
 
     /* The limits of the modulated parameter, in absolute value (not in percentages).
     ** These are the limits between which the modulated parameter may vary, there are not the limits of the modulator.
