@@ -1,9 +1,9 @@
-import { Settings } from "../../../../constants/settings";
-import { NoteSettings } from "../../../../constants/note-settings";
-import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
+import { Settings } from "../../../../../constants/settings";
+import { NoteSettings } from "../../../../../constants/note-settings";
+import { BaseMelodicOscillator } from "./base-melodic-oscillator";
 
-import { UnipolarLfo } from "../../modulation/unipolar-lfo";
-import { ModulationManager } from "../../modulation/modulation-manager";
+import { UnipolarLfo } from "../../../modulation/unipolar-lfo";
+import { ModulationManager } from "../../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

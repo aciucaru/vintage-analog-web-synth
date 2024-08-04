@@ -1,13 +1,11 @@
-import { Settings } from "../../../../constants/settings";
-import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
-import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
+import { Settings } from "../../../../../constants/settings";
+import { BaseMelodicOscillator } from "./base-melodic-oscillator";
+import type { BaseUnisonOscillator } from "./base-unison-oscillator";
 
-import { ModulationManager } from "../../modulation/modulation-manager";
+import { ModulationManager } from "../../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-
-
 
 
 export class TriangleOscillator extends BaseMelodicOscillator implements BaseUnisonOscillator

@@ -17,11 +17,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 */
 
-import { Settings } from "../../../../constants/settings";
-import { BaseMelodicOscillator } from "../../source/oscillator/melodic/base-melodic-oscillator";
-import type { BaseUnisonOscillator } from "../../source/oscillator/melodic/base-unison-oscillator";
-import type { BasePulseOscillator } from "../../source/oscillator/melodic/base-pulse-oscillator";
-import { ModulationManager } from "../../modulation/modulation-manager";
+import { Settings } from "../../../../../constants/settings";
+import { BaseMelodicOscillator } from "./base-melodic-oscillator";
+import type { BaseUnisonOscillator } from "./base-unison-oscillator";
+import type { BasePulseOscillator } from "./base-pulse-oscillator";
+import { ModulationManager } from "../../../modulation/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
