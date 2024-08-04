@@ -42,6 +42,26 @@ export abstract class BaseMelodicOscillator extends BaseOscillator
     ** where to connect a main oscillator that will be a ring modulator. */
     public ringModulationInput(): GainNode { return this.ringModulationOnOffNode; }
 
+    public enableFmModulation(): void
+    {
+
+    }
+
+    public disableFmModulation(): void
+    {
+
+    }
+
+    public enableRingModulation(): void
+    {
+
+    }
+
+    public disableRingModulation(): void
+    {
+        
+    }
+
     /* these note methods are specific to every type of oscillator class that extends this class, because an oscillator
     ** class that extends this abstract class could be arbitrarily complex (it might contain one internal
     ** oscillator or maybe 4 internal oscillators), a call to these class-specific methods is needed, whenever the note
