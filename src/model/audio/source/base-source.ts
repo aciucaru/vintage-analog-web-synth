@@ -24,16 +24,18 @@ export class BaseSource
 
     constructor(audioContext: AudioContext)
     {
-        if (audioContext !== undefined)
-            this.audioContext = audioContext;
-        else
-        {
-            BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
-            this.audioContext = new AudioContext();
-        }
+        this.audioContext = audioContext;
 
-        if (audioContext === null)
-            BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
+        // if (audioContext !== undefined)
+        //     this.audioContext = audioContext;
+        // else
+        // {
+        //     BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
+        //     this.audioContext = new AudioContext();
+        // }
+
+        // if (audioContext === null)
+        //     BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
