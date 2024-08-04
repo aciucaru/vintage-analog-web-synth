@@ -44,7 +44,7 @@ export class MultiShapeOscillator extends BasePulseOscillator
         // this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
 
         this.freqLfoManager = new ModulationManager(this.audioContext, lfoArray,
-                                                -400, 400, 0);
+                                                Settings.minOscFreqModulation, Settings.maxOscFreqModulation, Settings.defaultOscFreqModulation);
         this.ampLfoManager = new ModulationManager(this.audioContext, lfoArray,
                                                 Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
         this.pulseWidthLfoManager = new ModulationManager(this.audioContext, lfoArray,

@@ -60,7 +60,11 @@ export class Settings
 
     public static readonly minOscPulseWidth = 0.0;
     public static readonly maxOscPulseWidth = 1.0;
-    public static readonly defaultOscPulseWidth = 0.5; // 50% - square
+    public static readonly defaultOscPulseWidth = 0.5; // 50%: square
+
+    public static readonly minOscFreqModulation = -400.0; // -400 Hz
+    public static readonly maxOscFreqModulation = 400.0; // 400 Hz
+    public static readonly defaultOscFreqModulation = 0.0;
 
     // noise oscillator settings
     public static readonly minNoiseKeyTrackingLevel = 0; // 0%, no key tracking
