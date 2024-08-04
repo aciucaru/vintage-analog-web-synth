@@ -41,10 +41,10 @@ export class SubOscillator extends BaseMelodicOscillator
                                                         Settings.minOscGain, Settings.maxOscGain, Settings.defaultOscGain);
 
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
-        this.freqParamManager.mainNode().connect(this.subOsc.frequency);
+        this.freqParamManager.outputNode().connect(this.subOsc.frequency);
 
         // for the amplitude LFO manager, we only connect to one node, the output gain node
-        this.ampParamManager.mainNode().connect(this.outputGainNode.gain);
+        this.ampParamManager.outputNode().connect(this.outputGainNode.gain);
 
         // start the sound oscillator
         this.subOsc.start();

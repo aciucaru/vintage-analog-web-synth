@@ -95,9 +95,9 @@ export class PulseOscillator extends BasePulseOscillator
         this.unisonDetuneParamManager = unisonDetuneParamManager;
 
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
-        this.freqParamManager.mainNode().connect(this.sawOscillatorNode.frequency);
-        this.pulseWidthParamManager.mainNode().connect(this.pulseWidthGainNode.gain);
-        this.unisonDetuneParamManager.mainNode().connect(this.sawOscillatorNode.detune);
+        this.freqParamManager.outputNode().connect(this.sawOscillatorNode.frequency);
+        this.pulseWidthParamManager.outputNode().connect(this.pulseWidthGainNode.gain);
+        this.unisonDetuneParamManager.outputNode().connect(this.sawOscillatorNode.detune);
 
         // start the main sound oscillator
         this.sawOscillatorNode.start();

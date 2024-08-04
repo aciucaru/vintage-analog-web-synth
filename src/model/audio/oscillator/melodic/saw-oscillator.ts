@@ -41,8 +41,8 @@ export class SawOscillator extends BaseUnisonOscillator
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
         // this.sawOscillator.frequency.setValueAtTime(0, this.audioContext.currentTime);
         this.sawOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
-        this.freqParamManager.mainNode().connect(this.sawOscillator.frequency);
-        this.unisonDetuneParamManager.mainNode().connect(this.sawOscillator.detune);
+        this.freqParamManager.outputNode().connect(this.sawOscillator.frequency);
+        this.unisonDetuneParamManager.outputNode().connect(this.sawOscillator.detune);
 
         // start the sound oscillator
         this.sawOscillator.start();

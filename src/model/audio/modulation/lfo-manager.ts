@@ -106,14 +106,14 @@ export class LfoManager
             this.shareableLfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
 
             // connect each LFO to the final merger node
-            this.shareableLfoArray[i].mainNode().connect(this.mergerGainNode);
+            this.shareableLfoArray[i].outputNode().connect(this.mergerGainNode);
 
             // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
             this.shareableLfoArray[i].disable();
         }
     }
 
-    public mainNode(): AudioNode { return this.mergerGainNode; }
+    public outputNode(): AudioNode { return this.mergerGainNode; }
 
     // public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
 

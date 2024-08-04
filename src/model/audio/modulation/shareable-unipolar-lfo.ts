@@ -42,13 +42,13 @@ export class ShareableUnipolarLfo
         this.toggleGainNode.gain.setValueAtTime(Settings.minLfoGain, this.audioContext.currentTime);
 
         // connect oscillator and constant source to the gain
-        this.lfo.mainNode().connect(this.toggleGainNode);
+        this.lfo.outputNode().connect(this.toggleGainNode);
 
         // disable the LFO
         this.toggleGainNode.gain.setValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime);
     }
 
-    public mainNode(): AudioNode { return this.toggleGainNode; }
+    public outputNode(): AudioNode { return this.toggleGainNode; }
 
     public isEnabled(): boolean { return this.isLfoEnabled; }
 

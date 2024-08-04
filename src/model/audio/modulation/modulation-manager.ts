@@ -67,12 +67,12 @@ export class ModulationManager
         this.mergerGainNode = this.audioContext.createGain();
         this.mergerGainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
 
-        this.lfoManager.mainNode().connect(this.mergerGainNode);
+        this.lfoManager.outputNode().connect(this.mergerGainNode);
     }
 
     /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
     ** this method is supposed to return the main node of the class */
-    public mainNode(): AudioNode { return this.mergerGainNode; }
+    public outputNode(): AudioNode { return this.mergerGainNode; }
 
     public setLfosModulationAmount(normalizedModulationAmount: number): boolean
     {

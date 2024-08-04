@@ -41,8 +41,8 @@ export class TriangleOscillator extends BaseUnisonOscillator
         // for each modulatable parameter, connect the ConstantSourceNode and the LfoManager to the same parameter
         this.triangleOscillator.frequency.setValueAtTime(this.note.getFreq(), this.audioContext.currentTime);
         // this.triangleOscillator.frequency.setValueAtTime(0, this.audioContext.currentTime);
-        this.freqParamManager.mainNode().connect(this.triangleOscillator.frequency);
-        this.unisonDetuneParamManager.mainNode().connect(this.triangleOscillator.detune);
+        this.freqParamManager.outputNode().connect(this.triangleOscillator.frequency);
+        this.unisonDetuneParamManager.outputNode().connect(this.triangleOscillator.detune);
 
         // start the sound oscillator
         this.triangleOscillator.start();

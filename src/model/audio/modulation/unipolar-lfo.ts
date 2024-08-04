@@ -83,7 +83,7 @@ export class UnipolarLfo
         this.constantOscillator.start();
     }
 
-    public mainNode(): AudioNode { return this.mergerGainNode; }
+    public outputNode(): AudioNode { return this.mergerGainNode; }
 
     public setShape(shape: LfoShape): void
     {

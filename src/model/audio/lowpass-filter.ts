@@ -71,13 +71,13 @@ export class OscFilter extends InputOutputBaseAudioNode
         this.envelopeAmountGainNode = this.audioContext.createGain();
         this.envelopeAmountGainNode.gain.setValueAtTime(-2400, this.audioContext.currentTime);
 
-        this.cutoffFreqModulationManager.mainNode().connect(this.filterNode.detune);
+        this.cutoffFreqModulationManager.outputNode().connect(this.filterNode.detune);
         this.cutoffAdsrEnvelope.outputNode().connect(this.envelopeAmountGainNode);
         this.envelopeAmountGainNode.connect(this.filterNode.detune);
         // this.envelopeAmountGainNode.connect(this.filterNode.frequency);
 
         // connect modulators with resonance (Q factor)
-        this.resonanceModulationManager.mainNode().connect(this.filterNode.Q);
+        this.resonanceModulationManager.outputNode().connect(this.filterNode.Q);
     }
 
     // this method is supposed to return the main node of the class

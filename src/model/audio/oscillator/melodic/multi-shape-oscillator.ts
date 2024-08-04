@@ -91,8 +91,8 @@ export class MultiShapeOscillator extends BasePulseOscillator
         this.pulseOscillatorGainNode.connect(this.analyserGainNode);
 
         // for the amplitude LFO manager, we only connect to one node, the output gain node
-        this.ampLfoManager.mainNode().connect(this.analyserGainNode.gain);
-        this.ampLfoManager.mainNode().connect(this.outputGainNode.gain);
+        this.ampLfoManager.outputNode().connect(this.analyserGainNode.gain);
+        this.ampLfoManager.outputNode().connect(this.outputGainNode.gain);
     }
 
     public override setNote(octaves: number, semitones: number): boolean
