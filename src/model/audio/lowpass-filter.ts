@@ -18,8 +18,8 @@ export class OscFilter extends IntermediateBaseAudioNode
     private resonanceModulationManager: ModulationManager;
 
     // the ADSR envelope for the cutoff frequency
-    // private cutoffAdsrEnvelope: SimpleAdsrEnvelope;
     private cutoffAdsrEnvelope: AdsrEnvelope;
+    
     // the gain node for the ADSR amount
     private envelopeAmountGainNode: GainNode;
 
