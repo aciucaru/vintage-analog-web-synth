@@ -1,5 +1,6 @@
-import { Settings } from "../../../constants/settings";
-import { UnipolarLfo } from "../source/modulators/unipolar-lfo";
+import { Settings } from "../../../../constants/settings";
+import { BaseSource } from "../base-source";
+import { UnipolarLfo } from "./unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -15,17 +16,12 @@ import type { ILogObj } from "tslog";
 ** The ShareableUnipolarLfo oscillates between 0 and 1 (when enabled) and between 0 and 0 (no perceivable effect, when disabled).
 **
 ** This class is called 'shareable' because, by being able to turn an LFO on/off, we can modulate multiple parameters with the same LFO
-** In this way, we can reuse the same LFO for multiple synth parameters, if we want to, but we are not obligated to use that LFO for all
-** synth parameters because the 'shareable' LFO cand be enabled/disabled for each synth paramter separately. */
-export class ShareableUnipolarLfo
+** In this way, we can reuse the same LFO for multiple synth parameters, if we want to, but we are not obligated to use the same LFO for
+** all synth parameters because the 'shareable' LFO cand be enabled/disabled for each synth paramter separately. */
+export class ShareableUnipolarLfo extends BaseSource
 {
-    private audioContext: AudioContext;
-
     // the unipolar LFO that oscillates continously once started, it never stops
     private lfo: UnipolarLfo;
-
-    // the on/off GainNode, which gives the illusion that the LFO is being disabled or enabled (muted or unmuted)
-    private toggleGainNode: GainNode;
 
     // keeps track if the LFO is enabled or disabled
     private isLfoEnabled: boolean = false;
@@ -34,21 +30,19 @@ export class ShareableUnipolarLfo
 
     constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)
     {
-        this.audioContext = audioContext;
+        super(audioContext);
 
         this.lfo = unipolarLfo;
 
-        this.toggleGainNode = this.audioContext.createGain();
-        this.toggleGainNode.gain.setValueAtTime(Settings.minLfoGain, this.audioContext.currentTime);
+        // the on/off gain node is the 'outputGainNode' inherited from 'BaseSource' class
+        this.outputGainNode.gain.setValueAtTime(Settings.minLfoGain, this.audioContext.currentTime);
 
         // connect oscillator and constant source to the gain
-        this.lfo.outputNode().connect(this.toggleGainNode);
+        this.lfo.outputNode().connect(this.outputGainNode);
 
-        // disable the LFO
-        this.toggleGainNode.gain.setValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime);
+        // give the illusion that the LFO is disabled
+        this.outputGainNode.gain.setValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime);
     }
-
-    public outputNode(): AudioNode { return this.toggleGainNode; }
 
     public isEnabled(): boolean { return this.isLfoEnabled; }
 
@@ -59,7 +53,7 @@ export class ShareableUnipolarLfo
         this.isLfoEnabled = true;
 
         // set the new value
-        this.toggleGainNode.gain.linearRampToValueAtTime(Settings.shareableLfoEnabledGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
+        this.outputGainNode.gain.linearRampToValueAtTime(Settings.shareableLfoEnabledGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }
 
     public disable(): void
@@ -69,6 +63,6 @@ export class ShareableUnipolarLfo
         this.isLfoEnabled = false;
 
         // set the new value
-        this.toggleGainNode.gain.linearRampToValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
+        this.outputGainNode.gain.linearRampToValueAtTime(Settings.shareableLfoDisabledGain, this.audioContext.currentTime + Settings.lfoGainChangeTimeOffset);
     }
 }

@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
+import { ShareableUnipolarLfo } from "../source/modulators/shareable-unipolar-lfo";
 import { UnipolarLfo } from "../source/modulators/unipolar-lfo";
 
 import { Logger } from "tslog";
