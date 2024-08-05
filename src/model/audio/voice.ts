@@ -39,9 +39,6 @@ export class Voice
 
     // LFO modulators
     private sharedLfoArray: Array<UnipolarLfo>;
-    // modulator nodes:
-    private filterCutoffFreqModulationManager: ModulationManager;
-    private filterResonanceModulationManager: ModulationManager;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Voice", minLevel: Settings.minLogLevel});
 
@@ -64,11 +61,6 @@ export class Voice
         {
             this.sharedLfoArray[i] = new UnipolarLfo(this.audioContext);
         }
-        
-        this.filterCutoffFreqModulationManager = new ModulationManager(this.audioContext, lfoArray,
-                                                                        Settings.minFilterEnvelopeAmount, Settings.maxFilterEnvelopeAmount, Settings.defaultFilterEnvelopeAmount);
-        this.filterResonanceModulationManager = new ModulationManager(this.audioContext, lfoArray,
-                                                                        Settings.minFilterResonance, Settings.maxFilterResonance, Settings.defaultFilterResonance);
 
         // instantiate the nodes:
         this.multiShapeOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);

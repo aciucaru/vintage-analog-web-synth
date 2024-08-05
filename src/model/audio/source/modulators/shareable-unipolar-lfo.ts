@@ -21,14 +21,16 @@ import type { ILogObj } from "tslog";
 export class ShareableUnipolarLfo extends BaseSource
 {
     // the unipolar LFO that oscillates continously once started, it never stops
-    private lfo: UnipolarLfo;
+    // private lfo: UnipolarLfo;
+    private lfo: BaseSource;
 
     // keeps track if the LFO is enabled or disabled
     private isLfoEnabled: boolean = false;
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ShareableUnipolarLfo", minLevel: Settings.minLogLevel});
 
-    constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)
+    // constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)
+    constructor(audioContext: AudioContext, unipolarLfo: BaseSource)
     {
         super(audioContext);
 
