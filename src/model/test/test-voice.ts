@@ -7,7 +7,7 @@ import { MultiNoiseOscillator } from "../audio/source/oscillator/noise/multi-noi
 import { OscillatorMixer } from "../audio/oscillator-mixer";
 import { OscFilter } from "../audio/lowpass-filter";
 
-import { AdsrEnvelope } from "../audio/modulation/adsr-envelope";
+import { AdsrEnvelope } from "../audio/source/modulators/adsr-envelope";
 import { UnipolarLfo } from "../audio/source/modulators/unipolar-lfo";
 import { lfoArray } from "../../constants/shareable-audio-nodes";
 

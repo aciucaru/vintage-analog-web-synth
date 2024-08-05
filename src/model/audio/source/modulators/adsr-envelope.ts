@@ -1,7 +1,9 @@
-import { Settings } from "../../../constants/settings";
+import { Settings } from "../../../../constants/settings";
+import { BaseSource } from "../base-source";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+
 
 /* General-purpose ADSR envelope; this envelope does not have a predefined min and max value,
 ** instead, it can vary between 0.0 and 1.0.
@@ -26,9 +28,9 @@ import type { ILogObj } from "tslog";
 ** That emitter is a ConstanSourceNode, which is fed through the GainNode.
 ** Whithout the ConstantSourceNode, the ADSR envelope will not work, because it won't emit any signal. */
 
-export class AdsrEnvelope
+export class AdsrEnvelope extends BaseSource
 {
-    private audioContext: AudioContext;
+    // private audioContext: AudioContext;
 
     // the emitter of a continous constant signal 
     private adsrConstantSource: ConstantSourceNode;
@@ -36,14 +38,6 @@ export class AdsrEnvelope
     // a multiplier to multiply the previous 'adsrConstantSource' constant signal with
     private adsrGainNode: GainNode;
 
-    /* A second gain node, for completely turning off the ADSR envelope.
-    ** This node is necessary because the 'adsrGainNode' cannot have a totaly zero gain, because
-    ** the 'adsrGainNode' could also be used with exponential ramps, which cannot ramp to exactly zero,
-    ** leaving a very small signal that might still be audible.
-    ** But the 'onOffGainNode' never uses an exponential ramp, so it can go completely to zero, making the
-    ** ADSR truly silent when necessary (in the 'release' phase). */
-    private onOffGainNode: GainNode;
-    
     // main parameters: durations (not times/moments!) and sustain level
     private attackDuration: number = Settings.defaultAdsrAttackDuration;
     private decayDuration: number = Settings.defaultAdsrDecayDuration;
@@ -68,7 +62,8 @@ export class AdsrEnvelope
 
     constructor(audioContext: AudioContext)
     {
-        this.audioContext = audioContext;
+        super(audioContext);
+        // this.audioContext = audioContext;
 
         this.adsrConstantSource = this.audioContext.createConstantSource();
         this.adsrConstantSource.offset.setValueAtTime(1.0, this.audioContext.currentTime);
@@ -76,18 +71,24 @@ export class AdsrEnvelope
         this.adsrGainNode = this.audioContext.createGain();
         this.adsrGainNode.gain.setValueAtTime(Settings.minAdsrSustainLevel, this.audioContext.currentTime);
 
-        this.onOffGainNode = this.audioContext.createGain();
-        this.onOffGainNode.gain.setValueAtTime(Settings.adsrOffLevel, this.audioContext.currentTime);
+        /* The on/off gain node (final node) is 'ouputGainNode', inherited from BaseSource class.
+        ** This second gain node is used for completely turning off the ADSR envelope.
+        ** This node is necessary because the 'adsrGainNode' cannot have a totaly zero gain, because
+        ** the 'adsrGainNode' could also be used with exponential ramps, which cannot ramp to exactly zero,
+        ** leaving a very small signal that might still be audible.
+        ** But the 'outputGainNode' never uses an exponential ramp, so it can go completely to zero, making the
+        ** ADSR truly silent when necessary (in the 'release' phase). */
+        this.outputGainNode.gain.setValueAtTime(Settings.adsrOffLevel, this.audioContext.currentTime);
 
         // connect nodes betweem them
         this.adsrConstantSource.connect(this.adsrGainNode);
-        this.adsrGainNode.connect(this.onOffGainNode);
+        this.adsrGainNode.connect(this.outputGainNode);
 
         // start the emitter
         this.adsrConstantSource.start();
     }
 
-    public outputNode(): AudioNode { return this.onOffGainNode; }
+    // public outputNode(): AudioNode { return this.onOffGainNode; }
 
     /* This method represents the ADS portion of the envelope, it basically coressponds to the 'noteOn' event */
     public start(): void
@@ -105,7 +106,7 @@ export class AdsrEnvelope
         /* then we cancel all events that start AFTER the previous cancelation time but we keep the value
         ** that the parameter had when the cancelation started */ 
         this.adsrGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
-        this.onOffGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
+        this.outputGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
 
         /* After we checked the current ADSR phase based on ADSR times, we can now compute and overwrite ADSR times
         ** with new values.
@@ -117,7 +118,7 @@ export class AdsrEnvelope
         this.decayEndTime = this.attackEndTime + this.decayDuration; // the time the decay phase should end
 
         // First, turn on the ADSR envelope, otherwise the emitted signal will be zero
-        this.onOffGainNode.gain.linearRampToValueAtTime(Settings.adsrOnLevel, this.onTime);
+        this.outputGainNode.gain.linearRampToValueAtTime(Settings.adsrOnLevel, this.onTime);
 
         /* Attack and decay phases */
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.maxAdsrSustainLevel, this.attackEndTime); // attack
@@ -139,7 +140,7 @@ export class AdsrEnvelope
 
         // cancel all remaining events
         this.adsrGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
-        this.onOffGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
+        this.outputGainNode.gain.cancelAndHoldAtTime(cancelationStartTime);
 
         // compute the start and end of the 'release' phase
         this.releaseStartTime = cancelationStartTime;
@@ -149,7 +150,7 @@ export class AdsrEnvelope
         // then start the actual 'release' phase by ramping down to the minimum possible
         // for 'release' phase we use linear ramp, not exponential, because exponential goes down to quick
         this.adsrGainNode.gain.linearRampToValueAtTime(Settings.minAdsrSustainLevel, this.releaseEndTime);
-        this.onOffGainNode.gain.linearRampToValueAtTime(Settings.adsrOffLevel, this.offtTime);
+        this.outputGainNode.gain.linearRampToValueAtTime(Settings.adsrOffLevel, this.offtTime);
     }
 
     // this method is for sequencer beats (steps)

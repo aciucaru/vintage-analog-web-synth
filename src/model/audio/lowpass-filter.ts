@@ -1,5 +1,5 @@
 import { Settings } from "../../constants/settings";
-import { AdsrEnvelope } from "./modulation/adsr-envelope";
+import { AdsrEnvelope } from "./source/modulators/adsr-envelope";
 import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
 import { IntermediateBaseAudioNode } from "./base/intermediate-base-audio-node";
 import { ModulationManager } from "./modulation/modulation-manager";
