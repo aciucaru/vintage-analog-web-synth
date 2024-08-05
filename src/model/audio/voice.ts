@@ -8,12 +8,10 @@ import { OscillatorMixer } from "./oscillator-mixer";
 import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "./source/modulators/adsr-envelope";
-import { UnipolarLfo } from "./source/modulators/unipolar-lfo";
 import { lfoArray } from "../../constants/shareable-audio-nodes";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-import { ModulationManager } from "./source/modulators/modulation-manager";
 
 
 export class Voice
@@ -37,9 +35,6 @@ export class Voice
 
     private outputGainNode: GainNode;
 
-    // LFO modulators
-    private sharedLfoArray: Array<UnipolarLfo>;
-
     private static readonly logger: Logger<ILogObj> = new Logger({name: "Voice", minLevel: Settings.minLogLevel});
 
     constructor(audioContext: AudioContext)
@@ -54,13 +49,6 @@ export class Voice
 
         if (audioContext === null)
             Voice.logger.warn("constructor(): audioContext is null, separate audioContext was created");
-
-        // instantiate and fill the array of shared LFOs
-        this.sharedLfoArray = new Array<UnipolarLfo>(Settings.lfoCount);
-        for (let i = 0; i < this.sharedLfoArray.length; i++)
-        {
-            this.sharedLfoArray[i] = new UnipolarLfo(this.audioContext);
-        }
 
         // instantiate the nodes:
         this.multiShapeOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
