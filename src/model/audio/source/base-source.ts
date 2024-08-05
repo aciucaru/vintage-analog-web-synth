@@ -10,7 +10,7 @@ import type { ILogObj } from "tslog";
 ** Even if such a class does not have inputs, it could have modulators, such as an LFO (which is also considered
 ** a source of signal).
 **
-** Classes that inherit this class are oscillators, LFOs, ADSR envelopes and other source of signal. */
+** Classes that inherit this class are oscillators, LFOs, ADSR envelopes and other sources of signal. */
 export class BaseSource
 {
     /* the audio context used to create and connect nodes;
@@ -25,17 +25,6 @@ export class BaseSource
     constructor(audioContext: AudioContext)
     {
         this.audioContext = audioContext;
-
-        // if (audioContext !== undefined)
-        //     this.audioContext = audioContext;
-        // else
-        // {
-        //     BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
-        //     this.audioContext = new AudioContext();
-        // }
-
-        // if (audioContext === null)
-        //     BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.baseSourceDefaultGain, this.audioContext.currentTime);
