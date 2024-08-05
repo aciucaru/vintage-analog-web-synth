@@ -1,22 +1,19 @@
-import { Settings } from "../../../constants/settings";
-import { UnipolarLfo } from "../source/modulators/unipolar-lfo";
-import { LfoManager } from "../source/modulators/lfo-manager";
+import { Settings } from "../../../../constants/settings";
+import { UnipolarLfo } from "./unipolar-lfo";
+import { LfoManager } from "./lfo-manager";
+import { BaseSource } from "../base-source";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
+
 /* This class is modulator that can merge modulation from different sources, such as LFOs, ADSR envelopes and other
 ** sources.
 ** This class basically manages all the modulators of a parameter. Currently only LFO modulators are supported. */
-export class ModulationManager
+export class ModulationManager extends BaseSource
 {
-    private audioContext: AudioContext;
-
     // modulator node
     private lfoManager: LfoManager;
-
-    // final node
-    private mergerGainNode: GainNode;
 
     /* The limits of the modulated parameter, in absolute value (not in percentages).
     ** These are the limits between which the modulated parameter may vary, there are not the limits of the modulator.
@@ -28,11 +25,13 @@ export class ModulationManager
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ParameterManager", minLevel: Settings.minLogLevel});
 
+    private static readonly FINAL_NODE_GAIN = 1.0;
+
     constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
                 parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
                 useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
-        this.audioContext = audioContext;
+        super(audioContext);
 
         // initialize limits of the modulated parameter
         if (parameterLowerLimit < parameterUpperLimit)
@@ -63,23 +62,17 @@ export class ModulationManager
         this.lfoManager = new LfoManager(this.audioContext, lfoArray, parameterLowerLimit, parameterUpperLimit, parameterCurrentValue,
                                             useFixedModulationRanges, lowerModulationFixedRange, upperModulationFixedRange);
 
-        this.mergerGainNode = this.audioContext.createGain();
-        this.mergerGainNode.gain.setValueAtTime(1, this.audioContext.currentTime);
+        // the final node is 'outputGainNode', inherited from BaseSource class
+        this.outputGainNode.gain.setValueAtTime(ModulationManager.FINAL_NODE_GAIN, this.audioContext.currentTime);
 
-        this.lfoManager.outputNode().connect(this.mergerGainNode);
+        this.lfoManager.outputNode().connect(this.outputGainNode);
     }
-
-    /* implementation of 'mainNode()', the only method of the BaseAudioNode abstract class
-    ** this method is supposed to return the main node of the class */
-    public outputNode(): AudioNode { return this.mergerGainNode; }
 
     public setLfosModulationAmount(normalizedModulationAmount: number): boolean
     {
         if (Settings.minLfoManagerModulationAmount <= normalizedModulationAmount && normalizedModulationAmount <= Settings.maxLfoManagerModulationAmount)
         {
             ModulationManager.logger.debug(`setNormalizedModulationAmount(${normalizedModulationAmount})`);
-
-            // this.lfoModulationAmount = normalizedModulationAmount;
 
             this.lfoManager.setNormalizedModulationAmount(normalizedModulationAmount);
 

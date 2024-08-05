@@ -13,7 +13,7 @@ import { lfoArray } from "../../constants/shareable-audio-nodes";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-import { ModulationManager } from "../audio/modulation/modulation-manager";
+import { ModulationManager } from "../audio/source/modulators/modulation-manager";
 
 
 export class TestVoice

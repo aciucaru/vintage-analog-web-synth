@@ -2,7 +2,7 @@ import { Settings } from "../../constants/settings";
 import { AdsrEnvelope } from "./source/modulators/adsr-envelope";
 import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
 import { IntermediateBaseAudioNode } from "./base/intermediate-base-audio-node";
-import { ModulationManager } from "./modulation/modulation-manager";
+import { ModulationManager } from "./source/modulators/modulation-manager";
 import type { UnipolarLfo } from "./source/modulators/unipolar-lfo";
 
 import { Logger } from "tslog";

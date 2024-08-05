@@ -21,7 +21,7 @@ import { Settings } from "../../../../../constants/settings";
 import { BaseMelodicOscillator } from "./base-melodic-oscillator";
 import type { BaseUnisonOscillator } from "./base-unison-oscillator";
 import type { BasePulseOscillator } from "./base-pulse-oscillator";
-import { ModulationManager } from "../../../modulation/modulation-manager";
+import { ModulationManager } from "../../modulators/modulation-manager";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
