@@ -1,28 +1,18 @@
-import { Settings } from "../../../constants/settings";
-import { ShareableUnipolarLfo } from "../source/modulators/shareable-unipolar-lfo";
-import { UnipolarLfo } from "../source/modulators/unipolar-lfo";
+import { Settings } from "../../../../constants/settings";
+import { BaseSource } from "../base-source";
+import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
+import { UnipolarLfo } from "./unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class LfoManager
+export class LfoManager extends BaseSource
 {
-    private audioContext: AudioContext;
-
     /* The array of managed shareable LFOs.
     ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,
     ** meaning that the shreable LFO is shared between modulation destinations. */
     private shareableLfoArray: Array<ShareableUnipolarLfo>;
-
-    /* The gain node that merges (adds) all above LFOs togheter.
-    ** This gain node serves both as a merger node (it merges all LFOs from the 'lfoArray' into a
-    ** single node/signal) and also as the modulation amount (it's gain is the modulation amount, 
-    ** basically a multiplier that multiplies the merged LFOs signal).
-    **
-    ** The gain of this node is computed as below:
-    ** mergerGainNode.gain = (1.0 / numberOfEnabledLfos) * modulationAmount (when 'numberOfEnabledLfos' is different than zero) */
-    private mergerGainNode: GainNode;
 
     // how many LFOs are enabled
     private numberOfEnabledLfos = 0;
@@ -59,7 +49,7 @@ export class LfoManager
                 parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
                 useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
-        this.audioContext = audioContext;
+        super(audioContext);
 
         // initialize limits of the modulated parameter
         if (parameterLowerLimit < parameterUpperLimit)
@@ -91,10 +81,15 @@ export class LfoManager
         this.lowerModulationFixedRange = lowerModulationFixedRange;
         this.upperModulationFixedRange = upperModulationFixedRange;
 
-        this.mergerGainNode = this.audioContext.createGain();
-
-        // the initial gain of the node that merges all LFOs is 0 (no moudulation amount)
-        this.mergerGainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+        /* The gain node that merges (adds) all LFOs togheter is 'outputGainNode', inherited from BaseSource class.
+        ** This gain node serves both as a merger node (it merges all LFOs from the 'lfoArray' into a
+        ** single node/signal) and also as the modulation amount (it's gain is the modulation amount, 
+        ** basically a multiplier that multiplies the merged LFOs signal).
+        **
+        ** The gain of this node is computed as below (when 'numberOfEnabledLfos' is different than zero):
+        ** mergerGainNode.gain = (1.0 / numberOfEnabledLfos) * modulationAmount
+        ** The initial gain of the node that merges all LFOs is 0 (no moudulation amount) */
+        this.outputGainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
 
         // instantiate the array of shareable LFOs, for this we use the length of the 'lfoArray' constructor argument
         this.shareableLfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
@@ -106,16 +101,12 @@ export class LfoManager
             this.shareableLfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
 
             // connect each LFO to the final merger node
-            this.shareableLfoArray[i].outputNode().connect(this.mergerGainNode);
+            this.shareableLfoArray[i].outputNode().connect(this.outputGainNode);
 
             // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
             this.shareableLfoArray[i].disable();
         }
     }
-
-    public outputNode(): AudioNode { return this.mergerGainNode; }
-
-    // public getShareableLfos(): Array<ShareableUnipolarLfo> { return this.shareableLfoArray; }
 
     public enableLfo(lfoIndex: number): boolean
     {
@@ -223,7 +214,7 @@ export class LfoManager
         }
     }
 
-    public getParameterCurrentValue(): number { return this.mergerGainNode.gain.value; }
+    public getParameterCurrentValue(): number { return this.outputGainNode.gain.value; }
 
     /* This method computes the absolute modulation amount, and does this by multiplying the 'normalizedModulationAmount', which is
     ** a factor with the maximum possible modulation in the direction of the 'normalizedModulationAmount' (plus or minus).
@@ -291,6 +282,6 @@ export class LfoManager
         else if (this.numberOfEnabledLfos > 0)
             finalGain = (1.0 / this.numberOfEnabledLfos) * this.absoluteModulationAmount;
 
-        this.mergerGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime);
+        this.outputGainNode.gain.linearRampToValueAtTime(finalGain, this.audioContext.currentTime);
     }
 }
