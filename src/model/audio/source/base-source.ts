@@ -38,7 +38,7 @@ export class BaseSource
         //     BaseSource.baseSourceLogger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         this.outputGainNode = this.audioContext.createGain();
-        this.outputGainNode.gain.setValueAtTime(Settings.defaultOscGain, this.audioContext.currentTime);
+        this.outputGainNode.gain.setValueAtTime(Settings.baseSourceDefaultGain, this.audioContext.currentTime);
     }
 
     // returns the main gain node

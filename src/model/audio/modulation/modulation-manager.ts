@@ -1,5 +1,5 @@
 import { Settings } from "../../../constants/settings";
-import { UnipolarLfo } from "./unipolar-lfo";
+import { UnipolarLfo } from "../source/modulators/unipolar-lfo";
 import { LfoManager } from "./lfo-manager";
 
 import { Logger } from "tslog";

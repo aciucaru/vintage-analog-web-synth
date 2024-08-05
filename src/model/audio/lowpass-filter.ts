@@ -3,7 +3,7 @@ import { AdsrEnvelope } from "./modulation/adsr-envelope";
 import { SimpleAdsrEnvelope } from "./modulation/simple-adsr-envelope";
 import { IntermediateBaseAudioNode } from "./base/intermediate-base-audio-node";
 import { ModulationManager } from "./modulation/modulation-manager";
-import type { UnipolarLfo } from "./modulation/unipolar-lfo";
+import type { UnipolarLfo } from "./source/modulators/unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

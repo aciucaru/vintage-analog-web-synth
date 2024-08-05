@@ -20,6 +20,8 @@ export class Settings
     public static readonly noteDefaultOctaves = 4;
     public static readonly noteDefaultSemitones = 9;
 
+    // settings for BaseSource:
+    public static readonly baseSourceDefaultGain = 1.0;
 
     // settings for oscillators: ********************************************************************
     public static readonly minOscGain = 0.0;

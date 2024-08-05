@@ -1,5 +1,5 @@
 import { Settings } from "./settings";
-import { UnipolarLfo } from "../model/audio/modulation/unipolar-lfo";
+import { UnipolarLfo } from "../model/audio/source/modulators/unipolar-lfo";
 
 export const audioContext = new AudioContext();
 

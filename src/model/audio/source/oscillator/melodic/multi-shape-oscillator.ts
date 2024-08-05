@@ -6,7 +6,7 @@ import { TriangleOscillator } from "./triangle-oscillator";
 import { SawOscillator } from "./saw-oscillator";
 import { PulseOscillator } from "./pulse-oscillator";
 
-import type { UnipolarLfo } from "../../../modulation/unipolar-lfo";
+import type { UnipolarLfo } from "../../modulators/unipolar-lfo";
 import { ModulationManager } from "../../../modulation/modulation-manager";
 
 import { Logger } from "tslog";

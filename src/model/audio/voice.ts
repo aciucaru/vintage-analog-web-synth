@@ -8,7 +8,7 @@ import { OscillatorMixer } from "./oscillator-mixer";
 import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "./modulation/adsr-envelope";
-import { UnipolarLfo } from "./modulation/unipolar-lfo";
+import { UnipolarLfo } from "./source/modulators/unipolar-lfo";
 import { lfoArray } from "../../constants/shareable-audio-nodes";
 
 import { Logger } from "tslog";

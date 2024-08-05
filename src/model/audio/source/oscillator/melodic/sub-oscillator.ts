@@ -2,7 +2,7 @@ import { Settings } from "../../../../../constants/settings";
 import { NoteSettings } from "../../../../../constants/note-settings";
 import { BaseMelodicOscillator } from "./base-melodic-oscillator";
 
-import { UnipolarLfo } from "../../../modulation/unipolar-lfo";
+import { UnipolarLfo } from "../../modulators/unipolar-lfo";
 import { ModulationManager } from "../../../modulation/modulation-manager";
 
 import { Logger } from "tslog";

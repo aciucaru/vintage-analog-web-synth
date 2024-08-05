@@ -1,7 +1,9 @@
-import { Settings } from "../../../constants/settings";
+import { Settings } from "../../../../constants/settings";
+import { BaseSource } from "../base-source";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
+
 
 // export enum FrequencyType
 // {
@@ -31,9 +33,9 @@ export enum LfoFreqRange
 ** The class that represents an LFO that is actually connected to a synth parameter is called ShareableUnipolarOscillator,
 ** which can be turned on or off through the LfoManager class, which manages multiple LFOs that can modulate the same
 ** parameter (these LFOs can be enabled or disabled/muted at any time). */
-export class UnipolarLfo
+export class UnipolarLfo extends BaseSource
 {
-    private audioContext: AudioContext;
+    // private audioContext: AudioContext;
 
     // the LFO oscillator (oscillates between -1 and 1)
     private lfoOscillator: OscillatorNode;
@@ -42,11 +44,6 @@ export class UnipolarLfo
     ** that will oscillate between 0 and 2. IMPORTANT: the value (offset) of this node should always be 1, so it always
     ** send the value 1! */
     private constantOscillator: ConstantSourceNode;
-
-    /* this node adds (merges) the 'lfoOscillator' and 'constantOscillator' togheter in order to obtain an oscillator
-    ** that will oscillate between 0 and 2. In order to obtain the expected oscillation between 0 and 1, the gain of this
-    ** oscillator SHOULD ALWAYS BE 0.5, so the end result oscillates between 0.5*0 and 0.5*2 (e.g. between 0 and 1). */
-    private mergerGainNode: GainNode;
 
     // the allowable frequency range of the LFO
     private freqRange: LfoFreqRange = LfoFreqRange.Low;
@@ -62,7 +59,7 @@ export class UnipolarLfo
 
     constructor(audioContext: AudioContext)
     {
-        this.audioContext = audioContext;
+        super(audioContext);
 
         this.lfoOscillator = this.audioContext.createOscillator();
         this.lfoOscillator.type = "triangle";
@@ -71,19 +68,22 @@ export class UnipolarLfo
         this.constantOscillator = this.audioContext.createConstantSource();
         this.constantOscillator.offset.setValueAtTime(UnipolarLfo.CONSTANT_OSCILLATOR_OFFSET, this.audioContext.currentTime);
 
-        this.mergerGainNode = this.audioContext.createGain();
-        this.mergerGainNode.gain.setValueAtTime(UnipolarLfo.MERGER_GAIN_NODE_GAIN, this.audioContext.currentTime);
+        /* this node that adds (merges) the 'lfoOscillator' and 'constantOscillator' togheter is a node inherited from 'BaseSource'.
+        ** The node is called 'outputGainNode' and will add the two oscillators in order to obtain an oscillator that will oscillate
+        ** between 0 and 2.
+        ** In order to obtain the expected oscillation between 0 and 1, the gain of this oscillator SHOULD ALWAYS BE 0.5, so the end
+        ** result oscillates between 0.5*0 and 0.5*2 (e.g. between 0 and 1). */
+        this.outputGainNode.gain.setValueAtTime(UnipolarLfo.MERGER_GAIN_NODE_GAIN, this.audioContext.currentTime);
 
         // connect oscillator and constant source to the gain
-        this.lfoOscillator.connect(this.mergerGainNode);
-        this.constantOscillator.connect(this.mergerGainNode);
+        this.lfoOscillator.connect(this.outputGainNode);
+        this.constantOscillator.connect(this.outputGainNode);
 
         // start the nodes
         this.lfoOscillator.start();
         this.constantOscillator.start();
     }
 
-    public outputNode(): AudioNode { return this.mergerGainNode; }
 
     public setShape(shape: LfoShape): void
     {
