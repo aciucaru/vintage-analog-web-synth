@@ -25,7 +25,6 @@ export class OscFilter extends IntermediateBaseAudioNode
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LowpassFilter", minLevel: Settings.minLogLevel });
 
-    // constructor(audioContext: AudioContext, freqCutoffModulationManager: ModulationManager, resonanceModulationManager: ModulationManager)
     constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>)
     {
         super(audioContext);
