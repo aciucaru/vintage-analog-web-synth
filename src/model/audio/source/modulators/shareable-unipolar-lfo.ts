@@ -34,10 +34,10 @@ export class ShareableUnipolarLfo extends BaseSource
 
         this.lfo = unipolarLfo;
 
-        // the on/off gain node is the 'outputGainNode' inherited from 'BaseSource' class
+        // the on/off gain node is the 'outputGainNode', inherited from 'BaseSource' class
         this.outputGainNode.gain.setValueAtTime(Settings.minLfoGain, this.audioContext.currentTime);
 
-        // connect oscillator and constant source to the gain
+        // connect oscillator to the final gain
         this.lfo.outputNode().connect(this.outputGainNode);
 
         // give the illusion that the LFO is disabled
