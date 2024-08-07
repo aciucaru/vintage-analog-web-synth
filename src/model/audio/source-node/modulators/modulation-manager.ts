@@ -9,7 +9,8 @@ import type { ILogObj } from "tslog";
 
 /* This class is modulator that can merge modulation from different sources, such as LFOs, ADSR envelopes and other
 ** sources.
-** This class basically manages all the modulators of a parameter. Currently only LFO modulators are supported. */
+** This class basically manages all the modulators of a parameter.
+** Currently only LFO modulators are supported. The functionality for LFO modulators is provide by the 'lfoManager' instance. */
 export class ModulationManager extends BaseSourceNode
 {
     // modulator node
