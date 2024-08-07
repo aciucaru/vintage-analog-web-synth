@@ -2,11 +2,11 @@ import { Settings } from "../../constants/settings";
 import { audioContext } from "../../constants/shareable-audio-nodes";
 
 import { Voice } from "./intermediate-node/voice";
-import { TestVoice } from "../test/test-voice";
-import { DelayEffect } from "./effects/delay-effect";
-import { DistortionEffect } from "./effects/distortion-effect";
-import { ReverbEffect } from "./effects/reverb-effect";
-import { CompressorEffect } from "./effects/compresor-effect";
+// import { TestVoice } from "../test/test-voice";
+import { DelayEffect } from "./intermediate-node/effects/delay-effect";
+import { DistortionEffect } from "./intermediate-node/effects/distortion-effect";
+import { ReverbEffect } from "./intermediate-node/effects/reverb-effect";
+import { CompressorEffect } from "./intermediate-node/effects/compresor-effect";
 
 
 export class MonoSynth
@@ -14,7 +14,7 @@ export class MonoSynth
     private audioContext: AudioContext;
 
     private voice: Voice;
-    private testVoice: TestVoice;
+    // private testVoice: TestVoice;
 
     private distortionEffect: DistortionEffect;
     private delayEffect: DelayEffect;
@@ -29,7 +29,7 @@ export class MonoSynth
         this.audioContext = audioContext;
 
         this.voice = new Voice(this.audioContext);
-        this.testVoice = new TestVoice(this.audioContext);
+        // this.testVoice = new TestVoice(this.audioContext);
 
         this.distortionEffect = new DistortionEffect(this.audioContext);
         this.delayEffect = new DelayEffect(this.audioContext);
@@ -59,7 +59,7 @@ export class MonoSynth
     }
 
     public getVoice(): Voice { return this.voice; }
-    public getTestVoice(): TestVoice { return this.testVoice; }
+    // public getTestVoice(): TestVoice { return this.testVoice; }
 
     public getDistortionEffect(): DistortionEffect { return this.distortionEffect; }
     public getDelayEffect(): DelayEffect { return this.delayEffect; }

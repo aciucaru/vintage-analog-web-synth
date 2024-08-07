@@ -1,5 +1,5 @@
-import { Settings } from "../../../constants/settings";
-import { IntermediateBaseNode } from "../intermediate-node/intermediate-base-audio-node";
+import { Settings } from "../../../../constants/settings";
+import { IntermediateBaseNode } from "../intermediate-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

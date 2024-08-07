@@ -9,7 +9,7 @@
 ** Great thanks to these people for making this information available! */
 
 
-import { Settings } from "../../../constants/settings";
+import { Settings } from "../../../../constants/settings";
 import { BaseEffect } from "./base-effect";
 
 import { Logger } from "tslog";

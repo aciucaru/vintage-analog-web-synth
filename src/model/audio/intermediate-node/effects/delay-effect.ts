@@ -1,4 +1,4 @@
-import { Settings } from "../../../constants/settings";
+import { Settings } from "../../../../constants/settings";
 import { BaseEffect } from "./base-effect";
 
 import { Logger } from "tslog";
