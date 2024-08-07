@@ -24,7 +24,7 @@ export class Voice
     private subOscillator: SubOscillator;
     private noiseOscillator: MultiNoiseOscillator;
 
-    // the mixer (the mixer only sets gain levels, it does not combine oscillators togheter)
+    // the oscillator mixer
     private oscillatorMixer: OscillatorMixer;
 
     // the filter and envelope:
@@ -56,7 +56,7 @@ export class Voice
         this.subOscillator = new SubOscillator(this.audioContext, Settings.minOscGain, lfoArray);
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
-        // instantiate the mixer, filter and ADSR envelope
+        // instantiate and set the mixer
         this.oscillatorMixer = new OscillatorMixer(this.audioContext);
 
         // add the oscillators to the mixer, in the exact order below
@@ -65,9 +65,11 @@ export class Voice
         this.oscillatorMixer.addNonFilteredOscillator(this.subOscillator); // must be at index 2
         this.oscillatorMixer.addFilteredOscillator(this.noiseOscillator); // must be at index 3
 
+        // instantiate the filter
         this.filterNode = new OscFilter(this.audioContext, lfoArray);
-        this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
 
+        // instantite and set the ADSR envelope
+        this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
         this.voiceAdsrGainNode = this.audioContext.createGain();
         this.voiceAdsrGainNode.gain.setValueAtTime(Settings.adsrOffLevel, this.audioContext.currentTime);
 
@@ -79,9 +81,9 @@ export class Voice
         this.oscillatorMixer.filteredOutput().connect(this.filterNode.inputNode());
 
         /* Connect the filtered and non filtered signals with the ADSR gain envelope.
-        // These are not connected to the ADSR envelope itself, because the ADSR envelope is an emitter,
-        // not destination, these are connected to a GainNode who's .gain property is modulated by the ADSR. */
-        // the non filtered oscillators aretaken from the mixer
+        ** These are not connected to the ADSR envelope itself, because the ADSR envelope is an emitter,
+        ** not a destination, these are connected to a GainNode who's .gain property is modulated by the ADSR. */
+        // the non filtered oscillators are taken from the mixer
         this.oscillatorMixer.nonFilteredOutput().connect(this.voiceAdsrGainNode);
         // the filtered oscillators are taken from the filter output
         this.filterNode.outputNode().connect(this.voiceAdsrGainNode);
