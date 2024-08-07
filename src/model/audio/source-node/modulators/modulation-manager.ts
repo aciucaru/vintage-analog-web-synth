@@ -24,7 +24,7 @@ export class ModulationManager extends BaseSourceNode
     // the current value of the modulated parameter
     private parameterCurrentValue: number;
 
-    private static readonly logger: Logger<ILogObj> = new Logger({name: "ParameterManager", minLevel: Settings.minLogLevel});
+    private static readonly logger: Logger<ILogObj> = new Logger({name: "ModulationManager", minLevel: Settings.minLogLevel});
 
     private static readonly FINAL_NODE_GAIN = 1.0;
 
