@@ -45,7 +45,10 @@ export class LfoManager extends BaseSourceNode
 
     private static readonly logger: Logger<ILogObj> = new Logger({name: "LfoManager", minLevel: Settings.minLogLevel});
 
-    constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
+    // constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
+    //             parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
+    //             useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
+    constructor(audioContext: AudioContext, lfoArray: Array<BaseSourceNode>,
                 parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
                 useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
