@@ -1,5 +1,5 @@
 import { Settings } from "../../../../constants/settings";
-import { BaseSource } from "../base-source";
+import { BaseSourceNode } from "../base-source-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -28,7 +28,7 @@ import type { ILogObj } from "tslog";
 ** That emitter is a ConstanSourceNode, which is fed through the GainNode.
 ** Whithout the ConstantSourceNode, the ADSR envelope will not work, because it won't emit any signal. */
 
-export class AdsrEnvelope extends BaseSource
+export class AdsrEnvelope extends BaseSourceNode
 {
     // private audioContext: AudioContext;
 

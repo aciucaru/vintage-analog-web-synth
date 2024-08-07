@@ -1,5 +1,5 @@
 import { Settings } from "../../constants/settings";
-import type { BaseOscillator } from "./source/oscillator/base-oscillator";
+import type { BaseOscillator } from "./source-node/oscillator/base-oscillator";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

@@ -1,13 +1,13 @@
 import { Settings } from "../../../../constants/settings";
 import type { AnalysableNode } from "../../base/base-analizable-node";
-import { BaseSource } from "../base-source";
+import { BaseSourceNode } from "../base-source-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
 
-export class BaseOscillator extends BaseSource implements AnalysableNode
+export class BaseOscillator extends BaseSourceNode implements AnalysableNode
 {
     /* the gain node that should be used for drawing the sound (for AnalyserNode);
     ** this property is inherided from 'AnalysableNode' interface */

@@ -14,7 +14,7 @@ import type { ILogObj } from "tslog";
 **
 ** Classes that inherit from this base class usually have a complex graph of nodes (usually more than one node)
 ** in order to work properly. All those nodes are between 'unputGainNode' and 'outputGainNode'. */
-export class IntermediateBaseAudioNode
+export class IntermediateBaseNode
 {
     protected audioContext: AudioContext;
 
@@ -32,12 +32,12 @@ export class IntermediateBaseAudioNode
             this.audioContext = audioContext;
         else
         {
-            IntermediateBaseAudioNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            IntermediateBaseNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
             this.audioContext = new AudioContext();
         }
 
         if (audioContext === null)
-            IntermediateBaseAudioNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            IntermediateBaseNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         this.inputGainNode = this.audioContext.createGain();
         this.inputGainNode.gain.setValueAtTime(Settings.inputGain, this.audioContext.currentTime);

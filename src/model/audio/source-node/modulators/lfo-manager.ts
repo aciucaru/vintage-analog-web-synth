@@ -1,5 +1,5 @@
 import { Settings } from "../../../../constants/settings";
-import { BaseSource } from "../base-source";
+import { BaseSourceNode } from "../base-source-node";
 import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
 import { UnipolarLfo } from "./unipolar-lfo";
 
@@ -7,7 +7,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class LfoManager extends BaseSource
+export class LfoManager extends BaseSourceNode
 {
     /* The array of managed shareable LFOs.
     ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,

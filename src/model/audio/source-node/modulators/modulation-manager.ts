@@ -1,7 +1,7 @@
 import { Settings } from "../../../../constants/settings";
 import { UnipolarLfo } from "./unipolar-lfo";
 import { LfoManager } from "./lfo-manager";
-import { BaseSource } from "../base-source";
+import { BaseSourceNode } from "../base-source-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -10,7 +10,7 @@ import type { ILogObj } from "tslog";
 /* This class is modulator that can merge modulation from different sources, such as LFOs, ADSR envelopes and other
 ** sources.
 ** This class basically manages all the modulators of a parameter. Currently only LFO modulators are supported. */
-export class ModulationManager extends BaseSource
+export class ModulationManager extends BaseSourceNode
 {
     // modulator node
     private lfoManager: LfoManager;

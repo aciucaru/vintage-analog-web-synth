@@ -11,7 +11,7 @@ import type { ILogObj } from "tslog";
 ** a source of signal).
 **
 ** Classes that inherit this class are oscillators, LFOs, ADSR envelopes and other sources of signal. */
-export class BaseSource
+export class BaseSourceNode
 {
     /* the audio context used to create and connect nodes;
     ** must be supplied from outside the class */
@@ -38,7 +38,7 @@ export class BaseSource
     {
         if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
         {
-            BaseSource.baseSourceLogger.debug(`setOutputGain(${gain})`);
+            BaseSourceNode.baseSourceLogger.debug(`setOutputGain(${gain})`);
 
             // set the new value
             this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
@@ -46,7 +46,7 @@ export class BaseSource
         }
         else
         {
-            BaseSource.baseSourceLogger.warn(`setOutputGain(${gain}): value outside bounds`);
+            BaseSourceNode.baseSourceLogger.warn(`setOutputGain(${gain}): value outside bounds`);
 
             return false; // change was not successfull
         }
