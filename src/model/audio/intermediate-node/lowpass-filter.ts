@@ -1,8 +1,8 @@
-import { Settings } from "../../constants/settings";
-import type { UnipolarLfo } from "./source-node/modulators/unipolar-lfo";
-import { AdsrEnvelope } from "./source-node/modulators/adsr-envelope";
-import { ModulationManager } from "./source-node/modulators/modulation-manager";
-import { IntermediateBaseNode } from "./intermediate-node/intermediate-base-audio-node";
+import { Settings } from "../../../constants/settings";
+import type { UnipolarLfo } from "../source-node/modulators/unipolar-lfo";
+import { AdsrEnvelope } from "../source-node/modulators/adsr-envelope";
+import { ModulationManager } from "../source-node/modulators/modulation-manager";
+import { IntermediateBaseNode } from "./intermediate-base-audio-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

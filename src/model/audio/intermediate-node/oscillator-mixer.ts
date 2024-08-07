@@ -1,5 +1,5 @@
-import { Settings } from "../../constants/settings";
-import type { BaseOscillator } from "./source-node/oscillator/base-oscillator";
+import { Settings } from "../../../constants/settings";
+import type { BaseOscillator } from "../source-node/oscillator/base-oscillator";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -49,6 +49,9 @@ export class OscillatorMixer
         this.computeAndSetGainValues();
     }
 
+    /* unlike most intermediate nodes, the oscillator mixer has 2 outputs:
+    ** - one output for oscillators that will be passed through a filter (filtered output)
+    ** - one output for oscillators that won't be passed through a filter (non filtered output) */
     public filteredOutput(): GainNode { return this.filteredOutputGainNode; }
 
     public nonFilteredOutput(): GainNode { return this.nonFilteredOutputGainNode; }

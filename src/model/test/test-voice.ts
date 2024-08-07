@@ -4,8 +4,8 @@ import { SubOscillator } from "../audio/source-node/oscillator/melodic/sub-oscil
 import { MultiShapeOscillator } from "../audio/source-node/oscillator/melodic/multi-shape-oscillator";
 import { MultiNoiseOscillator } from "../audio/source-node/oscillator/noise/multi-noise-oscillator";
 
-import { OscillatorMixer } from "../audio/oscillator-mixer";
-import { OscFilter } from "../audio/lowpass-filter";
+import { OscillatorMixer } from "../audio/intermediate-node/oscillator-mixer";
+import { OscFilter } from "../audio/intermediate-node/lowpass-filter";
 
 import { AdsrEnvelope } from "../audio/source-node/modulators/adsr-envelope";
 import { UnipolarLfo } from "../audio/source-node/modulators/unipolar-lfo";

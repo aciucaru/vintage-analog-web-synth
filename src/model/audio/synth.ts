@@ -1,7 +1,7 @@
 import { Settings } from "../../constants/settings";
 import { audioContext } from "../../constants/shareable-audio-nodes";
 
-import { Voice } from "./voice";
+import { Voice } from "./intermediate-node/voice";
 import { TestVoice } from "../test/test-voice";
 import { DelayEffect } from "./effects/delay-effect";
 import { DistortionEffect } from "./effects/distortion-effect";

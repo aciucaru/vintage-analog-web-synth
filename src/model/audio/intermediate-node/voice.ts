@@ -1,14 +1,14 @@
-import { Settings } from "../../constants/settings";
+import { Settings } from "../../../constants/settings";
 
-import { SubOscillator } from "./source-node/oscillator/melodic/sub-oscillator";
-import { MultiShapeOscillator } from "./source-node/oscillator/melodic/multi-shape-oscillator";
-import { MultiNoiseOscillator } from "./source-node/oscillator/noise/multi-noise-oscillator";
+import { SubOscillator } from "../source-node/oscillator/melodic/sub-oscillator";
+import { MultiShapeOscillator } from "../source-node/oscillator/melodic/multi-shape-oscillator";
+import { MultiNoiseOscillator } from "../source-node/oscillator/noise/multi-noise-oscillator";
 
 import { OscillatorMixer } from "./oscillator-mixer";
 import { OscFilter } from "./lowpass-filter";
 
-import { AdsrEnvelope } from "./source-node/modulators/adsr-envelope";
-import { lfoArray } from "../../constants/shareable-audio-nodes";
+import { AdsrEnvelope } from "../source-node/modulators/adsr-envelope";
+import { lfoArray } from "../../../constants/shareable-audio-nodes";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";

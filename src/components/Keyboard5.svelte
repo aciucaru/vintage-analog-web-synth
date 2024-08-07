@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Settings } from "../constants/settings";
     import keyboard5OctavesSVG from '../assets/keyboard/keyboard-5-octaves-simple-opt.svg?raw';
-    import { voice } from '../model/audio/voice';
+    import { voice } from '../model/audio/intermediate-node/voicemediate-node/voice';
 
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
