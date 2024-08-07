@@ -48,9 +48,12 @@ export class LfoManager extends BaseSourceNode
     // constructor(audioContext: AudioContext, lfoArray: Array<UnipolarLfo>,
     //             parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
     //             useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
-    constructor(audioContext: AudioContext, lfoArray: Array<BaseSourceNode>,
-                parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
-                useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
+    // constructor(audioContext: AudioContext, lfoArray: Array<BaseSourceNode>,
+    //             parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
+    //             useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
+    constructor(audioContext: AudioContext,
+            parameterLowerLimit: number, parameterUpperLimit: number, parameterCurrentValue: number,
+            useFixedModulationRanges: boolean = false, lowerModulationFixedRange: number = 0, upperModulationFixedRange: number = 0)
     {
         super(audioContext);
 
@@ -95,20 +98,21 @@ export class LfoManager extends BaseSourceNode
         this.outputGainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
 
         // instantiate the array of shareable LFOs, for this we use the length of the 'lfoArray' constructor argument
-        this.shareableLfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
+        // this.shareableLfoArray = new Array<ShareableUnipolarLfo>(lfoArray.length);
+        this.shareableLfoArray = new Array<ShareableUnipolarLfo>();
 
         // instantiate and connect each shareable LFO to the final merger node and then mute each LFO
-        for (let i = 0; i < this.shareableLfoArray.length; i++)
-        {
-            // instantiate each ShareableLfo
-            this.shareableLfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
+        // for (let i = 0; i < this.shareableLfoArray.length; i++)
+        // {
+        //     // instantiate each ShareableLfo
+        //     this.shareableLfoArray[i] = new ShareableUnipolarLfo(this.audioContext, lfoArray[i]);
 
-            // connect each LFO to the final merger node
-            this.shareableLfoArray[i].outputNode().connect(this.outputGainNode);
+        //     // connect each LFO to the final merger node
+        //     this.shareableLfoArray[i].outputNode().connect(this.outputGainNode);
 
-            // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
-            this.shareableLfoArray[i].disable();
-        }
+        //     // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
+        //     this.shareableLfoArray[i].disable();
+        // }
     }
 
     public enableLfo(lfoIndex: number): boolean
@@ -155,6 +159,53 @@ export class LfoManager extends BaseSourceNode
         else
         {
             LfoManager.logger.warn(`disableLfo(${lfoIndex}): parameter outside bounds`);
+
+            return false;
+        }
+    }
+
+    public addLfo(lfo: BaseSourceNode): number
+    {
+        // create a shareable LFO based on the lfo source
+        const shareableLfo = new ShareableUnipolarLfo(this.audioContext, lfo);
+
+        // add the shareable LFO to the array of shareable LFOs
+        this.shareableLfoArray.push(shareableLfo);
+
+        // connect the LFO to the final merger node
+        shareableLfo.outputNode().connect(this.outputGainNode);
+
+        // set the LFO gain to minimum (doesn't actually stop the LFO, it just mutes it)
+        shareableLfo.disable();
+
+        // return the index of the new added LFO
+        return this.shareableLfoArray.length - 1;
+    }
+
+    public removeLfo(lfoIndex: number): boolean
+    {
+        if (0 <= lfoIndex && lfoIndex < this.shareableLfoArray.length)
+        {
+            LfoManager.logger.debug(`removeLfo(${lfoIndex})`);
+
+            // first, disable the LFO
+            this.disableLfo(lfoIndex);
+
+            // if the LFO is enabled, then we disabled it before removing it from the array
+            if (this.shareableLfoArray[lfoIndex].isEnabled())
+            {
+                this.shareableLfoArray[lfoIndex].disable(); // this only mutes the LFO
+                this.disableLfo(lfoIndex); // this truly disables the LFO by recomputing final gain
+            }
+
+            // then remove it from the array
+            this.shareableLfoArray.splice(lfoIndex, 1); // delete one element starting at 'lfoIndex'
+
+            return true;
+        }
+        else
+        {
+            LfoManager.logger.warn(`removeLfo(${lfoIndex}): parameter outside bounds`);
 
             return false;
         }

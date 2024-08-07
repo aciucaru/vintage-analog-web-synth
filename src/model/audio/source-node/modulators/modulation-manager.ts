@@ -60,8 +60,17 @@ export class ModulationManager extends BaseSourceNode
             this.parameterCurrentValue = (this.parameterUpperLimit - this.parameterLowerLimit) / 2.0;
         }
 
-        this.lfoManager = new LfoManager(this.audioContext, lfoArray, parameterLowerLimit, parameterUpperLimit, parameterCurrentValue,
-                                            useFixedModulationRanges, lowerModulationFixedRange, upperModulationFixedRange);
+        // this.lfoManager = new LfoManager(this.audioContext, lfoArray, parameterLowerLimit, parameterUpperLimit, parameterCurrentValue,
+        //                                     useFixedModulationRanges, lowerModulationFixedRange, upperModulationFixedRange);
+        this.lfoManager = new LfoManager(this.audioContext,
+                                        parameterLowerLimit, parameterUpperLimit, parameterCurrentValue,
+                                        useFixedModulationRanges, lowerModulationFixedRange, upperModulationFixedRange);
+
+        for (let i = 0; i < lfoArray.length; i++)
+        {
+            // add each unipolar LFO to the LFO manager
+            this.lfoManager.addLfo(lfoArray[i]);
+        }
 
         // the final node is 'outputGainNode', inherited from BaseSource class
         this.outputGainNode.gain.setValueAtTime(ModulationManager.FINAL_NODE_GAIN, this.audioContext.currentTime);
