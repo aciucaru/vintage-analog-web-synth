@@ -20,7 +20,7 @@ export class BaseEmitterNode
     // the final output of the oscillator; this is used to connect the oscillator to other nodes
     protected outputGainNode: GainNode;
 
-    private static readonly baseSourceLogger: Logger<ILogObj> = new Logger({name: "BaseSource", minLevel: Settings.minLogLevel });
+    private static readonly baseEmitterLogger: Logger<ILogObj> = new Logger({name: "BaseEmitterNode", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext)
     {
@@ -38,7 +38,7 @@ export class BaseEmitterNode
     {
         if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
         {
-            BaseEmitterNode.baseSourceLogger.debug(`setOutputGain(${gain})`);
+            BaseEmitterNode.baseEmitterLogger.debug(`setOutputGain(${gain})`);
 
             // set the new value
             this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
@@ -46,7 +46,7 @@ export class BaseEmitterNode
         }
         else
         {
-            BaseEmitterNode.baseSourceLogger.warn(`setOutputGain(${gain}): value outside bounds`);
+            BaseEmitterNode.baseEmitterLogger.warn(`setOutputGain(${gain}): value outside bounds`);
 
             return false; // change was not successfull
         }
