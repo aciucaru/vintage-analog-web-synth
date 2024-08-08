@@ -1,5 +1,5 @@
 import { Settings } from "../../../../constants/settings";
-import { IntermediateBaseNode } from "../intermediate-base-audio-node";
+import { BaseReceiverEmitterNode } from "../base-receiver-emitter-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -9,7 +9,7 @@ import type { ILogObj } from "tslog";
 ** - 'inputWetDryGainNode' and 'effectWetDryGainNode', used to set the wet/dry effect amount
 ** - 'toggleEffect()', used to turn the effect on/off
 ** - 'setEffectAmount()', sets the wet/dry effect amount */
-export class BaseEffect extends IntermediateBaseNode
+export class BaseEffect extends BaseReceiverEmitterNode
 {
     // the input node of this effect
     protected inputGainNode: GainNode;

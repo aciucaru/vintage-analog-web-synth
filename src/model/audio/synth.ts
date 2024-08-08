@@ -1,11 +1,11 @@
 import { Settings } from "../../constants/settings";
 import { audioContext } from "../../constants/shareable-audio-nodes";
 
-import { Voice } from "./intermediate-node/voice";
-import { DelayEffect } from "./intermediate-node/effects/delay-effect";
-import { DistortionEffect } from "./intermediate-node/effects/distortion-effect";
-import { ReverbEffect } from "./intermediate-node/effects/reverb-effect";
-import { CompressorEffect } from "./intermediate-node/effects/compresor-effect";
+import { Voice } from "./emitter-receiver-node/voice";
+import { DelayEffect } from "./emitter-receiver-node/effects/delay-effect";
+import { DistortionEffect } from "./emitter-receiver-node/effects/distortion-effect";
+import { ReverbEffect } from "./emitter-receiver-node/effects/reverb-effect";
+import { CompressorEffect } from "./emitter-receiver-node/effects/compresor-effect";
 
 
 export class MonoSynth

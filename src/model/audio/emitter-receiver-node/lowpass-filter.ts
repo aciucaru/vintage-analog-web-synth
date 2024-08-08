@@ -2,13 +2,13 @@ import { Settings } from "../../../constants/settings";
 import type { UnipolarLfo } from "../emitter-node/modulators/unipolar-lfo";
 import { AdsrEnvelope } from "../emitter-node/modulators/adsr-envelope";
 import { ModulationManager } from "../emitter-node/modulators/modulation-manager";
-import { IntermediateBaseNode } from "./intermediate-base-audio-node";
+import { BaseReceiverEmitterNode } from "./base-receiver-emitter-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class OscFilter extends IntermediateBaseNode
+export class OscFilter extends BaseReceiverEmitterNode
 {
     // the main node: the biquad filter, this node sits between 'inputNode' and 'outputNode'
     private filterNode: BiquadFilterNode;

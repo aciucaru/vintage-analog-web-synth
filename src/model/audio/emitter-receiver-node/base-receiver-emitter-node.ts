@@ -14,7 +14,7 @@ import type { ILogObj } from "tslog";
 **
 ** Classes that inherit from this base class usually have a complex graph of nodes (usually more than one node)
 ** in order to work properly. All those nodes are between 'unputGainNode' and 'outputGainNode'. */
-export class IntermediateBaseNode
+export class BaseReceiverEmitterNode
 {
     protected audioContext: AudioContext;
 
@@ -24,7 +24,7 @@ export class IntermediateBaseNode
     // the output node, this is the sound resulting from this class
     protected outputGainNode: GainNode;
 
-    private static readonly singleInputAudioNodelogger: Logger<ILogObj> = new Logger({name: "SingleInputBaseAudioNode", minLevel: Settings.minLogLevel });
+    private static readonly receiverEmitterNodelogger: Logger<ILogObj> = new Logger({name: "BaseReceiverEmitterNode", minLevel: Settings.minLogLevel });
 
     constructor(audioContext: AudioContext)
     {
@@ -32,12 +32,12 @@ export class IntermediateBaseNode
             this.audioContext = audioContext;
         else
         {
-            IntermediateBaseNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            BaseReceiverEmitterNode.receiverEmitterNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
             this.audioContext = new AudioContext();
         }
 
         if (audioContext === null)
-            IntermediateBaseNode.singleInputAudioNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
+            BaseReceiverEmitterNode.receiverEmitterNodelogger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         this.inputGainNode = this.audioContext.createGain();
         this.inputGainNode.gain.setValueAtTime(Settings.inputGain, this.audioContext.currentTime);
