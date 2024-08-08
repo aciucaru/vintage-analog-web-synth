@@ -52,7 +52,7 @@ export class TestVoice
             TestVoice.logger.warn("constructor(): audioContext is null, separate audioContext was created");
 
         // instantiate and fill the array of shared LFOs
-        this.sharedLfoArray = new Array<UnipolarLfo>(Settings.lfoCount);
+        this.sharedLfoArray = new Array<UnipolarLfo>(Settings.generalUseLfoPerVoiceCount);
         for (let i = 0; i < this.sharedLfoArray.length; i++)
         {
             this.sharedLfoArray[i] = new UnipolarLfo(this.audioContext);

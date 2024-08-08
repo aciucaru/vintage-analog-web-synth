@@ -19,8 +19,13 @@ export class Voice
 {
     private audioContext: AudioContext;
 
-    // the array of per-voice LFOs
+    // the per-voice LFOs, as an array
+    // these LFOs will modulate al modulatable parameters except frequency
     private lfoArray: Array<UnipolarLfo>;
+
+    // the per-voice FM and ring modulation LFOs, as an array
+    // these LFOs will modulate frequency and will also assure ring modulation
+    private fmRingLfoArray: Array<UnipolarLfo>;
 
     // the oscillators:
     private multiShapeOscillator1: MultiShapeOscillator;
@@ -54,12 +59,20 @@ export class Voice
         if (audioContext === null)
             Voice.logger.warn("constructor(): audioContext is null, separate audioContext was created");
 
-        // instantiate the array of LFOs (abd the LFOs themselves)
-        this.lfoArray = new Array<UnipolarLfo>(Settings.lfoCount);
+        // instantiate the array of general purpose LFOs (and the LFOs themselves)
+        this.lfoArray = new Array<UnipolarLfo>(Settings.generalUseLfoPerVoiceCount);
         for (let i = 0; i < this.lfoArray.length; i++)
         {
             this.lfoArray[i] = new UnipolarLfo(audioContext);
             this.lfoArray[i].setFrequency(Settings.defaultLfoLowAbsoluteFrequency);
+        }
+
+        // instantiate the array of LFOs dedicated to FM and ring modulation (and the LFOs themselves)
+        this.fmRingLfoArray = new Array<UnipolarLfo>(Settings.generalUseLfoPerVoiceCount);
+        for (let i = 0; i < this.lfoArray.length; i++)
+        {
+            this.fmRingLfoArray[i] = new UnipolarLfo(audioContext);
+            this.fmRingLfoArray[i].setFrequency(Settings.defaultLfoLowAbsoluteFrequency);
         }
 
         // instantiate the nodes:
@@ -211,6 +224,8 @@ export class Voice
     public getNoiseOscillator(): MultiNoiseOscillator { return this.noiseOscillator; }
 
     public getLfoArray(): Array<UnipolarLfo> { return this.lfoArray; } 
+
+    public getFmLfoArray(): Array<UnipolarLfo> { return this.fmRingLfoArray; }
 
     // public getAnalyserNode(): AnalyserNode { return this.analyserNode; }
 

@@ -201,8 +201,10 @@ export class Settings
     public static readonly shareableLfoEnabledGain = 1.0; 
 
     // settings for LFO Array: **************************************************************************
-    // the total number of LFOs for one single layer (timbre) of the synth
-    public static readonly lfoCount = 5;
+    // the total number of LFOs for one single voice of the synth
+    public static readonly generalUseLfoPerVoiceCount = 5;
+
+    public static readonly fmRingModulationLfoPerVoiceCount = 3;
     // the maximum number of simultaneos LFOs that can modulate a parameter
     // public static readonly lfoArrayModulatorsCount = 5;
 
