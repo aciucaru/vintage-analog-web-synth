@@ -1,7 +1,10 @@
 <script lang="ts">
-    import { lfoArray } from "../../../constants/shareable-audio-nodes";
+    import { monoSynth } from "../../../model/audio/synth";
 
     import SingleLfoPanel from "./SingleLfoPanel.svelte";
+
+    // get the LFOs from the voice
+    const lfoArray = monoSynth.getVoice().getLfoArray();
 </script>
 
 <div class="main-container">

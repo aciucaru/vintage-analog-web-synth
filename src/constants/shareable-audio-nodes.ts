@@ -3,7 +3,7 @@ import { UnipolarLfo } from "../model/audio/emitter-node/modulators/unipolar-lfo
 
 export const audioContext = new AudioContext();
 
-export const lfoArray: Array<UnipolarLfo> = new Array<UnipolarLfo>(Settings.lfoCount);
+const lfoArray: Array<UnipolarLfo> = new Array<UnipolarLfo>(Settings.lfoCount);
 
 for (let i = 0; i < lfoArray.length; i++)
 {

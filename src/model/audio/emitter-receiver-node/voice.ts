@@ -8,7 +8,8 @@ import { OscillatorMixer } from "./oscillator-mixer";
 import { OscFilter } from "./lowpass-filter";
 
 import { AdsrEnvelope } from "../emitter-node/modulators/adsr-envelope";
-import { lfoArray } from "../../../constants/shareable-audio-nodes";
+// import { lfoArray } from "../../../constants/shareable-audio-nodes";
+import { UnipolarLfo } from "../emitter-node/modulators/unipolar-lfo";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -17,6 +18,9 @@ import type { ILogObj } from "tslog";
 export class Voice
 {
     private audioContext: AudioContext;
+
+    // the array of per-voice LFOs
+    private lfoArray: Array<UnipolarLfo>;
 
     // the oscillators:
     private multiShapeOscillator1: MultiShapeOscillator;
@@ -50,10 +54,18 @@ export class Voice
         if (audioContext === null)
             Voice.logger.warn("constructor(): audioContext is null, separate audioContext was created");
 
+        // instantiate the array of LFOs (abd the LFOs themselves)
+        this.lfoArray = new Array<UnipolarLfo>(Settings.lfoCount);
+        for (let i = 0; i < this.lfoArray.length; i++)
+        {
+            this.lfoArray[i] = new UnipolarLfo(audioContext);
+            this.lfoArray[i].setFrequency(Settings.defaultLfoLowAbsoluteFrequency);
+        }
+
         // instantiate the nodes:
-        this.multiShapeOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, lfoArray);
-        this.multiShapeOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain, lfoArray);
-        this.subOscillator = new SubOscillator(this.audioContext, Settings.minOscGain, lfoArray);
+        this.multiShapeOscillator1 = new MultiShapeOscillator(this.audioContext, Settings.maxOscGain, this.lfoArray);
+        this.multiShapeOscillator2 = new MultiShapeOscillator(this.audioContext, Settings.minOscGain, this.lfoArray);
+        this.subOscillator = new SubOscillator(this.audioContext, Settings.minOscGain, this.lfoArray);
         this.noiseOscillator = new MultiNoiseOscillator(this.audioContext, Settings.minOscGain);
 
         // instantiate and set the mixer
@@ -66,7 +78,7 @@ export class Voice
         this.oscillatorMixer.addFilteredOscillator(this.noiseOscillator); // must be at index 3
 
         // instantiate the filter
-        this.filterNode = new OscFilter(this.audioContext, lfoArray);
+        this.filterNode = new OscFilter(this.audioContext, this.lfoArray);
 
         // instantite and set the ADSR envelope
         this.voiceAdsrEnvelope = new AdsrEnvelope(this.audioContext);
@@ -76,6 +88,8 @@ export class Voice
         // instantiate and set the final gain node
         this.outputGainNode = this.audioContext.createGain();
         this.outputGainNode.gain.setValueAtTime(Settings.maxOscGain, this.audioContext.currentTime);
+
+
 
         // connect the merged result of the oscillators that should be filtered, to the filter itself
         this.oscillatorMixer.filteredOutput().connect(this.filterNode.inputNode());
@@ -195,6 +209,8 @@ export class Voice
     public getSubOscillator(): SubOscillator { return this.subOscillator; }
 
     public getNoiseOscillator(): MultiNoiseOscillator { return this.noiseOscillator; }
+
+    public getLfoArray(): Array<UnipolarLfo> { return this.lfoArray; } 
 
     // public getAnalyserNode(): AnalyserNode { return this.analyserNode; }
 
