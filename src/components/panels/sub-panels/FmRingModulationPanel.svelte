@@ -5,11 +5,9 @@
 </script>
 
 <div class="main-container">
-    <SingleLfoPanel unipolarLfo={lfoArray[0]} label={"LFO 1"}></SingleLfoPanel>
-    <SingleLfoPanel unipolarLfo={lfoArray[1]} label={"LFO 2"}></SingleLfoPanel>
-    <SingleLfoPanel unipolarLfo={lfoArray[2]} label={"LFO 3"}></SingleLfoPanel>
-    <SingleLfoPanel unipolarLfo={lfoArray[3]} label={"LFO 4"}></SingleLfoPanel>
-    <SingleLfoPanel unipolarLfo={lfoArray[4]} label={"LFO 5"}></SingleLfoPanel>
+    <SingleLfoPanel unipolarLfo={lfoArray[0]} label={"MOD 1"}></SingleLfoPanel>
+    <SingleLfoPanel unipolarLfo={lfoArray[1]} label={"MOD 2"}></SingleLfoPanel>
+    <SingleLfoPanel unipolarLfo={lfoArray[2]} label={"MOD 3"}></SingleLfoPanel>
 </div>
 
 <style>

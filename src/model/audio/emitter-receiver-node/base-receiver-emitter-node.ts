@@ -47,6 +47,6 @@ export class BaseReceiverEmitterNode
     }
 
     // these are the methods that return the input and output node
-    public inputNode(): GainNode { return this.inputGainNode; }
-    public outputNode(): GainNode { return this.outputGainNode; }
+    public inputNode(): GainNode { return this.inputGainNode; } // the receiver
+    public outputNode(): GainNode { return this.outputGainNode; } // the emitter
 }

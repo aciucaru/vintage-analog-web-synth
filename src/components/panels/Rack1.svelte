@@ -12,6 +12,7 @@
     import TestOscillatorPanel from "./sub-panels/TestOscillatorPanel.svelte";
     import TestFilterSettingsPanel from "./sub-panels/TestFilterSettingsPanel.svelte";
     import TestInvisibleKeyboard from "../TestInvisibleKeyboard.svelte";
+    import FmRingModulationPanel from "./sub-panels/FmRingModulationPanel.svelte";
 </script>
 
 <div class="main-container">
@@ -22,12 +23,13 @@
 
     <FilterSettingsPanel></FilterSettingsPanel>
     <VoiceSettingsPanel></VoiceSettingsPanel>
-    <!-- <AdsrEnvelopesPanel></AdsrEnvelopesPanel> -->
+
+    <FmRingModulationPanel></FmRingModulationPanel>
+
+    <InvisibleKeyboard></InvisibleKeyboard>
 
     <!-- <TestOscillatorPanel></TestOscillatorPanel> -->
     <!-- <TestFilterSettingsPanel></TestFilterSettingsPanel> -->
-    
-    <InvisibleKeyboard></InvisibleKeyboard>
     <!-- <TestInvisibleKeyboard></TestInvisibleKeyboard> -->
 </div>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { LfoFreqRange, LfoShape } from "../../../model/audio/emitter-node/modulators/unipolar-lfo";
+    import { LfoFreqRange, LfoShape, UnipolarLfo } from "../../../model/audio/emitter-node/modulators/unipolar-lfo";
     import { lfoArray } from "../../../constants/shareable-audio-nodes";
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
 
@@ -11,12 +11,13 @@
     import { Logger } from "tslog";
     import type { ILogObj } from "tslog";
 
+    // the LFO that this component is supposed to control
+    export let unipolarLfo: UnipolarLfo;
 
-    // all the LFOs are inside an array and this is the index of the LFO this component should control
-    // this index is a Svelte prop, so it must be passed to this component
-    export let lfoIndex: number;
+    // the label of this component, also a Svelte prop
+    export let label = "";
 
-    const logger: Logger<ILogObj> = new Logger({name: "RadioGroup", minLevel: Settings.minLogLevel });
+    const logger: Logger<ILogObj> = new Logger({name: "SingleLfoPanel", minLevel: Settings.minLogLevel });
 
     /* Variable that stores the frequency range of the singel LFO.
     ** This variable is used bothe be the callback and Svelte UI, so it must have this high scope */
@@ -27,40 +28,45 @@
     {
         logger.debug("onLfo1TriangleShapeSelect()");
 
-        if (lfoArray.length > lfoIndex)
-            lfoArray[lfoIndex].setShape(LfoShape.Triangle);
+        // if (lfoArray.length > lfoIndex)
+            // lfoArray[lfoIndex].setShape(LfoShape.Triangle);
+            unipolarLfo.setShape(LfoShape.Triangle);
     }
 
     function onLfoSawtoothShapeSelect(): void
     {
         logger.debug("onLfo1SawtoothShapeSelect()");
 
-        if (lfoArray.length > lfoIndex)
-            lfoArray[lfoIndex].setShape(LfoShape.Sawtooth);
+        // if (lfoArray.length > lfoIndex)
+            // lfoArray[lfoIndex].setShape(LfoShape.Sawtooth);
+            unipolarLfo.setShape(LfoShape.Sawtooth);
     }
 
     function onLfoSquareShapeSelect(): void
     {
         logger.debug("onLfo1SquareShapeSelect()");
 
-        if (lfoArray.length > lfoIndex)
-            lfoArray[lfoIndex].setShape(LfoShape.Square);
+        // if (lfoArray.length > lfoIndex)
+            // lfoArray[lfoIndex].setShape(LfoShape.Square);
+            unipolarLfo.setShape(LfoShape.Square);
     }
 
     function onLfoSineShapeSelect(): void
     {
         logger.debug("onLfo1SineShapeSelect()");
 
-        if (lfoArray.length > lfoIndex)
-            lfoArray[lfoIndex].setShape(LfoShape.Sine);
+        // if (lfoArray.length > lfoIndex)
+            // lfoArray[lfoIndex].setShape(LfoShape.Sine);
+            unipolarLfo.setShape(LfoShape.Sine);
     }
 
     function onLfoFreqChange(lfoFreq: number): void
     {
         logger.debug(`onLfo1FreqChange(${lfoFreq})`);
 
-        if (lfoArray.length > lfoIndex)
-            lfoArray[lfoIndex].setFrequency(lfoFreq);
+        // if (lfoArray.length > lfoIndex)
+            // lfoArray[lfoIndex].setFrequency(lfoFreq);
+            unipolarLfo.setFrequency(lfoFreq);
     }
 
     function onFrequencyRangeChange(selectedOptionIndex: number)
@@ -74,7 +80,8 @@
             case 2: frequencyRange = LfoFreqRange.High; break;
         }
 
-        lfoArray[lfoIndex].setFrequencyRange(frequencyRange);
+        // lfoArray[lfoIndex].setFrequencyRange(frequencyRange);
+        unipolarLfo.setFrequencyRange(frequencyRange);
     }
 
     // the data for a single radio button consists of an index, a label and the callback
@@ -106,7 +113,9 @@
 
 <div class="main-container">
         <!-- title -->
-        <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 1 / 2;">LFO {lfoIndex + 1}</div>
+        {#if label.length > 0}
+            <div class="title unselectable" style="grid-column: 1 / 8; grid-row: 1 / 2;">{label}</div>
+        {/if}
 
         <div style="grid-column: 1 / 2; grid-row: 3 / 4;">
             <RadioButton radioData={lfoRadioDataArray[0]} containerCallback={lfoRadioContainerCallback} buttonWidth={18}></RadioButton>
