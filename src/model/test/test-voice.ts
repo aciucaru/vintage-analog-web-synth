@@ -1,19 +1,19 @@
 import { Settings } from "../../constants/settings";
 
-import { SubOscillator } from "../audio/source-node/oscillator/melodic/sub-oscillator";
-import { MultiShapeOscillator } from "../audio/source-node/oscillator/melodic/multi-shape-oscillator";
-import { MultiNoiseOscillator } from "../audio/source-node/oscillator/noise/multi-noise-oscillator";
+import { SubOscillator } from "../audio/emitter-node/oscillator/melodic/sub-oscillator";
+import { MultiShapeOscillator } from "../audio/emitter-node/oscillator/melodic/multi-shape-oscillator";
+import { MultiNoiseOscillator } from "../audio/emitter-node/oscillator/noise/multi-noise-oscillator";
 
 import { OscillatorMixer } from "../audio/intermediate-node/oscillator-mixer";
 import { OscFilter } from "../audio/intermediate-node/lowpass-filter";
 
-import { AdsrEnvelope } from "../audio/source-node/modulators/adsr-envelope";
-import { UnipolarLfo } from "../audio/source-node/modulators/unipolar-lfo";
+import { AdsrEnvelope } from "../audio/emitter-node/modulators/adsr-envelope";
+import { UnipolarLfo } from "../audio/emitter-node/modulators/unipolar-lfo";
 import { lfoArray } from "../../constants/shareable-audio-nodes";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
-import { ModulationManager } from "../audio/source-node/modulators/modulation-manager";
+import { ModulationManager } from "../audio/emitter-node/modulators/modulation-manager";
 
 
 export class TestVoice

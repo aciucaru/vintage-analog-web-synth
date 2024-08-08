@@ -1,5 +1,5 @@
 import { Settings } from "../../../../constants/settings";
-import { BaseSourceNode } from "../base-source-node";
+import { BaseEmitterNode } from "../base-emitter-node";
 import { ShareableUnipolarLfo } from "./shareable-unipolar-lfo";
 import { UnipolarLfo } from "./unipolar-lfo";
 
@@ -7,7 +7,7 @@ import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
 
-export class LfoManager extends BaseSourceNode
+export class LfoManager extends BaseEmitterNode
 {
     /* The array of managed shareable LFOs.
     ** A shareable LFO is an LFO that can modulate multiple parameters at the same time,
@@ -164,7 +164,7 @@ export class LfoManager extends BaseSourceNode
         }
     }
 
-    public addLfo(lfo: BaseSourceNode): number
+    public addLfo(lfo: BaseEmitterNode): number
     {
         // create a shareable LFO based on the lfo source
         const shareableLfo = new ShareableUnipolarLfo(this.audioContext, lfo);

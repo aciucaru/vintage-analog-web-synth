@@ -1,7 +1,7 @@
 import { Settings } from "../../../constants/settings";
-import type { UnipolarLfo } from "../source-node/modulators/unipolar-lfo";
-import { AdsrEnvelope } from "../source-node/modulators/adsr-envelope";
-import { ModulationManager } from "../source-node/modulators/modulation-manager";
+import type { UnipolarLfo } from "../emitter-node/modulators/unipolar-lfo";
+import { AdsrEnvelope } from "../emitter-node/modulators/adsr-envelope";
+import { ModulationManager } from "../emitter-node/modulators/modulation-manager";
 import { IntermediateBaseNode } from "./intermediate-base-audio-node";
 
 import { Logger } from "tslog";

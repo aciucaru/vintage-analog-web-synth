@@ -1,5 +1,5 @@
 import { Settings } from "../../../../constants/settings";
-import { BaseSourceNode } from "../base-source-node";
+import { BaseEmitterNode } from "../base-emitter-node";
 import { UnipolarLfo } from "./unipolar-lfo";
 
 import { Logger } from "tslog";
@@ -18,11 +18,11 @@ import type { ILogObj } from "tslog";
 ** This class is called 'shareable' because, by being able to turn an LFO on/off, we can modulate multiple parameters with the same LFO
 ** In this way, we can reuse the same LFO for multiple synth parameters, if we want to, but we are not obligated to use the same LFO for
 ** all synth parameters because the 'shareable' LFO cand be enabled/disabled for each synth paramter separately. */
-export class ShareableUnipolarLfo extends BaseSourceNode
+export class ShareableUnipolarLfo extends BaseEmitterNode
 {
     // the unipolar LFO that oscillates continously once started, it never stops
     // private lfo: UnipolarLfo;
-    private lfo: BaseSourceNode;
+    private lfo: BaseEmitterNode;
 
     // keeps track if the LFO is enabled or disabled
     private isLfoEnabled: boolean = false;
@@ -30,7 +30,7 @@ export class ShareableUnipolarLfo extends BaseSourceNode
     private static readonly logger: Logger<ILogObj> = new Logger({name: "ShareableUnipolarLfo", minLevel: Settings.minLogLevel});
 
     // constructor(audioContext: AudioContext, unipolarLfo: UnipolarLfo)
-    constructor(audioContext: AudioContext, unipolarLfo: BaseSourceNode)
+    constructor(audioContext: AudioContext, unipolarLfo: BaseEmitterNode)
     {
         super(audioContext);
 

@@ -3,15 +3,15 @@ import { Settings } from "../../../constants/settings";
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
 
-/* This class represent the base class of all sources.
-** A source is a node that only has outputs but no inputs. Because it has only one output (ore more),
-** it is considered a source.
+/* This class represent the base class of all sources/emitters of signal.
+** An emitter is a node that only has outputs but no inputs. Because it has only one output (ore more),
+** it is considered an emitter of signal, but never a receiver.
 **
 ** Even if such a class does not have inputs, it could have modulators, such as an LFO (which is also considered
-** a source of signal).
+** an emitter of signal).
 **
-** Classes that inherit this class are oscillators, LFOs, ADSR envelopes and other sources of signal. */
-export class BaseSourceNode
+** Classes that inherit this class are oscillators, LFOs, ADSR envelopes and other emitters of signal. */
+export class BaseEmitterNode
 {
     /* the audio context used to create and connect nodes;
     ** must be supplied from outside the class */
@@ -38,7 +38,7 @@ export class BaseSourceNode
     {
         if (Settings.minOscGain <= gain && gain <= Settings.maxOscGain)
         {
-            BaseSourceNode.baseSourceLogger.debug(`setOutputGain(${gain})`);
+            BaseEmitterNode.baseSourceLogger.debug(`setOutputGain(${gain})`);
 
             // set the new value
             this.outputGainNode.gain.linearRampToValueAtTime(gain, this.audioContext.currentTime);
@@ -46,7 +46,7 @@ export class BaseSourceNode
         }
         else
         {
-            BaseSourceNode.baseSourceLogger.warn(`setOutputGain(${gain}): value outside bounds`);
+            BaseEmitterNode.baseSourceLogger.warn(`setOutputGain(${gain}): value outside bounds`);
 
             return false; // change was not successfull
         }

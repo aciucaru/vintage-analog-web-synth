@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Settings } from "../../../constants/settings";
-    import { LfoFreqRange, LfoShape } from "../../../model/audio/source-node/modulators/unipolar-lfo";
+    import { LfoFreqRange, LfoShape } from "../../../model/audio/emitter-node/modulators/unipolar-lfo";
     import { lfoArray } from "../../../constants/shareable-audio-nodes";
     import { RadioButtonData } from "../../../model/gui/radio-button-data";
 

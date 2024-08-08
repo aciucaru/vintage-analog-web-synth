@@ -1,7 +1,7 @@
 import { Settings } from "../../../../constants/settings";
 import { UnipolarLfo } from "./unipolar-lfo";
 import { LfoManager } from "./lfo-manager";
-import { BaseSourceNode } from "../base-source-node";
+import { BaseEmitterNode } from "../base-emitter-node";
 
 import { Logger } from "tslog";
 import type { ILogObj } from "tslog";
@@ -11,7 +11,7 @@ import type { ILogObj } from "tslog";
 ** sources.
 ** This class basically manages all the modulators of a parameter.
 ** Currently only LFO modulators are supported. The functionality for LFO modulators is provide by the 'lfoManager' instance. */
-export class ModulationManager extends BaseSourceNode
+export class ModulationManager extends BaseEmitterNode
 {
     // modulator node
     private lfoManager: LfoManager;
